@@ -1,13 +1,14 @@
-// VirgilPatch Updater - keeps an Epsilon patch folder in sync with the VirgilPatch GitHub repository.
+// VirgilPatch Updater - keeps Epsilon patch folders in sync with the VirgilPatch GitHub repository
+// (every patch folder published there installs as Patches\<folder name>).
 //
 // Only files that are new or different are downloaded (each verified against its git blob SHA-1 from index.json);
-// patch.json is written last, files the previous version installed and the new one dropped are removed.
-// A fresh install (or a very large update) downloads the repository archive once instead of thousands of files.
+// each patch.json is written last, files the previous version installed and the new one dropped are removed (a patch
+// that is no longer published disappears completely). A fresh install (or a very large update) downloads the
+// repository archive once instead of thousands of files.
 //
 // Build (no SDK needed, .NET Framework 4.8 ships with Windows 10/11):
 //   C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe /optimize+ /out:VirgilUpdater.exe
-//     /r:System.Web.Extensions.dll /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll
-//     /win32icon:virgil.ico VirgilUpdater.cs
+//     /r:System.Web.Extensions.dll /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll VirgilUpdater.cs
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,8 +27,8 @@ using System.Windows.Forms;
 
 [assembly: System.Reflection.AssemblyTitle("VirgilPatch Updater")]
 [assembly: System.Reflection.AssemblyProduct("VirgilPatch")]
-[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyVersion("1.1.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.1.0.0")]
 
 namespace VirgilPatch
 {
@@ -36,7 +37,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.0";
+        public const string UserAgent = "VirgilPatchUpdater/1.1";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
     }
 
@@ -151,26 +152,27 @@ namespace VirgilPatch
     // ------------------------------------------------------------------ the update itself
     class FileInfoEntry
     {
+        public string Patch;    // patch folder name = Patches\<Patch>
         public string Name;     // path inside the patch folder, forward slashes
+        public string RepoPath; // path inside the repository
         public long Size;
         public string Sha;
+        public string Key { get { return Patch + "/" + Name; } }
     }
 
     class Plan
     {
         public string Commit;
-        public string PatchFolder;
-        public string RepoDir;
         public string Published;
+        public List<string> Patches = new List<string>();
         public List<FileInfoEntry> Fetch = new List<FileInfoEntry>();
-        public List<string> Remove = new List<string>();
-        public FileInfoEntry PatchJson;
-        public bool PatchJsonChanged;
+        public List<string> Remove = new List<string>();                   // installed keys "<patch>/<file>"
+        public List<FileInfoEntry> PatchJsons = new List<FileInfoEntry>(); // changed patch.json files, written last
         public long FetchBytes { get { return Fetch.Sum(f => f.Size); } }
         public long TotalBytes;
         public int TotalFiles;
         public Dictionary<string, string> Installed = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        public bool UpToDate { get { return Fetch.Count == 0 && Remove.Count == 0 && !PatchJsonChanged; } }
+        public bool UpToDate { get { return Fetch.Count == 0 && Remove.Count == 0 && PatchJsons.Count == 0; } }
     }
 
     class State
@@ -256,16 +258,20 @@ namespace VirgilPatch
             return s;
         }
 
-        static FileInfoEntry Entry(string name, object o)
+        static FileInfoEntry Entry(string patch, string repoDir, string name, object o)
         {
             var d = (Dictionary<string, object>)o;
-            return new FileInfoEntry { Name = name, Size = Convert.ToInt64(d["size"]), Sha = (string)d["sha"] };
+            return new FileInfoEntry { Patch = patch, Name = name, RepoPath = repoDir + "/" + name,
+                                       Size = Convert.ToInt64(d["size"]), Sha = (string)d["sha"] };
         }
 
-        public string Local(Plan p, string name)
+        public string Local(string key)
         {
-            return Path.Combine(state.patches_dir, p.PatchFolder, name.Replace('/', '\\'));
+            var i = key.IndexOf('/');
+            return Path.Combine(state.patches_dir, key.Substring(0, i), key.Substring(i + 1).Replace('/', '\\'));
         }
+
+        public string Local(FileInfoEntry f) { return Local(f.Key); }
 
         public Plan Check()
         {
@@ -273,34 +279,51 @@ namespace VirgilPatch
             var p = new Plan { Commit = src.ResolveCommit() };
             var js = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
             var index = js.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(src.Get(p.Commit, "index.json")));
-            p.PatchFolder = (string)index["patch_folder"];
-            p.RepoDir = index.ContainsKey("repo_dir") ? (string)index["repo_dir"] : "patch";
             p.Published = index.ContainsKey("published") ? Convert.ToString(index["published"]) : "";
-            p.PatchJson = Entry("patch.json", index["patch_json"]);
-            var files = ((Dictionary<string, object>)index["files"]).Select(kv => Entry(kv.Key, kv.Value)).ToList();
-            p.TotalFiles = files.Count;
-            p.TotalBytes = files.Sum(f => f.Size);
-            Log(string.Format("Latest version: {0} ({1}), {2} files, {3:0.00} GB", p.Commit.Substring(0, Math.Min(7, p.Commit.Length)),
-                              p.Published, p.TotalFiles, p.TotalBytes / 1e9));
-            Log("Checking your files in " + Path.Combine(state.patches_dir, p.PatchFolder) + " ...");
-            long done = 0, total = p.TotalBytes;
-            foreach (var f in files)
+            // format 2: {"patches": {name: {repo_dir, patch_json, files}}}; format 1: one patch at the top level
+            var patches = new List<KeyValuePair<string, Dictionary<string, object>>>();
+            if (index.ContainsKey("patches"))
+                foreach (var kv in (Dictionary<string, object>)index["patches"])
+                    patches.Add(new KeyValuePair<string, Dictionary<string, object>>(kv.Key, (Dictionary<string, object>)kv.Value));
+            else
+                patches.Add(new KeyValuePair<string, Dictionary<string, object>>((string)index["patch_folder"], index));
+            var all = new List<FileInfoEntry>();
+            var jsons = new List<FileInfoEntry>();
+            foreach (var kv in patches)
             {
-                var path = Local(p, f.Name);
+                var d = kv.Value;
+                var repoDir = d.ContainsKey("repo_dir") ? (string)d["repo_dir"] : "patches/" + kv.Key;
+                p.Patches.Add(kv.Key);
+                jsons.Add(Entry(kv.Key, repoDir, "patch.json", d["patch_json"]));
+                all.AddRange(((Dictionary<string, object>)d["files"]).Select(f => Entry(kv.Key, repoDir, f.Key, f.Value)));
+            }
+            p.TotalFiles = all.Count;
+            p.TotalBytes = all.Sum(f => f.Size);
+            Log(string.Format("Latest version: {0} ({1}): {2} - {3} files, {4:0.00} GB", p.Commit.Substring(0, Math.Min(7, p.Commit.Length)),
+                              p.Published, string.Join(", ", p.Patches), p.TotalFiles, p.TotalBytes / 1e9));
+            Log("Checking your files in " + state.patches_dir + " ...");
+            long done = 0, total = p.TotalBytes;
+            foreach (var f in all)
+            {
+                var path = Local(f);
                 var fi = new FileInfo(path);
                 if (!fi.Exists || fi.Length != f.Size || CachedSha(path) != f.Sha) p.Fetch.Add(f);
-                p.Installed[f.Name] = f.Sha;
+                p.Installed[f.Key] = f.Sha;
                 done += f.Size;
                 Progress(done, total);
             }
-            var pj = Local(p, "patch.json");
-            p.PatchJsonChanged = !File.Exists(pj) || CachedSha(pj) != p.PatchJson.Sha;
-            p.Installed["patch.json"] = p.PatchJson.Sha;
-            // files an earlier update installed that the new version no longer has (left alone if you changed them)
+            foreach (var j in jsons)
+            {
+                var path = Local(j);
+                if (!File.Exists(path) || CachedSha(path) != j.Sha) p.PatchJsons.Add(j);
+                p.Installed[j.Key] = j.Sha;
+            }
+            // files an earlier update installed that the new version no longer has (left alone if you changed them),
+            // including whole patches that are no longer published
             foreach (var kv in state.installed)
-                if (!p.Installed.ContainsKey(kv.Key))
+                if (!p.Installed.ContainsKey(kv.Key) && kv.Key.IndexOf('/') > 0)
                 {
-                    var path = Local(p, kv.Key);
+                    var path = Local(kv.Key);
                     if (File.Exists(path) && CachedSha(path) == kv.Value) p.Remove.Add(kv.Key);
                 }
             state.Save();
@@ -320,8 +343,6 @@ namespace VirgilPatch
 
         public void Apply(Plan p, CancellationToken cancel)
         {
-            var target = Path.Combine(state.patches_dir, p.PatchFolder);
-            Directory.CreateDirectory(target);
             long total = p.FetchBytes, done = 0;
             var pending = new List<FileInfoEntry>(p.Fetch);
             var archive = src.ArchiveUrl(p.Commit);
@@ -339,7 +360,7 @@ namespace VirgilPatch
                 var opts = new ParallelOptions { MaxDegreeOfParallelism = 4, CancellationToken = cancel };
                 Parallel.ForEach(pending, opts, f =>
                 {
-                    var dest = Local(p, f.Name);
+                    var dest = Local(f);
                     Directory.CreateDirectory(Path.GetDirectoryName(dest));
                     var tmp = dest + ".vtmp";
                     for (int attempt = 1; ; attempt++)
@@ -347,7 +368,7 @@ namespace VirgilPatch
                         long got = 0;
                         try
                         {
-                            src.Download(p.Commit, p.RepoDir + "/" + f.Name, tmp, n => { got += n; Progress(Interlocked.Add(ref done, n), total); });
+                            src.Download(p.Commit, f.RepoPath, tmp, n => { got += n; Progress(Interlocked.Add(ref done, n), total); });
                             lock (state) Place(tmp, dest, f.Sha);
                             break;
                         }
@@ -358,7 +379,7 @@ namespace VirgilPatch
                             var code = we != null && we.Response is HttpWebResponse ? (int)((HttpWebResponse)we.Response).StatusCode : 0;
                             if (attempt >= 4 || ex is IOException && !(ex is WebException))
                             {
-                                lock (errors) errors.Add(f.Name + ": " + ex.Message);
+                                lock (errors) errors.Add(f.Key + ": " + ex.Message);
                                 break;
                             }
                             Thread.Sleep(code == 429 || code == 403 ? 30000 * attempt : 2000 * attempt);
@@ -372,19 +393,34 @@ namespace VirgilPatch
                                         "\r\n(If a file is in use, close WoW and run the update again - finished files are kept.)");
                 }
             }
-            // patch.json last: until now the game still sees the previous file list
-            if (p.PatchJsonChanged)
+            // each patch.json last: until now the game still sees the previous file lists
+            foreach (var j in p.PatchJsons)
             {
-                var dest = Local(p, "patch.json");
+                var dest = Local(j);
+                Directory.CreateDirectory(Path.GetDirectoryName(dest));
                 var tmp = dest + ".vtmp";
-                File.WriteAllBytes(tmp, src.Get(p.Commit, p.RepoDir + "/patch.json"));
-                Place(tmp, dest, p.PatchJson.Sha);
+                File.WriteAllBytes(tmp, src.Get(p.Commit, j.RepoPath));
+                Place(tmp, dest, j.Sha);
             }
-            foreach (var name in p.Remove)
+            var touchedDirs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var key in p.Remove)
             {
-                try { File.Delete(Local(p, name)); Log("removed " + name); }
-                catch (IOException ex) { Log("could not remove " + name + ": " + ex.Message); }
+                try
+                {
+                    File.Delete(Local(key));
+                    Log("removed " + key);
+                    touchedDirs.Add(Path.Combine(state.patches_dir, key.Substring(0, key.IndexOf('/'))));
+                }
+                catch (IOException ex) { Log("could not remove " + key + ": " + ex.Message); }
             }
+            foreach (var dir in touchedDirs)                 // a patch that is no longer published: drop its empty folders
+                try
+                {
+                    foreach (var sub in Directory.GetDirectories(dir, "*", SearchOption.AllDirectories).OrderByDescending(s => s.Length))
+                        if (!Directory.EnumerateFileSystemEntries(sub).Any()) Directory.Delete(sub);
+                    if (!Directory.EnumerateFileSystemEntries(dir).Any()) { Directory.Delete(dir); Log("removed folder " + Path.GetFileName(dir)); }
+                }
+                catch (IOException) { }
             state.commit = p.Commit;
             state.published = p.Published;
             state.installed = p.Installed;
@@ -395,7 +431,7 @@ namespace VirgilPatch
         List<FileInfoEntry> FromArchive(Plan p, string url, List<FileInfoEntry> pending, CancellationToken cancel)
         {
             var zipPath = Path.Combine(state.patches_dir, "VirgilPatch_download.zip.part");
-            Log(string.Format("Downloading the full patch archive (about {0:0.00} GB, one download) ...", p.TotalBytes / 1e9));
+            Log(string.Format("Downloading the full archive (about {0:0.00} GB, one download) ...", p.TotalBytes / 1e9));
             long got = 0;
             GitHubSource.Fetch(url, zipPath, n =>
             {
@@ -409,18 +445,17 @@ namespace VirgilPatch
                 using (var z = ZipFile.OpenRead(zipPath))
                 {
                     var top = z.Entries.Count > 0 ? z.Entries[0].FullName.Split('/')[0] + "/" : "";
-                    var prefix = top + p.RepoDir + "/";
                     var map = new Dictionary<string, ZipArchiveEntry>(StringComparer.OrdinalIgnoreCase);
                     foreach (var e in z.Entries)
-                        if (e.FullName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) map[e.FullName.Substring(prefix.Length)] = e;
+                        if (e.FullName.StartsWith(top, StringComparison.OrdinalIgnoreCase)) map[e.FullName.Substring(top.Length)] = e;
                     Log("Unpacking " + pending.Count + " files ...");
                     long done = 0, total = pending.Sum(f => f.Size);
                     foreach (var f in pending)
                     {
                         cancel.ThrowIfCancellationRequested();
                         ZipArchiveEntry e;
-                        if (!map.TryGetValue(f.Name, out e)) { left.Add(f); continue; }
-                        var dest = Local(p, f.Name);
+                        if (!map.TryGetValue(f.RepoPath, out e)) { left.Add(f); continue; }
+                        var dest = Local(f);
                         Directory.CreateDirectory(Path.GetDirectoryName(dest));
                         var tmp = dest + ".vtmp";
                         e.ExtractToFile(tmp, true);
@@ -560,7 +595,7 @@ namespace VirgilPatch
                         var msg = string.Format("Update available ({0}): {1} files to download ({2:0.0} MB){3}{4}", plan.Published,
                                                 plan.Fetch.Count, plan.FetchBytes / 1e6,
                                                 plan.Remove.Count > 0 ? ", " + plan.Remove.Count + " old files to remove" : "",
-                                                plan.Fetch.Count == 0 && plan.PatchJsonChanged ? ", file list changed" : "");
+                                                plan.Fetch.Count == 0 && plan.PatchJsons.Count > 0 ? ", file list changed" : "");
                         Say(msg);
                         status.Text = msg;
                     }
@@ -623,7 +658,7 @@ namespace VirgilPatch
                     var u = new Updater(src, st) { Log = say };
                     var plan = u.Check();
                     say(string.Format("plan: fetch {0} files / {1} bytes, remove {2}, patch.json changed {3}", plan.Fetch.Count,
-                                      plan.FetchBytes, plan.Remove.Count, plan.PatchJsonChanged));
+                                      plan.FetchBytes, plan.Remove.Count, plan.PatchJsons.Count));
                     if (!plan.UpToDate) u.Apply(plan, CancellationToken.None);
                     return 0;
                 }

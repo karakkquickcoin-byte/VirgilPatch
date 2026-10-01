@@ -1,4 +1,7 @@
 {
+"format": 2,
+"patches": {
+"!Chronicles-TexturePatch(3.2.0)": {
 "files": {
 "1.blp": {
 "id": 840753,
@@ -29626,13 +29629,13 @@
 "size": 99758
 }
 },
-"format": 1,
-"patch_folder": "!Chronicles-TexturePatch(3.2.0)",
 "patch_json": {
 "sha": "509ddf88cb5321a31261dc94916da0d6ff052ff0",
 "size": 346652
 },
-"published": "2026-10-01 20:57",
-"repo_dir": "patch",
+"repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
 "total_bytes": 2426625388
+}
+},
+"published": "2026-10-01 21:11"
 }
