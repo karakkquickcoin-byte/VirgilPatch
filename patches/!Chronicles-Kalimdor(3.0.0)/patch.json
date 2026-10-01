@@ -1,0 +1,1315 @@
+{
+  "name": "kalimdor",
+  "version": "MU-4",
+  "url": null,
+  "files": [
+    {
+      "id": 782778,
+      "file": "world/maps/kalimdor/kalimdor.wdl"
+    },
+    {
+      "id": 782779,
+      "file": "world/maps/kalimdor/kalimdor.wdt"
+    },
+    {
+      "id": 783035,
+      "file": "world/maps/kalimdor/kalimdor_24_32.adt"
+    },
+    {
+      "id": 783036,
+      "file": "world/maps/kalimdor/kalimdor_24_32_obj0.adt"
+    },
+    {
+      "id": 783037,
+      "file": "world/maps/kalimdor/kalimdor_24_32_obj1.adt"
+    },
+    {
+      "id": 783038,
+      "file": "world/maps/kalimdor/kalimdor_24_32_tex0.adt"
+    },
+    {
+      "id": 783040,
+      "file": "world/maps/kalimdor/kalimdor_24_33.adt"
+    },
+    {
+      "id": 783041,
+      "file": "world/maps/kalimdor/kalimdor_24_33_obj0.adt"
+    },
+    {
+      "id": 783042,
+      "file": "world/maps/kalimdor/kalimdor_24_33_obj1.adt"
+    },
+    {
+      "id": 783043,
+      "file": "world/maps/kalimdor/kalimdor_24_33_tex0.adt"
+    },
+    {
+      "id": 783045,
+      "file": "world/maps/kalimdor/kalimdor_24_34.adt"
+    },
+    {
+      "id": 783046,
+      "file": "world/maps/kalimdor/kalimdor_24_34_obj0.adt"
+    },
+    {
+      "id": 783047,
+      "file": "world/maps/kalimdor/kalimdor_24_34_obj1.adt"
+    },
+    {
+      "id": 783048,
+      "file": "world/maps/kalimdor/kalimdor_24_34_tex0.adt"
+    },
+    {
+      "id": 783050,
+      "file": "world/maps/kalimdor/kalimdor_24_35.adt"
+    },
+    {
+      "id": 783051,
+      "file": "world/maps/kalimdor/kalimdor_24_35_obj0.adt"
+    },
+    {
+      "id": 783052,
+      "file": "world/maps/kalimdor/kalimdor_24_35_obj1.adt"
+    },
+    {
+      "id": 783053,
+      "file": "world/maps/kalimdor/kalimdor_24_35_tex0.adt"
+    },
+    {
+      "id": 783055,
+      "file": "world/maps/kalimdor/kalimdor_24_36.adt"
+    },
+    {
+      "id": 783056,
+      "file": "world/maps/kalimdor/kalimdor_24_36_obj0.adt"
+    },
+    {
+      "id": 783057,
+      "file": "world/maps/kalimdor/kalimdor_24_36_obj1.adt"
+    },
+    {
+      "id": 783058,
+      "file": "world/maps/kalimdor/kalimdor_24_36_tex0.adt"
+    },
+    {
+      "id": 783215,
+      "file": "world/maps/kalimdor/kalimdor_25_32.adt"
+    },
+    {
+      "id": 783216,
+      "file": "world/maps/kalimdor/kalimdor_25_32_obj0.adt"
+    },
+    {
+      "id": 783217,
+      "file": "world/maps/kalimdor/kalimdor_25_32_obj1.adt"
+    },
+    {
+      "id": 783218,
+      "file": "world/maps/kalimdor/kalimdor_25_32_tex0.adt"
+    },
+    {
+      "id": 783220,
+      "file": "world/maps/kalimdor/kalimdor_25_33.adt"
+    },
+    {
+      "id": 783221,
+      "file": "world/maps/kalimdor/kalimdor_25_33_obj0.adt"
+    },
+    {
+      "id": 783222,
+      "file": "world/maps/kalimdor/kalimdor_25_33_obj1.adt"
+    },
+    {
+      "id": 783223,
+      "file": "world/maps/kalimdor/kalimdor_25_33_tex0.adt"
+    },
+    {
+      "id": 783225,
+      "file": "world/maps/kalimdor/kalimdor_25_34.adt"
+    },
+    {
+      "id": 783226,
+      "file": "world/maps/kalimdor/kalimdor_25_34_obj0.adt"
+    },
+    {
+      "id": 783227,
+      "file": "world/maps/kalimdor/kalimdor_25_34_obj1.adt"
+    },
+    {
+      "id": 783228,
+      "file": "world/maps/kalimdor/kalimdor_25_34_tex0.adt"
+    },
+    {
+      "id": 783230,
+      "file": "world/maps/kalimdor/kalimdor_25_35.adt"
+    },
+    {
+      "id": 783231,
+      "file": "world/maps/kalimdor/kalimdor_25_35_obj0.adt"
+    },
+    {
+      "id": 783232,
+      "file": "world/maps/kalimdor/kalimdor_25_35_obj1.adt"
+    },
+    {
+      "id": 783233,
+      "file": "world/maps/kalimdor/kalimdor_25_35_tex0.adt"
+    },
+    {
+      "id": 783235,
+      "file": "world/maps/kalimdor/kalimdor_25_36.adt"
+    },
+    {
+      "id": 783236,
+      "file": "world/maps/kalimdor/kalimdor_25_36_obj0.adt"
+    },
+    {
+      "id": 783237,
+      "file": "world/maps/kalimdor/kalimdor_25_36_obj1.adt"
+    },
+    {
+      "id": 783238,
+      "file": "world/maps/kalimdor/kalimdor_25_36_tex0.adt"
+    },
+    {
+      "id": 783450,
+      "file": "world/maps/kalimdor/kalimdor_26_32.adt"
+    },
+    {
+      "id": 783451,
+      "file": "world/maps/kalimdor/kalimdor_26_32_obj0.adt"
+    },
+    {
+      "id": 783452,
+      "file": "world/maps/kalimdor/kalimdor_26_32_obj1.adt"
+    },
+    {
+      "id": 783453,
+      "file": "world/maps/kalimdor/kalimdor_26_32_tex0.adt"
+    },
+    {
+      "id": 783455,
+      "file": "world/maps/kalimdor/kalimdor_26_33.adt"
+    },
+    {
+      "id": 783456,
+      "file": "world/maps/kalimdor/kalimdor_26_33_obj0.adt"
+    },
+    {
+      "id": 783457,
+      "file": "world/maps/kalimdor/kalimdor_26_33_obj1.adt"
+    },
+    {
+      "id": 783458,
+      "file": "world/maps/kalimdor/kalimdor_26_33_tex0.adt"
+    },
+    {
+      "id": 783460,
+      "file": "world/maps/kalimdor/kalimdor_26_34.adt"
+    },
+    {
+      "id": 783461,
+      "file": "world/maps/kalimdor/kalimdor_26_34_obj0.adt"
+    },
+    {
+      "id": 783462,
+      "file": "world/maps/kalimdor/kalimdor_26_34_obj1.adt"
+    },
+    {
+      "id": 783463,
+      "file": "world/maps/kalimdor/kalimdor_26_34_tex0.adt"
+    },
+    {
+      "id": 783465,
+      "file": "world/maps/kalimdor/kalimdor_26_35.adt"
+    },
+    {
+      "id": 783466,
+      "file": "world/maps/kalimdor/kalimdor_26_35_obj0.adt"
+    },
+    {
+      "id": 783467,
+      "file": "world/maps/kalimdor/kalimdor_26_35_obj1.adt"
+    },
+    {
+      "id": 783468,
+      "file": "world/maps/kalimdor/kalimdor_26_35_tex0.adt"
+    },
+    {
+      "id": 783470,
+      "file": "world/maps/kalimdor/kalimdor_26_36.adt"
+    },
+    {
+      "id": 783471,
+      "file": "world/maps/kalimdor/kalimdor_26_36_obj0.adt"
+    },
+    {
+      "id": 783472,
+      "file": "world/maps/kalimdor/kalimdor_26_36_obj1.adt"
+    },
+    {
+      "id": 783473,
+      "file": "world/maps/kalimdor/kalimdor_26_36_tex0.adt"
+    },
+    {
+      "id": 783685,
+      "file": "world/maps/kalimdor/kalimdor_27_32.adt"
+    },
+    {
+      "id": 783686,
+      "file": "world/maps/kalimdor/kalimdor_27_32_obj0.adt"
+    },
+    {
+      "id": 783687,
+      "file": "world/maps/kalimdor/kalimdor_27_32_obj1.adt"
+    },
+    {
+      "id": 783688,
+      "file": "world/maps/kalimdor/kalimdor_27_32_tex0.adt"
+    },
+    {
+      "id": 783690,
+      "file": "world/maps/kalimdor/kalimdor_27_33.adt"
+    },
+    {
+      "id": 783691,
+      "file": "world/maps/kalimdor/kalimdor_27_33_obj0.adt"
+    },
+    {
+      "id": 783692,
+      "file": "world/maps/kalimdor/kalimdor_27_33_obj1.adt"
+    },
+    {
+      "id": 783693,
+      "file": "world/maps/kalimdor/kalimdor_27_33_tex0.adt"
+    },
+    {
+      "id": 783695,
+      "file": "world/maps/kalimdor/kalimdor_27_34.adt"
+    },
+    {
+      "id": 783696,
+      "file": "world/maps/kalimdor/kalimdor_27_34_obj0.adt"
+    },
+    {
+      "id": 783697,
+      "file": "world/maps/kalimdor/kalimdor_27_34_obj1.adt"
+    },
+    {
+      "id": 783698,
+      "file": "world/maps/kalimdor/kalimdor_27_34_tex0.adt"
+    },
+    {
+      "id": 783700,
+      "file": "world/maps/kalimdor/kalimdor_27_35.adt"
+    },
+    {
+      "id": 783701,
+      "file": "world/maps/kalimdor/kalimdor_27_35_obj0.adt"
+    },
+    {
+      "id": 783702,
+      "file": "world/maps/kalimdor/kalimdor_27_35_obj1.adt"
+    },
+    {
+      "id": 783703,
+      "file": "world/maps/kalimdor/kalimdor_27_35_tex0.adt"
+    },
+    {
+      "id": 783705,
+      "file": "world/maps/kalimdor/kalimdor_27_36.adt"
+    },
+    {
+      "id": 783706,
+      "file": "world/maps/kalimdor/kalimdor_27_36_obj0.adt"
+    },
+    {
+      "id": 783707,
+      "file": "world/maps/kalimdor/kalimdor_27_36_obj1.adt"
+    },
+    {
+      "id": 783708,
+      "file": "world/maps/kalimdor/kalimdor_27_36_tex0.adt"
+    },
+    {
+      "id": 783920,
+      "file": "world/maps/kalimdor/kalimdor_28_32.adt"
+    },
+    {
+      "id": 783921,
+      "file": "world/maps/kalimdor/kalimdor_28_32_obj0.adt"
+    },
+    {
+      "id": 783922,
+      "file": "world/maps/kalimdor/kalimdor_28_32_obj1.adt"
+    },
+    {
+      "id": 783923,
+      "file": "world/maps/kalimdor/kalimdor_28_32_tex0.adt"
+    },
+    {
+      "id": 783925,
+      "file": "world/maps/kalimdor/kalimdor_28_33.adt"
+    },
+    {
+      "id": 783926,
+      "file": "world/maps/kalimdor/kalimdor_28_33_obj0.adt"
+    },
+    {
+      "id": 783927,
+      "file": "world/maps/kalimdor/kalimdor_28_33_obj1.adt"
+    },
+    {
+      "id": 783928,
+      "file": "world/maps/kalimdor/kalimdor_28_33_tex0.adt"
+    },
+    {
+      "id": 783930,
+      "file": "world/maps/kalimdor/kalimdor_28_34.adt"
+    },
+    {
+      "id": 783931,
+      "file": "world/maps/kalimdor/kalimdor_28_34_obj0.adt"
+    },
+    {
+      "id": 783932,
+      "file": "world/maps/kalimdor/kalimdor_28_34_obj1.adt"
+    },
+    {
+      "id": 783933,
+      "file": "world/maps/kalimdor/kalimdor_28_34_tex0.adt"
+    },
+    {
+      "id": 783935,
+      "file": "world/maps/kalimdor/kalimdor_28_35.adt"
+    },
+    {
+      "id": 783936,
+      "file": "world/maps/kalimdor/kalimdor_28_35_obj0.adt"
+    },
+    {
+      "id": 783937,
+      "file": "world/maps/kalimdor/kalimdor_28_35_obj1.adt"
+    },
+    {
+      "id": 783938,
+      "file": "world/maps/kalimdor/kalimdor_28_35_tex0.adt"
+    },
+    {
+      "id": 783940,
+      "file": "world/maps/kalimdor/kalimdor_28_36.adt"
+    },
+    {
+      "id": 783941,
+      "file": "world/maps/kalimdor/kalimdor_28_36_obj0.adt"
+    },
+    {
+      "id": 783942,
+      "file": "world/maps/kalimdor/kalimdor_28_36_obj1.adt"
+    },
+    {
+      "id": 783943,
+      "file": "world/maps/kalimdor/kalimdor_28_36_tex0.adt"
+    },
+    {
+      "id": 784165,
+      "file": "world/maps/kalimdor/kalimdor_29_34.adt"
+    },
+    {
+      "id": 784166,
+      "file": "world/maps/kalimdor/kalimdor_29_34_obj0.adt"
+    },
+    {
+      "id": 784167,
+      "file": "world/maps/kalimdor/kalimdor_29_34_obj1.adt"
+    },
+    {
+      "id": 784168,
+      "file": "world/maps/kalimdor/kalimdor_29_34_tex0.adt"
+    },
+    {
+      "id": 784170,
+      "file": "world/maps/kalimdor/kalimdor_29_35.adt"
+    },
+    {
+      "id": 784171,
+      "file": "world/maps/kalimdor/kalimdor_29_35_obj0.adt"
+    },
+    {
+      "id": 784172,
+      "file": "world/maps/kalimdor/kalimdor_29_35_obj1.adt"
+    },
+    {
+      "id": 784173,
+      "file": "world/maps/kalimdor/kalimdor_29_35_tex0.adt"
+    },
+    {
+      "id": 784175,
+      "file": "world/maps/kalimdor/kalimdor_29_36.adt"
+    },
+    {
+      "id": 784176,
+      "file": "world/maps/kalimdor/kalimdor_29_36_obj0.adt"
+    },
+    {
+      "id": 784177,
+      "file": "world/maps/kalimdor/kalimdor_29_36_obj1.adt"
+    },
+    {
+      "id": 784178,
+      "file": "world/maps/kalimdor/kalimdor_29_36_tex0.adt"
+    },
+    {
+      "id": 1100658,
+      "file": "world/maps/kalimdor/kalimdor_lgt.wdt"
+    },
+    {
+      "id": 783440,
+      "file": "world/maps/kalimdor/kalimdor_26_30.adt"
+    },
+    {
+      "id": 783441,
+      "file": "world/maps/kalimdor/kalimdor_26_30_obj0.adt"
+    },
+    {
+      "id": 783442,
+      "file": "world/maps/kalimdor/kalimdor_26_30_obj1.adt"
+    },
+    {
+      "id": 783443,
+      "file": "world/maps/kalimdor/kalimdor_26_30_tex0.adt"
+    },
+    {
+      "id": 783445,
+      "file": "world/maps/kalimdor/kalimdor_26_31.adt"
+    },
+    {
+      "id": 783446,
+      "file": "world/maps/kalimdor/kalimdor_26_31_obj0.adt"
+    },
+    {
+      "id": 783447,
+      "file": "world/maps/kalimdor/kalimdor_26_31_obj1.adt"
+    },
+    {
+      "id": 783448,
+      "file": "world/maps/kalimdor/kalimdor_26_31_tex0.adt"
+    },
+    {
+      "id": 783675,
+      "file": "world/maps/kalimdor/kalimdor_27_30.adt"
+    },
+    {
+      "id": 783676,
+      "file": "world/maps/kalimdor/kalimdor_27_30_obj0.adt"
+    },
+    {
+      "id": 783677,
+      "file": "world/maps/kalimdor/kalimdor_27_30_obj1.adt"
+    },
+    {
+      "id": 783678,
+      "file": "world/maps/kalimdor/kalimdor_27_30_tex0.adt"
+    },
+    {
+      "id": 783680,
+      "file": "world/maps/kalimdor/kalimdor_27_31.adt"
+    },
+    {
+      "id": 783681,
+      "file": "world/maps/kalimdor/kalimdor_27_31_obj0.adt"
+    },
+    {
+      "id": 783682,
+      "file": "world/maps/kalimdor/kalimdor_27_31_obj1.adt"
+    },
+    {
+      "id": 783683,
+      "file": "world/maps/kalimdor/kalimdor_27_31_tex0.adt"
+    },
+    {
+      "id": 783910,
+      "file": "world/maps/kalimdor/kalimdor_28_30.adt"
+    },
+    {
+      "id": 783911,
+      "file": "world/maps/kalimdor/kalimdor_28_30_obj0.adt"
+    },
+    {
+      "id": 783912,
+      "file": "world/maps/kalimdor/kalimdor_28_30_obj1.adt"
+    },
+    {
+      "id": 783913,
+      "file": "world/maps/kalimdor/kalimdor_28_30_tex0.adt"
+    },
+    {
+      "id": 783915,
+      "file": "world/maps/kalimdor/kalimdor_28_31.adt"
+    },
+    {
+      "id": 783916,
+      "file": "world/maps/kalimdor/kalimdor_28_31_obj0.adt"
+    },
+    {
+      "id": 783917,
+      "file": "world/maps/kalimdor/kalimdor_28_31_obj1.adt"
+    },
+    {
+      "id": 783918,
+      "file": "world/maps/kalimdor/kalimdor_28_31_tex0.adt"
+    },
+    {
+      "id": 784145,
+      "file": "world/maps/kalimdor/kalimdor_29_30.adt"
+    },
+    {
+      "id": 784146,
+      "file": "world/maps/kalimdor/kalimdor_29_30_obj0.adt"
+    },
+    {
+      "id": 784147,
+      "file": "world/maps/kalimdor/kalimdor_29_30_obj1.adt"
+    },
+    {
+      "id": 784148,
+      "file": "world/maps/kalimdor/kalimdor_29_30_tex0.adt"
+    },
+    {
+      "id": 784150,
+      "file": "world/maps/kalimdor/kalimdor_29_31.adt"
+    },
+    {
+      "id": 784151,
+      "file": "world/maps/kalimdor/kalimdor_29_31_obj0.adt"
+    },
+    {
+      "id": 784152,
+      "file": "world/maps/kalimdor/kalimdor_29_31_obj1.adt"
+    },
+    {
+      "id": 784153,
+      "file": "world/maps/kalimdor/kalimdor_29_31_tex0.adt"
+    },
+    {
+      "id": 784155,
+      "file": "world/maps/kalimdor/kalimdor_29_32.adt"
+    },
+    {
+      "id": 784156,
+      "file": "world/maps/kalimdor/kalimdor_29_32_obj0.adt"
+    },
+    {
+      "id": 784157,
+      "file": "world/maps/kalimdor/kalimdor_29_32_obj1.adt"
+    },
+    {
+      "id": 784158,
+      "file": "world/maps/kalimdor/kalimdor_29_32_tex0.adt"
+    },
+    {
+      "id": 784160,
+      "file": "world/maps/kalimdor/kalimdor_29_33.adt"
+    },
+    {
+      "id": 784161,
+      "file": "world/maps/kalimdor/kalimdor_29_33_obj0.adt"
+    },
+    {
+      "id": 784162,
+      "file": "world/maps/kalimdor/kalimdor_29_33_obj1.adt"
+    },
+    {
+      "id": 784163,
+      "file": "world/maps/kalimdor/kalimdor_29_33_tex0.adt"
+    },
+    {
+      "id": 784400,
+      "file": "world/maps/kalimdor/kalimdor_30_31.adt"
+    },
+    {
+      "id": 784401,
+      "file": "world/maps/kalimdor/kalimdor_30_31_obj0.adt"
+    },
+    {
+      "id": 784402,
+      "file": "world/maps/kalimdor/kalimdor_30_31_obj1.adt"
+    },
+    {
+      "id": 784403,
+      "file": "world/maps/kalimdor/kalimdor_30_31_tex0.adt"
+    },
+    {
+      "id": 784405,
+      "file": "world/maps/kalimdor/kalimdor_30_32.adt"
+    },
+    {
+      "id": 784406,
+      "file": "world/maps/kalimdor/kalimdor_30_32_obj0.adt"
+    },
+    {
+      "id": 784407,
+      "file": "world/maps/kalimdor/kalimdor_30_32_obj1.adt"
+    },
+    {
+      "id": 784408,
+      "file": "world/maps/kalimdor/kalimdor_30_32_tex0.adt"
+    },
+    {
+      "id": 784410,
+      "file": "world/maps/kalimdor/kalimdor_30_33.adt"
+    },
+    {
+      "id": 784411,
+      "file": "world/maps/kalimdor/kalimdor_30_33_obj0.adt"
+    },
+    {
+      "id": 784412,
+      "file": "world/maps/kalimdor/kalimdor_30_33_obj1.adt"
+    },
+    {
+      "id": 784413,
+      "file": "world/maps/kalimdor/kalimdor_30_33_tex0.adt"
+    },
+    {
+      "id": 784415,
+      "file": "world/maps/kalimdor/kalimdor_30_34.adt"
+    },
+    {
+      "id": 784416,
+      "file": "world/maps/kalimdor/kalimdor_30_34_obj0.adt"
+    },
+    {
+      "id": 784417,
+      "file": "world/maps/kalimdor/kalimdor_30_34_obj1.adt"
+    },
+    {
+      "id": 784418,
+      "file": "world/maps/kalimdor/kalimdor_30_34_tex0.adt"
+    },
+    {
+      "id": 784180,
+      "file": "world/maps/kalimdor/kalimdor_29_37.adt"
+    },
+    {
+      "id": 784181,
+      "file": "world/maps/kalimdor/kalimdor_29_37_obj0.adt"
+    },
+    {
+      "id": 784182,
+      "file": "world/maps/kalimdor/kalimdor_29_37_obj1.adt"
+    },
+    {
+      "id": 784183,
+      "file": "world/maps/kalimdor/kalimdor_29_37_tex0.adt"
+    },
+    {
+      "id": 784395,
+      "file": "world/maps/kalimdor/kalimdor_30_30.adt"
+    },
+    {
+      "id": 784396,
+      "file": "world/maps/kalimdor/kalimdor_30_30_obj0.adt"
+    },
+    {
+      "id": 784397,
+      "file": "world/maps/kalimdor/kalimdor_30_30_obj1.adt"
+    },
+    {
+      "id": 784398,
+      "file": "world/maps/kalimdor/kalimdor_30_30_tex0.adt"
+    },
+    {
+      "id": 784420,
+      "file": "world/maps/kalimdor/kalimdor_30_35.adt"
+    },
+    {
+      "id": 784421,
+      "file": "world/maps/kalimdor/kalimdor_30_35_obj0.adt"
+    },
+    {
+      "id": 784422,
+      "file": "world/maps/kalimdor/kalimdor_30_35_obj1.adt"
+    },
+    {
+      "id": 784423,
+      "file": "world/maps/kalimdor/kalimdor_30_35_tex0.adt"
+    },
+    {
+      "id": 784425,
+      "file": "world/maps/kalimdor/kalimdor_30_36.adt"
+    },
+    {
+      "id": 784426,
+      "file": "world/maps/kalimdor/kalimdor_30_36_obj0.adt"
+    },
+    {
+      "id": 784427,
+      "file": "world/maps/kalimdor/kalimdor_30_36_obj1.adt"
+    },
+    {
+      "id": 784428,
+      "file": "world/maps/kalimdor/kalimdor_30_36_tex0.adt"
+    },
+    {
+      "id": 784430,
+      "file": "world/maps/kalimdor/kalimdor_30_37.adt"
+    },
+    {
+      "id": 784431,
+      "file": "world/maps/kalimdor/kalimdor_30_37_obj0.adt"
+    },
+    {
+      "id": 784432,
+      "file": "world/maps/kalimdor/kalimdor_30_37_obj1.adt"
+    },
+    {
+      "id": 784433,
+      "file": "world/maps/kalimdor/kalimdor_30_37_tex0.adt"
+    },
+    {
+      "id": 784630,
+      "file": "world/maps/kalimdor/kalimdor_31_30.adt"
+    },
+    {
+      "id": 784631,
+      "file": "world/maps/kalimdor/kalimdor_31_30_obj0.adt"
+    },
+    {
+      "id": 784632,
+      "file": "world/maps/kalimdor/kalimdor_31_30_obj1.adt"
+    },
+    {
+      "id": 784633,
+      "file": "world/maps/kalimdor/kalimdor_31_30_tex0.adt"
+    },
+    {
+      "id": 784635,
+      "file": "world/maps/kalimdor/kalimdor_31_31.adt"
+    },
+    {
+      "id": 784636,
+      "file": "world/maps/kalimdor/kalimdor_31_31_obj0.adt"
+    },
+    {
+      "id": 784637,
+      "file": "world/maps/kalimdor/kalimdor_31_31_obj1.adt"
+    },
+    {
+      "id": 784638,
+      "file": "world/maps/kalimdor/kalimdor_31_31_tex0.adt"
+    },
+    {
+      "id": 784640,
+      "file": "world/maps/kalimdor/kalimdor_31_32.adt"
+    },
+    {
+      "id": 784641,
+      "file": "world/maps/kalimdor/kalimdor_31_32_obj0.adt"
+    },
+    {
+      "id": 784642,
+      "file": "world/maps/kalimdor/kalimdor_31_32_obj1.adt"
+    },
+    {
+      "id": 784643,
+      "file": "world/maps/kalimdor/kalimdor_31_32_tex0.adt"
+    },
+    {
+      "id": 784645,
+      "file": "world/maps/kalimdor/kalimdor_31_33.adt"
+    },
+    {
+      "id": 784646,
+      "file": "world/maps/kalimdor/kalimdor_31_33_obj0.adt"
+    },
+    {
+      "id": 784647,
+      "file": "world/maps/kalimdor/kalimdor_31_33_obj1.adt"
+    },
+    {
+      "id": 784648,
+      "file": "world/maps/kalimdor/kalimdor_31_33_tex0.adt"
+    },
+    {
+      "id": 784650,
+      "file": "world/maps/kalimdor/kalimdor_31_34.adt"
+    },
+    {
+      "id": 784651,
+      "file": "world/maps/kalimdor/kalimdor_31_34_obj0.adt"
+    },
+    {
+      "id": 784652,
+      "file": "world/maps/kalimdor/kalimdor_31_34_obj1.adt"
+    },
+    {
+      "id": 784653,
+      "file": "world/maps/kalimdor/kalimdor_31_34_tex0.adt"
+    },
+    {
+      "id": 784655,
+      "file": "world/maps/kalimdor/kalimdor_31_35.adt"
+    },
+    {
+      "id": 784656,
+      "file": "world/maps/kalimdor/kalimdor_31_35_obj0.adt"
+    },
+    {
+      "id": 784657,
+      "file": "world/maps/kalimdor/kalimdor_31_35_obj1.adt"
+    },
+    {
+      "id": 784658,
+      "file": "world/maps/kalimdor/kalimdor_31_35_tex0.adt"
+    },
+    {
+      "id": 784660,
+      "file": "world/maps/kalimdor/kalimdor_31_36.adt"
+    },
+    {
+      "id": 784661,
+      "file": "world/maps/kalimdor/kalimdor_31_36_obj0.adt"
+    },
+    {
+      "id": 784662,
+      "file": "world/maps/kalimdor/kalimdor_31_36_obj1.adt"
+    },
+    {
+      "id": 784663,
+      "file": "world/maps/kalimdor/kalimdor_31_36_tex0.adt"
+    },
+    {
+      "id": 784665,
+      "file": "world/maps/kalimdor/kalimdor_31_37.adt"
+    },
+    {
+      "id": 784666,
+      "file": "world/maps/kalimdor/kalimdor_31_37_obj0.adt"
+    },
+    {
+      "id": 784667,
+      "file": "world/maps/kalimdor/kalimdor_31_37_obj1.adt"
+    },
+    {
+      "id": 784668,
+      "file": "world/maps/kalimdor/kalimdor_31_37_tex0.adt"
+    },
+    {
+      "id": 784670,
+      "file": "world/maps/kalimdor/kalimdor_31_38.adt"
+    },
+    {
+      "id": 784671,
+      "file": "world/maps/kalimdor/kalimdor_31_38_obj0.adt"
+    },
+    {
+      "id": 784672,
+      "file": "world/maps/kalimdor/kalimdor_31_38_obj1.adt"
+    },
+    {
+      "id": 784673,
+      "file": "world/maps/kalimdor/kalimdor_31_38_tex0.adt"
+    },
+    {
+      "id": 784870,
+      "file": "world/maps/kalimdor/kalimdor_32_31.adt"
+    },
+    {
+      "id": 784871,
+      "file": "world/maps/kalimdor/kalimdor_32_31_obj0.adt"
+    },
+    {
+      "id": 784872,
+      "file": "world/maps/kalimdor/kalimdor_32_31_obj1.adt"
+    },
+    {
+      "id": 784873,
+      "file": "world/maps/kalimdor/kalimdor_32_31_tex0.adt"
+    },
+    {
+      "id": 784875,
+      "file": "world/maps/kalimdor/kalimdor_32_32.adt"
+    },
+    {
+      "id": 784876,
+      "file": "world/maps/kalimdor/kalimdor_32_32_obj0.adt"
+    },
+    {
+      "id": 784877,
+      "file": "world/maps/kalimdor/kalimdor_32_32_obj1.adt"
+    },
+    {
+      "id": 784878,
+      "file": "world/maps/kalimdor/kalimdor_32_32_tex0.adt"
+    },
+    {
+      "id": 784880,
+      "file": "world/maps/kalimdor/kalimdor_32_33.adt"
+    },
+    {
+      "id": 784881,
+      "file": "world/maps/kalimdor/kalimdor_32_33_obj0.adt"
+    },
+    {
+      "id": 784882,
+      "file": "world/maps/kalimdor/kalimdor_32_33_obj1.adt"
+    },
+    {
+      "id": 784883,
+      "file": "world/maps/kalimdor/kalimdor_32_33_tex0.adt"
+    },
+    {
+      "id": 784885,
+      "file": "world/maps/kalimdor/kalimdor_32_34.adt"
+    },
+    {
+      "id": 784886,
+      "file": "world/maps/kalimdor/kalimdor_32_34_obj0.adt"
+    },
+    {
+      "id": 784887,
+      "file": "world/maps/kalimdor/kalimdor_32_34_obj1.adt"
+    },
+    {
+      "id": 784888,
+      "file": "world/maps/kalimdor/kalimdor_32_34_tex0.adt"
+    },
+    {
+      "id": 784890,
+      "file": "world/maps/kalimdor/kalimdor_32_35.adt"
+    },
+    {
+      "id": 784891,
+      "file": "world/maps/kalimdor/kalimdor_32_35_obj0.adt"
+    },
+    {
+      "id": 784892,
+      "file": "world/maps/kalimdor/kalimdor_32_35_obj1.adt"
+    },
+    {
+      "id": 784893,
+      "file": "world/maps/kalimdor/kalimdor_32_35_tex0.adt"
+    },
+    {
+      "id": 784895,
+      "file": "world/maps/kalimdor/kalimdor_32_36.adt"
+    },
+    {
+      "id": 784896,
+      "file": "world/maps/kalimdor/kalimdor_32_36_obj0.adt"
+    },
+    {
+      "id": 784897,
+      "file": "world/maps/kalimdor/kalimdor_32_36_obj1.adt"
+    },
+    {
+      "id": 784898,
+      "file": "world/maps/kalimdor/kalimdor_32_36_tex0.adt"
+    },
+    {
+      "id": 784900,
+      "file": "world/maps/kalimdor/kalimdor_32_37.adt"
+    },
+    {
+      "id": 784901,
+      "file": "world/maps/kalimdor/kalimdor_32_37_obj0.adt"
+    },
+    {
+      "id": 784902,
+      "file": "world/maps/kalimdor/kalimdor_32_37_obj1.adt"
+    },
+    {
+      "id": 784903,
+      "file": "world/maps/kalimdor/kalimdor_32_37_tex0.adt"
+    },
+    {
+      "id": 784905,
+      "file": "world/maps/kalimdor/kalimdor_32_38.adt"
+    },
+    {
+      "id": 784906,
+      "file": "world/maps/kalimdor/kalimdor_32_38_obj0.adt"
+    },
+    {
+      "id": 784907,
+      "file": "world/maps/kalimdor/kalimdor_32_38_obj1.adt"
+    },
+    {
+      "id": 784908,
+      "file": "world/maps/kalimdor/kalimdor_32_38_tex0.adt"
+    },
+    {
+      "id": 785110,
+      "file": "world/maps/kalimdor/kalimdor_33_32.adt"
+    },
+    {
+      "id": 785111,
+      "file": "world/maps/kalimdor/kalimdor_33_32_obj0.adt"
+    },
+    {
+      "id": 785112,
+      "file": "world/maps/kalimdor/kalimdor_33_32_obj1.adt"
+    },
+    {
+      "id": 785113,
+      "file": "world/maps/kalimdor/kalimdor_33_32_tex0.adt"
+    },
+    {
+      "id": 785115,
+      "file": "world/maps/kalimdor/kalimdor_33_33.adt"
+    },
+    {
+      "id": 785116,
+      "file": "world/maps/kalimdor/kalimdor_33_33_obj0.adt"
+    },
+    {
+      "id": 785117,
+      "file": "world/maps/kalimdor/kalimdor_33_33_obj1.adt"
+    },
+    {
+      "id": 785118,
+      "file": "world/maps/kalimdor/kalimdor_33_33_tex0.adt"
+    },
+    {
+      "id": 785120,
+      "file": "world/maps/kalimdor/kalimdor_33_34.adt"
+    },
+    {
+      "id": 785121,
+      "file": "world/maps/kalimdor/kalimdor_33_34_obj0.adt"
+    },
+    {
+      "id": 785122,
+      "file": "world/maps/kalimdor/kalimdor_33_34_obj1.adt"
+    },
+    {
+      "id": 785123,
+      "file": "world/maps/kalimdor/kalimdor_33_34_tex0.adt"
+    },
+    {
+      "id": 785125,
+      "file": "world/maps/kalimdor/kalimdor_33_35.adt"
+    },
+    {
+      "id": 785126,
+      "file": "world/maps/kalimdor/kalimdor_33_35_obj0.adt"
+    },
+    {
+      "id": 785127,
+      "file": "world/maps/kalimdor/kalimdor_33_35_obj1.adt"
+    },
+    {
+      "id": 785128,
+      "file": "world/maps/kalimdor/kalimdor_33_35_tex0.adt"
+    },
+    {
+      "id": 785130,
+      "file": "world/maps/kalimdor/kalimdor_33_36.adt"
+    },
+    {
+      "id": 785131,
+      "file": "world/maps/kalimdor/kalimdor_33_36_obj0.adt"
+    },
+    {
+      "id": 785132,
+      "file": "world/maps/kalimdor/kalimdor_33_36_obj1.adt"
+    },
+    {
+      "id": 785133,
+      "file": "world/maps/kalimdor/kalimdor_33_36_tex0.adt"
+    },
+    {
+      "id": 785135,
+      "file": "world/maps/kalimdor/kalimdor_33_37.adt"
+    },
+    {
+      "id": 785136,
+      "file": "world/maps/kalimdor/kalimdor_33_37_obj0.adt"
+    },
+    {
+      "id": 785137,
+      "file": "world/maps/kalimdor/kalimdor_33_37_obj1.adt"
+    },
+    {
+      "id": 785138,
+      "file": "world/maps/kalimdor/kalimdor_33_37_tex0.adt"
+    },
+    {
+      "id": 785140,
+      "file": "world/maps/kalimdor/kalimdor_33_38.adt"
+    },
+    {
+      "id": 785141,
+      "file": "world/maps/kalimdor/kalimdor_33_38_obj0.adt"
+    },
+    {
+      "id": 785142,
+      "file": "world/maps/kalimdor/kalimdor_33_38_obj1.adt"
+    },
+    {
+      "id": 785143,
+      "file": "world/maps/kalimdor/kalimdor_33_38_tex0.adt"
+    },
+    {
+      "id": 785340,
+      "file": "world/maps/kalimdor/kalimdor_34_33.adt"
+    },
+    {
+      "id": 785341,
+      "file": "world/maps/kalimdor/kalimdor_34_33_obj0.adt"
+    },
+    {
+      "id": 785342,
+      "file": "world/maps/kalimdor/kalimdor_34_33_obj1.adt"
+    },
+    {
+      "id": 785343,
+      "file": "world/maps/kalimdor/kalimdor_34_33_tex0.adt"
+    },
+    {
+      "id": 785345,
+      "file": "world/maps/kalimdor/kalimdor_34_34.adt"
+    },
+    {
+      "id": 785346,
+      "file": "world/maps/kalimdor/kalimdor_34_34_obj0.adt"
+    },
+    {
+      "id": 785347,
+      "file": "world/maps/kalimdor/kalimdor_34_34_obj1.adt"
+    },
+    {
+      "id": 785348,
+      "file": "world/maps/kalimdor/kalimdor_34_34_tex0.adt"
+    },
+    {
+      "id": 785350,
+      "file": "world/maps/kalimdor/kalimdor_34_35.adt"
+    },
+    {
+      "id": 785351,
+      "file": "world/maps/kalimdor/kalimdor_34_35_obj0.adt"
+    },
+    {
+      "id": 785352,
+      "file": "world/maps/kalimdor/kalimdor_34_35_obj1.adt"
+    },
+    {
+      "id": 785353,
+      "file": "world/maps/kalimdor/kalimdor_34_35_tex0.adt"
+    },
+    {
+      "id": 785355,
+      "file": "world/maps/kalimdor/kalimdor_34_36.adt"
+    },
+    {
+      "id": 785356,
+      "file": "world/maps/kalimdor/kalimdor_34_36_obj0.adt"
+    },
+    {
+      "id": 785357,
+      "file": "world/maps/kalimdor/kalimdor_34_36_obj1.adt"
+    },
+    {
+      "id": 785358,
+      "file": "world/maps/kalimdor/kalimdor_34_36_tex0.adt"
+    },
+    {
+      "id": 785360,
+      "file": "world/maps/kalimdor/kalimdor_34_37.adt"
+    },
+    {
+      "id": 785361,
+      "file": "world/maps/kalimdor/kalimdor_34_37_obj0.adt"
+    },
+    {
+      "id": 785362,
+      "file": "world/maps/kalimdor/kalimdor_34_37_obj1.adt"
+    },
+    {
+      "id": 785363,
+      "file": "world/maps/kalimdor/kalimdor_34_37_tex0.adt"
+    },
+    {
+      "id": 785365,
+      "file": "world/maps/kalimdor/kalimdor_34_38.adt"
+    },
+    {
+      "id": 785366,
+      "file": "world/maps/kalimdor/kalimdor_34_38_obj0.adt"
+    },
+    {
+      "id": 785367,
+      "file": "world/maps/kalimdor/kalimdor_34_38_obj1.adt"
+    },
+    {
+      "id": 785368,
+      "file": "world/maps/kalimdor/kalimdor_34_38_tex0.adt"
+    },
+    {
+      "id": 783945,
+      "file": "world/maps/kalimdor/kalimdor_28_37.adt"
+    },
+    {
+      "id": 783946,
+      "file": "world/maps/kalimdor/kalimdor_28_37_obj0.adt"
+    },
+    {
+      "id": 783947,
+      "file": "world/maps/kalimdor/kalimdor_28_37_obj1.adt"
+    },
+    {
+      "id": 783948,
+      "file": "world/maps/kalimdor/kalimdor_28_37_tex0.adt"
+    },
+    {
+      "id": 783950,
+      "file": "world/maps/kalimdor/kalimdor_28_38.adt"
+    },
+    {
+      "id": 783951,
+      "file": "world/maps/kalimdor/kalimdor_28_38_obj0.adt"
+    },
+    {
+      "id": 783952,
+      "file": "world/maps/kalimdor/kalimdor_28_38_obj1.adt"
+    },
+    {
+      "id": 783953,
+      "file": "world/maps/kalimdor/kalimdor_28_38_tex0.adt"
+    },
+    {
+      "id": 784185,
+      "file": "world/maps/kalimdor/kalimdor_29_38.adt"
+    },
+    {
+      "id": 784186,
+      "file": "world/maps/kalimdor/kalimdor_29_38_obj0.adt"
+    },
+    {
+      "id": 784187,
+      "file": "world/maps/kalimdor/kalimdor_29_38_obj1.adt"
+    },
+    {
+      "id": 784188,
+      "file": "world/maps/kalimdor/kalimdor_29_38_tex0.adt"
+    },
+    {
+      "id": 784190,
+      "file": "world/maps/kalimdor/kalimdor_29_39.adt"
+    },
+    {
+      "id": 784191,
+      "file": "world/maps/kalimdor/kalimdor_29_39_obj0.adt"
+    },
+    {
+      "id": 784192,
+      "file": "world/maps/kalimdor/kalimdor_29_39_obj1.adt"
+    },
+    {
+      "id": 784193,
+      "file": "world/maps/kalimdor/kalimdor_29_39_tex0.adt"
+    }
+  ]
+}
