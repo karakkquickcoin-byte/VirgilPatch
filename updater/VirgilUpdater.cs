@@ -26,9 +26,14 @@ using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 [assembly: System.Reflection.AssemblyTitle("VirgilPatch Updater")]
+[assembly: System.Reflection.AssemblyDescription("Keeps the VirgilPatch Epsilon patch folders up to date from github.com/karakkquickcoin-byte/VirgilPatch")]
+[assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("VirgilPatch")]
-[assembly: System.Reflection.AssemblyVersion("1.1.0.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.1.0.0")]
+[assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
+[assembly: System.Reflection.AssemblyVersion("1.2.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.2.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.2.0")]
+[assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
 {
@@ -37,7 +42,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.1";
+        public const string UserAgent = "VirgilPatchUpdater/1.2";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
     }
 

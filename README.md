@@ -5,15 +5,19 @@ to date from here.
 
 ## Install / update
 
-1. Download **[VirgilUpdater.exe](updater/VirgilUpdater.exe?raw=1)**. Put it anywhere, e.g. in your Epsilon `_retail_` folder.
+1. Download **[VirgilUpdater.zip](VirgilUpdater.zip?raw=1)** and unzip `VirgilUpdater.exe` anywhere, e.g. into your
+   Epsilon `_retail_` folder.
 2. Run it. If it doesn't find your `_retail_\Patches` folder itself, click **Browse...** and pick it.
 3. Click **Update**. Close WoW first.
 
-The first run downloads everything once (about 2.4 GB). After that, each update only downloads the files that
-changed. Files you already have are checked and kept.
+The first run downloads everything once. After that, each update only downloads the files that changed. Files you
+already have are checked and kept.
 
-Windows may warn about an unrecognised app the first time ("Windows protected your PC" → **More info** → **Run anyway**).
-The updater is a small .NET program; its full source is [updater/VirgilUpdater.cs](updater/VirgilUpdater.cs).
+**"Windows protected your PC" / "unrecognised app"**: click **More info** → **Run anyway**. Windows and browsers warn
+about every program that isn't signed with a paid code-signing certificate. If your antivirus quarantines it, restore
+it and add an exception - it's a false positive. The updater is a small .NET program (version info, manifest and icon
+included); its full source is [updater/VirgilUpdater.cs](updater/VirgilUpdater.cs), and it only talks to this
+GitHub repository.
 
 ## What it does
 

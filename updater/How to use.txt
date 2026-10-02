@@ -1,0 +1,12 @@
+VirgilPatch Updater
+===================
+
+1. Unzip VirgilUpdater.exe anywhere (your Epsilon "_retail_" folder is a good place).
+2. Run it. If it doesn't find your _retail_\Patches folder itself, click Browse... and pick it.
+3. Click Update. Close WoW first.
+
+The first run downloads everything once; after that only changed files are downloaded.
+
+Windows may say "Windows protected your PC": click "More info" -> "Run anyway".
+That happens to any program that isn't signed with a paid certificate. The updater is
+open source - the full code is updater/VirgilUpdater.cs on the GitHub page.
