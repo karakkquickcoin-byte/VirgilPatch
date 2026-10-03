@@ -20810,28 +20810,28 @@
 },
 "plaguelandtree02.m2": {
 "id": 203799,
-"sha": "9c250e41b019ea054d00ab292fcf0bd2c0d1fe3e",
-"size": 1849424
+"sha": "dbe4eef8daf37c362782e59bcfec0de71def767e",
+"size": 1850424
 },
 "plaguelandtree0200.skin": {
 "id": 508633,
-"sha": "7f04a189a797b9b53abbfaa183d8665e43402e75",
-"size": 67472
+"sha": "58f761e4d312c370dea53aa3611a51954331eff2",
+"size": 76952
 },
 "plaguelandtree02_lod01.skin": {
 "id": 9000171,
-"sha": "3f8751428cfdac75e44f06562ba4478a5a100184",
-"size": 66416
+"sha": "8d858c00803a4171e74c0d60586a25485cab7bf2",
+"size": 66404
 },
 "plaguelandtree02_lod02.skin": {
 "id": 9000172,
-"sha": "f426853730d1e36a06334b838775e3024fa001ef",
-"size": 51344
+"sha": "2c7ebae8b94315807b4322260d7d64092d3fbab2",
+"size": 51328
 },
 "plaguelandtree02_lod03.skin": {
 "id": 9000173,
-"sha": "5714166a4024c569cfea99848dfb33895556244c",
-"size": 32832
+"sha": "845619ad054bb7257d45b57a63592161f50ee77b",
+"size": 32800
 },
 "plaguelandtree02_lod03_impostor.blp": {
 "id": 9000174,
@@ -20840,28 +20840,28 @@
 },
 "plaguelandtree03.m2": {
 "id": 203800,
-"sha": "a600e1f8e2b48ca71737f082438456d1fbd8417f",
-"size": 1676260
+"sha": "b34aa344c71a779ea18e4639ac4d72cda816e18f",
+"size": 1677260
 },
 "plaguelandtree0300.skin": {
 "id": 508625,
-"sha": "d3cea808f6c34e7297f09c592b285c7b938ca43d",
-"size": 51872
+"sha": "bef2fba791d75cf3e8ed198879b30ef0ad2997cd",
+"size": 58036
 },
 "plaguelandtree03_lod01.skin": {
 "id": 9000175,
-"sha": "2e90248aee8086f592df7e2d7e53413a1d72d029",
-"size": 50096
+"sha": "52fb77e49daabd3ae1fcbb5209bee1250a93de5b",
+"size": 50032
 },
 "plaguelandtree03_lod02.skin": {
 "id": 9000176,
-"sha": "8db276fcb5918d52e33a540434c50e5f158067e6",
-"size": 38768
+"sha": "279b510e8e6fecab1ebf3c35d27875c33333b1b3",
+"size": 38712
 },
 "plaguelandtree03_lod03.skin": {
 "id": 9000177,
-"sha": "e747cfe9820058e99ff32e38ddf2abfac0f3418a",
-"size": 24080
+"sha": "fa9373f1580011ca1d15405c487edfaaf668205b",
+"size": 24000
 },
 "plaguelandtree03_lod03_impostor.blp": {
 "id": 9000178,
@@ -20870,53 +20870,53 @@
 },
 "plaguelandtree05.m2": {
 "id": 203802,
-"sha": "b190c21e67e825f927c9772b38cb3077b6e2e6cb",
-"size": 2961108
+"sha": "c1410ddb2f64afe503ef20950522001318ccdf4e",
+"size": 2962108
 },
 "plaguelandtree0500.skin": {
 "id": 508634,
-"sha": "92c2fdf46c82cb21ff2765df300dac4d1d894487",
-"size": 192356
+"sha": "55922bf5cb604e31a7e5003866f49e77f5972b0e",
+"size": 206336
 },
 "plaguelandtree05_lod01.skin": {
 "id": 9000179,
-"sha": "115a1736f72d5cb066607f1121870bec69f3ddd8",
-"size": 185916
+"sha": "210dc0b941a7ca31b8eefe4ec98393c630b03cdf",
+"size": 196104
 },
 "plaguelandtree05_lod02.skin": {
 "id": 9000180,
-"sha": "721c8cc1ec8fe126db03606d8bf9ab10fb092023",
-"size": 137244
+"sha": "26f26fcaef8d7adb2e65a5b268dab6e1412d8ddd",
+"size": 144104
 },
 "plaguelandtree05_lod03.skin": {
 "id": 9000181,
-"sha": "7fb274cebec0b8f02b5b2ed8f15723807d23b760",
-"size": 90252
+"sha": "e1ca7471c06b6283aad06438baa01c52256bcae8",
+"size": 94536
 },
 "plaguelandtree06.m2": {
 "id": 203803,
-"sha": "b6d7782878be29747996996fb2db15e22069dd4a",
-"size": 614188
+"sha": "70d04aaf53bf6955e3a1178f8352ce13215ce313",
+"size": 615188
 },
 "plaguelandtree0600.skin": {
 "id": 508621,
-"sha": "eff1e8a7d2b53e30f25020dae306b2037f07c4d7",
-"size": 21968
+"sha": "a15293a0f3e621931c6984132782a2fe51f28e22",
+"size": 21952
 },
 "plaguelandtree06_lod01.skin": {
 "id": 9000182,
-"sha": "0ccdc1a2b9f3608b07dc82d7c692a19906c515a4",
-"size": 21008
+"sha": "26b031f417e1c1d9a307439cffdaf36df616c0e0",
+"size": 20984
 },
 "plaguelandtree06_lod02.skin": {
 "id": 9000183,
-"sha": "5be7a8b789ecc4dc45ba5a8ad4ea47d810f429c0",
-"size": 14128
+"sha": "44e871d0655897785cadbc231254b092a7b5a250",
+"size": 14096
 },
 "plaguelandtree06_lod03.skin": {
 "id": 9000184,
-"sha": "14c8e96ad4207c38b4d2528315b427958f3bfa29",
-"size": 7760
+"sha": "d0606f7997f88f815638abc5b24533a4662a089f",
+"size": 7740
 },
 "plaguelandtree06_lod03_impostor.blp": {
 "id": 9000185,
@@ -20925,53 +20925,53 @@
 },
 "plaguelandtree07.m2": {
 "id": 203804,
-"sha": "9b3a17550536259e7b3700d92712c2e12bb79193",
-"size": 3464404
+"sha": "fea14f76431caf9f6953ab4a147dbc6b4266c1c2",
+"size": 5013940
 },
 "plaguelandtree0700.skin": {
 "id": 508617,
-"sha": "eb30586f1b35fe307919b3cdd0732a6028c2fda0",
-"size": 135700
+"sha": "ca8dca1cd6f2ef7056faec588814531afaba0d7b",
+"size": 142764
 },
 "plaguelandtree07_lod01.skin": {
 "id": 9000419,
-"sha": "3cd25ee5bcdfe9fbee74abeb5532c7ea77ebb87a",
-"size": 131052
+"sha": "736af6649694c269ea53ca0ea9520cb3c7a6014d",
+"size": 130960
 },
 "plaguelandtree07_lod02.skin": {
 "id": 9000420,
-"sha": "8287486b1e36797c4a287c5529da5891e4dbaaa0",
-"size": 96188
+"sha": "03fc16eeec47e91acbc80b58c335c97348013728",
+"size": 96108
 },
 "plaguelandtree07_lod03.skin": {
 "id": 9000421,
-"sha": "7d9497a7f84f21afc3131ee6036ac79ae198d70b",
-"size": 59852
+"sha": "d60c24ec92cbac3693e11aa91d8b3f496137ec5f",
+"size": 59764
 },
 "plaguelandtree08.m2": {
 "id": 203805,
-"sha": "4fd9b5c118b43831f3b88b535ae1ad79a846e080",
-"size": 2426792
+"sha": "fe314287cf33d7f3b95b921ac80cdc955048c82c",
+"size": 2427792
 },
 "plaguelandtree0800.skin": {
 "id": 508636,
-"sha": "479f6e3f473327af03e52e36c30e619da1a4187e",
-"size": 74852
+"sha": "c52a13832e961e7c2c4e814498f8a95643d4b658",
+"size": 80880
 },
 "plaguelandtree08_lod01.skin": {
 "id": 9000189,
-"sha": "eb4b3cd4d496be4bcd4db7ef468274161e30d622",
-"size": 72172
+"sha": "fae4b6309c710180db8982fa5804e6d5b7735684",
+"size": 72076
 },
 "plaguelandtree08_lod02.skin": {
 "id": 9000190,
-"sha": "fb34a6f5b1acb5248a195500236e529423f093f4",
-"size": 53580
+"sha": "c63ab3cf469f205f6d323ebe3048cd28740d71ca",
+"size": 53480
 },
 "plaguelandtree08_lod03.skin": {
 "id": 9000191,
-"sha": "109ca62186e5adb5b71130908c742f6592cc8409",
-"size": 31260
+"sha": "88ca595e610b52cb498571ff7dc57ca8cbc2f22c",
+"size": 31188
 },
 "plaguelandtree08_lod03_impostor.blp": {
 "id": 9000192,
@@ -20980,53 +20980,53 @@
 },
 "plaguelandtree09.m2": {
 "id": 203806,
-"sha": "c5fdba8a6a095c585163fbf94f99fa45b09906bf",
-"size": 5590100
+"sha": "4b02f18b4127d5abae5d9fa7a6495df3120d8456",
+"size": 8213924
 },
 "plaguelandtree0900.skin": {
 "id": 508626,
-"sha": "742aface6263fa06863ae8023913ac8890f7e4bb",
-"size": 204180
+"sha": "ee1b303bd0a6d9e24921c5a4723f1e3821b8ac35",
+"size": 217344
 },
 "plaguelandtree09_lod01.skin": {
 "id": 9000616,
-"sha": "75712efb38b86f18d649033b52221668bb55fbe2",
-"size": 197516
+"sha": "3065a69a5eb315f602b409a74e9462e25f10afbf",
+"size": 197432
 },
 "plaguelandtree09_lod02.skin": {
 "id": 9000617,
-"sha": "d48409dee46853d4a9a6f7d6aff007a98852ee7e",
-"size": 146156
+"sha": "349c9111939f9998cb5e1ee1b2af1ab4227d9a90",
+"size": 146064
 },
 "plaguelandtree09_lod03.skin": {
 "id": 9000618,
-"sha": "98bd7bb63b490f02c9ef5e1c8bfe028a5db19c7e",
-"size": 97036
+"sha": "ee2f44025f39b5dfe1ae51e8cd026c0a6817dbaf",
+"size": 96952
 },
 "plaguelandtree10.m2": {
 "id": 203807,
-"sha": "2f4d60b7867915fea1edef9857c75619255fcbf0",
-"size": 2235420
+"sha": "bef14ac1d334e1a7ea6495ac4788bc99b0e5eec6",
+"size": 2236420
 },
 "plaguelandtree1000.skin": {
 "id": 508622,
-"sha": "29ce5ebedbfa82bc7ea53964e5266e64936f5359",
-"size": 67928
+"sha": "be01418ba2bb9582c8754baf6ec049fa5f219b47",
+"size": 68048
 },
 "plaguelandtree10_lod01.skin": {
 "id": 9000196,
-"sha": "719b03e38a29f406d6de37023cdfb4bd940a9b78",
-"size": 66392
+"sha": "469bf505e7db1ce24b05a476770af119d6763caf",
+"size": 66360
 },
 "plaguelandtree10_lod02.skin": {
 "id": 9000197,
-"sha": "70d00c53bbfa18b4bb23f2069061296b9d355601",
-"size": 50376
+"sha": "8e235c2d8f4d3dcf14a1854864da2cec5bdc08a8",
+"size": 50328
 },
 "plaguelandtree10_lod03.skin": {
 "id": 9000198,
-"sha": "6bf7bc643bd9e8cbb9d1e224c2d4cddbd88f8db8",
-"size": 31432
+"sha": "1641ee40bc3e8219435e6ba6bc603bb77a9f7568",
+"size": 31392
 },
 "plaguelandtree10_lod03_impostor.blp": {
 "id": 9000199,
@@ -21035,28 +21035,28 @@
 },
 "plaguelandtree11.m2": {
 "id": 203808,
-"sha": "7ef0c23024c9b5ab67b14d13addc4c96fdf0858f",
-"size": 4530110
+"sha": "bb50db58932d8ed26893e0aae37217e19ee4e848",
+"size": 4531120
 },
 "plaguelandtree1100.skin": {
 "id": 508631,
-"sha": "9c1851f1ca4d5bea1a5080735c1a4099f01f953d",
-"size": 253448
+"sha": "698ed0eeed5b5d03e02ad845bd33a9dbe9e874a8",
+"size": 265512
 },
 "plaguelandtree11_lod01.skin": {
 "id": 9000200,
-"sha": "61c597129efabdceb651fb68169858c1ed8dca51",
-"size": 253128
+"sha": "6cc9d6bdb95ece231d3509059b9b0febaaf3e0ae",
+"size": 263152
 },
 "plaguelandtree11_lod02.skin": {
 "id": 9000201,
-"sha": "bbdbf3c8e4180b76aae3a758c7936b4d366616f9",
-"size": 203320
+"sha": "7950f7399d9929780af4b71d3cd7c90aff739426",
+"size": 211632
 },
 "plaguelandtree11_lod03.skin": {
 "id": 9000202,
-"sha": "a0e7c57bd41fe3c77ceb57f5c8aa65f2bff6cae0",
-"size": 133800
+"sha": "6aea15ad48b544cb6dbf0b28f2635893b04f8979",
+"size": 137684
 },
 "plaguelandtree11_lod03_impostor.blp": {
 "id": 9000203,
@@ -21065,28 +21065,28 @@
 },
 "plaguelandtree12.m2": {
 "id": 203809,
-"sha": "f529ca23318d48ce3da7df5db766d79c2d22b5ba",
-"size": 1678540
+"sha": "51c126fdf2a30076ea7d0151e340d6cee0eef23b",
+"size": 1679540
 },
 "plaguelandtree1200.skin": {
 "id": 508632,
-"sha": "2ded5dbe48b9093a9ff631641db92a559f5e63cd",
-"size": 58176
+"sha": "947be321355497d211d687de6e39c9736846e59f",
+"size": 58240
 },
 "plaguelandtree12_lod01.skin": {
 "id": 9000204,
-"sha": "f9b5ffe22e17f401e7fd452c74502d9fdfc94c61",
-"size": 55440
+"sha": "c8dcfa5087a0cfbd7ebae574f25852dd1909cfec",
+"size": 55420
 },
 "plaguelandtree12_lod02.skin": {
 "id": 9000205,
-"sha": "25fce0a7419307966185718fd797028ed4e8c134",
-"size": 39888
+"sha": "4f0f35d18e758c49808bf8097372ca6066187c90",
+"size": 39860
 },
 "plaguelandtree12_lod03.skin": {
 "id": 9000206,
-"sha": "da6901f91f11fa2d9687246ddb713a40ff2b5483",
-"size": 22496
+"sha": "6398566fcdd77315da9da502b23e0a8a59475d11",
+"size": 22464
 },
 "plaguelandtree12_lod03_impostor.blp": {
 "id": 9000207,
@@ -21095,28 +21095,28 @@
 },
 "plaguelandtree13.m2": {
 "id": 203810,
-"sha": "c8fae10adf2aa9f1cbeb05bb59d0fd80afa0274e",
-"size": 5623060
+"sha": "80366a8e338283108536999baaacc23dc353265c",
+"size": 5624060
 },
 "plaguelandtree1300.skin": {
 "id": 508628,
-"sha": "654d8fa03715c0a9de87663d2830b4a84435dc08",
-"size": 167812
+"sha": "e5fe14a97b85beed8c7192fa0e4a4294f67e33e6",
+"size": 173624
 },
 "plaguelandtree13_lod01.skin": {
 "id": 9000208,
-"sha": "e401f76d7fbe0e3da0fbe1a6bdb6ec40f1556e69",
-"size": 165788
+"sha": "5958192e9e51a730a506fefd3ab414b10b94bf82",
+"size": 165692
 },
 "plaguelandtree13_lod02.skin": {
 "id": 9000209,
-"sha": "2d260125eab1b4684b88110bdc06fdfa756f207b",
-"size": 126876
+"sha": "058031e1be4d4d545acbe0b1695573ee9136c3ac",
+"size": 126792
 },
 "plaguelandtree13_lod03.skin": {
 "id": 9000210,
-"sha": "b2724a160d79f1248ab5c0d0d4ea58758ea18b05",
-"size": 78972
+"sha": "808fac0f273f4e23112fce3b491e89f34bcff8a4",
+"size": 78876
 },
 "plaguelandwesternbush01.m2": {
 "id": 203731,
@@ -31594,7 +31594,7 @@
 "size": 350156
 },
 "repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
-"total_bytes": 2495639260
+"total_bytes": 2499937506
 },
 "Chronicles-Northrend": {
 "files": {
@@ -83207,5 +83207,5 @@
 "total_bytes": 642547592
 }
 },
-"published": "2026-10-03 08:51"
+"published": "2026-10-03 09:40"
 }
