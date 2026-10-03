@@ -14793,6 +14793,41 @@
 "sha": "d56048e4749f9587321c2aa5fc74a3a934c3be99",
 "size": 175948
 },
+"kidghoul00.skin": {
+"id": 8284233,
+"sha": "ff85802fea3d7e559b833e6dd1178c9c89214a53",
+"size": 76788
+},
+"kidghoul_body.blp": {
+"id": 8284234,
+"sha": "76da8f484bf0405bf37886cdb813d038d45dff2c",
+"size": 1399292
+},
+"kidghoul_bones.blp": {
+"id": 8284237,
+"sha": "00cf74f5db8d4c3c015fdd38c67964b8e4d9bc80",
+"size": 175948
+},
+"kidghoul_extras.blp": {
+"id": 8284236,
+"sha": "e8d1f6bc118cc37caaee7c51370cfd20f95328c5",
+"size": 44876
+},
+"kidghoul_feet.blp": {
+"id": 8284235,
+"sha": "157bc23d73b5f10576bc09e32b2983eec15fe84f",
+"size": 175948
+},
+"kidghoul_fly.blp": {
+"id": 8284239,
+"sha": "39371d0c77711f09caddf7c6e62a3ce80d5d2690",
+"size": 2564
+},
+"kidghoul_glow.blp": {
+"id": 8284238,
+"sha": "3d7708ca26c0c2b296a22a6fbeff61fb35c829ab",
+"size": 6660
+},
 "kingkodoskull01.blp": {
 "id": 201588,
 "sha": "905d9ea6c0c9be99030d4d15f2a41a418532dcbf",
@@ -31578,6 +31613,86 @@
 "sha": "e1234574e49413ad7fb034407e3fb9f553b96163",
 "size": 44876
 },
+"zombiesword.m2": {
+"id": 126575,
+"sha": "d02e695d41baff3e814f9c64e96ab2d8e55cbbf5",
+"size": 15979660
+},
+"zombiesword_lod01.skin": {
+"id": 8284240,
+"sha": "c3731eed1d9984f6480ab92af9135d9b54cb8183",
+"size": 74956
+},
+"zombiesword_lod01_tex01_128.blp": {
+"id": 8284243,
+"sha": "872a068ad22275ac33b7d6ebdd04e0d6e4cff505",
+"size": 23044
+},
+"zombiesword_lod01_tex02_256.blp": {
+"id": 8284244,
+"sha": "7ee515eb8b4ab5bc57e88bee4ffc719533420bd9",
+"size": 88580
+},
+"zombiesword_lod01_tex03_1024.blp": {
+"id": 8284271,
+"sha": "025bd9b96a008b0c7c6d21d49e4b664bd55ab799",
+"size": 700260
+},
+"zombiesword_lod01_tex04_256.blp": {
+"id": 8284272,
+"sha": "082caf73daaa20e3bcdc458fe563e4fc2864846f",
+"size": 88580
+},
+"zombiesword_lod02.skin": {
+"id": 8284241,
+"sha": "c9856ad6bafd7eb727516df3e722864adfae2357",
+"size": 56636
+},
+"zombiesword_lod02_tex01_64.blp": {
+"id": 8284273,
+"sha": "eb3c36dd2d575a76e6dfc4f877a86e8fd0cd6f1b",
+"size": 6660
+},
+"zombiesword_lod02_tex02_128.blp": {
+"id": 8284274,
+"sha": "666b59add913e6809561d94e1cbc66e35246c3db",
+"size": 23044
+},
+"zombiesword_lod02_tex03_512.blp": {
+"id": 8284275,
+"sha": "46424e75cd1a55aef298355f3463d6ae75b62bf2",
+"size": 175972
+},
+"zombiesword_lod02_tex04_128.blp": {
+"id": 8284276,
+"sha": "20eb641d7a255d9f63a7b7e85af47702f0ceb7fc",
+"size": 23044
+},
+"zombiesword_lod03.skin": {
+"id": 8284242,
+"sha": "271e7f0c07e98c5ceb84d8041e7e80403444248c",
+"size": 36204
+},
+"zombiesword_lod03_tex01_32.blp": {
+"id": 8284277,
+"sha": "b168296fb50817a6b90cf753c5b268d9e49c22eb",
+"size": 2564
+},
+"zombiesword_lod03_tex02_64.blp": {
+"id": 8284278,
+"sha": "d060b40c2232a965a1a60d98cfdd829c35955900",
+"size": 6660
+},
+"zombiesword_lod03_tex03_256.blp": {
+"id": 8284279,
+"sha": "014b304f7a71b39e9cdc3f7044b8c78922ea5510",
+"size": 44900
+},
+"zombiesword_lod03_tex04_64.blp": {
+"id": 8284280,
+"sha": "76316bdaf7adf7713249f13cc9b7e4a958886580",
+"size": 6660
+},
 "zulaman_pillar_a.wmo": {
 "id": 114509,
 "sha": "dfdab6dd33bf04d1c36f3408eca9b0d4c6bd9330",
@@ -31590,11 +31705,11 @@
 }
 },
 "patch_json": {
-"sha": "2212ffcd1dc084af911228fc603d742555b5f3c3",
-"size": 350156
+"sha": "c1c75ff15c823c06b9aa649aacef2ab600098333",
+"size": 351298
 },
 "repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
-"total_bytes": 2499937506
+"total_bytes": 2519157006
 },
 "Chronicles-Northrend": {
 "files": {
@@ -83207,5 +83322,5 @@
 "total_bytes": 642547592
 }
 },
-"published": "2026-10-03 09:40"
+"published": "2026-10-03 14:05"
 }
