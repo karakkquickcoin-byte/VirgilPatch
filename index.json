@@ -9995,8 +9995,8 @@
 },
 "club_1h_torch_a_01.blp": {
 "id": 199814,
-"sha": "57ec77cb9d603e0390590e2b02cbd8ea106d47e1",
-"size": 350724
+"sha": "77ed061735234e69bb5a9660592de9cf11872fb4",
+"size": 350756
 },
 "coffin.blp": {
 "id": 646328,
@@ -10062,6 +10062,11 @@
 "id": 412059,
 "sha": "d3a9766076da0969f6a01ee579486be3e70e37df",
 "size": 175948
+},
+"darkfuseshredder00.skin": {
+"id": 8284372,
+"sha": "843601e55cc814ae9b14d832db7161da1b9c0648",
+"size": 147984
 },
 "darkironmural02.blp": {
 "id": 197182,
@@ -10297,6 +10302,131 @@
 "id": 218707,
 "sha": "706738259c0dbf1eb12136997def673e82ac455d",
 "size": 700236
+},
+"df_9hu_roof_a.blp": {
+"id": 8284457,
+"sha": "7706c4d1e81f860a7b788b02fb8f93e6f4ac019e",
+"size": 175948
+},
+"df_9hu_roof_b.blp": {
+"id": 8284458,
+"sha": "6f7406da4481cc8749cd1d43cd39f570e97cb21a",
+"size": 175948
+},
+"df_9hu_roof_farm.blp": {
+"id": 8284459,
+"sha": "dd3003d732aa0ad5debb9e886944fa6105136bec",
+"size": 175948
+},
+"df_ab_window.blp": {
+"id": 8284460,
+"sha": "696bc32858b2f4c28f1a3433cee34efc923f2697",
+"size": 700236
+},
+"df_ab_window_glow_a.blp": {
+"id": 8284461,
+"sha": "3bb2941355d74b793077b4f15f8e3bc71a6d0354",
+"size": 44876
+},
+"df_ab_window_glow_b.blp": {
+"id": 8284462,
+"sha": "3ba6d0b3866efd1d06e000129ebff5a1d8a26a0f",
+"size": 44876
+},
+"df_black.blp": {
+"id": 8284469,
+"sha": "d188b033a4dfb82a0a46cf268c6a8f4ad803c3ec",
+"size": 3916
+},
+"df_inn_window_a.blp": {
+"id": 8284463,
+"sha": "4c035e7c10c4c3d15f1fb5a079c638754055c7b0",
+"size": 700236
+},
+"df_inn_window_a_glow.blp": {
+"id": 8284464,
+"sha": "223f8d36887440434c0660b106fdfe04e618c279",
+"size": 44876
+},
+"df_inn_window_b.blp": {
+"id": 8284465,
+"sha": "d922467132620cddb5d0dad9946934dd063df443",
+"size": 700236
+},
+"df_inn_window_b_glow.blp": {
+"id": 8284466,
+"sha": "dc4541afa06abba2e68b3a949f46bda26bdf088d",
+"size": 44876
+},
+"df_inn_window_c.blp": {
+"id": 8284467,
+"sha": "fe661fcd4815ffd9031c807b82217b7a8026febd",
+"size": 700236
+},
+"df_inn_window_c_glow.blp": {
+"id": 8284468,
+"sha": "e82304a98900e2335ef067c9efd984ca91041f55",
+"size": 44876
+},
+"df_shredder_blood.blp": {
+"id": 8284377,
+"sha": "a75a06850cc8061f5b119566f790f780ad04c1fc",
+"size": 350724
+},
+"df_shredder_body1.blp": {
+"id": 8284373,
+"sha": "750ecd0935fdd2652943bd2675f35f70a0e68144",
+"size": 1399300
+},
+"df_shredder_body2.blp": {
+"id": 8284374,
+"sha": "9bbebe895f8ff75e85bd955a8bdb5620fdb7a27b",
+"size": 1399300
+},
+"df_shredder_clamp.blp": {
+"id": 8284378,
+"sha": "2c74901d9ee8d1394e2eee288b0216cb0aa12618",
+"size": 6660
+},
+"df_shredder_eye.blp": {
+"id": 8284375,
+"sha": "97e7c8afca22cf9ea2a81fe9e62e26a2f334d532",
+"size": 6660
+},
+"df_shredder_frame1.blp": {
+"id": 8284379,
+"sha": "7a12b813026519a45bf8379f5bfbdf4120b95388",
+"size": 350724
+},
+"df_shredder_frame2.blp": {
+"id": 8284380,
+"sha": "e002a5f01f120b3ba2f14388eda8a456c1f20cd2",
+"size": 350724
+},
+"df_shredder_glass.blp": {
+"id": 8284381,
+"sha": "2e1fce78ac201e75ffc4a1c99625eb4fba207f10",
+"size": 1399300
+},
+"df_shredder_glow.blp": {
+"id": 8284376,
+"sha": "0b148f8873e8115dc6aa8ece78df9dd2c26a9273",
+"size": 12132
+},
+"df_shredder_outline.blp": {
+"id": 8284383,
+"sha": "c257db9feccc8abaf0fbcda970b137fd893b1149",
+"size": 6660
+},
+"df_shredder_squirt.blp": {
+"id": 8284420,
+"sha": "0ba3c354a33e479fcaee957d2d0ad79a781b64e5",
+"size": 23044
+},
+"df_shredder_valve.blp": {
+"id": 8284382,
+"sha": "115712d04e2162d48949db592232f3a3aaa47fda",
+"size": 1399300
 },
 "directionalmarker02.m2": {
 "id": 199684,
@@ -10605,13 +10735,33 @@
 },
 "dsinfector00.skin": {
 "id": 8284333,
-"sha": "3cd634f718100be165d1d649a477a81d6b6b8f90",
-"size": 57588
+"sha": "ab6b531831079f212d6668c33d59b41f388ee28a",
+"size": 294740
+},
+"dsinfector_blood.blp": {
+"id": 8284216,
+"sha": "631c597511e10657f767e46c6ea95c44a11fe009",
+"size": 88580
 },
 "dsinfector_body.blp": {
 "id": 8284334,
-"sha": "20d3880025ab4b0e6d0c824810b6aca5739767fc",
-"size": 700236
+"sha": "963b71310ca6b1afe0986acfd8e502eb78b7af5e",
+"size": 2797388
+},
+"dsinfector_bones.blp": {
+"id": 8284209,
+"sha": "9594ea19feb42f2ff89e284237cebcd3db65bd97",
+"size": 2797388
+},
+"dsinfector_eye.blp": {
+"id": 8284215,
+"sha": "221b6b98fa4c52bcce9c6cda6fe740d0ef39b55f",
+"size": 12108
+},
+"dsinfector_tendon.blp": {
+"id": 8284213,
+"sha": "9d6606d3ceb917b074d348bff28e026537eba81d",
+"size": 88572
 },
 "dslbon01.m2": {
 "id": 218729,
@@ -10663,6 +10813,141 @@
 "sha": "f0cfd59d5fdd1059dee9917ef1e2963a512659f2",
 "size": 700236
 },
+"duskwood_barn.wmo": {
+"id": 106701,
+"sha": "12e40d5d10b3b941d404fe584ff83ed6522e24e5",
+"size": 3214
+},
+"duskwood_barn_000.wmo": {
+"id": 106702,
+"sha": "76a29a51fa7ce01cbcecf3faa912285c69ca47c9",
+"size": 442652
+},
+"duskwood_barn_001.wmo": {
+"id": 106703,
+"sha": "3cc591a1dc7f06c599c8b6827f22b487b074ddce",
+"size": 587434
+},
+"duskwood_blacksmith.wmo": {
+"id": 106732,
+"sha": "b33ce6586793cb6d3223f89465a82567e34c649f",
+"size": 9892
+},
+"duskwood_blacksmith_000.wmo": {
+"id": 106733,
+"sha": "9bdbbb3865ecee677fea0405904ee44e0b56bf49",
+"size": 330814
+},
+"duskwood_blacksmith_001.wmo": {
+"id": 106734,
+"sha": "fc3deec98fdbcce1402d68277ef29d5c37a619f3",
+"size": 1198518
+},
+"duskwood_human_farm.wmo": {
+"id": 106735,
+"sha": "1872401572114b03dafaa209eb323bee19f3fbf4",
+"size": 3698
+},
+"duskwood_human_farm_000.wmo": {
+"id": 106736,
+"sha": "9f199a234032934f65384f4123b78ae40646956a",
+"size": 432166
+},
+"duskwood_human_farm_001.wmo": {
+"id": 106737,
+"sha": "09127882746e599176799a781fdff04c6bd338de",
+"size": 316056
+},
+"duskwood_humantwostory.wmo": {
+"id": 106740,
+"sha": "6af4468c05a94c6cbfa44e0092ad7a115db4828c",
+"size": 8442
+},
+"duskwood_humantwostory_000.wmo": {
+"id": 106741,
+"sha": "d16dc329e5ba81b51e249624b540cdea8c8cdc4c",
+"size": 277432
+},
+"duskwood_humantwostory_001.wmo": {
+"id": 106742,
+"sha": "18a22c23e06873466dc7dd2530dc1862f0a491de",
+"size": 161890
+},
+"duskwood_humantwostory_002.wmo": {
+"id": 106743,
+"sha": "d5bb1940680959e79ee78918115785761df9c1c0",
+"size": 680618
+},
+"duskwood_humantwostory_003.wmo": {
+"id": 106744,
+"sha": "9f1e9ba867b7e1408effda8f99c6becc72f58b37",
+"size": 275414
+},
+"duskwood_humantwostory_004.wmo": {
+"id": 106745,
+"sha": "7b8927654fe990b24b532203f5a6140c64db534c",
+"size": 259094
+},
+"duskwood_humantwostory_005.wmo": {
+"id": 106746,
+"sha": "73e5b8bcec0f1ba5228a40b5764ebf8b533e2a6a",
+"size": 236784
+},
+"duskwood_inn.wmo": {
+"id": 106747,
+"sha": "85620439cac3368ebf123c37305419b4a9ef7835",
+"size": 12772
+},
+"duskwood_inn_000.wmo": {
+"id": 106748,
+"sha": "278f43cad40f63e5d6fa72922ed3ebc146cb7261",
+"size": 79464
+},
+"duskwood_inn_001.wmo": {
+"id": 106749,
+"sha": "4a66f20b52e1404b1112e3e59619f2bfd32d1d7e",
+"size": 270240
+},
+"duskwood_inn_002.wmo": {
+"id": 106750,
+"sha": "ebcbe94ce88b7675cfc574f6efa24a56bfc9ef54",
+"size": 258708
+},
+"duskwood_inn_003.wmo": {
+"id": 106751,
+"sha": "fca8bd46ed12e8368399588514f08e5824ef1e7f",
+"size": 905400
+},
+"duskwood_inn_004.wmo": {
+"id": 106752,
+"sha": "0d21143b50727a445a70f461a3c52d9a0d02a3a3",
+"size": 256702
+},
+"duskwood_inn_005.wmo": {
+"id": 106753,
+"sha": "0dba7d93c3e7f1014dbe991f598764ac6acc6c53",
+"size": 282968
+},
+"duskwood_inn_006.wmo": {
+"id": 106754,
+"sha": "34e9d2bb1fb554d7f709736c2d8d1b6821f84c9a",
+"size": 375050
+},
+"duskwood_inn_007.wmo": {
+"id": 106755,
+"sha": "e0362d5fcb969bcc1e3d2a1e43b1d3b5d778dafe",
+"size": 60262
+},
+"duskwood_inn_008.wmo": {
+"id": 106756,
+"sha": "db6fe4087948d701219ba52114552c0b94df10c2",
+"size": 67050
+},
+"duskwood_inn_009.wmo": {
+"id": 106757,
+"sha": "9244fb35c88b0827b1f5d717ce5f764c05f5baec",
+"size": 1141344
+},
 "duskwood_int_wall_burnt01.blp": {
 "id": 129780,
 "sha": "45e1089ff0851cf6164bf6b2b772695709d81d2d",
@@ -10700,33 +10985,138 @@
 },
 "duskwoodabandoned_barn.wmo": {
 "id": 106793,
-"sha": "cca459fec18fb14a3a169985e8fb7e996f76bfa4",
-"size": 1896
+"sha": "8697463ff953f70d480e832d32c7356672716fdc",
+"size": 4710
 },
 "duskwoodabandoned_barn_000.wmo": {
 "id": 106794,
-"sha": "10049d55cef40e4dd836dbaf08414731653466d1",
-"size": 660644
+"sha": "76a29a51fa7ce01cbcecf3faa912285c69ca47c9",
+"size": 442652
 },
 "duskwoodabandoned_barn_001.wmo": {
 "id": 106795,
-"sha": "ba6640f3b2f632474b9e6f11c4c282901f8a7f4d",
-"size": 887580
+"sha": "63d44bbf4be040e1fb697c8c078c2a055c767e29",
+"size": 587500
+},
+"duskwoodabandoned_blacksmith.wmo": {
+"id": 106797,
+"sha": "92657e5f4285cee6fe96eadbf264515594bc4d57",
+"size": 12188
+},
+"duskwoodabandoned_blacksmith_000.wmo": {
+"id": 106798,
+"sha": "239fe6df2b93a41541ec8a72381334e182521119",
+"size": 330928
+},
+"duskwoodabandoned_blacksmith_001.wmo": {
+"id": 106799,
+"sha": "c8cbd0086e5794409a51f89075bef26619d8baae",
+"size": 1198504
 },
 "duskwoodabandoned_human_farm.wmo": {
 "id": 106800,
-"sha": "ca436a20ca48bb7874d3d9e480e9ffbf077e45ac",
-"size": 2164
+"sha": "6fb79b650fb3fa7047f8664824d4296afdf5c41f",
+"size": 4734
 },
 "duskwoodabandoned_human_farm_000.wmo": {
 "id": 106801,
-"sha": "3afb2328dc40a143bf1ccc227c1d460922b127ed",
-"size": 589704
+"sha": "9f199a234032934f65384f4123b78ae40646956a",
+"size": 432166
 },
 "duskwoodabandoned_human_farm_001.wmo": {
 "id": 106802,
-"sha": "c9c64e15f92f523ac56061ab23cc4312f205f490",
-"size": 492288
+"sha": "2502c6cd3b9d3975cc7d5bb8a44fabb05621525f",
+"size": 316100
+},
+"duskwoodabandoned_humantwostory.wmo": {
+"id": 106803,
+"sha": "714c4cbdf550ae7e9777d580a6bc754ffbc873d8",
+"size": 11746
+},
+"duskwoodabandoned_humantwostory_000.wmo": {
+"id": 106804,
+"sha": "ca8488859a2ebaaab6b157612756688532acf768",
+"size": 277456
+},
+"duskwoodabandoned_humantwostory_001.wmo": {
+"id": 106805,
+"sha": "7ac90204805c06d4d7e83b7777b514ffaaeff9ad",
+"size": 161910
+},
+"duskwoodabandoned_humantwostory_002.wmo": {
+"id": 106806,
+"sha": "d5bb1940680959e79ee78918115785761df9c1c0",
+"size": 680618
+},
+"duskwoodabandoned_humantwostory_003.wmo": {
+"id": 106807,
+"sha": "977689528b6e4cb7cfd28276da64a175278af171",
+"size": 275434
+},
+"duskwoodabandoned_humantwostory_004.wmo": {
+"id": 106808,
+"sha": "eb101531228633aa2671c5f0c07d0319765aa8e7",
+"size": 259134
+},
+"duskwoodabandoned_humantwostory_005.wmo": {
+"id": 106809,
+"sha": "47ec705270aec278ca3aa6379528de7835b2ee17",
+"size": 236828
+},
+"duskwoodabandoned_inn.wmo": {
+"id": 106822,
+"sha": "2d59a8bc02f0676b0b9e9af415c81ae1dfb5b130",
+"size": 18916
+},
+"duskwoodabandoned_inn_000.wmo": {
+"id": 106823,
+"sha": "278f43cad40f63e5d6fa72922ed3ebc146cb7261",
+"size": 79464
+},
+"duskwoodabandoned_inn_001.wmo": {
+"id": 106824,
+"sha": "0953d24fa0a21a9f32780b6abd0e1fe66b8cd278",
+"size": 270290
+},
+"duskwoodabandoned_inn_002.wmo": {
+"id": 106825,
+"sha": "d0b7cf9b79c8bd0957ff945dff47945eb95e6af9",
+"size": 258728
+},
+"duskwoodabandoned_inn_003.wmo": {
+"id": 106826,
+"sha": "fca8bd46ed12e8368399588514f08e5824ef1e7f",
+"size": 905400
+},
+"duskwoodabandoned_inn_004.wmo": {
+"id": 106827,
+"sha": "04ce924398e4aa1626a82f8fbd07892fd6460b33",
+"size": 256734
+},
+"duskwoodabandoned_inn_005.wmo": {
+"id": 106828,
+"sha": "65a7a9b669811649d3ee10dc26d737a0e7fb1a1b",
+"size": 282990
+},
+"duskwoodabandoned_inn_006.wmo": {
+"id": 106829,
+"sha": "e6c8eef6cc76973964ea640f5195a82213f8e3be",
+"size": 375086
+},
+"duskwoodabandoned_inn_007.wmo": {
+"id": 106830,
+"sha": "ce36a64ba2b084049e154578667defe2eaa40147",
+"size": 60262
+},
+"duskwoodabandoned_inn_008.wmo": {
+"id": 106831,
+"sha": "237eeb7caf07a4796680b9bbf058905e5df06fa2",
+"size": 67050
+},
+"duskwoodabandoned_inn_009.wmo": {
+"id": 106832,
+"sha": "aabed67b8ffdad0604c2039706ebdcb190ceb3a5",
+"size": 1141452
 },
 "duskwoodbrowntree.m2": {
 "id": 189544,
@@ -10852,6 +11242,31 @@
 "id": 198303,
 "sha": "e1bdc8b32260d753f2a0b13b92a9c425ac8251c5",
 "size": 207932
+},
+"duskwoodtreecanopy03.m2": {
+"id": 189562,
+"sha": "e8172106e3f22e7868638556de69f2362e400322",
+"size": 817464
+},
+"duskwoodtreecanopy0300.skin": {
+"id": 494416,
+"sha": "0ed11e36c7d099678bf377ab0eccf36e7e9b64f2",
+"size": 39624
+},
+"duskwoodtreecanopy03_lod01.skin": {
+"id": 8284480,
+"sha": "73f14c69bff8269b29d8aaede7b96a350c1dd595",
+"size": 39368
+},
+"duskwoodtreecanopy03_lod02.skin": {
+"id": 8284481,
+"sha": "c6cf81f9b0d25b6967ae82798a93d5fe9799f0b0",
+"size": 28088
+},
+"duskwoodtreecanopy03_lod03.skin": {
+"id": 8284482,
+"sha": "c9d9585e8e25c0299920b5cf63106e1e14fb2edd",
+"size": 17800
 },
 "duskwoodwhitetree03skin.blp": {
 "id": 189572,
@@ -12188,6 +12603,26 @@
 "sha": "0939808dfeddd8c2b10d285938499db12a864c7b",
 "size": 44916
 },
+"fabmachine00.skin": {
+"id": 8284353,
+"sha": "2451276b8c6b7752f59d6fa4d40f5b3350ba9e8c",
+"size": 275016
+},
+"fabmachine_eye.blp": {
+"id": 8284355,
+"sha": "29c30d5b42486669297945bcfc2f59af21421e3d",
+"size": 23044
+},
+"fabmachine_eyegreen.blp": {
+"id": 8284356,
+"sha": "401c9ae8be12cf02ffa9882c36afb609edee7d73",
+"size": 23044
+},
+"fabmachine_metal.blp": {
+"id": 8284354,
+"sha": "f6905a79b1a86fdc24e62df9695ee7f96bd53271",
+"size": 1399300
+},
 "faf.blp": {
 "id": 4008331,
 "sha": "05b6b9414a99d76768d36322708c1b2de28fae88",
@@ -12655,8 +13090,8 @@
 },
 "generaltorch01.m2": {
 "id": 199820,
-"sha": "64227e0691899252899fc72e049ff0ebe21d7532",
-"size": 19924
+"sha": "621720783b5e98b260f04ea337301dcac0ddae66",
+"size": 32390
 },
 "generaltorch0100.skin": {
 "id": 505699,
@@ -13157,6 +13592,191 @@
 "id": 3060881,
 "sha": "e40e7340f1975fc386873355eced7b69c54a4bf0",
 "size": 700244
+},
+"goblinshredder.m2": {
+"id": 124225,
+"sha": "f83382706b6ffc83327137d105a8a16c56f41d6c",
+"size": 11020532
+},
+"goblinshredder_lod01.skin": {
+"id": 8284421,
+"sha": "7474882a951116eb1262b2094a5cf911706ee94f",
+"size": 143904
+},
+"goblinshredder_lod01_tex01_512.blp": {
+"id": 8284424,
+"sha": "d2b659c06ffd7af5ea356fff3095b75ded12892f",
+"size": 350724
+},
+"goblinshredder_lod01_tex02_512.blp": {
+"id": 8284425,
+"sha": "f7079e455130ed700a14dc8a944cf3de5c5bddbe",
+"size": 350724
+},
+"goblinshredder_lod01_tex03_32.blp": {
+"id": 8284426,
+"sha": "637bfb166d0b12eada43232da799214072d9d13d",
+"size": 2564
+},
+"goblinshredder_lod01_tex04_64.blp": {
+"id": 8284427,
+"sha": "0cb5e347e7520941737f74f13fa729eeb96ccd01",
+"size": 3940
+},
+"goblinshredder_lod01_tex05_512.blp": {
+"id": 8284428,
+"sha": "54b271160ce94711810e37b8dbc287503c81bd4a",
+"size": 350724
+},
+"goblinshredder_lod01_tex06_256.blp": {
+"id": 8284429,
+"sha": "1dfdaf6f1a8dd4949510b8f971001f6453a8f841",
+"size": 88580
+},
+"goblinshredder_lod01_tex07_32.blp": {
+"id": 8284430,
+"sha": "3db4c1117ac9f472016f81971d0f2cb8b84567e1",
+"size": 2564
+},
+"goblinshredder_lod01_tex08_32.blp": {
+"id": 8284431,
+"sha": "cfb26f68e00a48de4ba639e4c2522b0205f6bc23",
+"size": 2564
+},
+"goblinshredder_lod01_tex09_256.blp": {
+"id": 8284432,
+"sha": "6750308f3d3e1ba9b0d09c99bb69bc271d3ae9af",
+"size": 88580
+},
+"goblinshredder_lod01_tex10_256.blp": {
+"id": 8284433,
+"sha": "7231ff125102ae0811558199807872eeae8ed138",
+"size": 88580
+},
+"goblinshredder_lod01_tex11_512.blp": {
+"id": 8284434,
+"sha": "3fb8a11fc3267e456c474441cac27b8a39f13ab1",
+"size": 350724
+},
+"goblinshredder_lod02.skin": {
+"id": 8284422,
+"sha": "00da7119ff3b1e3e9908fe8f1dc3223ff08ba97a",
+"size": 114128
+},
+"goblinshredder_lod02_tex01_256.blp": {
+"id": 8284435,
+"sha": "7dfa8e3806abe72e057d253e1cfea3b564bf1f75",
+"size": 88580
+},
+"goblinshredder_lod02_tex02_256.blp": {
+"id": 8284436,
+"sha": "94d9b2f67b45c2a061d5917ae6f929454ac4b623",
+"size": 88580
+},
+"goblinshredder_lod02_tex03_16.blp": {
+"id": 8284437,
+"sha": "0535b294c540933ba07a695ebde638898e275e79",
+"size": 1540
+},
+"goblinshredder_lod02_tex04_32.blp": {
+"id": 8284438,
+"sha": "65e7c976b93d3062a126a2c2d78f66e4890358a7",
+"size": 1892
+},
+"goblinshredder_lod02_tex05_256.blp": {
+"id": 8284439,
+"sha": "c41e249bd061c6ec630f3318b39b64b6c495f8ae",
+"size": 88580
+},
+"goblinshredder_lod02_tex06_128.blp": {
+"id": 8284440,
+"sha": "24532ee9ff6c04f1012ffab95c4df800c1ef2d11",
+"size": 23044
+},
+"goblinshredder_lod02_tex07_16.blp": {
+"id": 8284441,
+"sha": "2a285c9fb1f724905e48d758aa429ace76b8ffe0",
+"size": 1540
+},
+"goblinshredder_lod02_tex08_16.blp": {
+"id": 8284442,
+"sha": "d971cd7ccb7da42ca7bbbfdb624fb727f4ff45e4",
+"size": 1540
+},
+"goblinshredder_lod02_tex09_128.blp": {
+"id": 8284443,
+"sha": "820eea204b356344b7a7609185834bbab5f13163",
+"size": 23044
+},
+"goblinshredder_lod02_tex10_128.blp": {
+"id": 8284444,
+"sha": "eb551f054bc8f98ca15cc6ffd4e685c7e41a886b",
+"size": 23044
+},
+"goblinshredder_lod02_tex11_256.blp": {
+"id": 8284445,
+"sha": "01d03fa943c1e9929133dc7e9194bbd3d59eb140",
+"size": 88580
+},
+"goblinshredder_lod03.skin": {
+"id": 8284423,
+"sha": "a49bbd8a9dfd3e41855d6334fd86ade5aae8409d",
+"size": 66320
+},
+"goblinshredder_lod03_tex01_128.blp": {
+"id": 8284446,
+"sha": "1ca7ef2349aaec57f5a2c2eb980ed4c08dd2da47",
+"size": 23044
+},
+"goblinshredder_lod03_tex02_128.blp": {
+"id": 8284447,
+"sha": "ba5c6eff286cba19595e6a70706cbbf410d76d1e",
+"size": 23044
+},
+"goblinshredder_lod03_tex03_8.blp": {
+"id": 8284448,
+"sha": "4fd6a35e004b7317fd49bc88000894497748142a",
+"size": 1284
+},
+"goblinshredder_lod03_tex04_16.blp": {
+"id": 8284449,
+"sha": "df88323afd15b8cd143ebd0fd32845fbd320ac00",
+"size": 1380
+},
+"goblinshredder_lod03_tex05_128.blp": {
+"id": 8284450,
+"sha": "ada5ff441a128d7478a17a13519ff5ffbb8956bc",
+"size": 23044
+},
+"goblinshredder_lod03_tex06_64.blp": {
+"id": 8284451,
+"sha": "b9fa62a1b52af3636824cd5356c1db92dce46a3b",
+"size": 6660
+},
+"goblinshredder_lod03_tex07_8.blp": {
+"id": 8284452,
+"sha": "f6015be75c2e011654e01b29ef9952bafa60e2fc",
+"size": 1284
+},
+"goblinshredder_lod03_tex08_8.blp": {
+"id": 8284453,
+"sha": "a2f797d0f955a8aaf3e487ec4d18237bad794632",
+"size": 1284
+},
+"goblinshredder_lod03_tex09_64.blp": {
+"id": 8284454,
+"sha": "e7882b9f22abd28fef0f8f1e2e931aaff6d9c587",
+"size": 6660
+},
+"goblinshredder_lod03_tex10_64.blp": {
+"id": 8284455,
+"sha": "9dfa98267b86e60db6835b8cac718bc50ac7844c",
+"size": 6660
+},
+"goblinshredder_lod03_tex11_128.blp": {
+"id": 8284456,
+"sha": "0a9caeb1f4284fad434e2163fc7cde03b578232f",
+"size": 23044
 },
 "gp_duskwood_supports_01.blp": {
 "id": 189412,
@@ -14325,38 +14945,83 @@
 },
 "humanfemalemerchantthin.m2": {
 "id": 124467,
-"sha": "dd68bbd1db8590ab45deb7b9c31ac20a2b803e87",
-"size": 13642298
+"sha": "7daaeed281419fb72d3863f8a7a6054c8c80c207",
+"size": 18769348
 },
 "humanfemalemerchantthin_lod01.skin": {
-"id": 8284335,
-"sha": "200c9a351667e739ef97ad2077f068fd577aa55a",
-"size": 57596
+"id": 8284220,
+"sha": "fea3f53c1e7fdf0d01af078bf0262a70e73b2c8a",
+"size": 284796
 },
-"humanfemalemerchantthin_lod01_tex01_512.blp": {
-"id": 8284338,
-"sha": "3c93b77ef516f73b2a6dbe8c81d0fbc8e745e50c",
-"size": 350724
+"humanfemalemerchantthin_lod01_tex01_1024.blp": {
+"id": 8284223,
+"sha": "a81e9c1d41b2d7babfa8e773bd1ad2355fe96984",
+"size": 1399300
+},
+"humanfemalemerchantthin_lod01_tex02_64.blp": {
+"id": 8284224,
+"sha": "a57a74f03b8e070cf1be307fbcbdaac513cf0407",
+"size": 6660
+},
+"humanfemalemerchantthin_lod01_tex03_1024.blp": {
+"id": 8284225,
+"sha": "f167144125453e49bb387dcf566cd83ed941d54a",
+"size": 1399300
+},
+"humanfemalemerchantthin_lod01_tex04_256.blp": {
+"id": 8284226,
+"sha": "a8434f3133c8cfab4317a81d3837918db77e8784",
+"size": 44900
 },
 "humanfemalemerchantthin_lod02.skin": {
-"id": 8284336,
-"sha": "6d644ba9a1f3908cbeab10ea17e5e9fe98bb81b1",
-"size": 45292
+"id": 8284221,
+"sha": "da01a1dd5d9a86177a92accad7588a7976668a52",
+"size": 216524
 },
-"humanfemalemerchantthin_lod02_tex01_256.blp": {
-"id": 8284339,
-"sha": "8ab526256fdcfbe89a4c29b3d9037b5e9792820f",
-"size": 88580
+"humanfemalemerchantthin_lod02_tex01_512.blp": {
+"id": 8284227,
+"sha": "6cb86f6c185e53f379182072cebe6bc6ac6a7129",
+"size": 350724
+},
+"humanfemalemerchantthin_lod02_tex02_32.blp": {
+"id": 8284228,
+"sha": "c4596892176a94103509bda33be024ce24e1fe9c",
+"size": 2564
+},
+"humanfemalemerchantthin_lod02_tex03_512.blp": {
+"id": 8284229,
+"sha": "243ccd7c01b16c17a67fd4e51519f4ba17d9a660",
+"size": 350724
+},
+"humanfemalemerchantthin_lod02_tex04_128.blp": {
+"id": 8284230,
+"sha": "cf2f5de01d5c35304f7ee1eda3a0da841986a32c",
+"size": 12132
 },
 "humanfemalemerchantthin_lod03.skin": {
-"id": 8284337,
-"sha": "63045fa826455d4bc1971dd635da96b87ce093cb",
-"size": 29660
+"id": 8284222,
+"sha": "4e4bcb0b292042ef88981458897c73dc9bf038a4",
+"size": 150188
 },
-"humanfemalemerchantthin_lod03_tex01_128.blp": {
-"id": 8284340,
-"sha": "280450e1fd84221d18e6a4090854370ba792f60c",
-"size": 23044
+"humanfemalemerchantthin_lod03_tex01_256.blp": {
+"id": 8284231,
+"sha": "1e98cb33c326685879d119d9c70a8d70d66869af",
+"size": 88580
+},
+"humanfemalemerchantthin_lod03_tex02_16.blp": {
+"id": 8284232,
+"sha": "23dbf360d138c76b43b4c9ebed05f60b93873dca",
+"size": 1540
+},
+"humanfemalemerchantthin_lod03_tex03_256.blp": {
+"id": 8284262,
+"sha": "71c82bebc70659d439179dc1eda017687bd59d53",
+"size": 88580
+},
+"humanfemalemerchantthin_lod03_tex04_64.blp": {
+"id": 8284263,
+"sha": "7575f8ba0c541b8dbcab1e3799460840af545938",
+"size": 3940
 },
 "humanfemalenakedpelvisskin00_102_hd.blp": {
 "id": 1466923,
@@ -14367,131 +15032,6 @@
 "id": 1466925,
 "sha": "4a79c5df8a7a80e041e0be19ab0a5c39396f410d",
 "size": 44884
-},
-"humanfemalepeasant.m2": {
-"id": 124468,
-"sha": "0f0057720a5c03a1f5a0cb076076058947dbcdd4",
-"size": 18984986
-},
-"humanfemalepeasant_lod01.skin": {
-"id": 8284215,
-"sha": "101f6af853aa3aa11ea54eacd06708bd07cf5b3c",
-"size": 243780
-},
-"humanfemalepeasant_lod01_tex01_1024.blp": {
-"id": 8284218,
-"sha": "a3c14ef3f4b8c17649a4f834814726df48f5af67",
-"size": 700260
-},
-"humanfemalepeasant_lod01_tex02_512.blp": {
-"id": 8284219,
-"sha": "f6029ebc4a40892a542b4a22d08655328b79b40b",
-"size": 350724
-},
-"humanfemalepeasant_lod01_tex03_512.blp": {
-"id": 8284220,
-"sha": "114c5743f745696918411e1d72be12fb1eaea6d6",
-"size": 350724
-},
-"humanfemalepeasant_lod01_tex04_512.blp": {
-"id": 8284221,
-"sha": "c6498556c19bbf79938b55bdf655a277564858d0",
-"size": 350724
-},
-"humanfemalepeasant_lod01_tex05_512.blp": {
-"id": 8284222,
-"sha": "56cf4c2536b1993366d4fdf03b511cac6c100bcc",
-"size": 175972
-},
-"humanfemalepeasant_lod01_tex06_1024.blp": {
-"id": 8284223,
-"sha": "0d55479bfd429c14ac47620250905b3c0c2e603f",
-"size": 1399300
-},
-"humanfemalepeasant_lod01_tex07_1024.blp": {
-"id": 8284224,
-"sha": "0e56c7d8649b06f1cfe9cad208254697c8559add",
-"size": 1399300
-},
-"humanfemalepeasant_lod02.skin": {
-"id": 8284216,
-"sha": "9d9a7998dd9cd464e0e73b26b9ff7861e8333e40",
-"size": 189588
-},
-"humanfemalepeasant_lod02_tex01_512.blp": {
-"id": 8284225,
-"sha": "213db31dc682e279d0178e00ad0ead589ee30b68",
-"size": 175972
-},
-"humanfemalepeasant_lod02_tex02_256.blp": {
-"id": 8284226,
-"sha": "8e02e9e8a0d201f96279e78db24231d00122d77d",
-"size": 88580
-},
-"humanfemalepeasant_lod02_tex03_256.blp": {
-"id": 8284227,
-"sha": "c9c3cdf6c1b8a2925cb524fab7b122b56292d373",
-"size": 88580
-},
-"humanfemalepeasant_lod02_tex04_256.blp": {
-"id": 8284228,
-"sha": "4ea760333856ab9caf54ed2aeb8101c4d15e3de7",
-"size": 88580
-},
-"humanfemalepeasant_lod02_tex05_256.blp": {
-"id": 8284229,
-"sha": "b005fb25264527551fb6b05184aa679a22cf5126",
-"size": 44900
-},
-"humanfemalepeasant_lod02_tex06_512.blp": {
-"id": 8284230,
-"sha": "cd440278801c62a8c31198317a07f0965326e345",
-"size": 350724
-},
-"humanfemalepeasant_lod02_tex07_512.blp": {
-"id": 8284231,
-"sha": "86948d70747fca1d1e5a235c5f40f83c413490e2",
-"size": 350724
-},
-"humanfemalepeasant_lod03.skin": {
-"id": 8284217,
-"sha": "9f33b7222e9a38e614c0f16be72bd618ff713aca",
-"size": 126052
-},
-"humanfemalepeasant_lod03_tex01_256.blp": {
-"id": 8284232,
-"sha": "24a900b3cc23943a2e85be7c6656f46348a9d333",
-"size": 44900
-},
-"humanfemalepeasant_lod03_tex02_128.blp": {
-"id": 8284262,
-"sha": "adf9bf342b1856d3d8f9b6843c4355f4ed83f5d1",
-"size": 23044
-},
-"humanfemalepeasant_lod03_tex03_128.blp": {
-"id": 8284263,
-"sha": "8015cdfdfcdd559c1967c104b9e33c9e4a397971",
-"size": 23044
-},
-"humanfemalepeasant_lod03_tex04_128.blp": {
-"id": 8284264,
-"sha": "0c60b5363d2de60adbf6249d81efdfe586219080",
-"size": 23044
-},
-"humanfemalepeasant_lod03_tex05_128.blp": {
-"id": 8284265,
-"sha": "494bc59be38e92ac2cce02ac622456c4b344d5b2",
-"size": 12132
-},
-"humanfemalepeasant_lod03_tex06_256.blp": {
-"id": 8284266,
-"sha": "4e2e7260be4c39de9f0ec7d9827e2e97eb49f9c1",
-"size": 88580
-},
-"humanfemalepeasant_lod03_tex07_256.blp": {
-"id": 8284267,
-"sha": "aa146beffd0bed1c68f7f71ad5041393ae60f05a",
-"size": 88580
 },
 "humanfemaleskin00_100_hd.blp": {
 "id": 1002493,
@@ -14792,6 +15332,71 @@
 "id": 124540,
 "sha": "cf60d1377b4d521f945a310f3f69179bc6f06fda",
 "size": 3564080
+},
+"humanmalewarriorlight.m2": {
+"id": 124544,
+"sha": "a179b3b7a3fd3bcfabe74e200c10af4b6aa3022e",
+"size": 10454960
+},
+"humanmalewarriorlight_lod01.skin": {
+"id": 8284360,
+"sha": "8034b18b995b143dbb602cd3fed8a4374335ad0a",
+"size": 257896
+},
+"humanmalewarriorlight_lod01_tex01_64.blp": {
+"id": 8284363,
+"sha": "c7090c381a50bb90315d9f8fe1b1d1d4ecfd091c",
+"size": 6660
+},
+"humanmalewarriorlight_lod01_tex02_64.blp": {
+"id": 8284364,
+"sha": "d44a56f78bf0c984d29e58746f77c8a01737341e",
+"size": 6660
+},
+"humanmalewarriorlight_lod01_tex03_512.blp": {
+"id": 8284365,
+"sha": "66773b117ddc693eecbab906c5609d83fabd7d98",
+"size": 350724
+},
+"humanmalewarriorlight_lod02.skin": {
+"id": 8284361,
+"sha": "6149676eac0ffb3b61e7c039339b28a5791d9829",
+"size": 186376
+},
+"humanmalewarriorlight_lod02_tex01_32.blp": {
+"id": 8284366,
+"sha": "5a0a6086d29c565352686f94ed7066f962fe69c7",
+"size": 2564
+},
+"humanmalewarriorlight_lod02_tex02_32.blp": {
+"id": 8284367,
+"sha": "e340ed7ebaee0f2b9a6321e9909b7709bb6d1ec1",
+"size": 2564
+},
+"humanmalewarriorlight_lod02_tex03_256.blp": {
+"id": 8284368,
+"sha": "8497124debccf9d634a1498b346c88a42482ab0f",
+"size": 88580
+},
+"humanmalewarriorlight_lod03.skin": {
+"id": 8284362,
+"sha": "1559fc35fb699d01f3269747cf9bfed4ce0658bb",
+"size": 100280
+},
+"humanmalewarriorlight_lod03_tex01_16.blp": {
+"id": 8284369,
+"sha": "c7982045ac47438250e9297fabf0dbc701189ffa",
+"size": 1540
+},
+"humanmalewarriorlight_lod03_tex02_16.blp": {
+"id": 8284370,
+"sha": "cdad3e3313a35b97df517401fbf48b5498236101",
+"size": 1540
+},
+"humanmalewarriorlight_lod03_tex03_128.blp": {
+"id": 8284371,
+"sha": "f6cd2a4ec60ca5f993a7e2d2ff1c84d3e07c5f11",
+"size": 23044
 },
 "humanmalewarriormedium.m2": {
 "id": 124547,
@@ -21125,38 +21730,68 @@
 },
 "plaguedfountain.m2": {
 "id": 198240,
-"sha": "e00dce882a8a28764f8ff183b36ab8f2bcbc3cfe",
-"size": 412396
+"sha": "69e00f822c884ac1a30d83d9ecf691235217cead",
+"size": 932308
 },
 "plaguedfountain00.skin": {
 "id": 504428,
-"sha": "434f9ca3d73b214a06e94950b05ece835f820d2d",
-"size": 24360
+"sha": "660b479d1f1fe1648fe20c96e08cd13a3edf5cf3",
+"size": 29736
+},
+"plaguedfountain_goop.blp": {
+"id": 8284471,
+"sha": "5eef9e3b7f16f01383053dbca57d11068661fd16",
+"size": 350724
 },
 "plaguedfountain_lod01.skin": {
 "id": 9000673,
-"sha": "5035f1868f8b0b31574d10d2d44eb801e0ca7054",
-"size": 24104
+"sha": "65d4d549917fc6cfadd4d892ca0f55df7a4ad1ac",
+"size": 27912
+},
+"plaguedfountain_lod01_tex01_1024.blp": {
+"id": 8284472,
+"sha": "24aea76bb37b095ac60213d47cf5d4f1f0355060",
+"size": 1399300
+},
+"plaguedfountain_lod01_tex02_256.blp": {
+"id": 8284473,
+"sha": "29d55563b58a146b1d25d9abe6bcc364a8c8f918",
+"size": 88580
 },
 "plaguedfountain_lod02.skin": {
 "id": 9000674,
-"sha": "dc611bffa65a7eb4d83fd835a7edd77c8c475222",
-"size": 19224
+"sha": "e05e31a2391839c313ed2c2cb7cbf96adc37ba60",
+"size": 20168
+},
+"plaguedfountain_lod02_tex01_512.blp": {
+"id": 8284474,
+"sha": "86d0abdaf6dda122a9ffa9ac431372d926f22790",
+"size": 350724
+},
+"plaguedfountain_lod02_tex02_128.blp": {
+"id": 8284475,
+"sha": "9fcf2a0b1f249b3d7d26643a0fd5fdb8fa121aff",
+"size": 23044
 },
 "plaguedfountain_lod03.skin": {
 "id": 9000675,
-"sha": "bd7073ccb2550f6fac46155c0d04b8ba5b5f6cf6",
-"size": 12456
+"sha": "dada5f6904153e9cdc314723b61f255181f6ab42",
+"size": 8904
 },
 "plaguedfountain_lod03_tex01_256.blp": {
 "id": 9000676,
-"sha": "2e6c5da930f9cccc8fbf7a780aa615a474310883",
-"size": 44876
-},
-"plaguedfountain_lod03_tex02_256.blp": {
-"id": 9000677,
-"sha": "8bf94641643261f6b2c551df31da684968bc5457",
+"sha": "1e91bc508a6d249cc2dfbc0e3e1cc5a1262c28d2",
 "size": 88580
+},
+"plaguedfountain_lod03_tex02_64.blp": {
+"id": 8284476,
+"sha": "eee49218362ec705f380b25379cf53cbb37287a4",
+"size": 6660
+},
+"plaguedfountain_stone.blp": {
+"id": 8284470,
+"sha": "0e9d1e7c032ad93184deb5f0f9c9d2d4ad6bb563",
+"size": 2797388
 },
 "plaguedtree6_vinesred.blp": {
 "id": 203784,
@@ -22177,11 +22812,6 @@
 "id": 124050,
 "sha": "d3b71f06d95b8bcafc2a6186a99f4aaddefce0cc",
 "size": 88580
-},
-"pwamalgam00.skin": {
-"id": 8284209,
-"sha": "65ab9a45e70f47c2842a7f26e61d5e411ff845ae",
-"size": 246716
 },
 "pwamalgam_flesh.blp": {
 "id": 8284211,
@@ -27943,6 +28573,31 @@
 "sha": "3e464065c7dfe138c4a256f7bf946c24ba4b81f5",
 "size": 350724
 },
+"westfallstable01.m2": {
+"id": 190655,
+"sha": "6948235ee5112fa74075d58777a5984f0baf737c",
+"size": 1819644
+},
+"westfallstable0100.skin": {
+"id": 495000,
+"sha": "a83406d125ed772bf8924f5e710d2ca1cb3ed71d",
+"size": 80836
+},
+"westfallstable01_lod01.skin": {
+"id": 8284477,
+"sha": "8fabd1bea63b6ce6e04759ad3311576c354ec819",
+"size": 75836
+},
+"westfallstable01_lod02.skin": {
+"id": 8284478,
+"sha": "79d857c6b76fb6fb4295e27d482cb2d4948c2a9e",
+"size": 51660
+},
+"westfallstable01_lod03.skin": {
+"id": 8284479,
+"sha": "363d62018928d5de1451a3b6756e592fddce4f08",
+"size": 23372
+},
 "westfallstrawbase.blp": {
 "id": 189013,
 "sha": "bc1e090d121dc6e4bfe02ae78aae5d0a90738265",
@@ -32055,11 +32710,11 @@
 }
 },
 "patch_json": {
-"sha": "95ece2416b20081ae6a0a262d9cf261248c29a7c",
-"size": 355471
+"sha": "6e74ed5be43410ee3d5378ca39404be6a83c1901",
+"size": 362301
 },
 "repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
-"total_bytes": 2630238044
+"total_bytes": 2679420988
 },
 "Chronicles-Northrend": {
 "files": {
@@ -94512,5 +95167,5 @@
 "total_bytes": 1645251639
 }
 },
-"published": "2026-10-07 17:31"
+"published": "2026-10-09 16:07"
 }
