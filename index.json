@@ -36915,8 +36915,8 @@
 },
 "world/maps/northrend/northrend.wdl": {
 "id": 819492,
-"sha": "e25788a93c2040e8f9bb1e0dc9589bbca601a5c2",
-"size": 2143818
+"sha": "e7d289ef93f228d9602aab5e6671378ac9b7784c",
+"size": 2143886
 },
 "world/maps/northrend/northrend.wdt": {
 "id": 822688,
@@ -56125,7 +56125,7 @@
 },
 "world/maps/northrend/northrend_34_13.adt": {
 "id": 822618,
-"sha": "990de11ecb2d5c14b623a64ca266eec1d59640b6",
+"sha": "4f7a126ed264ba701aeb302d7aff115c19085c0f",
 "size": 415112
 },
 "world/maps/northrend/northrend_34_13_lod.adt": {
@@ -56175,7 +56175,7 @@
 },
 "world/maps/northrend/northrend_34_15.adt": {
 "id": 825152,
-"sha": "22bdf18e0f281b579a0b61857a2b42f6e1d47445",
+"sha": "0f3b2bb701997466d85cbd6818c53d17733ab1be",
 "size": 565640
 },
 "world/maps/northrend/northrend_34_15_lod.adt": {
@@ -56575,7 +56575,7 @@
 },
 "world/maps/northrend/northrend_34_31.adt": {
 "id": 825233,
-"sha": "4e7c236d62f72a1c6ea32fd0f84eba33b3e8bf2a",
+"sha": "9e4af92ad9b527e069161d4c8d260ff00f3ba2da",
 "size": 481880
 },
 "world/maps/northrend/northrend_34_31_lod.adt": {
@@ -56585,12 +56585,12 @@
 },
 "world/maps/northrend/northrend_34_31_obj0.adt": {
 "id": 825247,
-"sha": "ed552fb926720f925b0d7051b32e391233a59fde",
-"size": 12488
+"sha": "9e0ee921c53e85c7eb96feb994dd8f121151adde",
+"size": 12544
 },
 "world/maps/northrend/northrend_34_31_obj1.adt": {
 "id": 826542,
-"sha": "1368cdbb188b44502ccdb7e0aa795e2640673271",
+"sha": "d50e8e7ce2e47f6c44b12e5feb1cede284a92207",
 "size": 8196
 },
 "world/maps/northrend/northrend_34_31_tex0.adt": {
@@ -56600,7 +56600,7 @@
 },
 "world/maps/northrend/northrend_34_32.adt": {
 "id": 822160,
-"sha": "072a968ba8ca0aa8934d28283fd12f05c3c9bbc3",
+"sha": "8ede8bb86a6cb407f09835deda4dd4f1dd1a97ec",
 "size": 499438
 },
 "world/maps/northrend/northrend_34_32_lod.adt": {
@@ -56610,12 +56610,12 @@
 },
 "world/maps/northrend/northrend_34_32_obj0.adt": {
 "id": 822715,
-"sha": "7b1d6d8d7e8ed41ae383e2fa97fa36cab560a735",
-"size": 12900
+"sha": "c1bb05b63a42daaf21cfa1fee896ef9867cae57c",
+"size": 12916
 },
 "world/maps/northrend/northrend_34_32_obj1.adt": {
 "id": 826164,
-"sha": "becbddc7c153b017d596c33fdc582b2ae1f53a36",
+"sha": "2ed6b1c5a2a2a170ee34bccd4279b6b3b9f9ae31",
 "size": 7148
 },
 "world/maps/northrend/northrend_34_32_tex0.adt": {
@@ -56625,7 +56625,7 @@
 },
 "world/maps/northrend/northrend_34_33.adt": {
 "id": 826548,
-"sha": "c6e4148754bb64400c6f2a40618e30fbf2f785e4",
+"sha": "707b65ebeb9e67283912f4af6874f85712144ae6",
 "size": 456356
 },
 "world/maps/northrend/northrend_34_33_lod.adt": {
@@ -56635,12 +56635,12 @@
 },
 "world/maps/northrend/northrend_34_33_obj0.adt": {
 "id": 822058,
-"sha": "cf2bdedaf16407b53b90271369e7e9abcb982076",
-"size": 25972
+"sha": "61f489a7e311a9d5789921f2c0b7fcfff53a5933",
+"size": 26100
 },
 "world/maps/northrend/northrend_34_33_obj1.adt": {
 "id": 823600,
-"sha": "3ca9e6bfa8fe91cf60248865d5abe75ba822ba9d",
+"sha": "222812bbda4726db1d67037c774b54bd5277d41b",
 "size": 23852
 },
 "world/maps/northrend/northrend_34_33_tex0.adt": {
@@ -56650,7 +56650,7 @@
 },
 "world/maps/northrend/northrend_34_34.adt": {
 "id": 826171,
-"sha": "3ed03c48d8b7cfda5a99ddc75b31dcf5f0a02938",
+"sha": "6542da9d474358080cfd27d58223c8109840477a",
 "size": 458492
 },
 "world/maps/northrend/northrend_34_34_lod.adt": {
@@ -56660,12 +56660,12 @@
 },
 "world/maps/northrend/northrend_34_34_obj0.adt": {
 "id": 825249,
-"sha": "97e54b3c192f09cab594bdece38686ecb0a5d227",
-"size": 28468
+"sha": "bbcb0f017890da30bf5ca36529f142ac8e64ee99",
+"size": 28640
 },
 "world/maps/northrend/northrend_34_34_obj1.adt": {
 "id": 825262,
-"sha": "e7cd004d9922e9c9e1a93e2dcb6e459b90c1503d",
+"sha": "5c194ac00e2ce8c6c05d60d4d8d4657e86cf7faa",
 "size": 26316
 },
 "world/maps/northrend/northrend_34_34_tex0.adt": {
@@ -56675,7 +56675,7 @@
 },
 "world/maps/northrend/northrend_34_35.adt": {
 "id": 823607,
-"sha": "5b773b996f80be9adaf7f275c99a8a4171bf8fd1",
+"sha": "ed5753f11d2dde4e1632b5344fcd5dcf3dd814c4",
 "size": 530971
 },
 "world/maps/northrend/northrend_34_35_lod.adt": {
@@ -56685,17 +56685,17 @@
 },
 "world/maps/northrend/northrend_34_35_obj0.adt": {
 "id": 822175,
-"sha": "1f77661569413bd2fba21a4f49c2c6f14eca7375",
-"size": 25192
+"sha": "ffa65154a8c7899e9959d183a0a8f90440894226",
+"size": 22916
 },
 "world/maps/northrend/northrend_34_35_obj1.adt": {
 "id": 822731,
-"sha": "d4f9085bd234b1da22e7e0a8f9a71a28cd0c0434",
-"size": 22360
+"sha": "b0288a085990461735d599542b114db9b78b1454",
+"size": 20376
 },
 "world/maps/northrend/northrend_34_35_tex0.adt": {
 "id": 826178,
-"sha": "a496750f480cd656fdffa4e2b5087b3e84464cec",
+"sha": "dcee94df1652caf13394d66cb173be1f1caac88f",
 "size": 2338036
 },
 "world/maps/northrend/northrend_34_36.adt": {
@@ -57330,8 +57330,8 @@
 },
 "world/maps/northrend/northrend_35_11.adt": {
 "id": 822198,
-"sha": "da54f3755489824c79163e67e60c741588142dd4",
-"size": 520344
+"sha": "9c6a56368085944a6dbd832ec59f9c7f5e409cba",
+"size": 415448
 },
 "world/maps/northrend/northrend_35_11_lod.adt": {
 "id": 9100816,
@@ -57340,12 +57340,12 @@
 },
 "world/maps/northrend/northrend_35_11_obj0.adt": {
 "id": 822756,
-"sha": "6adbc46aed7803f62625d2c75f04a16fca6985e4",
+"sha": "eac2754d491bbd489d10e0f2721a15312c4bef69",
 "size": 4992
 },
 "world/maps/northrend/northrend_35_11_obj1.adt": {
 "id": 826199,
-"sha": "9605eed2f7c3aaf5450d97b4c2e6620e4e948b72",
+"sha": "ec54352a4e3313e39f8b7a07bd18285958985070",
 "size": 4392
 },
 "world/maps/northrend/northrend_35_11_tex0.adt": {
@@ -57355,8 +57355,8 @@
 },
 "world/maps/northrend/northrend_35_12.adt": {
 "id": 826578,
-"sha": "b87cf7e893fe488dc6261e7c15ed3e68d9c5ac24",
-"size": 470952
+"sha": "e95c3360bbf09b7444d628e5bdff7de1b32422c7",
+"size": 415240
 },
 "world/maps/northrend/northrend_35_12_lod.adt": {
 "id": 9100817,
@@ -57365,12 +57365,12 @@
 },
 "world/maps/northrend/northrend_35_12_obj0.adt": {
 "id": 822098,
-"sha": "c15b2edb60d8f258226f8aa15242621bcc2881d5",
+"sha": "02a587433a4819caad43c3d1d41d34f9b8272da1",
 "size": 3380
 },
 "world/maps/northrend/northrend_35_12_obj1.adt": {
 "id": 823639,
-"sha": "6bd52c44e08507fab04dcbdba55e60f9e850f1ab",
+"sha": "b09dce6183efdb896bd900b2b5972e8e233e1f8f",
 "size": 1960
 },
 "world/maps/northrend/northrend_35_12_tex0.adt": {
@@ -57380,7 +57380,7 @@
 },
 "world/maps/northrend/northrend_35_13.adt": {
 "id": 826205,
-"sha": "50fd3746f72ccd1f0bab60240a809312077a7e34",
+"sha": "102731b4d932b83c398a38877012ea6636e9c570",
 "size": 415112
 },
 "world/maps/northrend/northrend_35_13_lod.adt": {
@@ -57430,7 +57430,7 @@
 },
 "world/maps/northrend/northrend_35_15.adt": {
 "id": 825310,
-"sha": "0c2e8cd5e9ccda564f627d12c1a9fd964fbd5b33",
+"sha": "be216f87e84fee808a6f42011a9df8dc59bdbc01",
 "size": 565912
 },
 "world/maps/northrend/northrend_35_15_lod.adt": {
@@ -57850,7 +57850,7 @@
 },
 "world/maps/northrend/northrend_35_31.adt": {
 "id": 825391,
-"sha": "31553f4bcbbb75314f05bc198b4d24497ebc9b79",
+"sha": "fb41cf311fb61bcba25750de196dda3d58bcd04a",
 "size": 505118
 },
 "world/maps/northrend/northrend_35_31_lod.adt": {
@@ -57875,7 +57875,7 @@
 },
 "world/maps/northrend/northrend_35_32.adt": {
 "id": 822860,
-"sha": "fd5e246717e8d5277038b51435add6c6b9db92bc",
+"sha": "9f1b71e76050fb1dfcb090ecaeb249b7f20f6930",
 "size": 551429
 },
 "world/maps/northrend/northrend_35_32_lod.adt": {
@@ -57885,8 +57885,8 @@
 },
 "world/maps/northrend/northrend_35_32_obj0.adt": {
 "id": 826279,
-"sha": "7891b30ac0d66ebdaa975a0da07863f12e0b2b8b",
-"size": 15988
+"sha": "1f00113cde02f41b1f222b96254446143cb22c0e",
+"size": 15992
 },
 "world/maps/northrend/northrend_35_32_obj1.adt": {
 "id": 825384,
@@ -57900,7 +57900,7 @@
 },
 "world/maps/northrend/northrend_35_33.adt": {
 "id": 822202,
-"sha": "03f5daf6187a160b4c8e0f5cf53e9d4e929a43b9",
+"sha": "870631cf76dfee5551fc07e58062fc29fa42d8f8",
 "size": 463768
 },
 "world/maps/northrend/northrend_35_33_lod.adt": {
@@ -57910,12 +57910,12 @@
 },
 "world/maps/northrend/northrend_35_33_obj0.adt": {
 "id": 823744,
-"sha": "69f9ea34686d34c1e4c6d626811e71b6533807fe",
-"size": 35084
+"sha": "d418927befef00cc0820ba812aa28193c1b9721a",
+"size": 35248
 },
 "world/maps/northrend/northrend_35_33_obj1.adt": {
 "id": 822309,
-"sha": "51a1e510a3aa06c3eca64baabe6a28873878d980",
+"sha": "93dff61fb209e32874539ac92a464c645271c513",
 "size": 38448
 },
 "world/maps/northrend/northrend_35_33_tex0.adt": {
@@ -57925,7 +57925,7 @@
 },
 "world/maps/northrend/northrend_35_34.adt": {
 "id": 825393,
-"sha": "14a733b35829de030fcc2dfd9b10907707883fa7",
+"sha": "723865bf0b34bef3d102a128ec9cf8d76a34f981",
 "size": 489416
 },
 "world/maps/northrend/northrend_35_34_lod.adt": {
@@ -57935,12 +57935,12 @@
 },
 "world/maps/northrend/northrend_35_34_obj0.adt": {
 "id": 825407,
-"sha": "98d99a5af0aa1b2848aae3252570345e2fc078d8",
-"size": 28216
+"sha": "d33a3831716754148e9670924bb9af9e2cdb01f9",
+"size": 28344
 },
 "world/maps/northrend/northrend_35_34_obj1.adt": {
 "id": 826657,
-"sha": "f325d8c8c3547bae5ead3af6ab45a6d3b7ebe9ab",
+"sha": "4c02705c6fc5b7ab068711979514bd8ffa8c13d7",
 "size": 26700
 },
 "world/maps/northrend/northrend_35_34_tex0.adt": {
@@ -57950,8 +57950,8 @@
 },
 "world/maps/northrend/northrend_35_35.adt": {
 "id": 822317,
-"sha": "31f5375069ba0f57cf0cacfbeeba450e86db0184",
-"size": 480245
+"sha": "f06c72e78abb43c6b1c5c73f8dae8bc09a79039b",
+"size": 495332
 },
 "world/maps/northrend/northrend_35_35_lod.adt": {
 "id": 9100841,
@@ -57960,18 +57960,18 @@
 },
 "world/maps/northrend/northrend_35_35_obj0.adt": {
 "id": 822873,
-"sha": "49666315a5e7e8f2126174213a005c0f4e327015",
-"size": 36500
+"sha": "a339d6759912c5af6bef825124aafc58f75c5f4e",
+"size": 27940
 },
 "world/maps/northrend/northrend_35_35_obj1.adt": {
 "id": 826291,
-"sha": "5fe82faab179c7b7abdcf6f87d93163fdabc14b9",
-"size": 38600
+"sha": "247e95812f34e316e838b1ede49db89999fdff4e",
+"size": 27392
 },
 "world/maps/northrend/northrend_35_35_tex0.adt": {
 "id": 825401,
-"sha": "3b3977409a7313e1df73a22da793ecc5eaf5e1c1",
-"size": 2420180
+"sha": "5c73074edf5cf88390dec893ec18e9fa1b7a94d2",
+"size": 2407820
 },
 "world/maps/northrend/northrend_35_36.adt": {
 "id": 826662,
@@ -58605,8 +58605,8 @@
 },
 "world/maps/northrend/northrend_36_11.adt": {
 "id": 822896,
-"sha": "bcbc09b847a96b6aa9990911518cac80d901ff1d",
-"size": 569464
+"sha": "42f50424de414905049754e2e2bc3d2c8e53fb57",
+"size": 569400
 },
 "world/maps/northrend/northrend_36_11_lod.adt": {
 "id": 9100867,
@@ -58615,12 +58615,12 @@
 },
 "world/maps/northrend/northrend_36_11_obj0.adt": {
 "id": 826308,
-"sha": "3781d1f860946313568b6f31d1f875242d38e78a",
-"size": 38536
+"sha": "96970b23cbf2b2de550687ec84015eeeaa1e0547",
+"size": 38408
 },
 "world/maps/northrend/northrend_36_11_obj1.adt": {
 "id": 825425,
-"sha": "cac3802117601b29fa65e67522c4e6c4ca95b911",
+"sha": "5e2f1856cd000003b284ad1874b37d9e12fb43eb",
 "size": 48756
 },
 "world/maps/northrend/northrend_36_11_tex0.adt": {
@@ -58630,7 +58630,7 @@
 },
 "world/maps/northrend/northrend_36_12.adt": {
 "id": 822242,
-"sha": "276945685ad94fad9e45bbab3c0a126ca2ddc213",
+"sha": "c31ae946750908bd0c5c8972c70445855eb71adf",
 "size": 566408
 },
 "world/maps/northrend/northrend_36_12_lod.adt": {
@@ -58640,12 +58640,12 @@
 },
 "world/maps/northrend/northrend_36_12_obj0.adt": {
 "id": 823784,
-"sha": "24cdc3d5394d98451abd6d22019c2775da2c12d2",
-"size": 42348
+"sha": "e84c51f1dcc137409e2aa756bd74d0e9ad50e1f6",
+"size": 42228
 },
 "world/maps/northrend/northrend_36_12_obj1.adt": {
 "id": 822349,
-"sha": "f20154a68e3d35c2ec62c5170f325b26495da5e3",
+"sha": "1e5e0329934fd81246dacbe7cd04f9264f7d3a91",
 "size": 56252
 },
 "world/maps/northrend/northrend_36_12_tex0.adt": {
@@ -58655,7 +58655,7 @@
 },
 "world/maps/northrend/northrend_36_13.adt": {
 "id": 825433,
-"sha": "c808a665ed5a4c0b9826bf1a9591bea541ffc425",
+"sha": "f53770a4ebf2e3eae1126f904d35a1db57265f85",
 "size": 416540
 },
 "world/maps/northrend/northrend_36_13_lod.adt": {
@@ -58665,8 +58665,8 @@
 },
 "world/maps/northrend/northrend_36_13_obj0.adt": {
 "id": 825447,
-"sha": "dea06c4ccefa52834c8f15297b685aeaf8e05398",
-"size": 19152
+"sha": "3ef8bc363c67bdaafbdf75c3ea2448e78c3207df",
+"size": 19128
 },
 "world/maps/northrend/northrend_36_13_obj1.adt": {
 "id": 826683,
@@ -58680,7 +58680,7 @@
 },
 "world/maps/northrend/northrend_36_14.adt": {
 "id": 822357,
-"sha": "b049c4b2c55d277d0f7d0ed7305bf8d3ca3c56ea",
+"sha": "78f04ae95f252b515a8e294371349f6de85dc681",
 "size": 410575
 },
 "world/maps/northrend/northrend_36_14_lod.adt": {
@@ -58705,7 +58705,7 @@
 },
 "world/maps/northrend/northrend_36_15.adt": {
 "id": 826688,
-"sha": "5e2f1d423438c4202ed867fd852419a99bb956e5",
+"sha": "483436f61f519256370bbba26c16dfe1ad373ea8",
 "size": 555068
 },
 "world/maps/northrend/northrend_36_15_lod.adt": {
@@ -59155,7 +59155,7 @@
 },
 "world/maps/northrend/northrend_36_31.adt": {
 "id": 826738,
-"sha": "c708a821fb4c7ace75a616cc661a8542c0914470",
+"sha": "e8d8ca4f993795947d5e5b27217aba138113dac0",
 "size": 458422
 },
 "world/maps/northrend/northrend_36_31_lod.adt": {
@@ -59180,7 +59180,7 @@
 },
 "world/maps/northrend/northrend_36_32.adt": {
 "id": 826389,
-"sha": "f598ef0bf20183ce30ce0d95fc1cbaf798ee4587",
+"sha": "1baff050e359f6a2decb04bc815981c3c55e97e5",
 "size": 492330
 },
 "world/maps/northrend/northrend_36_32_lod.adt": {
@@ -59190,12 +59190,12 @@
 },
 "world/maps/northrend/northrend_36_32_obj0.adt": {
 "id": 825530,
-"sha": "da1925e6ec475deb2e66adcb3462fb0da3d5a2b9",
-"size": 21820
+"sha": "3af69c25869511727c5951a54672fce5c3f018bc",
+"size": 21892
 },
 "world/maps/northrend/northrend_36_32_obj1.adt": {
 "id": 825545,
-"sha": "9c3076d6993a1ac2e58af672d342ddebc61abaa7",
+"sha": "43d5edb9d95785bc42aa32e8e5ead3bd27fd1e98",
 "size": 16168
 },
 "world/maps/northrend/northrend_36_32_tex0.adt": {
@@ -59205,7 +59205,7 @@
 },
 "world/maps/northrend/northrend_36_33.adt": {
 "id": 823889,
-"sha": "ae28e3e2d974b7f5acbb020f40ba6e9646bf5ba4",
+"sha": "931b6c01f9568c0a01ae8c8b047a1d02792a9ad0",
 "size": 509707
 },
 "world/maps/northrend/northrend_36_33_lod.adt": {
@@ -59215,22 +59215,22 @@
 },
 "world/maps/northrend/northrend_36_33_obj0.adt": {
 "id": 822452,
-"sha": "c73ccbfb701a1a1d45dedcfe57e9f94bd4c9fc0c",
-"size": 53200
+"sha": "0100422c6fc2c5462996d29bf378e60aae7c2332",
+"size": 58888
 },
 "world/maps/northrend/northrend_36_33_obj1.adt": {
 "id": 823008,
-"sha": "a1ef3ba1b165cf94b20e0b3fb925aa78d0349ebf",
-"size": 60428
+"sha": "0c2a0fc3a541c1f94b5b654eaa774693569c2fbe",
+"size": 68240
 },
 "world/maps/northrend/northrend_36_33_tex0.adt": {
 "id": 826395,
-"sha": "f84ed49f289dffecfc24a0506d9396ab6c843143",
-"size": 2486020
+"sha": "d606adc4c8f30b05fefc84194ad9105ae9641c7b",
+"size": 2506580
 },
 "world/maps/northrend/northrend_36_34.adt": {
 "id": 825553,
-"sha": "751fb5dcd69027a2db388b3339aa7d07aa5ff22d",
+"sha": "83c606048878fe91ab911909e1d218bcd24268a4",
 "size": 504698
 },
 "world/maps/northrend/northrend_36_34_lod.adt": {
@@ -59240,22 +59240,22 @@
 },
 "world/maps/northrend/northrend_36_34_obj0.adt": {
 "id": 826748,
-"sha": "6c3a676d118198f67d375f1ee25daa180847b3df",
-"size": 36416
+"sha": "8c8cd5cb4671c27f1696ba865d42650f43433a04",
+"size": 36944
 },
 "world/maps/northrend/northrend_36_34_obj1.adt": {
 "id": 822353,
-"sha": "86566d7a5d179302821285954112aec1665c6f1f",
-"size": 36960
+"sha": "d20718fd81565bfd0ffed7ce9bb8b6ab8faafa3d",
+"size": 37536
 },
 "world/maps/northrend/northrend_36_34_tex0.adt": {
 "id": 823897,
-"sha": "1df6203a090c84da7b2a2e45cf77d6d5ebda8c0a",
-"size": 2646364
+"sha": "3bab91f6af322cfdaf7c5ddacee4d2438e40018f",
+"size": 2650476
 },
 "world/maps/northrend/northrend_36_35.adt": {
 "id": 823016,
-"sha": "8d03a7a057d744503abfa0e448236d09a98e504e",
+"sha": "656c9ac45422c43a47adce94dd72901d86119726",
 "size": 559707
 },
 "world/maps/northrend/northrend_36_35_lod.adt": {
@@ -59265,12 +59265,12 @@
 },
 "world/maps/northrend/northrend_36_35_obj0.adt": {
 "id": 826401,
-"sha": "524cc9286ad2c765869211362c14930e12148ed3",
-"size": 19644
+"sha": "78fecc00cf883318066547835cf4862e6423b5ac",
+"size": 19740
 },
 "world/maps/northrend/northrend_36_35_obj1.adt": {
 "id": 825546,
-"sha": "a7952dbb18c1568760836ce222ebc5d42093458d",
+"sha": "880eb119775fba2e32a384b898a7b70e7c3d15e7",
 "size": 16384
 },
 "world/maps/northrend/northrend_36_35_tex0.adt": {
@@ -59955,7 +59955,7 @@
 },
 "world/maps/northrend/northrend_37_12.adt": {
 "id": 823929,
-"sha": "ad04d49c44ffa4d17c1c1544fdb8624aad252361",
+"sha": "e187168471eddfe03fcb319de1f605a159e533b3",
 "size": 476898
 },
 "world/maps/northrend/northrend_37_12_lod.adt": {
@@ -59965,22 +59965,22 @@
 },
 "world/maps/northrend/northrend_37_12_obj0.adt": {
 "id": 822491,
-"sha": "b3a7c0d10b040f71de3cdf885530c4d541289f4b",
-"size": 82508
+"sha": "9a4a224a64853a9dd44020f529bd63be8df8fded",
+"size": 80588
 },
 "world/maps/northrend/northrend_37_12_obj1.adt": {
 "id": 823048,
-"sha": "cb0b1436f79654f50cd0c51acd9d8d479775a2ec",
+"sha": "16b501a39e7bcbb86ce9b7f74cb4b864d0e62874",
 "size": 105604
 },
 "world/maps/northrend/northrend_37_12_tex0.adt": {
 "id": 826425,
-"sha": "851634ef07329f04cbbd1c28a581a4517c2cf699",
-"size": 2502348
+"sha": "872bb95af2cebbc365f44f3b3561d94019a663cf",
+"size": 2498212
 },
 "world/maps/northrend/northrend_37_13.adt": {
 "id": 825593,
-"sha": "834da6b997517e2e3a2ec812be55a9cf74019c15",
+"sha": "dc1ade12528b2da46d9db8cc96658f5d0cb1cd60",
 "size": 420818
 },
 "world/maps/northrend/northrend_37_13_lod.adt": {
@@ -59990,13 +59990,13 @@
 },
 "world/maps/northrend/northrend_37_13_obj0.adt": {
 "id": 826773,
-"sha": "2f5829e93290f0ad1779a8dcb11c7e757599f12c",
-"size": 23920
+"sha": "692d85cebe3ab9c8ddf63cfe219e43372ecbf82c",
+"size": 23612
 },
 "world/maps/northrend/northrend_37_13_obj1.adt": {
 "id": 822391,
-"sha": "e7cfa78dc712461ece9f3eb6ec3cfe6b3881e9af",
-"size": 23660
+"sha": "6a4fe3748eebf75874cc9233719b9779a682a46b",
+"size": 23596
 },
 "world/maps/northrend/northrend_37_13_tex0.adt": {
 "id": 823937,
@@ -60005,7 +60005,7 @@
 },
 "world/maps/northrend/northrend_37_14.adt": {
 "id": 823056,
-"sha": "e99809233966025e7dabfecf7ce92684d869b68a",
+"sha": "d22a792c1dff9b6de820923838fd85d083683443",
 "size": 323233
 },
 "world/maps/northrend/northrend_37_14_lod.adt": {
@@ -60015,8 +60015,8 @@
 },
 "world/maps/northrend/northrend_37_14_obj0.adt": {
 "id": 826431,
-"sha": "382f8b091d36e5f253c45443a7fc3005ebd0a5a0",
-"size": 10044
+"sha": "7f019dde8faa87608d51c92ba9051ee578d8d87b",
+"size": 9988
 },
 "world/maps/northrend/northrend_37_14_obj1.adt": {
 "id": 825587,
@@ -60025,12 +60025,12 @@
 },
 "world/maps/northrend/northrend_37_14_tex0.adt": {
 "id": 825601,
-"sha": "4039067c18e39b1956592bc1560ec78f3fc278c8",
+"sha": "4dd3a9f08cbd343bf81c60dd92963482e60577ae",
 "size": 2834460
 },
 "world/maps/northrend/northrend_37_15.adt": {
 "id": 822399,
-"sha": "3f0bcc9b43db27a0fd755d9dcb256a87141c3b91",
+"sha": "388cafabff8ff98ab643fb5f22d14f3b961b54a6",
 "size": 484760
 },
 "world/maps/northrend/northrend_37_15_lod.adt": {
@@ -60480,7 +60480,7 @@
 },
 "world/maps/northrend/northrend_37_31.adt": {
 "id": 822479,
-"sha": "2c86de780253a16a9b308fcdec3adf0369d28d66",
+"sha": "4622dfe1006d73292dd311764e4c8f7d90e74b09",
 "size": 483894
 },
 "world/maps/northrend/northrend_37_31_lod.adt": {
@@ -60490,12 +60490,12 @@
 },
 "world/maps/northrend/northrend_37_31_obj0.adt": {
 "id": 824025,
-"sha": "13d24d28409f1df72fb5d918b51686ed6477f69a",
-"size": 12244
+"sha": "cee6cffed988ec975f3c372b8128a71dfce07bdd",
+"size": 12280
 },
 "world/maps/northrend/northrend_37_31_obj1.adt": {
 "id": 822587,
-"sha": "fdf70dcbe790a7b39c3801a0f1d8a0965f266d2f",
+"sha": "e7392104f70712e0ab3bc2d364900cecb3af2205",
 "size": 5216
 },
 "world/maps/northrend/northrend_37_31_tex0.adt": {
@@ -60505,7 +60505,7 @@
 },
 "world/maps/northrend/northrend_37_32.adt": {
 "id": 825675,
-"sha": "85f3dab12811a10f568e92acbe33bf449d8d18dd",
+"sha": "a4d2379ab3bc2d832b6d301b32ca8e7440a30e0e",
 "size": 500366
 },
 "world/maps/northrend/northrend_37_32_lod.adt": {
@@ -60515,12 +60515,12 @@
 },
 "world/maps/northrend/northrend_37_32_obj0.adt": {
 "id": 825690,
-"sha": "807d208d8b0a0c52c89b6e12e80e75120608b694",
-"size": 15460
+"sha": "20c88d2f442e6ce07d082c8732777f1a34b337fa",
+"size": 15484
 },
 "world/maps/northrend/northrend_37_32_obj1.adt": {
 "id": 826833,
-"sha": "d25c5c6ebc09cdf89f8e2e99a74d1efead7bdabd",
+"sha": "ae87270acc899dd71b50dd894d8c12167f18bf2e",
 "size": 10424
 },
 "world/maps/northrend/northrend_37_32_tex0.adt": {
@@ -60530,7 +60530,7 @@
 },
 "world/maps/northrend/northrend_37_33.adt": {
 "id": 822595,
-"sha": "1bd0dba2aa0a05be7a7b3f51714023f1ab7b560b",
+"sha": "9971154c758bf672f70e3ef2253e8e7cb4705171",
 "size": 466177
 },
 "world/maps/northrend/northrend_37_33_lod.adt": {
@@ -60540,22 +60540,22 @@
 },
 "world/maps/northrend/northrend_37_33_obj0.adt": {
 "id": 823152,
-"sha": "65a07477d7f864547d24a2b533bee7a9f0944916",
-"size": 49600
+"sha": "1cf693d0329102421bb200a2974c9ae8a6d17100",
+"size": 50856
 },
 "world/maps/northrend/northrend_37_33_obj1.adt": {
 "id": 826504,
-"sha": "404742e79a751e53b7c15cb05d974798a84c7517",
-"size": 57900
+"sha": "0a2cffeae312268300ede6c9b08eb27ddfa93c84",
+"size": 59960
 },
 "world/maps/northrend/northrend_37_33_tex0.adt": {
 "id": 825683,
-"sha": "0209c7c445f0fe64f0b03f72731ae935a30e4c4a",
-"size": 2403780
+"sha": "105b66d291d4683b0ab03eadd0a10f97ceb1cf2c",
+"size": 2412004
 },
 "world/maps/northrend/northrend_37_34.adt": {
 "id": 826838,
-"sha": "56e5a63b3a08f54571bfbed39ac6eb4fbff8e184",
+"sha": "e326f56743d5370a1f7bf7353cc8e9a97fa4de9f",
 "size": 494395
 },
 "world/maps/northrend/northrend_37_34_lod.adt": {
@@ -60565,22 +60565,22 @@
 },
 "world/maps/northrend/northrend_37_34_obj0.adt": {
 "id": 822495,
-"sha": "806e67d6c789aa5e7dd14aae824100b539a89dfb",
-"size": 21076
+"sha": "f4303fefea85ebe481bb8ae35e8f883fbe3f00d5",
+"size": 21172
 },
 "world/maps/northrend/northrend_37_34_obj1.adt": {
 "id": 824042,
-"sha": "e97beb58d18387c22e73965c0d79d6d36fe4bef2",
+"sha": "8e0ba1ebdc4ceccc3f1ca934fd5f95a2a55901ff",
 "size": 17852
 },
 "world/maps/northrend/northrend_37_34_tex0.adt": {
 "id": 822602,
-"sha": "f8e7d75fe9578a2c0162b59efd2283941fea6d32",
-"size": 2321444
+"sha": "1b3255cddb878cca01edce10f7265a4c12dbbf5e",
+"size": 2358452
 },
 "world/maps/northrend/northrend_37_35.adt": {
 "id": 826510,
-"sha": "e44ba11f6e0c0a9a4c0522a4900f408bcd2d58c4",
+"sha": "f2384211af919cd67f9fccdbf620e26ab39c4d5d",
 "size": 548686
 },
 "world/maps/northrend/northrend_37_35_lod.adt": {
@@ -60590,13 +60590,13 @@
 },
 "world/maps/northrend/northrend_37_35_obj0.adt": {
 "id": 825691,
-"sha": "66dce7f0bcdf1286358b488eba923602a39da29d",
-"size": 14224
+"sha": "50abd14c23d843502a8319b2be0b96cba5417d08",
+"size": 14308
 },
 "world/maps/northrend/northrend_37_35_obj1.adt": {
 "id": 825706,
-"sha": "8435c1d5f40c8bd334102374e2ffa363f89aca8a",
-"size": 10756
+"sha": "586d866b9373932859fe582b0c6df9d42a24a5ab",
+"size": 10820
 },
 "world/maps/northrend/northrend_37_35_tex0.adt": {
 "id": 826844,
@@ -61230,8 +61230,8 @@
 },
 "world/maps/northrend/northrend_38_10.adt": {
 "id": 822519,
-"sha": "a55fe90c71cece47bcecdbcc9fda7694e3f90760",
-"size": 357439
+"sha": "7661f12aaf19e0812ad85fafb9600102d2c9e50b",
+"size": 416827
 },
 "world/maps/northrend/northrend_38_10_lod.adt": {
 "id": 9100972,
@@ -61240,22 +61240,22 @@
 },
 "world/maps/northrend/northrend_38_10_obj0.adt": {
 "id": 824066,
-"sha": "1746838cb37d0a47f98763b22c6d4e122f6a8f6c",
-"size": 25148
+"sha": "60bee4d3e6d2cffee417e6a4a64e83ffb32e58ea",
+"size": 26700
 },
 "world/maps/northrend/northrend_38_10_obj1.adt": {
 "id": 822627,
-"sha": "fa8c71a4683f776460466051b2a4380414ea5d32",
-"size": 26928
+"sha": "1e9c19a6ab5ef7f9131a7b0e72d423840b806880",
+"size": 29296
 },
 "world/maps/northrend/northrend_38_10_tex0.adt": {
 "id": 823183,
-"sha": "02ddf0fcc2c2aa9b047b50914af2d9fa2d79a789",
-"size": 2810060
+"sha": "6eab5e3e09e217f8c3fe9ffa876dd1a138a49a5c",
+"size": 2896436
 },
 "world/maps/northrend/northrend_38_11.adt": {
 "id": 825715,
-"sha": "884a5d5984c727f6b9f10fa10114d8b2644d5a6b",
+"sha": "6f5e39aacf878464f3ae432a670682a2d49f0ffc",
 "size": 476945
 },
 "world/maps/northrend/northrend_38_11_lod.adt": {
@@ -61265,22 +61265,22 @@
 },
 "world/maps/northrend/northrend_38_11_obj0.adt": {
 "id": 825730,
-"sha": "4b4248f779b5280396e6e3c8c32b185c745cba3d",
-"size": 95568
+"sha": "9c46d380d9623ca05eb6a9a0ebc45c29655e9564",
+"size": 95016
 },
 "world/maps/northrend/northrend_38_11_obj1.adt": {
 "id": 826859,
-"sha": "df77ad9d7b779c6ced5226e2d3e78a7b56caa8f6",
-"size": 126032
+"sha": "992d022d2dd6b0925e4989f0c6aa8f1bf4ed2f55",
+"size": 127376
 },
 "world/maps/northrend/northrend_38_11_tex0.adt": {
 "id": 822526,
-"sha": "6dcfad46a128840c6ebc134bfb1638238a720f5e",
-"size": 2748620
+"sha": "403fe8d82637f69b157d23c724482fd4007aafd8",
+"size": 2773364
 },
 "world/maps/northrend/northrend_38_12.adt": {
 "id": 822635,
-"sha": "85ace38e5c026c68fe0410c6d3e0b4a31b274dbb",
+"sha": "938c6ad165920585db1fb7ed4ec28f0916705b4b",
 "size": 459442
 },
 "world/maps/northrend/northrend_38_12_lod.adt": {
@@ -61290,22 +61290,22 @@
 },
 "world/maps/northrend/northrend_38_12_obj0.adt": {
 "id": 823191,
-"sha": "73cee4bc4651bdcccd016def5f73bcc18c6581c7",
-"size": 78708
+"sha": "d0dcb87148f19d5302b010dac6c975f0e2accd7d",
+"size": 77496
 },
 "world/maps/northrend/northrend_38_12_obj1.adt": {
 "id": 826534,
-"sha": "13344a338dce812de1de72e3f8df3cc4290359f8",
-"size": 102128
+"sha": "a6c0546e8ffc1bb099b85cd09eb9667584e9903b",
+"size": 102256
 },
 "world/maps/northrend/northrend_38_12_tex0.adt": {
 "id": 825723,
-"sha": "8a84a1d8b797873b738536f8177e564892917e34",
-"size": 2383124
+"sha": "59602b804c31e4cd8b29185c7613666f7370531b",
+"size": 2383100
 },
 "world/maps/northrend/northrend_38_13.adt": {
 "id": 826864,
-"sha": "0ed87112952563314f6926b7e8d6ed2cad7ea29c",
+"sha": "c12c2cba78cbdbb93788ea9378562de06440facb",
 "size": 420561
 },
 "world/maps/northrend/northrend_38_13_lod.adt": {
@@ -61315,13 +61315,13 @@
 },
 "world/maps/northrend/northrend_38_13_obj0.adt": {
 "id": 822534,
-"sha": "2715818e76ea7f8b057d357241299e8968aece30",
-"size": 45688
+"sha": "fe7bb0e5cc1eb32f6593bf6707f54d26a37dfada",
+"size": 44648
 },
 "world/maps/northrend/northrend_38_13_obj1.adt": {
 "id": 824082,
-"sha": "1491d5a6069368dd1554c18e2c87e1cda98ee52f",
-"size": 52236
+"sha": "e93471b311938e995d341f3b21d8af33698e6252",
+"size": 52108
 },
 "world/maps/northrend/northrend_38_13_tex0.adt": {
 "id": 822642,
@@ -61330,7 +61330,7 @@
 },
 "world/maps/northrend/northrend_38_14.adt": {
 "id": 826540,
-"sha": "6004381c1360c5c52718285fe5ce29ffee84b3d7",
+"sha": "dba388d39f94f517919e7e6ac587f2989a9246ad",
 "size": 322788
 },
 "world/maps/northrend/northrend_38_14_lod.adt": {
@@ -61340,22 +61340,22 @@
 },
 "world/maps/northrend/northrend_38_14_obj0.adt": {
 "id": 825733,
-"sha": "c178f2ff98d5eb36935d3f00600e6ba78106f713",
-"size": 12936
+"sha": "f5be5ba4fca40f6abcbcf520778778c7b7946caa",
+"size": 12928
 },
 "world/maps/northrend/northrend_38_14_obj1.adt": {
 "id": 825746,
-"sha": "77932753d293d4dd9bff9f899e697b50d597fa0e",
+"sha": "36c034c1cdc4dc75452d73698d7f84754d01780d",
 "size": 9424
 },
 "world/maps/northrend/northrend_38_14_tex0.adt": {
 "id": 826869,
-"sha": "69b9fa0903253eb9cd270e5619a1e023f0b0a9fb",
+"sha": "139b38ae3ba03a3515230af2be50a3fea9da876c",
 "size": 2465260
 },
 "world/maps/northrend/northrend_38_15.adt": {
 "id": 824090,
-"sha": "8f5a0f5095d765314d5a7f86caf9f3f9e6d42f70",
+"sha": "399b8f7757839df998d0ef6f5663b4f703ef210d",
 "size": 486456
 },
 "world/maps/northrend/northrend_38_15_lod.adt": {
@@ -61365,8 +61365,8 @@
 },
 "world/maps/northrend/northrend_38_15_obj0.adt": {
 "id": 822650,
-"sha": "8b90d15b8837bd47adea734fb05769d1a1bfd7cf",
-"size": 11976
+"sha": "14de80c290b7240662f0ba9a65b593fd685b2a28",
+"size": 11748
 },
 "world/maps/northrend/northrend_38_15_obj1.adt": {
 "id": 823207,
@@ -61375,12 +61375,12 @@
 },
 "world/maps/northrend/northrend_38_15_tex0.adt": {
 "id": 826546,
-"sha": "9da720c1fb5f7f27baf598d5f3287291a9a3d753",
+"sha": "286cf75c0f385d12193e7308df43c6bb4e43f4bd",
 "size": 2168364
 },
 "world/maps/northrend/northrend_38_16.adt": {
 "id": 825754,
-"sha": "2c41a625ca318c2736ace624978bc9911f4daf4c",
+"sha": "2791188ebbee8a43a555bd166fc07ae4c8bf4547",
 "size": 483544
 },
 "world/maps/northrend/northrend_38_16_lod.adt": {
@@ -61400,7 +61400,7 @@
 },
 "world/maps/northrend/northrend_38_16_tex0.adt": {
 "id": 824098,
-"sha": "0f993f474887beeca34e48e21ce6c7031405fdfd",
+"sha": "c11f827cb2a1e20b524b7410bbd0a34ef5e748ef",
 "size": 1388660
 },
 "world/maps/northrend/northrend_38_17.adt": {
@@ -61805,7 +61805,7 @@
 },
 "world/maps/northrend/northrend_38_31.adt": {
 "id": 824171,
-"sha": "6490b06a603a2bebf74f0927cbcb2f548c3aad46",
+"sha": "e499f73c341f9d4b1955c3f8c5ae489ab195bb60",
 "size": 565367
 },
 "world/maps/northrend/northrend_38_31_lod.adt": {
@@ -61815,8 +61815,8 @@
 },
 "world/maps/northrend/northrend_38_31_obj0.adt": {
 "id": 822730,
-"sha": "f06ba8929ae7d9a30eda4a081aefb99e7682c8ec",
-"size": 7640
+"sha": "f9030a50124cf93745895199031d36ef923e5885",
+"size": 7644
 },
 "world/maps/northrend/northrend_38_31_obj1.adt": {
 "id": 823286,
@@ -61830,7 +61830,7 @@
 },
 "world/maps/northrend/northrend_38_32.adt": {
 "id": 825834,
-"sha": "9b0ab289a987f5c38fdcd1cbd7d6ab89c7e3819b",
+"sha": "40a229089359e91c92bb4b402702705073c89b91",
 "size": 526099
 },
 "world/maps/northrend/northrend_38_32_lod.adt": {
@@ -61840,12 +61840,12 @@
 },
 "world/maps/northrend/northrend_38_32_obj0.adt": {
 "id": 826923,
-"sha": "58f10bcb6b5ea6677f2a63082c05b72e40682375",
-"size": 20108
+"sha": "09c4fd400984d61c26d7a2acc0bb7d520c13de26",
+"size": 20180
 },
 "world/maps/northrend/northrend_38_32_obj1.adt": {
 "id": 822629,
-"sha": "b82a929e9bd15a0de82071e7b45a00225797ded0",
+"sha": "ff2b81601e4204007f1b3c31d191f95904134e6d",
 "size": 16932
 },
 "world/maps/northrend/northrend_38_32_tex0.adt": {
@@ -61855,7 +61855,7 @@
 },
 "world/maps/northrend/northrend_38_33.adt": {
 "id": 823294,
-"sha": "bb441b000df0455fa929656a6b89772e5b043eba",
+"sha": "c0e7367464d0e70e759823c661c185a81b7b25d2",
 "size": 467381
 },
 "world/maps/northrend/northrend_38_33_lod.adt": {
@@ -61865,13 +61865,13 @@
 },
 "world/maps/northrend/northrend_38_33_obj0.adt": {
 "id": 826612,
-"sha": "a05cc2afbd24b8f12ff3ebc3caa059ce8eccdcf3",
-"size": 40696
+"sha": "d6f8c78d075da8ca05f08eef051bbb1c6e87a0a1",
+"size": 40252
 },
 "world/maps/northrend/northrend_38_33_obj1.adt": {
 "id": 825830,
-"sha": "3b327848efa6a4e1272b1c74745f032aefef23df",
-"size": 47620
+"sha": "3b7e701d3e01dabe49aa804595ba0f2eaef01ca3",
+"size": 47212
 },
 "world/maps/northrend/northrend_38_33_tex0.adt": {
 "id": 825841,
@@ -61880,7 +61880,7 @@
 },
 "world/maps/northrend/northrend_38_34.adt": {
 "id": 822636,
-"sha": "185ddb1091ec24b5a0bf54ea2e5d5b4220926b97",
+"sha": "85dbdf996b1a3749a45632aa78e0379cbe629cc9",
 "size": 550533
 },
 "world/maps/northrend/northrend_38_34_lod.adt": {
@@ -61890,13 +61890,13 @@
 },
 "world/maps/northrend/northrend_38_34_obj0.adt": {
 "id": 824187,
-"sha": "50c8fbbfbf8c1b34d4b4ffb163e9976bbdc0a06e",
-"size": 27004
+"sha": "eb72bdeb22df2c78c38f164f9c53365714da6cce",
+"size": 26080
 },
 "world/maps/northrend/northrend_38_34_obj1.adt": {
 "id": 822746,
-"sha": "0165056f5069b39d5a1087cc6ab579caa0f706eb",
-"size": 28380
+"sha": "90da6a0913b7582f7098a220d0ff89fe1f1fa0da",
+"size": 27428
 },
 "world/maps/northrend/northrend_38_34_tex0.adt": {
 "id": 823302,
@@ -61905,7 +61905,7 @@
 },
 "world/maps/northrend/northrend_38_35.adt": {
 "id": 825838,
-"sha": "414746b4ed3ef61237d029765fb2ba5b23f494d5",
+"sha": "2d15c32197c44bea2cad765aa895b7bb01acf26f",
 "size": 558213
 },
 "world/maps/northrend/northrend_38_35_lod.adt": {
@@ -61915,12 +61915,12 @@
 },
 "world/maps/northrend/northrend_38_35_obj0.adt": {
 "id": 825849,
-"sha": "3127f4e522c634cef5049376bf947be0d3b0245d",
-"size": 10400
+"sha": "c91804fca319d0c98b5c9b4b2ea84568bcbb7a1d",
+"size": 10416
 },
 "world/maps/northrend/northrend_38_35_obj1.adt": {
 "id": 826933,
-"sha": "bda34e9df45d37abe0be976376b2e9504265a840",
+"sha": "745a1bbd2b00b306532e7d6125bfc77b93a2862c",
 "size": 3112
 },
 "world/maps/northrend/northrend_38_35_tex0.adt": {
@@ -62475,7 +62475,7 @@
 },
 "world/maps/northrend/northrend_38_8.adt": {
 "id": 927004497,
-"sha": "e6d9472abd1377c207fb79851df3f1c9e52d7a9d",
+"sha": "ec6013110a8f3d385df1902fa8e208ae7eca1650",
 "size": 324140
 },
 "world/maps/northrend/northrend_38_8_lod.adt": {
@@ -62485,22 +62485,22 @@
 },
 "world/maps/northrend/northrend_38_8_obj0.adt": {
 "id": 927004498,
-"sha": "b0f463bb384e88cf4357a2a95b7cd44856853d5b",
-"size": 57352
+"sha": "6600792e272364f298ff3b7dbbecfaabccbac0c4",
+"size": 57332
 },
 "world/maps/northrend/northrend_38_8_obj1.adt": {
 "id": 927004499,
-"sha": "58a2e817ca48af73725b0ec8a4f77425079ebdab",
+"sha": "83fa0ec894c44e4ec94a6c70a2b5b8420e35db30",
 "size": 70928
 },
 "world/maps/northrend/northrend_38_8_tex0.adt": {
 "id": 927004500,
-"sha": "8b442b9cbd885b6cd2b1c59fb2ffb62ff3788038",
+"sha": "c6b9f5046198bfd04ca25145688b5ecbd0894063",
 "size": 2532668
 },
 "world/maps/northrend/northrend_38_9.adt": {
 "id": 826629,
-"sha": "e9c5e36e859e42fa86e946b9f882a8e10f8288cb",
+"sha": "da3e634ac46e63cbed4b6a0b28825794b5d48fc4",
 "size": 348615
 },
 "world/maps/northrend/northrend_38_9_lod.adt": {
@@ -62510,17 +62510,17 @@
 },
 "world/maps/northrend/northrend_38_9_obj0.adt": {
 "id": 825854,
-"sha": "b199af910740f6125bff38097305280ae4290f46",
-"size": 51520
+"sha": "21275351e51024735d45d1e6843c8e522fa027ec",
+"size": 51512
 },
 "world/maps/northrend/northrend_38_9_obj1.adt": {
 "id": 825865,
-"sha": "928feca075ab1bbd6cf44c77cff74e68476f9351",
+"sha": "58edfa98bc24e1cfbe74d8cbcbd4bbd49ce86f9d",
 "size": 61680
 },
 "world/maps/northrend/northrend_38_9_tex0.adt": {
 "id": 826944,
-"sha": "674fd5bcd79664580d065d220c4dd2169659a85d",
+"sha": "9ce7bac551425d53daef08f66396c30e4803d228",
 "size": 2740348
 },
 "world/maps/northrend/northrend_39_0.adt": {
@@ -62555,8 +62555,8 @@
 },
 "world/maps/northrend/northrend_39_10.adt": {
 "id": 824210,
-"sha": "69053cba363797e17f93ef12bb1d0d8619b7549f",
-"size": 360384
+"sha": "661aa3f099f521ffc7e4743f4ca5d5715aa9cb97",
+"size": 368616
 },
 "world/maps/northrend/northrend_39_10_lod.adt": {
 "id": 9101021,
@@ -62565,23 +62565,23 @@
 },
 "world/maps/northrend/northrend_39_10_obj0.adt": {
 "id": 822770,
-"sha": "3eb87762c1bfecb2d848d85f9a0e2830980f28be",
-"size": 27816
+"sha": "7e4984a7676e519285d4d0d19cc7156b53d7c40c",
+"size": 27852
 },
 "world/maps/northrend/northrend_39_10_obj1.adt": {
 "id": 823325,
-"sha": "602c4ca4d6a41b0cd147784f9f3d13e7dfbaea4c",
-"size": 31220
+"sha": "37c9551d86ed64dcc6a37c65bbb6a1b59abe050e",
+"size": 31348
 },
 "world/maps/northrend/northrend_39_10_tex0.adt": {
 "id": 826634,
-"sha": "fd73e517728accd36a6f0f7f1a6e953d898d7df5",
-"size": 2483916
+"sha": "d9c9ad58a85457114154a646b35830c2eb69674b",
+"size": 2529196
 },
 "world/maps/northrend/northrend_39_11.adt": {
 "id": 825873,
-"sha": "94b51b1de9f7588b865cdf400b20e6cd82f6536c",
-"size": 446097
+"sha": "88548d7ace5e198b6f0e1d8f0c9f439ede2b4a5e",
+"size": 447273
 },
 "world/maps/northrend/northrend_39_11_lod.adt": {
 "id": 9101022,
@@ -62590,18 +62590,18 @@
 },
 "world/maps/northrend/northrend_39_11_obj0.adt": {
 "id": 826949,
-"sha": "f7f7c499a3fb77be9cc6899172cbcf4e8f095f4f",
-"size": 38876
+"sha": "f47b362496d9841ebce7e8bb09b42bb98ffce68f",
+"size": 38064
 },
 "world/maps/northrend/northrend_39_11_obj1.adt": {
 "id": 822668,
-"sha": "4808ed05be5e8637e6d3225b17a2c3f49431b1aa",
-"size": 45628
+"sha": "b4e668e9263fb8f2b9fffa48e946fe76fee48823",
+"size": 45948
 },
 "world/maps/northrend/northrend_39_11_tex0.adt": {
 "id": 824218,
-"sha": "6d91709c8abdf8c34454d70953b805ff0e4b1b1b",
-"size": 3008028
+"sha": "05638d0c1b05d6ae3e138fe484b36a211fccdbf1",
+"size": 3008076
 },
 "world/maps/northrend/northrend_39_12.adt": {
 "id": 823333,
@@ -62630,7 +62630,7 @@
 },
 "world/maps/northrend/northrend_39_13.adt": {
 "id": 822676,
-"sha": "4334a67975676efe73668967f2bb69c8dccd592f",
+"sha": "d32c750325f0a53fed92d64f3675d7135c8034f8",
 "size": 395990
 },
 "world/maps/northrend/northrend_39_13_lod.adt": {
@@ -62640,13 +62640,13 @@
 },
 "world/maps/northrend/northrend_39_13_obj0.adt": {
 "id": 824226,
-"sha": "1151c2c491c9686322fcbaa3b5ac287da37944e6",
-"size": 27944
+"sha": "b5bf603e335550df12d536a1d7d9020db0307fdf",
+"size": 27452
 },
 "world/maps/northrend/northrend_39_13_obj1.adt": {
 "id": 822786,
-"sha": "a429131f89b8953c7ddeea8e3ee37cacfae7b3e2",
-"size": 29808
+"sha": "a19b8257f23ecf25fa073c203b20f6fbc25cec79",
+"size": 29872
 },
 "world/maps/northrend/northrend_39_13_tex0.adt": {
 "id": 823340,
@@ -62655,7 +62655,7 @@
 },
 "world/maps/northrend/northrend_39_14.adt": {
 "id": 825878,
-"sha": "c6fbb550088bd36cf635d2c6d8b6d1b3da4736dd",
+"sha": "2921ecac38e6d4d2c8c1d9c4b7c7e60caf12eb96",
 "size": 305148
 },
 "world/maps/northrend/northrend_39_14_lod.adt": {
@@ -62665,8 +62665,8 @@
 },
 "world/maps/northrend/northrend_39_14_obj0.adt": {
 "id": 825889,
-"sha": "85b8aa711ac2251c5336240b175802c4abbe4f33",
-"size": 4900
+"sha": "8de44aac2d833a10d3081f69d270a8dc34ef9f8f",
+"size": 4836
 },
 "world/maps/northrend/northrend_39_14_obj1.adt": {
 "id": 826958,
@@ -62675,12 +62675,12 @@
 },
 "world/maps/northrend/northrend_39_14_tex0.adt": {
 "id": 822684,
-"sha": "98cce48ccb8a2adc04af983627c1fb495ee90db4",
+"sha": "21b4a9cc2e0a3090d0e29d34ff8e1e947663e1e8",
 "size": 2488268
 },
 "world/maps/northrend/northrend_39_15.adt": {
 "id": 822794,
-"sha": "21de21a51ffbb37a7b4b7057d87e81a1a3c51dd3",
+"sha": "9147f1bdbc2b2dd48ba0b520d73bfbd75d4bfe4a",
 "size": 486792
 },
 "world/maps/northrend/northrend_39_15_lod.adt": {
@@ -62690,12 +62690,12 @@
 },
 "world/maps/northrend/northrend_39_15_obj0.adt": {
 "id": 823348,
-"sha": "5467503b54dd7b6b228d916324eb87ab53dc5744",
+"sha": "f5fa9a29b89eed27580483d68de4b05bdb808f38",
 "size": 3048
 },
 "world/maps/northrend/northrend_39_15_obj1.adt": {
 "id": 826649,
-"sha": "b7c061d4488bce56f5aa9b826108726a2516994b",
+"sha": "b4a729fb6c5bda867efe5606203fc960c514aa18",
 "size": 744
 },
 "world/maps/northrend/northrend_39_15_tex0.adt": {
@@ -62705,7 +62705,7 @@
 },
 "world/maps/northrend/northrend_39_16.adt": {
 "id": 826963,
-"sha": "3dca5a168acc76a7255adb0889c2f9ca1d524986",
+"sha": "690c2e0de762ea1c29ede6b5aea3e5350be71d4f",
 "size": 483800
 },
 "world/maps/northrend/northrend_39_16_lod.adt": {
@@ -62725,8 +62725,8 @@
 },
 "world/maps/northrend/northrend_39_16_tex0.adt": {
 "id": 822802,
-"sha": "79ea0752170f3b7fe376eade7fd482d2db9908cf",
-"size": 1673484
+"sha": "1b79c6cef471bf612efcde5344a6fa6f8333e415",
+"size": 1961348
 },
 "world/maps/northrend/northrend_39_17.adt": {
 "id": 826654,
@@ -63180,7 +63180,7 @@
 },
 "world/maps/northrend/northrend_39_33.adt": {
 "id": 826704,
-"sha": "a6b13fbf1fedba7f5aaf11190d274fc89703ed2a",
+"sha": "f3b9c6cb7d964ed6b2f5a728d7ac59efe15ac6dd",
 "size": 468291
 },
 "world/maps/northrend/northrend_39_33_lod.adt": {
@@ -63190,13 +63190,13 @@
 },
 "world/maps/northrend/northrend_39_33_obj0.adt": {
 "id": 825974,
-"sha": "322ee19ed350a1c6cfb01922f32917b010703c39",
-"size": 33528
+"sha": "579faee250f0591af578e99911aa96e9df51f025",
+"size": 33384
 },
 "world/maps/northrend/northrend_39_33_obj1.adt": {
 "id": 825986,
-"sha": "b8cb90502d1ae4ed37cf9802b5e94631a873f801",
-"size": 39536
+"sha": "3e124f1e433ebcd0a7adefd9c9eb1ef8defd23da",
+"size": 39332
 },
 "world/maps/northrend/northrend_39_33_tex0.adt": {
 "id": 827018,
@@ -63775,7 +63775,7 @@
 },
 "world/maps/northrend/northrend_39_7.adt": {
 "id": 927004529,
-"sha": "8e4b2d8944a19c6f595bffe1c5fa46c492f5a600",
+"sha": "ea3ed2d4166602678003ac5258ed42ccdcbf771a",
 "size": 322117
 },
 "world/maps/northrend/northrend_39_7_lod.adt": {
@@ -63785,22 +63785,22 @@
 },
 "world/maps/northrend/northrend_39_7_obj0.adt": {
 "id": 927004530,
-"sha": "d108556e140d78d1fe52c7105e91de9bfb04208a",
+"sha": "4b20fc7991b2343093a48052ea38b9f9a3925623",
 "size": 5968
 },
 "world/maps/northrend/northrend_39_7_obj1.adt": {
 "id": 927004531,
-"sha": "62a175f0e53ff49c5df1de9cc8511384ac349fcf",
+"sha": "6746bfa04691d7e6d6d94da8e52144599d40c700",
 "size": 808
 },
 "world/maps/northrend/northrend_39_7_tex0.adt": {
 "id": 927004532,
-"sha": "3d23dd2b5bf34172d1583fd2f8ac75e8d7bb744d",
+"sha": "76a98c5241fa3e425fa81b0978c577b447847862",
 "size": 1899300
 },
 "world/maps/northrend/northrend_39_8.adt": {
 "id": 927004533,
-"sha": "98a3b2c2faa2f134487c989237fe094969393d14",
+"sha": "874f8c3459a7fa253b6a4a969dc095c6b49ac725",
 "size": 316330
 },
 "world/maps/northrend/northrend_39_8_lod.adt": {
@@ -63810,22 +63810,22 @@
 },
 "world/maps/northrend/northrend_39_8_obj0.adt": {
 "id": 927004534,
-"sha": "a9f56e98bf382bc9e800fd159fd80e1e925de79b",
-"size": 44896
+"sha": "828b7f45b8b17922225c3d127ed17098a4c4b350",
+"size": 44880
 },
 "world/maps/northrend/northrend_39_8_obj1.adt": {
 "id": 927004535,
-"sha": "b751649580157c6d6c5bd7870882900cbdaba6b6",
+"sha": "8e01f2b7510a5e95a763b4cfc766bd9635a80929",
 "size": 56752
 },
 "world/maps/northrend/northrend_39_8_tex0.adt": {
 "id": 927004536,
-"sha": "07e141b0b9083c6ab2a0dfea8c7e8c1afeb05714",
+"sha": "4a80748d2fd736eaa3c20e602e86029061af6ea7",
 "size": 2166228
 },
 "world/maps/northrend/northrend_39_9.adt": {
 "id": 825997,
-"sha": "2070ee06edf70bee657449eb1426455c384f445e",
+"sha": "06fc3a272385a29283c3891b957cb8b276b1f569",
 "size": 320550
 },
 "world/maps/northrend/northrend_39_9_lod.adt": {
@@ -63835,18 +63835,18 @@
 },
 "world/maps/northrend/northrend_39_9_obj0.adt": {
 "id": 826010,
-"sha": "e434c23e78aaa236b98943fe418edc32b6629973",
-"size": 31160
+"sha": "f361e0d2b3ad32adbd93a860260dcc496314e0ba",
+"size": 31140
 },
 "world/maps/northrend/northrend_39_9_obj1.adt": {
 "id": 827033,
-"sha": "e87c3465d15c925bb42bb0336442d1440dc25ed6",
+"sha": "01038e9b09c30a681d940b9548589ce63b73a52b",
 "size": 33264
 },
 "world/maps/northrend/northrend_39_9_tex0.adt": {
 "id": 822803,
-"sha": "492700d895ab8c896ba992994cc5611421abc9a5",
-"size": 2596332
+"sha": "0ece1cec842e0a823f36dae8926c239fdc06562d",
+"size": 2600444
 },
 "world/maps/northrend/northrend_40_0.adt": {
 "id": 927004537,
@@ -65125,7 +65125,7 @@
 },
 "world/maps/northrend/northrend_40_8.adt": {
 "id": 927004569,
-"sha": "8212d1edbb652ca7f0f6ba0fd04df8d90a334c37",
+"sha": "fab605da622243c5cc329fa2b71e48fab4994f82",
 "size": 350312
 },
 "world/maps/northrend/northrend_40_8_lod.adt": {
@@ -65135,17 +65135,17 @@
 },
 "world/maps/northrend/northrend_40_8_obj0.adt": {
 "id": 927004570,
-"sha": "40c31f9937cb0733437e51ff6d4459d05ff779d4",
-"size": 24244
+"sha": "24310735cdb100d51ae34f905fba3c9ab117e72f",
+"size": 24240
 },
 "world/maps/northrend/northrend_40_8_obj1.adt": {
 "id": 927004571,
-"sha": "39e51d730e44bf6643fb8d5b2927d73eef0d9c98",
+"sha": "3d25d23762a0be56dc8885f92b4e6ffde9304894",
 "size": 25604
 },
 "world/maps/northrend/northrend_40_8_tex0.adt": {
 "id": 927004572,
-"sha": "f318b03367597175781efa6a5fbc1e46f12804ab",
+"sha": "cd1f37632d296251e97208b35fc58e496555fe35",
 "size": 2847444
 },
 "world/maps/northrend/northrend_40_9.adt": {
@@ -82549,7 +82549,7 @@
 "size": 903748
 },
 "repo_dir": "patches/Chronicles-Northrend",
-"total_bytes": 3085474426
+"total_bytes": 3085890277
 },
 "azeroth": {
 "files": {
@@ -99357,5 +99357,5 @@
 "total_bytes": 1645251639
 }
 },
-"published": "2026-10-10 18:39"
+"published": "2026-10-10 18:40"
 }
