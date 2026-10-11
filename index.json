@@ -10018,6 +10018,106 @@
 "sha": "7cace1870c7b9a3a31a3edb03e06f66af1da6af0",
 "size": 700236
 },
+"creature/turtleports/deathknightwc2/deathknightwc2.m2": {
+"id": 126149,
+"sha": "6dc115940f34b2261a8f7e5b53c4621d1ee5b846",
+"size": 579071
+},
+"creature/turtleports/deathknightwc2/deathknightwc200.skin": {
+"id": 927010651,
+"sha": "02c98765611a285ee2100529b11e6c1c600751dd",
+"size": 45736
+},
+"creature/turtleports/deathknightwc2/texture_00.blp": {
+"id": 927010652,
+"sha": "d21ebde2c3f2c53fc726a4a1d49b75dbb7ea7364",
+"size": 44900
+},
+"creature/turtleports/deathknightwc2/texture_01.blp": {
+"id": 927010653,
+"sha": "7e954abbace65a7f5347f0a9d32fa7b7275ca1d7",
+"size": 87556
+},
+"creature/turtleports/deathknightwc2/texture_02.blp": {
+"id": 927010654,
+"sha": "7cd53be968b141ada2e83daf4d66c9f6b6c86fbc",
+"size": 88596
+},
+"creature/turtleports/deathknightwc2/texture_03.blp": {
+"id": 927010655,
+"sha": "255917d1b56fef20a128977ab44cf4deb231007a",
+"size": 88596
+},
+"creature/turtleports/deathknightwc2/texture_04.blp": {
+"id": 927010656,
+"sha": "de907f00139aff2fef3c797fc5172649c11c0ab9",
+"size": 12108
+},
+"creature/turtleports/felhoundmount/felhoundmount.m2": {
+"id": 124485,
+"sha": "5bad48db49767e173b7abb2ba455001372371a93",
+"size": 339064
+},
+"creature/turtleports/felhoundmount/felhoundmount00.skin": {
+"id": 927010657,
+"sha": "ddc70de8c8aefcd88e7483a17634358e78e3e0fa",
+"size": 15860
+},
+"creature/turtleports/felhoundmount/texture_00.blp": {
+"id": 927010658,
+"sha": "88ef359b066f4fe33c4693adf45bd2061e8b0021",
+"size": 88580
+},
+"creature/turtleports/felhoundmount/texture_01.blp": {
+"id": 927010659,
+"sha": "946d44d53188999a6a425e907e8b9f92de653809",
+"size": 88580
+},
+"creature/turtleports/skardyn_male/skardyn_male.m2": {
+"id": 124541,
+"sha": "dbd390f31d8cead296d04b310147e1dbb69bbdc2",
+"size": 1078123
+},
+"creature/turtleports/skardyn_male/skardyn_male00.skin": {
+"id": 927010660,
+"sha": "da5c7af6f5789a4f001f287c7802469d7bf751c9",
+"size": 13260
+},
+"creature/turtleports/skardyn_male/texture_00.blp": {
+"id": 927010661,
+"sha": "3c783a14ee13d758b031c59b83aadf2d953fb6dd",
+"size": 88596
+},
+"creature/turtleports/skardyn_male/texture_01.blp": {
+"id": 927010662,
+"sha": "ed6bcedcc0f935bc868b67c8b1a18cfee361d3d4",
+"size": 44876
+},
+"creature/turtleports/skardyn_male/texture_02.blp": {
+"id": 927010663,
+"sha": "bfd9a08da61d226e7a4449a07d61dca3edc1a9bc",
+"size": 88596
+},
+"creature/turtleports/worgendemonmage/texture_00.blp": {
+"id": 927010665,
+"sha": "a54c04bacaa20da96ae850a72a207aaf1c6b3d4e",
+"size": 88596
+},
+"creature/turtleports/worgendemonmage/texture_01.blp": {
+"id": 927010666,
+"sha": "88ef359b066f4fe33c4693adf45bd2061e8b0021",
+"size": 88580
+},
+"creature/turtleports/worgendemonmage/worgendemonmage.m2": {
+"id": 124516,
+"sha": "c1759c8c372c64ddca5c16c0669a55d1db207464",
+"size": 1182588
+},
+"creature/turtleports/worgendemonmage/worgendemonmage00.skin": {
+"id": 927010664,
+"sha": "460fbdabd4e20bc4e2a07df36dddf6e39afc6008",
+"size": 12784
+},
 "cryptfiendskin.blp": {
 "id": 123330,
 "sha": "10a5a394c29779626a57533c18d0900e73584ff4",
@@ -12465,8 +12565,8 @@
 },
 "eversong12/12be_bloodelf_bush_0100.skin": {
 "id": 5887665,
-"sha": "afcd71dde4758ad47f6b05aaa99977310d626600",
-"size": 2912
+"sha": "d7284c1014cccbb6e54be11032f6240c7398161f",
+"size": 2924
 },
 "eversong12/12be_bloodelf_bush_01_5887660.blp": {
 "id": 5887660,
@@ -12475,43 +12575,43 @@
 },
 "eversong12/12be_bloodelf_bush_01_lod01.skin": {
 "id": 5887666,
-"sha": "91a9b99397d47c7276a10874f68952ea09f066b3",
-"size": 2384
+"sha": "97d59250551651fdc79a55ed20eb2ae720950f18",
+"size": 2396
 },
 "eversong12/12be_bloodelf_bush_01_lod02.skin": {
 "id": 5887667,
-"sha": "f926560858557e8ebf382abeecb4c0081d91ca4a",
-"size": 1968
+"sha": "64dce75ff7eda18e9b8e3f4151ec3aa602b93b26",
+"size": 1980
 },
 "eversong12/12be_bloodelf_bush_01_lod03.skin": {
 "id": 5887668,
-"sha": "b71cfa4ecd838693326810c1ce5b86ed3dbb08c7",
-"size": 1664
+"sha": "6fe86f42d2e8e304699e7d1d2be8aed71a52339d",
+"size": 1676
 },
 "eversong12/12be_bloodelf_bush_0200.skin": {
 "id": 5887669,
-"sha": "d0af5b77519266c92ffc1f5b48b6fc2035f92a71",
-"size": 4048
+"sha": "6b6181a3adf7ad268597f8062fa9635e75434299",
+"size": 4060
 },
 "eversong12/12be_bloodelf_bush_02_lod01.skin": {
 "id": 5887670,
-"sha": "106c4b0398290172583f24a4d14fcd19ab4d5abc",
-"size": 3296
+"sha": "d316a989e52f95fac4c911489250b1e47cfac7f6",
+"size": 3308
 },
 "eversong12/12be_bloodelf_bush_02_lod02.skin": {
 "id": 5887672,
-"sha": "7b2f0e8db567b9861a64fd04abf14ec2ecc4314e",
-"size": 2640
+"sha": "a2edca9908a7d3485ad840fdd3f32d16f9d58fc8",
+"size": 2652
 },
 "eversong12/12be_bloodelf_bush_02_lod03.skin": {
 "id": 5887674,
-"sha": "be0d263dfd1045f3a29469c4220c783de2a90328",
-"size": 2112
+"sha": "89f7c919b295a83df83b5ac1ef5d34242d629c64",
+"size": 2124
 },
 "eversong12/12be_bloodelf_bush_0300.skin": {
 "id": 5929828,
-"sha": "24d3ca4873033a84b5c3d76f3efcfcfe47474bea",
-"size": 2080
+"sha": "057dacca211cea0bd13e5b2850be1d193c6bc859",
+"size": 2092
 },
 "eversong12/12be_bloodelf_bush_03_5929826.blp": {
 "id": 5929826,
@@ -12520,58 +12620,58 @@
 },
 "eversong12/12be_bloodelf_bush_03_lod01.skin": {
 "id": 5929833,
-"sha": "92f065af4662b0afc61cf993118e8cf53c8fda99",
-"size": 1712
+"sha": "b6abad816c0966a7cb63822a962d030b69c48118",
+"size": 1724
 },
 "eversong12/12be_bloodelf_bush_03_lod02.skin": {
 "id": 5929837,
-"sha": "bf4e7e4f0862b8b73a98abf8f2a76dedea11b415",
-"size": 1440
+"sha": "1a1d4ffe7c2d4e14ab1574356fc6e50f76feaf32",
+"size": 1452
 },
 "eversong12/12be_bloodelf_bush_03_lod03.skin": {
 "id": 5929841,
-"sha": "1438312f7cbb2f16a2048b8fc438485e8013be1e",
-"size": 1200
+"sha": "5f7ef1a56c8c455e8743011fc230bcd8aa3fbeea",
+"size": 1212
 },
 "eversong12/12be_bloodelf_bush_0400.skin": {
 "id": 5929832,
-"sha": "75e612538a34b84379bb1dd0d53e1ba4dc068411",
-"size": 2912
+"sha": "bef4516707f8342753bfc9d44ed7dd59c563d8eb",
+"size": 2924
 },
 "eversong12/12be_bloodelf_bush_04_lod01.skin": {
 "id": 5929845,
-"sha": "55aef25cb44b08cc487ce020b78c3fd12826b616",
-"size": 2384
+"sha": "bd642f3b952824bccd68d9559dec98d5b7661a29",
+"size": 2396
 },
 "eversong12/12be_bloodelf_bush_04_lod02.skin": {
 "id": 5929846,
-"sha": "eefdade7287a74b75a04dd19babe517703dcf885",
-"size": 1968
+"sha": "5cb448a8e99f22e2f56334f3157b9dc225cf3dae",
+"size": 1980
 },
 "eversong12/12be_bloodelf_bush_04_lod03.skin": {
 "id": 5929847,
-"sha": "0832068e5d232c390ca43c353ac5e5981cc2c25c",
-"size": 1664
+"sha": "9487d881e8a105e73cbf503d34745c55e3323194",
+"size": 1676
 },
 "eversong12/12be_bloodelf_bush_0500.skin": {
 "id": 5929848,
-"sha": "9f9cef35ed99008a72025a0fe930f721e483e5c0",
-"size": 4048
+"sha": "a2027dfe1d356a0390b95397e9149c3cefdef036",
+"size": 4060
 },
 "eversong12/12be_bloodelf_bush_05_lod01.skin": {
 "id": 5929849,
-"sha": "ae8dd5b84724c24c70629a83cbf5eaebfd34391a",
-"size": 3296
+"sha": "d4b0b179ebe9750df151ecd850674cfa4c1c8d24",
+"size": 3308
 },
 "eversong12/12be_bloodelf_bush_05_lod02.skin": {
 "id": 5929850,
-"sha": "25f69b7d2a0a7c72a31c66aed0c7bcd4e20e1845",
-"size": 2592
+"sha": "c52896278ed2929665fa6a3e7f24a8ea6ee65f68",
+"size": 2604
 },
 "eversong12/12be_bloodelf_bush_05_lod03.skin": {
 "id": 5929851,
-"sha": "64e2bd43f5706394dc1313cbbcaaff70d9c4db20",
-"size": 2064
+"sha": "4836527f4d304b4388e5a2c79a737a9429a5d71a",
+"size": 2076
 },
 "eversong12/12be_bloodelf_smalltree_0100.skin": {
 "id": 5902889,
@@ -12620,48 +12720,48 @@
 },
 "eversong12/12be_bloodelf_smalltree_0300.skin": {
 "id": 5900612,
-"sha": "56cdac590c01125c6562461e40fc20a81f52a5c9",
-"size": 4672
+"sha": "826fb81a9f7f8ce398271770a46ddcc69d3141cc",
+"size": 4696
 },
 "eversong12/12be_bloodelf_smalltree_03_lod01.skin": {
 "id": 5900613,
-"sha": "a75b51c9d638a8268148eece1e892a4ab23068fe",
-"size": 3776
+"sha": "3d19447864ec38e93922b81bc8b3c0ad30a35f45",
+"size": 3800
 },
 "eversong12/12be_bloodelf_smalltree_03_lod02.skin": {
 "id": 5900614,
-"sha": "2eb3cdd1d2e8efeca7ba9c9423da85fac9c0391c",
-"size": 2960
+"sha": "a04fd7632487a9408d2fc8c256706b11f343a6ca",
+"size": 2984
 },
 "eversong12/12be_bloodelf_smalltree_03_lod03.skin": {
 "id": 5900615,
-"sha": "a386e9b924328292fa928251d777b2c51022e6fe",
-"size": 2224
+"sha": "01f1d72bac9355f7ac01036483492000dfa8d9dc",
+"size": 2248
 },
 "eversong12/12be_bloodelf_smalltree_0400.skin": {
 "id": 5900618,
-"sha": "491a6063bfd8d322b17479e03035a4335ccfc783",
-"size": 6832
+"sha": "3a9a7589f3edb38a5cb41a964d0c1f2a1b9201de",
+"size": 6856
 },
 "eversong12/12be_bloodelf_smalltree_04_lod01.skin": {
 "id": 5900619,
-"sha": "3ac6630a5f15d0242dc968398d3de8425f8685b8",
-"size": 5248
+"sha": "f388fcd54e461e24d6e3188c05e2d007c5225ab5",
+"size": 5272
 },
 "eversong12/12be_bloodelf_smalltree_04_lod02.skin": {
 "id": 5900622,
-"sha": "32b8bb695343f426dfcaafaeca093532281d1c87",
-"size": 4112
+"sha": "884d347ea38f2f53430c6fc486c82eae11a1d802",
+"size": 4136
 },
 "eversong12/12be_bloodelf_smalltree_04_lod03.skin": {
 "id": 5900625,
-"sha": "89f2a7e7e1bd67f3aa7b8349d0c7b452d4ba8294",
-"size": 3184
+"sha": "1d133324a719a62c690ab7f807874c13837f4f86",
+"size": 3208
 },
 "eversong12/12be_bloodelf_smalltree_0500.skin": {
 "id": 5900633,
-"sha": "5faff73e96f27d79833c6c958a0a64e4100f9867",
-"size": 6896
+"sha": "d1df6710d0d63c84ab1d5f2ea301ed1695f28b19",
+"size": 6920
 },
 "eversong12/12be_bloodelf_smalltree_05_5900611.blp": {
 "id": 5900611,
@@ -12670,63 +12770,63 @@
 },
 "eversong12/12be_bloodelf_smalltree_05_lod01.skin": {
 "id": 5900634,
-"sha": "1cd35816de05441c2ff78e32ee6453094e5f4faf",
-"size": 5072
+"sha": "2b8dd511cf3aab8ab48ac2922df438f71c69c09a",
+"size": 5096
 },
 "eversong12/12be_bloodelf_smalltree_05_lod02.skin": {
 "id": 5900635,
-"sha": "c9268dd82ac7aa2e2192dbeb889af22c51b79db4",
-"size": 3888
+"sha": "b82665bf5f544682cc2aca70a49ccf36dc451ba5",
+"size": 3912
 },
 "eversong12/12be_bloodelf_smalltree_05_lod03.skin": {
 "id": 5900636,
-"sha": "de1580ce24c54b4f080adb8d08ac96f74497b3bf",
-"size": 2960
+"sha": "662cc8e8445201097923ff58026ec662a8cde300",
+"size": 2984
 },
 "eversong12/12be_bloodelf_smalltree_0600.skin": {
 "id": 5900627,
-"sha": "5206554500418885d87e159fd5352a4f0e04441c",
-"size": 10656
+"sha": "16b31c51648987b7abdab6a1d6c3357167912235",
+"size": 10680
 },
 "eversong12/12be_bloodelf_smalltree_06_lod01.skin": {
 "id": 5900628,
-"sha": "d588a55ce0ffc0962b497b31d407b1f74954b2a1",
-"size": 7712
+"sha": "a5db5cffc3af8484a1f9375c47ddb693a4e2b373",
+"size": 7736
 },
 "eversong12/12be_bloodelf_smalltree_06_lod02.skin": {
 "id": 5900629,
-"sha": "5546aa1b05cb4f42e57189546628050b6ef9cf57",
-"size": 5536
+"sha": "527b978611ef8b553d85ec578c02c42aeb21e537",
+"size": 5560
 },
 "eversong12/12be_bloodelf_smalltree_06_lod03.skin": {
 "id": 5900630,
-"sha": "1e4a7747f85d82ed22d225fbdc42d5adf0a01cc5",
-"size": 4352
+"sha": "936b636798480285d54cb7557ad62c03c9c94175",
+"size": 4376
 },
 "eversong12/12be_bloodelf_smalltree_1000.skin": {
 "id": 5901929,
-"sha": "ed0b2a4e50015a9ef7c40e4af76105bf4af27063",
-"size": 10768
+"sha": "0592329e523446976d75edbfb8aba5e089743030",
+"size": 10804
 },
 "eversong12/12be_bloodelf_smalltree_10_lod01.skin": {
 "id": 5901930,
-"sha": "a13627a82084c6ce771e0732c6db2819cab0470e",
-"size": 7696
+"sha": "ddb1bfddd0f2d5357729622af38f1c13fffc8370",
+"size": 7732
 },
 "eversong12/12be_bloodelf_smalltree_10_lod02.skin": {
 "id": 5901932,
-"sha": "9f4b88d5eaea5df99f8e0434cc12257aabeed4a7",
-"size": 5888
+"sha": "81a67b887dd0351aa6d68bac9d70767df6ebeee8",
+"size": 5924
 },
 "eversong12/12be_bloodelf_smalltree_10_lod03.skin": {
 "id": 5901933,
-"sha": "013654f42a7460c16b7b228c0e38abaf654ec18a",
-"size": 4720
+"sha": "df762c3b1ff3e5377a1a48d5f6ee5d8bb45bdbc1",
+"size": 4756
 },
 "eversong12/12be_bloodelf_smalltree_1200.skin": {
 "id": 5901943,
-"sha": "a5d571cd51018c74de97e85bc089c0acf65b58c1",
-"size": 12240
+"sha": "6e52c8c391fe77d83bd0fd359856907d8a888a6d",
+"size": 12276
 },
 "eversong12/12be_bloodelf_smalltree_12_5901925.blp": {
 "id": 5901925,
@@ -12740,43 +12840,43 @@
 },
 "eversong12/12be_bloodelf_smalltree_12_lod01.skin": {
 "id": 5901944,
-"sha": "d06e0f358148bb3d43464b23ae50b1420289bdcc",
-"size": 8784
+"sha": "2e5b1ea6e883e74e6f8540e617a33869f9520e93",
+"size": 8820
 },
 "eversong12/12be_bloodelf_smalltree_12_lod02.skin": {
 "id": 5901945,
-"sha": "0685ab2d5005711a329c89de8b67256ff9befa49",
-"size": 6560
+"sha": "6d264a337e349a1ed38592294b4a828fc8fd2ef7",
+"size": 6596
 },
 "eversong12/12be_bloodelf_smalltree_12_lod03.skin": {
 "id": 5901946,
-"sha": "bdb41cf26482822293c96404f4a8dd91969f4bb5",
-"size": 5072
+"sha": "003a1f02790827dc7f8e22263279964e408340f5",
+"size": 5108
 },
 "eversong12/12be_bloodelf_smalltree_1300.skin": {
 "id": 5901947,
-"sha": "432ea60abd30206e4a5ce9557f803723b337a8bd",
-"size": 11984
+"sha": "996120377df3aa25e146f8efb6508e596b4c0f43",
+"size": 12020
 },
 "eversong12/12be_bloodelf_smalltree_13_lod01.skin": {
 "id": 5901948,
-"sha": "1a7f7560dbfe1642ee7071f6de5ee6036dc38c37",
-"size": 8656
+"sha": "a4a1bdf67c16f1e571d7cb481aa1c4e3fa6f8dd1",
+"size": 8692
 },
 "eversong12/12be_bloodelf_smalltree_13_lod02.skin": {
 "id": 5901949,
-"sha": "e05e2f366f84a34a1a5754d413604a3fd9e13cf8",
-"size": 6368
+"sha": "eb30aeb4376f0ca8f28e2d45335d8cc36caae249",
+"size": 6404
 },
 "eversong12/12be_bloodelf_smalltree_13_lod03.skin": {
 "id": 5901951,
-"sha": "eac5e8e14d16a7af158f304df928e2a83978eede",
-"size": 5056
+"sha": "244315ae5e58d8b928086f61b3c07edda810a2af",
+"size": 5092
 },
 "eversong12/12be_bloodelf_smalltree_1600.skin": {
 "id": 5907954,
-"sha": "2a249933c2622fb7e748db7f581a74196a8ecedd",
-"size": 4976
+"sha": "b7d4d9a645a5fe72d644a32f217e88aa482e3a54",
+"size": 4988
 },
 "eversong12/12be_bloodelf_smalltree_16_5907953.blp": {
 "id": 5907953,
@@ -12785,83 +12885,83 @@
 },
 "eversong12/12be_bloodelf_smalltree_16_lod01.skin": {
 "id": 5907956,
-"sha": "b11084aae8ecba15192b7133c05d8e3faa5ddcb0",
-"size": 3984
+"sha": "3418ba5e8f0f3e0536c4658ad6c1ac0fbe2b5ccb",
+"size": 3996
 },
 "eversong12/12be_bloodelf_smalltree_16_lod02.skin": {
 "id": 5907957,
-"sha": "6af008df3a774197937d801a6b640b5dbc6e36d1",
-"size": 3264
+"sha": "4aa16bb3407848e91d1e22b335f6c1a4c8ceb48f",
+"size": 3276
 },
 "eversong12/12be_bloodelf_smalltree_16_lod03.skin": {
 "id": 5907958,
-"sha": "470b59570625e10b6abfe4acdc819fd99e2b204c",
-"size": 2544
+"sha": "92f6a0ea067a0a7efc5949cff42a0940d0845be2",
+"size": 2556
 },
 "eversong12/12be_bloodelf_smalltree_1700.skin": {
 "id": 5907959,
-"sha": "0d4d96129e0725c61a7848e963a31def6ab44f44",
-"size": 6032
+"sha": "d101a1968af6750f46eb4ccbbf675bfc01891b05",
+"size": 6044
 },
 "eversong12/12be_bloodelf_smalltree_17_lod01.skin": {
 "id": 5907960,
-"sha": "1e2b2f983af3f68c9c7e1c882f3f450d2a6293b5",
-"size": 4688
+"sha": "57498954c1077273109e6a657a7c491bb4aaf4a2",
+"size": 4700
 },
 "eversong12/12be_bloodelf_smalltree_17_lod02.skin": {
 "id": 5907962,
-"sha": "f6e32e73fc750d8190a69cfa7d09638a3fda984c",
-"size": 3696
+"sha": "b3584fd5e68f1bf98314db6479d2aa7cc68f6e73",
+"size": 3708
 },
 "eversong12/12be_bloodelf_smalltree_17_lod03.skin": {
 "id": 5907963,
-"sha": "f685239f1c5f70e73b273fb3d5f3392592b3be86",
-"size": 2752
+"sha": "d61bd14fdeb0456257aed89ecfe8059549eed5ce",
+"size": 2764
 },
 "eversong12/12be_bloodelf_smalltree_1800.skin": {
 "id": 5907965,
-"sha": "1c5ccb7c2d8fd5abff1553bc3683b5df35e539a8",
-"size": 8736
+"sha": "f70af8ff60c371139636a05e9ce2b51c78c276e3",
+"size": 8748
 },
 "eversong12/12be_bloodelf_smalltree_18_lod01.skin": {
 "id": 5907966,
-"sha": "47b9b3cfa503a5dc2c45fb3a7d9c62f1db712af7",
-"size": 6176
+"sha": "775a1691b2e75e7d3340ace7921208bd9914e062",
+"size": 6188
 },
 "eversong12/12be_bloodelf_smalltree_18_lod02.skin": {
 "id": 5907967,
-"sha": "a2dc13520c146ee982ac900f05cb6a9fcc95b467",
-"size": 4880
+"sha": "bfb0867703e4d8f7acf072e653a0b531c774ab18",
+"size": 4892
 },
 "eversong12/12be_bloodelf_smalltree_18_lod03.skin": {
 "id": 5907968,
-"sha": "a8b0461e597f8614c333ed974f6d2a1206b94b67",
-"size": 3744
+"sha": "30d83f56d7394642400faf0ac8540d25f835c2c9",
+"size": 3756
 },
 "eversong12/12be_bloodelf_smalltree_2100.skin": {
 "id": 5910093,
-"sha": "2253e9d882568acfa4dde6830d68b7a9bf74f3e7",
-"size": 4752
+"sha": "b9bfad188644a842fb44ecd63568faf088187e8e",
+"size": 4776
 },
 "eversong12/12be_bloodelf_smalltree_21_lod01.skin": {
 "id": 5910094,
-"sha": "ef5d6d6731292186a1d0471db618dab670107ac3",
-"size": 3856
+"sha": "67ed1661e4e40b5fc3844cc1484a60b854578531",
+"size": 3880
 },
 "eversong12/12be_bloodelf_smalltree_21_lod02.skin": {
 "id": 5910095,
-"sha": "c8dc3584ce4338385d0ff9dabe74bb98284b6084",
-"size": 3152
+"sha": "8d64b892b25a01147f8352ff651e173b9895fb5c",
+"size": 3176
 },
 "eversong12/12be_bloodelf_smalltree_21_lod03.skin": {
 "id": 5910096,
-"sha": "4f4f5ca8de43178531d5baece01c56476cb4548c",
-"size": 2544
+"sha": "009e40c618e75232100408062f92a95cdcb6b80d",
+"size": 2568
 },
 "eversong12/12be_bloodelf_smalltree_2200.skin": {
 "id": 5910099,
-"sha": "dabd111300a3731f562d839ba93807c6cab16ccb",
-"size": 6400
+"sha": "4d4e9a366834c4e99d1ef8a05b131360d6b9723a",
+"size": 6424
 },
 "eversong12/12be_bloodelf_smalltree_22_5910088.blp": {
 "id": 5910088,
@@ -12870,23 +12970,23 @@
 },
 "eversong12/12be_bloodelf_smalltree_22_lod01.skin": {
 "id": 5910100,
-"sha": "ae1e097d4bb63811caa4aab59f0ad60b70cbd025",
-"size": 4976
+"sha": "a4df9425a9031f63347b5919938491d0174c97fe",
+"size": 5000
 },
 "eversong12/12be_bloodelf_smalltree_22_lod02.skin": {
 "id": 5910102,
-"sha": "2eeda5c36f3710256ed17d539a7952022f994b1f",
-"size": 4048
+"sha": "46e3bd553307c20c1632dbe967b900041cb5a030",
+"size": 4072
 },
 "eversong12/12be_bloodelf_smalltree_22_lod03.skin": {
 "id": 5910104,
-"sha": "54036615157d510f4cf765f5e11fa41b9a7cc1e1",
-"size": 3200
+"sha": "cb0bd32983944f6e2e5c6f4191462822732224d5",
+"size": 3224
 },
 "eversong12/12be_bloodelf_smalltree_2400.skin": {
 "id": 5910080,
-"sha": "dabd111300a3731f562d839ba93807c6cab16ccb",
-"size": 6400
+"sha": "4d4e9a366834c4e99d1ef8a05b131360d6b9723a",
+"size": 6424
 },
 "eversong12/12be_bloodelf_smalltree_24_5910071.blp": {
 "id": 5910071,
@@ -12895,18 +12995,18 @@
 },
 "eversong12/12be_bloodelf_smalltree_24_lod01.skin": {
 "id": 5910081,
-"sha": "ae1e097d4bb63811caa4aab59f0ad60b70cbd025",
-"size": 4976
+"sha": "a4df9425a9031f63347b5919938491d0174c97fe",
+"size": 5000
 },
 "eversong12/12be_bloodelf_smalltree_24_lod02.skin": {
 "id": 5910082,
-"sha": "2eeda5c36f3710256ed17d539a7952022f994b1f",
-"size": 4048
+"sha": "46e3bd553307c20c1632dbe967b900041cb5a030",
+"size": 4072
 },
 "eversong12/12be_bloodelf_smalltree_24_lod03.skin": {
 "id": 5910083,
-"sha": "54036615157d510f4cf765f5e11fa41b9a7cc1e1",
-"size": 3200
+"sha": "cb0bd32983944f6e2e5c6f4191462822732224d5",
+"size": 3224
 },
 "eversong12/12be_softglow_6310660.blp": {
 "id": 6310660,
@@ -13015,103 +13115,103 @@
 },
 "eversong12/ghostlands/ghostlandstree01.m2": {
 "id": 192282,
-"sha": "e76bf909bf7d4e701b89d6d34c6941e76f46d43a",
-"size": 1325902
+"sha": "df5639c9ed54e51e45b136d243adfe915aecda07",
+"size": 1588216
 },
 "eversong12/ghostlands/ghostlandstree01_yellow0200.skin": {
 "id": 8838193,
-"sha": "4a9b8137a21490691e88043a3dee6a3540f91467",
-"size": 73472
+"sha": "e789d9449c188c03c80935887f35f54124d6bb47",
+"size": 70808
 },
 "eversong12/ghostlands/ghostlandstree01_yellow02_lod01.skin": {
 "id": 8838194,
-"sha": "2c63d5fdf009554fb9398b0ea23c5ffa197610a6",
-"size": 64896
+"sha": "7b24ec058b325c23b4e04044d62fdc37ba5f33d3",
+"size": 65240
 },
 "eversong12/ghostlands/ghostlandstree01_yellow02_lod02.skin": {
 "id": 8838195,
-"sha": "f5739807ba2b49ed1dae2b23db8e397072b4ea40",
-"size": 59968
+"sha": "acefd27eccc2e96d93151fd30a09871bcc073fd0",
+"size": 60312
 },
 "eversong12/ghostlands/ghostlandstree01_yellow02_lod03.skin": {
 "id": 8838196,
-"sha": "03bd14dfe3a4cf7bae15c89343f816df3efb15b6",
-"size": 55664
+"sha": "a496a4c5b93e8aee770382ee08e6fb71812fc54e",
+"size": 56008
 },
 "eversong12/ghostlands/ghostlandstree02.m2": {
 "id": 192283,
-"sha": "3ec8c49479367606657fcb64ca60622b08a64e6e",
-"size": 1035938
+"sha": "78ea860ce6bfd734181e1f5bd4fbcd54e05ac6a5",
+"size": 1258312
 },
 "eversong12/ghostlands/ghostlandstree02_yellow0300.skin": {
 "id": 8838197,
-"sha": "f4656eb18164b956d9d3581169fe8dd76c290db4",
-"size": 62912
+"sha": "15742b91dc5182a3ce731766f113da6191acb6c1",
+"size": 60408
 },
 "eversong12/ghostlands/ghostlandstree02_yellow03_lod01.skin": {
 "id": 8838198,
-"sha": "0442c02077cdb60355a43f6bea130f8067aa2c1a",
-"size": 57440
+"sha": "93f41bb24fd26515d8b747f9b0b7ec564a1c8fd8",
+"size": 57784
 },
 "eversong12/ghostlands/ghostlandstree02_yellow03_lod02.skin": {
 "id": 8838199,
-"sha": "6d05b21926237c97e859ae5a3479fb696d9433fc",
-"size": 53776
+"sha": "51a82e179ae053fefe13f16160716bedf4983a2d",
+"size": 54120
 },
 "eversong12/ghostlands/ghostlandstree02_yellow03_lod03.skin": {
 "id": 8838200,
-"sha": "48e1e9bab73ea33f0dd1de638dd516e4cee2a816",
-"size": 50976
+"sha": "db16c8c67fd2b8633af809585234edd48c5d7fa5",
+"size": 51320
 },
 "eversong12/ghostlands/ghostlandstree04.m2": {
 "id": 192285,
-"sha": "8b007830f0ececd1778b889a373a60ff445d3dc9",
-"size": 1983630
+"sha": "a68f75e0129e9c9071d0a252682de0068d1dfc0b",
+"size": 2333640
 },
 "eversong12/ghostlands/ghostlandstree04_yellow0100.skin": {
 "id": 8838201,
-"sha": "7e62e65740139272f003ab91cae6c9f53dcc9565",
-"size": 96592
+"sha": "c5a2e361f3541b0dda0be1371c087c9ee5eb1e85",
+"size": 92152
 },
 "eversong12/ghostlands/ghostlandstree04_yellow01_lod01.skin": {
 "id": 8838202,
-"sha": "802c128908485d888dd303f2c47103e59b189b4e",
-"size": 81312
+"sha": "10bc061c9be5d627e24748518e6ab3d06cd14e4f",
+"size": 81656
 },
 "eversong12/ghostlands/ghostlandstree04_yellow01_lod02.skin": {
 "id": 8838203,
-"sha": "9b8a70f2f0c856dd3322d8ea8c8bfa66cf5f1718",
-"size": 70352
+"sha": "c8beedeea983c3b0e46d23cc044e0ba08bf41685",
+"size": 70696
 },
 "eversong12/ghostlands/ghostlandstree04_yellow01_lod03.skin": {
 "id": 8838204,
-"sha": "236f277dfd0ae1a508acbedf60f5db653548ce79",
-"size": 63600
+"sha": "b85d659904583bc1e668b1fe3e9ad124e45323c3",
+"size": 63944
 },
 "eversong12/ghostlands/ghostlandstree05.m2": {
 "id": 192286,
-"sha": "f8f0683eb23a5f2e709dff14adebbf978bf89af1",
-"size": 650234
+"sha": "4f71958b9b6d23ee67a6f6ff5913d07467ccebf8",
+"size": 816252
 },
 "eversong12/ghostlands/ghostlandstree05_yellow0500.skin": {
 "id": 8838205,
-"sha": "b2fb5d38b41ddcd4c88bbc5e73b154a7de591a15",
-"size": 45440
+"sha": "81b91e17d56c7f9b4d13330126ee6d70ccdad3a4",
+"size": 45416
 },
 "eversong12/ghostlands/ghostlandstree05_yellow05_lod01.skin": {
 "id": 8838206,
-"sha": "501e34e154d794d0ee76f115da9bd4456cea8a0d",
-"size": 42848
+"sha": "794326f108a5d20d239b5296fd3291405cf4767d",
+"size": 42920
 },
 "eversong12/ghostlands/ghostlandstree05_yellow05_lod02.skin": {
 "id": 8838207,
-"sha": "0659eecb113a533464982e2aff503ed1e1b427de",
-"size": 41328
+"sha": "44168b1258388ccd6f07959a8dbe5d2dff6a309e",
+"size": 41400
 },
 "eversong12/ghostlands/ghostlandstree05_yellow05_lod03.skin": {
 "id": 8838208,
-"sha": "df2e234c846d823efdcc26d0365c5bf0c4ee303f",
-"size": 40144
+"sha": "990cf4f6cbb42c00dcb8a5fef4b5a5ccd6f6dbed",
+"size": 40216
 },
 "eversong12/ghostlands/ghostlandsweb_01.m2": {
 "id": 192760,
@@ -13162,6 +13262,596 @@
 "id": 496168,
 "sha": "c65b1c114b7686419c3505811e6250b8cc10b631",
 "size": 224
+},
+"eversong12/props/be_barrel_01.m2": {
+"id": 191921,
+"sha": "108b08a6461d46e3e4cdc16fb9615a63248862b6",
+"size": 32794
+},
+"eversong12/props/be_barrel_0100.skin": {
+"id": 927010681,
+"sha": "ab35865900cf2e0896f49bdc2724dca2449d4166",
+"size": 6616
+},
+"eversong12/props/be_barrel_01_nocollision.m2": {
+"id": 242711,
+"sha": "7f6548ad88b0f7f30cf653a611c54983edee96fc",
+"size": 31658
+},
+"eversong12/props/be_barrel_01_nocollision00.skin": {
+"id": 927010715,
+"sha": "ab35865900cf2e0896f49bdc2724dca2449d4166",
+"size": 6616
+},
+"eversong12/props/be_bench01.m2": {
+"id": 191936,
+"sha": "6810355e88c38ee06fe6293edb42379552c05527",
+"size": 136666
+},
+"eversong12/props/be_bench0100.skin": {
+"id": 927010683,
+"sha": "7f3bef26995d89e26bfb03babdea9701c934f696",
+"size": 16936
+},
+"eversong12/props/be_chair01.m2": {
+"id": 191981,
+"sha": "0ba9d5adebb6035d7728ed0cd893982451ac1e9a",
+"size": 75774
+},
+"eversong12/props/be_chair0100.skin": {
+"id": 927010685,
+"sha": "1a3d0260ab9eced9365ebe882e1bdc66da173c29",
+"size": 11728
+},
+"eversong12/props/be_chair02.m2": {
+"id": 191982,
+"sha": "76e6e3c577d331ed7007f25f79b5ae97722224a3",
+"size": 107230
+},
+"eversong12/props/be_chair0200.skin": {
+"id": 927010688,
+"sha": "b5034bc27371df859bb8c2851f80caa9a9d20103",
+"size": 16848
+},
+"eversong12/props/be_chair_wrecked_01.m2": {
+"id": 191985,
+"sha": "852d8d71c3eaa594fa82dd733081e909ea966928",
+"size": 64478
+},
+"eversong12/props/be_chair_wrecked_0100.skin": {
+"id": 927010690,
+"sha": "1550357f0ab63c194271c520a7c56f2b94a84270",
+"size": 8464
+},
+"eversong12/props/be_chandelier01.m2": {
+"id": 191994,
+"sha": "171f49ed334d49f2fe399378938699340476e1f2",
+"size": 175310
+},
+"eversong12/props/be_chandelier0100.skin": {
+"id": 927010693,
+"sha": "d13fb2de261a6f6ca931e6bf4a3d33a1e39ccf85",
+"size": 24552
+},
+"eversong12/props/be_couch01.m2": {
+"id": 192001,
+"sha": "5088bda85ce74ed1b0b21e6b7b538cc6c8a91bbf",
+"size": 124290
+},
+"eversong12/props/be_couch0100.skin": {
+"id": 927010698,
+"sha": "012c104d7ae8586c8175a3a15b548775f3973628",
+"size": 19768
+},
+"eversong12/props/be_fence_eversong01.m2": {
+"id": 191771,
+"sha": "9630eeaaf41b11ea15d9d275b1a3c98925b679cf",
+"size": 65128
+},
+"eversong12/props/be_fence_eversong0100.skin": {
+"id": 927010667,
+"sha": "c013143d4bd2757008dae28fd20af03fa7c51c54",
+"size": 7552
+},
+"eversong12/props/be_fence_eversong02.m2": {
+"id": 191772,
+"sha": "5cf6df4fb2f960867b591dc1089b0ff284df279c",
+"size": 114104
+},
+"eversong12/props/be_fence_eversong0200.skin": {
+"id": 927010716,
+"sha": "7962414fa412ea6fcce423040f0569235104f9a6",
+"size": 14880
+},
+"eversong12/props/be_fence_eversong03.m2": {
+"id": 191773,
+"sha": "378c0096f17a5eeddd54f3b3ce9762cad63271dc",
+"size": 26596
+},
+"eversong12/props/be_fence_eversong0300.skin": {
+"id": 927010720,
+"sha": "b8924437c2a2a296b30a4c3769e621b0f751332b",
+"size": 3048
+},
+"eversong12/props/be_lamppost_eversong01.m2": {
+"id": 191776,
+"sha": "d998a4451ed5080f8d62afd26d0d80b01012d5ca",
+"size": 245496
+},
+"eversong12/props/be_lamppost_eversong0100.skin": {
+"id": 927010671,
+"sha": "e55bae5a598e11f7bc3688663b286e9b65fb311b",
+"size": 19136
+},
+"eversong12/props/be_lamppost_ghostlands01.m2": {
+"id": 192732,
+"sha": "22a8000149cd2ba0e0631a45dba92e2abd9f7516",
+"size": 240864
+},
+"eversong12/props/be_lamppost_ghostlands0100.skin": {
+"id": 927010725,
+"sha": "721285cd51736c3ef61ab1631a3c80fa1b97ddb1",
+"size": 19032
+},
+"eversong12/props/be_lamppost_ghostlands02.m2": {
+"id": 192733,
+"sha": "16dcb1b22791670e0dcd9b78cf3eb9cdf12be5a9",
+"size": 210896
+},
+"eversong12/props/be_lamppost_ghostlands0200.skin": {
+"id": 927010736,
+"sha": "e8fa90da8e7e58b5468d9e4e0737aca4b1f65ab0",
+"size": 16184
+},
+"eversong12/props/be_lantern01.m2": {
+"id": 192093,
+"sha": "30d5ae1fd6c29aaa3b33fc671bf9da18ef2942fc",
+"size": 81514
+},
+"eversong12/props/be_lantern0100.skin": {
+"id": 927010702,
+"sha": "c9b7427b0bdc0485dc6ed7bc053fba175a544dec",
+"size": 12912
+},
+"eversong12/props/be_statue01.m2": {
+"id": 192229,
+"sha": "86abdef609f2c9a1851c32982e749dd14da68547",
+"size": 282782
+},
+"eversong12/props/be_statue0100.skin": {
+"id": 927010705,
+"sha": "a6dbd6f9f84e1f811c9990a13b425c8266cc257d",
+"size": 47808
+},
+"eversong12/props/be_statue02.m2": {
+"id": 192230,
+"sha": "ae8628e15ddc70a4b9421a8a84f7867e38da0e7e",
+"size": 271838
+},
+"eversong12/props/be_statue0200.skin": {
+"id": 927010709,
+"sha": "0bcac94ecd0debab69f20c623c43e1608faebbca",
+"size": 46544
+},
+"eversong12/props/be_statueranger.m2": {
+"id": 192236,
+"sha": "b64116dfe8ed39181aebb47b65e48805a07306f5",
+"size": 449458
+},
+"eversong12/props/be_statueranger00.skin": {
+"id": 927010712,
+"sha": "d102091650f7bef9bec378af67dd514ea81afb6f",
+"size": 82144
+},
+"eversong12/props/deps/6024789.blp": {
+"id": 927010674,
+"sha": "d21f3a8d8307ce40fced633ff4c0f81f71482024",
+"size": 1228
+},
+"eversong12/props/deps/6024801.blp": {
+"id": 927010694,
+"sha": "de9738c768347931edbbdb3f44d8ee738ecff754",
+"size": 12108
+},
+"eversong12/props/deps/6075549.blp": {
+"id": 927010669,
+"sha": "c8d9d1a736d09c694960a2eacfc58282f9ea1475",
+"size": 3916
+},
+"eversong12/props/deps/6075652.blp": {
+"id": 927010682,
+"sha": "a65edbd45492cbb6e5fdd8352cad063cfc00598e",
+"size": 350724
+},
+"eversong12/props/deps/6075655.blp": {
+"id": 927010679,
+"sha": "59f52c762723ce491d95bd3d400523329a46efd8",
+"size": 3916
+},
+"eversong12/props/deps/6116535.blp": {
+"id": 927010686,
+"sha": "1428382b3e861e2850d68e61b3fdb40af809e2ee",
+"size": 350724
+},
+"eversong12/props/deps/6116540.blp": {
+"id": 927010689,
+"sha": "eacdaebe6439bc8740d6be183e68312c6635e4ce",
+"size": 350724
+},
+"eversong12/props/deps/6118065.blp": {
+"id": 927010687,
+"sha": "3b7937e0c4def0f58e40d9a6b70d89528d5ab035",
+"size": 350724
+},
+"eversong12/props/deps/6124759.blp": {
+"id": 927010672,
+"sha": "80f69448f1e39c28f52c156681ade74ffbd1b454",
+"size": 350724
+},
+"eversong12/props/deps/6124760.blp": {
+"id": 927010673,
+"sha": "722077322de44ca288a88b00483c8dcc8b244582",
+"size": 1540
+},
+"eversong12/props/deps/6124763.blp": {
+"id": 927010676,
+"sha": "f81e702eeebdca67a834679489c402ef56d765f7",
+"size": 350724
+},
+"eversong12/props/deps/6124765.blp": {
+"id": 927010677,
+"sha": "5a3919a62cf2df5cabf30e669d11f178d664f24a",
+"size": 12108
+},
+"eversong12/props/deps/6124768.blp": {
+"id": 927010678,
+"sha": "b825f9fdb5fc931af34e4d577c02cae41871f1e3",
+"size": 350724
+},
+"eversong12/props/deps/6124770.blp": {
+"id": 927010680,
+"sha": "d6f2384014de25f4fb6a7dfc65a283c8c8fb0ade",
+"size": 350724
+},
+"eversong12/props/deps/6127464.blp": {
+"id": 927010701,
+"sha": "8fc51da04c806d40d79366b6a22704f624329edf",
+"size": 350724
+},
+"eversong12/props/deps/6127465.blp": {
+"id": 927010700,
+"sha": "c354cc91bfda33e66251a476dd9988bd323edf31",
+"size": 350724
+},
+"eversong12/props/deps/6127466.blp": {
+"id": 927010699,
+"sha": "b73ad470b599537bae5e477f43d4856a6f43dad4",
+"size": 350724
+},
+"eversong12/props/deps/6187773.blp": {
+"id": 927010668,
+"sha": "5941982fb0d27508f594ab604bf7b93689976e1c",
+"size": 350724
+},
+"eversong12/props/deps/6187775.blp": {
+"id": 927010670,
+"sha": "7ef4039dfbe7d51ae701b36a8c5d461b019efbe2",
+"size": 175948
+},
+"eversong12/props/deps/6226208.blp": {
+"id": 927010696,
+"sha": "5594e968a3f32c48c91e6ddba86ede2593a8f8fb",
+"size": 350724
+},
+"eversong12/props/deps/6226209.blp": {
+"id": 927010697,
+"sha": "f0dc8ab52bb696fca224211ef9dc6365b5755503",
+"size": 350724
+},
+"eversong12/props/deps/6226210.blp": {
+"id": 927010695,
+"sha": "569b043cd7c933201692e30f14fec2df411cf728",
+"size": 44876
+},
+"eversong12/props/deps/6310364.blp": {
+"id": 927010675,
+"sha": "edc0702a9aa327d357204a608d8bee8a8e1ee83f",
+"size": 23044
+},
+"eversong12/props/deps/6929196.blp": {
+"id": 927010684,
+"sha": "d5366a51fdfd3726773465807fda2258109553ee",
+"size": 350724
+},
+"eversong12/props/deps/6990218.blp": {
+"id": 927010703,
+"sha": "c7d04860def766b2e9cc3dde3968a7bcf07375b3",
+"size": 44900
+},
+"eversong12/props/deps/7082252.blp": {
+"id": 927010704,
+"sha": "774e5b125a1e335481e8dd1bd672392a7829d708",
+"size": 350724
+},
+"eversong12/props/deps/7106889.blp": {
+"id": 927010711,
+"sha": "945344813b241e8518d4fd01e9be21f4fa84ff7f",
+"size": 1399300
+},
+"eversong12/props/deps/7106892.blp": {
+"id": 927010710,
+"sha": "60e67ffebfd7df619a44b37e994f66044a7297b7",
+"size": 1399300
+},
+"eversong12/props/deps/7132195.blp": {
+"id": 927010691,
+"sha": "448e262ce65e236dac3e2fad5c610b3b65110387",
+"size": 350724
+},
+"eversong12/props/deps/7132197.blp": {
+"id": 927010692,
+"sha": "5914ac42d4fe1dedfca3c40c46e0de37703e5594",
+"size": 350724
+},
+"eversong12/props/deps/7143551.blp": {
+"id": 927010707,
+"sha": "b2d7906bb1ffd4b4b2493a7cae12cb0850012417",
+"size": 12108
+},
+"eversong12/props/deps/7210311.blp": {
+"id": 927010706,
+"sha": "e927033753e033d9079d10949352df8b96c7950d",
+"size": 1399300
+},
+"eversong12/props/deps/7210312.blp": {
+"id": 927010708,
+"sha": "4fbc712634adf8e7878311f457b3577e9b395a1c",
+"size": 1399300
+},
+"eversong12/props/deps/7525301.blp": {
+"id": 927010713,
+"sha": "7941e8e7685cc958910034bb48414c9a5678f3b6",
+"size": 1399300
+},
+"eversong12/props/deps/7525302.blp": {
+"id": 927010714,
+"sha": "2b907ecabdcf6dbaa55e6621de6be11d0757f26a",
+"size": 1399300
+},
+"eversong12/props/deps/fence_v2/6024789.blp": {
+"id": 927010728,
+"sha": "d21f3a8d8307ce40fced633ff4c0f81f71482024",
+"size": 1228
+},
+"eversong12/props/deps/fence_v2/6075549.blp": {
+"id": 927010719,
+"sha": "c8d9d1a736d09c694960a2eacfc58282f9ea1475",
+"size": 3916
+},
+"eversong12/props/deps/fence_v2/6075655.blp": {
+"id": 927010734,
+"sha": "59f52c762723ce491d95bd3d400523329a46efd8",
+"size": 3916
+},
+"eversong12/props/deps/fence_v2/6124759.blp": {
+"id": 927010726,
+"sha": "80f69448f1e39c28f52c156681ade74ffbd1b454",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/6124760.blp": {
+"id": 927010727,
+"sha": "722077322de44ca288a88b00483c8dcc8b244582",
+"size": 1540
+},
+"eversong12/props/deps/fence_v2/6124763.blp": {
+"id": 927010730,
+"sha": "f81e702eeebdca67a834679489c402ef56d765f7",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/6124765.blp": {
+"id": 927010735,
+"sha": "5a3919a62cf2df5cabf30e669d11f178d664f24a",
+"size": 12108
+},
+"eversong12/props/deps/fence_v2/6187773.blp": {
+"id": 927010718,
+"sha": "5941982fb0d27508f594ab604bf7b93689976e1c",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/6187775.blp": {
+"id": 927010717,
+"sha": "7ef4039dfbe7d51ae701b36a8c5d461b019efbe2",
+"size": 175948
+},
+"eversong12/props/deps/fence_v2/6195829.blp": {
+"id": 927010739,
+"sha": "7785c7602ba4453e0ade17547a8e0f30ce8b063a",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/6195830.blp": {
+"id": 927010732,
+"sha": "181a32642b6c09d97c349e953781944fd99bdade",
+"size": 175948
+},
+"eversong12/props/deps/fence_v2/6310364.blp": {
+"id": 927010729,
+"sha": "edc0702a9aa327d357204a608d8bee8a8e1ee83f",
+"size": 23044
+},
+"eversong12/props/deps/fence_v2/6387436.blp": {
+"id": 927010738,
+"sha": "1154844c8ac71e8956f301e9e756582ea6aa1783",
+"size": 12108
+},
+"eversong12/props/deps/fence_v2/6387440.blp": {
+"id": 927010737,
+"sha": "9fdb9fbf16a3006cc30a74dac23cf02ca25d87dc",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/7082252.blp": {
+"id": 927010733,
+"sha": "774e5b125a1e335481e8dd1bd672392a7829d708",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/7082448.blp": {
+"id": 927010731,
+"sha": "30be95498f1847f546ed4bc58bf5a8bd3125aea2",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/ghost_6187773.blp": {
+"id": 927010740,
+"sha": "f1ffc0b64245ec04de2e9c9b7cfdd94235c5a030",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/ghost_6187775.blp": {
+"id": 927010741,
+"sha": "067886bcdbee48a217d051386f95dbe8d45c81a6",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/ghost_6195829.blp": {
+"id": 927010746,
+"sha": "cb0e29d80b6379d396972a92ea5acff0eb6e226a",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/ghost_6195830.blp": {
+"id": 927010744,
+"sha": "9a3f26dcb0b527215988bde28dd60b19a0cba0db",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/ghost_6387440.blp": {
+"id": 927010745,
+"sha": "e080c9265e2f7908a4a736426de741eb140f1e1e",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/ghost_7082252.blp": {
+"id": 927010742,
+"sha": "927222785d07f7e7e68312202fcf45e8d907912b",
+"size": 350724
+},
+"eversong12/props/deps/fence_v2/ghost_7082448.blp": {
+"id": 927010743,
+"sha": "f66c3ad338ccbebff5eff5fec2c3f24c005ac2d4",
+"size": 350724
+},
+"eversong12/props/deps/tbc_runtime_v5/143376.blp": {
+"id": 927010761,
+"sha": "6675ecd933d8f7c6d7b8bef167ed05cc4a2066ef",
+"size": 1868
+},
+"eversong12/props/deps/tbc_runtime_v5/166232.blp": {
+"id": 927010749,
+"sha": "85c0ff64ae4cab744e39c6a4bd4e3869b90c8776",
+"size": 6660
+},
+"eversong12/props/deps/tbc_runtime_v5/166967.blp": {
+"id": 927010757,
+"sha": "f407d7149f4af21c827c4bdf716f92e2fb39b83e",
+"size": 3916
+},
+"eversong12/props/deps/tbc_runtime_v5/191774.blp": {
+"id": 927010747,
+"sha": "c39041679749e40c59ac95e9580da6326ee115f3",
+"size": 88580
+},
+"eversong12/props/deps/tbc_runtime_v5/191883.blp": {
+"id": 927010759,
+"sha": "8d2da42749720e6c0cc4096e4dfca0d75e1b21dd",
+"size": 44876
+},
+"eversong12/props/deps/tbc_runtime_v5/191920.blp": {
+"id": 927010750,
+"sha": "4e0fa319b5e6c1ff203f0b3b55f4a10ea8e7f962",
+"size": 12108
+},
+"eversong12/props/deps/tbc_runtime_v5/191937.blp": {
+"id": 927010751,
+"sha": "546a02549f44c2310a033b4ae8e772ca79c7e138",
+"size": 44876
+},
+"eversong12/props/deps/tbc_runtime_v5/191987.blp": {
+"id": 927010752,
+"sha": "0364a112fad9f2c66c938e4db4563945f33908f1",
+"size": 44876
+},
+"eversong12/props/deps/tbc_runtime_v5/191989.blp": {
+"id": 927010753,
+"sha": "d336c82174dd107336c93022469ef93fc5263dc2",
+"size": 44876
+},
+"eversong12/props/deps/tbc_runtime_v5/191993.blp": {
+"id": 927010756,
+"sha": "2428103d8593871969fa5499e95a87134f022ac8",
+"size": 44876
+},
+"eversong12/props/deps/tbc_runtime_v5/191995.blp": {
+"id": 927010754,
+"sha": "b511101e917c36033a13a6498de5926bd66846f8",
+"size": 23036
+},
+"eversong12/props/deps/tbc_runtime_v5/191996.blp": {
+"id": 927010755,
+"sha": "e237b1e566b94e31a6d6640faca135c077569e71",
+"size": 6652
+},
+"eversong12/props/deps/tbc_runtime_v5/192000.blp": {
+"id": 927010758,
+"sha": "8f8d13e01cc5b113636f71477e4191b6e7e80eb1",
+"size": 88580
+},
+"eversong12/props/deps/tbc_runtime_v5/192235.blp": {
+"id": 927010760,
+"sha": "93d206b4753a2ce615b3d9b7fc351ebee4f84d19",
+"size": 44876
+},
+"eversong12/props/deps/tbc_runtime_v5/192731.blp": {
+"id": 927010762,
+"sha": "cd43917d738352fcc05d43ae389cf02ddcef7c04",
+"size": 44876
+},
+"eversong12/props/deps/tbc_runtime_v5/234823.blp": {
+"id": 927010748,
+"sha": "ce193d2938c562336aa38eb7e90babd091943d1f",
+"size": 1284
+},
+"eversong12/props/fence_ghostlands01.m2": {
+"id": 192727,
+"sha": "c0b06ab1ffcb6d1efbc1a17887a0a38e39bbcf46",
+"size": 64856
+},
+"eversong12/props/fence_ghostlands0100.skin": {
+"id": 927010721,
+"sha": "c013143d4bd2757008dae28fd20af03fa7c51c54",
+"size": 7552
+},
+"eversong12/props/fence_ghostlands02.m2": {
+"id": 192728,
+"sha": "5b3e9146cccb4e003b884f634caa333aaa335418",
+"size": 26324
+},
+"eversong12/props/fence_ghostlands0200.skin": {
+"id": 927010722,
+"sha": "b8924437c2a2a296b30a4c3769e621b0f751332b",
+"size": 3048
+},
+"eversong12/props/fence_ghostlands03.m2": {
+"id": 192729,
+"sha": "71dc3d90ef5bdc53293efd63d0a0f1225c3d474b",
+"size": 61592
+},
+"eversong12/props/fence_ghostlands0300.skin": {
+"id": 927010723,
+"sha": "046db8864ec528e4ca7851189e2f557aca738bb0",
+"size": 7552
+},
+"eversong12/props/fence_ghostlands04.m2": {
+"id": 192730,
+"sha": "4c88320c06c6a18cca96c6f88f11e2ad6870fb9c",
+"size": 113832
+},
+"eversong12/props/fence_ghostlands0400.skin": {
+"id": 927010724,
+"sha": "7962414fa412ea6fcce423040f0569235104f9a6",
+"size": 14880
 },
 "eversong12/silvermoonbush01.m2": {
 "id": 192287,
@@ -13220,8 +13910,8 @@
 },
 "eversong12/silvermoonsmallroots0100.skin": {
 "id": 508751,
-"sha": "b95fc23975dcea56c43b68d0dbb87288fd30b878",
-"size": 3344
+"sha": "c4e7020b60ff9d63e2311f66b73951ff8c1826bc",
+"size": 3356
 },
 "eversong12/silvermoonsmallroots02.m2": {
 "id": 203939,
@@ -13230,8 +13920,8 @@
 },
 "eversong12/silvermoonsmallroots0200.skin": {
 "id": 508742,
-"sha": "7eb1caca1c6897a36d7eb17fcf9c14bfd28ab7c1",
-"size": 2688
+"sha": "eb275e1d8ed35dbf858d93c944dc6c4ffb915946",
+"size": 2700
 },
 "eversong12/silvermoonsmallroots03.m2": {
 "id": 203940,
@@ -13240,8 +13930,8 @@
 },
 "eversong12/silvermoonsmallroots0300.skin": {
 "id": 508738,
-"sha": "0fdb5df2b8055f4ead6d016eec82f5a7b5830183",
-"size": 2880
+"sha": "8a39c048c76b4b3491af76facec2f884212d78f5",
+"size": 2892
 },
 "eversong12/silvermoonsmallroots04.m2": {
 "id": 203941,
@@ -13250,8 +13940,8 @@
 },
 "eversong12/silvermoonsmallroots0400.skin": {
 "id": 508748,
-"sha": "ecb10e177f2cda22f3a6ae960606969bfaf3a5f4",
-"size": 3008
+"sha": "9674965da5293899da6a980db8d0cd2a6b8f1218",
+"size": 3020
 },
 "eversong12/silvermoonsmalltree01.m2": {
 "id": 203942,
@@ -13295,78 +13985,78 @@
 },
 "eversong12/silvermoontree01.m2": {
 "id": 203950,
-"sha": "87bb135b7da0b97aee6f0081f92d3b0c31f690e3",
-"size": 816008
+"sha": "c2b3226ea7f84b1eb69780e11aea8152ffe2afa8",
+"size": 1038386
 },
 "eversong12/silvermoontree01_p_eversongtree_yellow0200.skin": {
 "id": 6692616,
-"sha": "d175a1f0f9384879ab6227ff5a29b5b789927938",
-"size": 60624
+"sha": "40d400727525405f2e876fba01e9734f1bba41fc",
+"size": 57948
 },
 "eversong12/silvermoontree01_p_eversongtree_yellow02_lod01.skin": {
 "id": 6692618,
-"sha": "5ba3501851854c57005b6e0fba21a700ea208696",
-"size": 52048
+"sha": "214bbb91af7b6f127dee85773768060e0ac98e37",
+"size": 52268
 },
 "eversong12/silvermoontree01_p_eversongtree_yellow02_lod02.skin": {
 "id": 6692619,
-"sha": "3eca2e3c87ef574ba4d62fd493608312ddf49326",
-"size": 47120
+"sha": "4203186eb78e52e4a3ecc47b987a9b1f0594371b",
+"size": 47340
 },
 "eversong12/silvermoontree01_p_eversongtree_yellow02_lod03.skin": {
 "id": 6692620,
-"sha": "2e2b2109d5f455545fd3affdf869f653a668581a",
-"size": 42816
+"sha": "21fca1871c4ea91edcc94805d202c6d14103a21a",
+"size": 43036
 },
 "eversong12/silvermoontree02.m2": {
 "id": 203951,
-"sha": "8b8d24dfc462d08b3a18bebaa0d8451035ba4417",
-"size": 357320
+"sha": "ad0c7de17bcf7143bc6f7ad8f107aab249e8e2d3",
+"size": 469590
 },
 "eversong12/silvermoontree02_p_eversongtree_yellow0400.skin": {
 "id": 6698624,
-"sha": "307f8872bc750128416ceef199ede7ba3393f837",
-"size": 29776
+"sha": "bb9615da7c39d0b4aa87a32e3f75e29525967bbe",
+"size": 29756
 },
 "eversong12/silvermoontree02_p_eversongtree_yellow04_lod01.skin": {
 "id": 6698625,
-"sha": "0562be36c7257af6b013de8776ffbf121eec65c4",
-"size": 27024
+"sha": "078b76929143b5d03b2c58dc511eebc3ef045dda",
+"size": 27068
 },
 "eversong12/silvermoontree02_p_eversongtree_yellow04_lod02.skin": {
 "id": 6698626,
-"sha": "3d23fb6aba739f0e872fa49e2fe1bed891bd1b1b",
-"size": 25472
+"sha": "3ab8c3a6cd071fdc946e7d425caa4f919a91ca8a",
+"size": 25516
 },
 "eversong12/silvermoontree02_p_eversongtree_yellow04_lod03.skin": {
 "id": 6698627,
-"sha": "c9aaacb3bf1151fd248b09ee78f362ca4aaf12a2",
-"size": 24272
+"sha": "30634979563cd493230e0c976c706f70ed898dfe",
+"size": 24316
 },
 "eversong12/silvermoontree03.m2": {
 "id": 203952,
-"sha": "04befc354344c69afbf8f48058385ee312b987cd",
-"size": 372324
+"sha": "ba2b8fd5dfe2a6c990bc5b3997f04709e2dcbb07",
+"size": 498406
 },
 "eversong12/silvermoontree03_p_eversongtree_yellow0500.skin": {
 "id": 6698651,
-"sha": "7b294d06ce55107198e694a5e1c1fd7893beb9c9",
-"size": 32576
+"sha": "04478a2fdddaf56e131e22d4d55a189fc1091ad5",
+"size": 32556
 },
 "eversong12/silvermoontree03_p_eversongtree_yellow05_lod01.skin": {
 "id": 6698652,
-"sha": "3d9a3d6cb14ef8174fa4494165d688e5f8024a8f",
-"size": 29984
+"sha": "c5f9e31b9c16f0de26edb90e0f8fb40205d9f621",
+"size": 30028
 },
 "eversong12/silvermoontree03_p_eversongtree_yellow05_lod02.skin": {
 "id": 6698653,
-"sha": "986ad27cefff667ba256809f41f0e7c8e0ecb756",
-"size": 28464
+"sha": "36b0aa8459c4ed04459800aaf325773027b7765b",
+"size": 28508
 },
 "eversong12/silvermoontree03_p_eversongtree_yellow05_lod03.skin": {
 "id": 6698654,
-"sha": "de8573e95b318862e8f4b0b2521808327d3f6f24",
-"size": 27280
+"sha": "4619175a4d9544573600e80eaf267423eb83dfc6",
+"size": 27324
 },
 "eversong12/silvermoontree04.m2": {
 "id": 203953,
@@ -13385,78 +14075,78 @@
 },
 "eversong12/silvermoontree08.m2": {
 "id": 193402,
-"sha": "3d732aad684459832820d887a0e0708a7c49de27",
-"size": 357320
+"sha": "22160542e175b7eb20b1b2011d1db1791512502c",
+"size": 469590
 },
 "eversong12/silvermoontree08_p_eversongtree_orange0400.skin": {
 "id": 6698634,
-"sha": "307f8872bc750128416ceef199ede7ba3393f837",
-"size": 29776
+"sha": "bb9615da7c39d0b4aa87a32e3f75e29525967bbe",
+"size": 29756
 },
 "eversong12/silvermoontree08_p_eversongtree_orange04_lod01.skin": {
 "id": 6698636,
-"sha": "0562be36c7257af6b013de8776ffbf121eec65c4",
-"size": 27024
+"sha": "078b76929143b5d03b2c58dc511eebc3ef045dda",
+"size": 27068
 },
 "eversong12/silvermoontree08_p_eversongtree_orange04_lod02.skin": {
 "id": 6698639,
-"sha": "3d23fb6aba739f0e872fa49e2fe1bed891bd1b1b",
-"size": 25472
+"sha": "3ab8c3a6cd071fdc946e7d425caa4f919a91ca8a",
+"size": 25516
 },
 "eversong12/silvermoontree08_p_eversongtree_orange04_lod03.skin": {
 "id": 6698641,
-"sha": "c9aaacb3bf1151fd248b09ee78f362ca4aaf12a2",
-"size": 24272
+"sha": "30634979563cd493230e0c976c706f70ed898dfe",
+"size": 24316
 },
 "eversong12/silvermoontree09.m2": {
 "id": 192293,
-"sha": "330cff541719d4e89092b576ffb00b150ecd8989",
-"size": 357320
+"sha": "310dedd7c496cc13c4d53bed7e349bb5efede055",
+"size": 469590
 },
 "eversong12/silvermoontree09_p_eversongtree_red0900.skin": {
 "id": 6698603,
-"sha": "307f8872bc750128416ceef199ede7ba3393f837",
-"size": 29776
+"sha": "bb9615da7c39d0b4aa87a32e3f75e29525967bbe",
+"size": 29756
 },
 "eversong12/silvermoontree09_p_eversongtree_red09_lod01.skin": {
 "id": 6698606,
-"sha": "0562be36c7257af6b013de8776ffbf121eec65c4",
-"size": 27024
+"sha": "078b76929143b5d03b2c58dc511eebc3ef045dda",
+"size": 27068
 },
 "eversong12/silvermoontree09_p_eversongtree_red09_lod02.skin": {
 "id": 6698611,
-"sha": "3d23fb6aba739f0e872fa49e2fe1bed891bd1b1b",
-"size": 25472
+"sha": "3ab8c3a6cd071fdc946e7d425caa4f919a91ca8a",
+"size": 25516
 },
 "eversong12/silvermoontree09_p_eversongtree_red09_lod03.skin": {
 "id": 6698616,
-"sha": "c9aaacb3bf1151fd248b09ee78f362ca4aaf12a2",
-"size": 24272
+"sha": "30634979563cd493230e0c976c706f70ed898dfe",
+"size": 24316
 },
 "eversong12/silvermoontree10.m2": {
 "id": 192294,
-"sha": "1f049b0a5497472661e66009711fa321a344efc9",
-"size": 374572
+"sha": "766764db0c91945c47010b08fde3126d3aa2eba2",
+"size": 501958
 },
 "eversong12/silvermoontree10_p_eversongtree_orange0500.skin": {
 "id": 6698645,
-"sha": "c135d7724e8da44de059141ab4976576f77f69cf",
-"size": 32944
+"sha": "31ed9bcee3e246cf989040f5f60c4195207cb0ff",
+"size": 32924
 },
 "eversong12/silvermoontree10_p_eversongtree_orange05_lod01.skin": {
 "id": 6698647,
-"sha": "d67f42b7fa1d098332ae8913194ec5e35c02c2fd",
-"size": 30368
+"sha": "210159d096e2c39dafb37700b099b4ff7ac41883",
+"size": 30412
 },
 "eversong12/silvermoontree10_p_eversongtree_orange05_lod02.skin": {
 "id": 6698649,
-"sha": "f4d8059e76c0da46206a9ef34f7d31e7a97bc0b2",
-"size": 28864
+"sha": "15db3a4b272929164b14c6c3bc412599e1dc02f5",
+"size": 28908
 },
 "eversong12/silvermoontree10_p_eversongtree_orange05_lod03.skin": {
 "id": 6698650,
-"sha": "119b43c2ead3616da52cdf2fba6a2cafffa0dd64",
-"size": 27664
+"sha": "e1e8c8a4cc1bf5611a0b94e83c2dcf32dfb454bb",
+"size": 27708
 },
 "eversonglynx/eversonglynx.m2": {
 "id": 307529,
@@ -14147,6 +14837,21 @@
 "id": 4008335,
 "sha": "de9738c768347931edbbdb3f44d8ee738ecff754",
 "size": 12108
+},
+"ghostlands_obelisk.blp": {
+"id": 192741,
+"sha": "f6f51ed146dd7de8dc60a40af1c9b265cb2ba5a9",
+"size": 700236
+},
+"ghostlandsbush.blp": {
+"id": 192724,
+"sha": "f5c60bcbdb5123c12c5eca316770e9c2e00d6a6d",
+"size": 5593604
+},
+"ghostlandsdeadtree01.blp": {
+"id": 192274,
+"sha": "e6548a9a4f3c01ddbff2ef4f06e914ed62ea6401",
+"size": 2797396
 },
 "ghostlandssmalltree03.m2": {
 "id": 192281,
@@ -36900,11 +37605,11 @@
 }
 },
 "patch_json": {
-"sha": "47b5ec0de0a365bce8481f47aeaaf091db082db7",
-"size": 427443
+"sha": "8fdb1a2355c3e2d755713202396cb471d3776f49",
+"size": 436852
 },
 "repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
-"total_bytes": 2793760570
+"total_bytes": 2833152096
 },
 "Chronicles-Northrend": {
 "files": {
@@ -99357,5 +100062,5 @@
 "total_bytes": 1645251639
 }
 },
-"published": "2026-10-11 15:29"
+"published": "2026-10-11 15:47"
 }
