@@ -330640,7 +330640,7 @@
 },
 "world/maps/azeroth/azeroth_26_31_obj0.adt": {
 "id": 776758,
-"sha": "c83157aee1ab6df4ce321c08b388f795c5e693bc",
+"sha": "b3aa1ec816390ef5ca980fce3e935cddccbdb57a",
 "size": 3272
 },
 "world/maps/azeroth/azeroth_26_31_obj1.adt": {
@@ -331340,8 +331340,8 @@
 },
 "world/maps/azeroth/azeroth_27_29_obj0.adt": {
 "id": 776933,
-"sha": "b7f881932d43b3ee8da4862d8820784b8498a43b",
-"size": 13464
+"sha": "37793d96c382b0f02f7e4f4b9c24ab2094306cac",
+"size": 13536
 },
 "world/maps/azeroth/azeroth_27_29_obj1.adt": {
 "id": 776934,
@@ -331360,8 +331360,8 @@
 },
 "world/maps/azeroth/azeroth_27_30_obj0.adt": {
 "id": 776938,
-"sha": "ee792b130646a04ebe92bf1014fbed1221a211b9",
-"size": 32208
+"sha": "d0b1405b23326c3b57d8b5a5b8dbf35502023923",
+"size": 32256
 },
 "world/maps/azeroth/azeroth_27_30_obj1.adt": {
 "id": 776939,
@@ -331380,8 +331380,8 @@
 },
 "world/maps/azeroth/azeroth_27_31_obj0.adt": {
 "id": 776943,
-"sha": "1ee99b2c1ac0cc7e6ec2b4cb3f308ad3a1106fe1",
-"size": 15916
+"sha": "7b3d2323db749de79fc59211e83dd08d0a760339",
+"size": 15996
 },
 "world/maps/azeroth/azeroth_27_31_obj1.adt": {
 "id": 776944,
@@ -332100,7 +332100,7 @@
 },
 "world/maps/azeroth/azeroth_28_27_obj0.adt": {
 "id": 777123,
-"sha": "5884616c5ac42cb08425a0d517b0f46e52b977ae",
+"sha": "aacbb9cd16dce92d926e3df2758f70861e00c938",
 "size": 26036
 },
 "world/maps/azeroth/azeroth_28_27_obj1.adt": {
@@ -332120,7 +332120,7 @@
 },
 "world/maps/azeroth/azeroth_28_28_obj0.adt": {
 "id": 777128,
-"sha": "0bc8c79453a52c6a8182314a4ba8716cfa2f4b18",
+"sha": "c72b6f23ab9498d9324c3a020d48a8e247593809",
 "size": 51204
 },
 "world/maps/azeroth/azeroth_28_28_obj1.adt": {
@@ -332140,7 +332140,7 @@
 },
 "world/maps/azeroth/azeroth_28_29_obj0.adt": {
 "id": 777133,
-"sha": "2531cf367c835dd8bfebd68f0391f1ec1408a0cf",
+"sha": "89affda091487df29324b83d3024dde9e525ace7",
 "size": 18484
 },
 "world/maps/azeroth/azeroth_28_29_obj1.adt": {
@@ -332160,7 +332160,7 @@
 },
 "world/maps/azeroth/azeroth_28_30_obj0.adt": {
 "id": 777138,
-"sha": "cd00a1735d4316335de9b55e5f0aa1fc908535bb",
+"sha": "071d40967fd880872c565447a9b84d6fb5e15cc1",
 "size": 23528
 },
 "world/maps/azeroth/azeroth_28_30_obj1.adt": {
@@ -332180,8 +332180,8 @@
 },
 "world/maps/azeroth/azeroth_28_31_obj0.adt": {
 "id": 777143,
-"sha": "9bf4be7b1cd0d5be29b508a99284c16811eddd85",
-"size": 24228
+"sha": "09b7d5514ea347fc21dce0816aceffc51c7e87b5",
+"size": 24276
 },
 "world/maps/azeroth/azeroth_28_31_obj1.adt": {
 "id": 777144,
@@ -332880,7 +332880,7 @@
 },
 "world/maps/azeroth/azeroth_29_26_obj0.adt": {
 "id": 777318,
-"sha": "df9424bedc1be8cc0f79933b05cd82a95122b9ea",
+"sha": "ad109904e6874517f7103d1694d190caab6f7aa4",
 "size": 11848
 },
 "world/maps/azeroth/azeroth_29_26_obj1.adt": {
@@ -332900,7 +332900,7 @@
 },
 "world/maps/azeroth/azeroth_29_27_obj0.adt": {
 "id": 777323,
-"sha": "d8d3e872e4a579d7c880bd63509bff50a39af755",
+"sha": "2671269d7b53d93c80eac7145bb1d8c99ee5a7e1",
 "size": 44784
 },
 "world/maps/azeroth/azeroth_29_27_obj1.adt": {
@@ -332920,8 +332920,8 @@
 },
 "world/maps/azeroth/azeroth_29_28_obj0.adt": {
 "id": 777328,
-"sha": "f6b2e07f62e3986ad39e78da1beda86410fe5e1e",
-"size": 40428
+"sha": "3796f1e723cd20bd64c70b96c88135556665b424",
+"size": 40436
 },
 "world/maps/azeroth/azeroth_29_28_obj1.adt": {
 "id": 777329,
@@ -332940,8 +332940,8 @@
 },
 "world/maps/azeroth/azeroth_29_29_obj0.adt": {
 "id": 777333,
-"sha": "2f5a786016609bbcd663a0861f89d05637e56d8e",
-"size": 40280
+"sha": "dea2f10b3375eb2e7f9bcc3dc9c54d2aa35210d6",
+"size": 40304
 },
 "world/maps/azeroth/azeroth_29_29_obj1.adt": {
 "id": 777334,
@@ -332960,8 +332960,8 @@
 },
 "world/maps/azeroth/azeroth_29_30_obj0.adt": {
 "id": 777338,
-"sha": "87979695cee993e8864e0cc200ed661af427fdbb",
-"size": 41112
+"sha": "93b7805105dbb0675f53746eb04f09b5408292c6",
+"size": 41136
 },
 "world/maps/azeroth/azeroth_29_30_obj1.adt": {
 "id": 777339,
@@ -332980,8 +332980,8 @@
 },
 "world/maps/azeroth/azeroth_29_31_obj0.adt": {
 "id": 777343,
-"sha": "aa4528eb74f4490b99badaff5bae0bb2fd120e2e",
-"size": 49328
+"sha": "efdebbf10075b7d3819769c193ddfdb42991b18d",
+"size": 49336
 },
 "world/maps/azeroth/azeroth_29_31_obj1.adt": {
 "id": 777344,
@@ -333220,7 +333220,7 @@
 },
 "world/maps/azeroth/azeroth_29_43_obj0.adt": {
 "id": 777403,
-"sha": "ba45e6936df4d5d2e93c9a9c55b1c0c57c99051f",
+"sha": "1320300269c1b55c3538985ea7a02915bbafcf42",
 "size": 4548
 },
 "world/maps/azeroth/azeroth_29_43_obj1.adt": {
@@ -333680,8 +333680,8 @@
 },
 "world/maps/azeroth/azeroth_30_26_obj0.adt": {
 "id": 777518,
-"sha": "5acdf04975a02279e97bc8024484996aab83c1a9",
-"size": 21032
+"sha": "d1c699145097a5905201660527c4db31a97ef0d7",
+"size": 21104
 },
 "world/maps/azeroth/azeroth_30_26_obj1.adt": {
 "id": 777519,
@@ -333700,8 +333700,8 @@
 },
 "world/maps/azeroth/azeroth_30_27_obj0.adt": {
 "id": 777523,
-"sha": "27257b54a6697ae7330c22ea765b903e30a174f1",
-"size": 46652
+"sha": "1df469c22fbf9f911c1e61cee04ff540034e61ae",
+"size": 47100
 },
 "world/maps/azeroth/azeroth_30_27_obj1.adt": {
 "id": 777524,
@@ -333720,8 +333720,8 @@
 },
 "world/maps/azeroth/azeroth_30_28_obj0.adt": {
 "id": 777528,
-"sha": "9852c038997af5f40f091fcb041e0c4d2d584386",
-"size": 52872
+"sha": "bd12d5e1a71398312fca661809ce087bda410417",
+"size": 52896
 },
 "world/maps/azeroth/azeroth_30_28_obj1.adt": {
 "id": 777529,
@@ -333760,7 +333760,7 @@
 },
 "world/maps/azeroth/azeroth_30_30_obj0.adt": {
 "id": 777538,
-"sha": "430e291f40825e158ba8e0ef32c68ce620e86274",
+"sha": "1256778345e121a0f6ac7d2192f4192117f5c7b6",
 "size": 29680
 },
 "world/maps/azeroth/azeroth_30_30_obj1.adt": {
@@ -334480,8 +334480,8 @@
 },
 "world/maps/azeroth/azeroth_31_26_obj0.adt": {
 "id": 777718,
-"sha": "9b7ecae38143a2f55037196e42f6c513c0d7b7a0",
-"size": 36948
+"sha": "d701117ecbab6791b3f25b46972c49633d481fe6",
+"size": 36972
 },
 "world/maps/azeroth/azeroth_31_26_obj1.adt": {
 "id": 777719,
@@ -334500,8 +334500,8 @@
 },
 "world/maps/azeroth/azeroth_31_27_obj0.adt": {
 "id": 777723,
-"sha": "f85273582ccd47c5ea14273b62c4d12235d95aeb",
-"size": 73584
+"sha": "31fd1a1ad6527747ae2127760d662aa34a66bddd",
+"size": 73592
 },
 "world/maps/azeroth/azeroth_31_27_obj1.adt": {
 "id": 777724,
@@ -334520,7 +334520,7 @@
 },
 "world/maps/azeroth/azeroth_31_28_obj0.adt": {
 "id": 777728,
-"sha": "9406f1184375cbdf389f716f81f3dd06773f2c58",
+"sha": "567c2606e3c4da321f1c04ce9b02f55d767ad842",
 "size": 42180
 },
 "world/maps/azeroth/azeroth_31_28_obj1.adt": {
@@ -334980,7 +334980,7 @@
 },
 "world/maps/azeroth/azeroth_31_51_obj0.adt": {
 "id": 777843,
-"sha": "ec70839d15dac4ca75f14bedf5b6b38fe08f1cee",
+"sha": "96e8f2e6ee879e6a9fc4b2c2269f0aad19754f8d",
 "size": 78300
 },
 "world/maps/azeroth/azeroth_31_51_obj1.adt": {
@@ -335000,8 +335000,8 @@
 },
 "world/maps/azeroth/azeroth_31_52_obj0.adt": {
 "id": 777848,
-"sha": "61cf6628aae9f8df4718fce77a8f3ba84d9fd347",
-"size": 61216
+"sha": "6d67f3f1d1a234a9c94340675f0a7a3b9cd473c3",
+"size": 61252
 },
 "world/maps/azeroth/azeroth_31_52_obj1.adt": {
 "id": 777849,
@@ -335060,7 +335060,7 @@
 },
 "world/maps/azeroth/azeroth_31_55_obj0.adt": {
 "id": 777863,
-"sha": "b173508e932302a6231ec100345cdb1f85340c7d",
+"sha": "43ec1b3118f7325f006bdca1a808c0916530c72d",
 "size": 51608
 },
 "world/maps/azeroth/azeroth_31_55_obj1.adt": {
@@ -335280,7 +335280,7 @@
 },
 "world/maps/azeroth/azeroth_32_26_obj0.adt": {
 "id": 777918,
-"sha": "128306aa89f62f629abe597ba3b3668fa776c992",
+"sha": "e34bf322f2c8db07f505b9d89dc956cd5f52a2b3",
 "size": 27952
 },
 "world/maps/azeroth/azeroth_32_26_obj1.adt": {
@@ -335300,8 +335300,8 @@
 },
 "world/maps/azeroth/azeroth_32_27_obj0.adt": {
 "id": 777923,
-"sha": "ffe10510fdfe8d3143cc30f006774bd4d8953a37",
-"size": 35308
+"sha": "86eb6dfadeadabec5e4c27666d6ee25f5a685f16",
+"size": 35320
 },
 "world/maps/azeroth/azeroth_32_27_obj1.adt": {
 "id": 777924,
@@ -335320,7 +335320,7 @@
 },
 "world/maps/azeroth/azeroth_32_28_obj0.adt": {
 "id": 777928,
-"sha": "3c52247651e6e2cf3e2e437867a96a766eb2436b",
+"sha": "a240dbb2a209411021d169e104ba687a8aad5903",
 "size": 55476
 },
 "world/maps/azeroth/azeroth_32_28_obj1.adt": {
@@ -335340,8 +335340,8 @@
 },
 "world/maps/azeroth/azeroth_32_29_obj0.adt": {
 "id": 777933,
-"sha": "5fde84dbc8055a0fdecca1286ebd026028dca939",
-"size": 40764
+"sha": "768cec491bd0426a41e3ac168368d74249d7bea6",
+"size": 40772
 },
 "world/maps/azeroth/azeroth_32_29_obj1.adt": {
 "id": 777934,
@@ -335360,7 +335360,7 @@
 },
 "world/maps/azeroth/azeroth_32_30_obj0.adt": {
 "id": 777938,
-"sha": "e4c9d4aeb83016c50c1fcb747f51936aafa7c341",
+"sha": "90b5a7a3800676b95a451c05f188ae1ef6d1709f",
 "size": 32164
 },
 "world/maps/azeroth/azeroth_32_30_obj1.adt": {
@@ -335380,7 +335380,7 @@
 },
 "world/maps/azeroth/azeroth_32_31_obj0.adt": {
 "id": 777943,
-"sha": "4e9b7655785f050e164db642e41c8861c034fd3e",
+"sha": "b52ed2c3759a660961a4207bba45462a45ee6058",
 "size": 20304
 },
 "world/maps/azeroth/azeroth_32_31_obj1.adt": {
@@ -335800,7 +335800,7 @@
 },
 "world/maps/azeroth/azeroth_32_52_obj0.adt": {
 "id": 778048,
-"sha": "1cc47f5ab092c9dfb7de27b7d64a803e5cd00e57",
+"sha": "05221094c3931f4faa84cd293de83c5a78ebfd77",
 "size": 60616
 },
 "world/maps/azeroth/azeroth_32_52_obj1.adt": {
@@ -335840,7 +335840,7 @@
 },
 "world/maps/azeroth/azeroth_32_54_obj0.adt": {
 "id": 778058,
-"sha": "ec74ad9a17d9c05c1d1983158ac960706f3ff1e6",
+"sha": "da90ae5771d3b615192479e9470191901ab604eb",
 "size": 61028
 },
 "world/maps/azeroth/azeroth_32_54_obj1.adt": {
@@ -336100,8 +336100,8 @@
 },
 "world/maps/azeroth/azeroth_33_27_obj0.adt": {
 "id": 778123,
-"sha": "09fe5eee07a3538b4706df7293add0523cd0486f",
-"size": 53972
+"sha": "7545711df4a2d33f795619449b4590fddfd697f9",
+"size": 53980
 },
 "world/maps/azeroth/azeroth_33_27_obj1.adt": {
 "id": 778124,
@@ -336120,7 +336120,7 @@
 },
 "world/maps/azeroth/azeroth_33_28_obj0.adt": {
 "id": 778128,
-"sha": "61dc4fada996fc036a23173677017da8ff115fc3",
+"sha": "fed0a0e7940d800e59334dfd7b4ca28e9c1c1864",
 "size": 43540
 },
 "world/maps/azeroth/azeroth_33_28_obj1.adt": {
@@ -336160,7 +336160,7 @@
 },
 "world/maps/azeroth/azeroth_33_30_obj0.adt": {
 "id": 778138,
-"sha": "1ff8f9b7af12a7a83de61fb23589205966528265",
+"sha": "adea9880630c65dd2f5f5c0cec2ad9f0480f03d0",
 "size": 27168
 },
 "world/maps/azeroth/azeroth_33_30_obj1.adt": {
@@ -336180,7 +336180,7 @@
 },
 "world/maps/azeroth/azeroth_33_31_obj0.adt": {
 "id": 778143,
-"sha": "f14ecd6a1822117fd22208465dc30fff0999a34f",
+"sha": "36e8c448c93878e7096990b8c5ce73b2701f28f3",
 "size": 42696
 },
 "world/maps/azeroth/azeroth_33_31_obj1.adt": {
@@ -336200,7 +336200,7 @@
 },
 "world/maps/azeroth/azeroth_33_32_obj0.adt": {
 "id": 778148,
-"sha": "a281d4aea7bb47ccad0c1b4e0d2d6f5a42af0708",
+"sha": "8e57b8aa937ef456890e608d09e15f79ce2db424",
 "size": 56632
 },
 "world/maps/azeroth/azeroth_33_32_obj1.adt": {
@@ -336600,7 +336600,7 @@
 },
 "world/maps/azeroth/azeroth_33_52_obj0.adt": {
 "id": 778248,
-"sha": "fb54036e1380c4cd98a174c6f3f277fec0612c2d",
+"sha": "a15e44bcfd48b30e94fcdea3c07cb5d371c9e1b2",
 "size": 56380
 },
 "world/maps/azeroth/azeroth_33_52_obj1.adt": {
@@ -336620,7 +336620,7 @@
 },
 "world/maps/azeroth/azeroth_33_53_obj0.adt": {
 "id": 778253,
-"sha": "6d964066570b777639690d69b6df9427a7e0f14d",
+"sha": "04ff800ddc807efdb57ad893c4807f4ef5a6af25",
 "size": 30072
 },
 "world/maps/azeroth/azeroth_33_53_obj1.adt": {
@@ -336640,7 +336640,7 @@
 },
 "world/maps/azeroth/azeroth_33_54_obj0.adt": {
 "id": 778258,
-"sha": "9b3cf1a1e68f7959d0f0758e68126d241289f781",
+"sha": "7ffa6966ea1b6f5188005884579697db09d66148",
 "size": 45700
 },
 "world/maps/azeroth/azeroth_33_54_obj1.adt": {
@@ -336920,7 +336920,7 @@
 },
 "world/maps/azeroth/azeroth_34_28_obj0.adt": {
 "id": 778328,
-"sha": "a43269528cca5ffe6533d1d251353f405a8f5cad",
+"sha": "1c1cbf9f0b023806f50bccc06a60df88b10ec513",
 "size": 68392
 },
 "world/maps/azeroth/azeroth_34_28_obj1.adt": {
@@ -336940,8 +336940,8 @@
 },
 "world/maps/azeroth/azeroth_34_29_obj0.adt": {
 "id": 778333,
-"sha": "216db995a6f57575ac1a65bc337ca6e66dc4227f",
-"size": 59992
+"sha": "5bec54e0a095839faa4670beb1b90e834585d017",
+"size": 60076
 },
 "world/maps/azeroth/azeroth_34_29_obj1.adt": {
 "id": 778334,
@@ -337380,8 +337380,8 @@
 },
 "world/maps/azeroth/azeroth_34_51_obj0.adt": {
 "id": 778443,
-"sha": "e3cd9094c82556a0af63e53e2570afa61a74771b",
-"size": 70424
+"sha": "311b8f2de78117786a7beb5e6fdec7b0d8cbf79e",
+"size": 70448
 },
 "world/maps/azeroth/azeroth_34_51_obj1.adt": {
 "id": 778444,
@@ -337400,7 +337400,7 @@
 },
 "world/maps/azeroth/azeroth_34_52_obj0.adt": {
 "id": 778448,
-"sha": "f7ea3ee29c83493529b2e8c9a6f547d9266dde7e",
+"sha": "0e38e135fd9639a22c8fc9a8d51f4858dc7cc042",
 "size": 56008
 },
 "world/maps/azeroth/azeroth_34_52_obj1.adt": {
@@ -337760,8 +337760,8 @@
 },
 "world/maps/azeroth/azeroth_35_28_obj0.adt": {
 "id": 778538,
-"sha": "4b126a4a0b110e31284ba504c790ce606fbe009c",
-"size": 37720
+"sha": "5c134c34b49430a969f3015bfca16fa0be5811e0",
+"size": 37808
 },
 "world/maps/azeroth/azeroth_35_28_obj1.adt": {
 "id": 778539,
@@ -337780,7 +337780,7 @@
 },
 "world/maps/azeroth/azeroth_35_29_obj0.adt": {
 "id": 778543,
-"sha": "b32f96260dac91874b841e0a39761ae5a29a39f3",
+"sha": "1408aeee4d4065ace6d8091e3152acb0385fcedd",
 "size": 75036
 },
 "world/maps/azeroth/azeroth_35_29_obj1.adt": {
@@ -337860,8 +337860,8 @@
 },
 "world/maps/azeroth/azeroth_35_33_obj0.adt": {
 "id": 778563,
-"sha": "690cc96d2e5843014b24dc1a077eced47954ebc4",
-"size": 58740
+"sha": "bc3121486587b5af7ec088590f58cf7827b2d3b5",
+"size": 58756
 },
 "world/maps/azeroth/azeroth_35_33_obj1.adt": {
 "id": 778564,
@@ -337880,7 +337880,7 @@
 },
 "world/maps/azeroth/azeroth_35_34_obj0.adt": {
 "id": 778568,
-"sha": "dcabd08b5fa079c6498524dce8d717ee029ec284",
+"sha": "9fb3589441124c05d1fd1fe5b0c5f6d5aa8ecb8a",
 "size": 71796
 },
 "world/maps/azeroth/azeroth_35_34_obj1.adt": {
@@ -337900,7 +337900,7 @@
 },
 "world/maps/azeroth/azeroth_35_35_obj0.adt": {
 "id": 778573,
-"sha": "657b002d023137e37acce90142ae74e437b54b02",
+"sha": "399e8be1bb7bc409715bdaa9352ba00dc2d6cd79",
 "size": 27340
 },
 "world/maps/azeroth/azeroth_35_35_obj1.adt": {
@@ -338240,7 +338240,7 @@
 },
 "world/maps/azeroth/azeroth_35_52_obj0.adt": {
 "id": 778658,
-"sha": "a1c8fd5bd4155d530d02b5f51ea1e9047a5381cb",
+"sha": "2116e973515370e5ec3941d189dd8edd9dc516fd",
 "size": 80172
 },
 "world/maps/azeroth/azeroth_35_52_obj1.adt": {
@@ -338500,7 +338500,7 @@
 },
 "world/maps/azeroth/azeroth_36_26_obj0.adt": {
 "id": 778723,
-"sha": "a6921b4e96259c5591f2e3138c1a95f92fdb3604",
+"sha": "956a760c005f14f2de61599fa90df5a904faa5cf",
 "size": 7568
 },
 "world/maps/azeroth/azeroth_36_26_obj1.adt": {
@@ -338520,7 +338520,7 @@
 },
 "world/maps/azeroth/azeroth_36_27_obj0.adt": {
 "id": 778728,
-"sha": "df047c8dc2f4424c4ac749e87000b0e9d81628d8",
+"sha": "6cd79ba8da9551d501fb3f5bdacc912617fcc243",
 "size": 15304
 },
 "world/maps/azeroth/azeroth_36_27_obj1.adt": {
@@ -338540,7 +338540,7 @@
 },
 "world/maps/azeroth/azeroth_36_28_obj0.adt": {
 "id": 778733,
-"sha": "e63e99af330382ba876574a505d86e6bd0018cbc",
+"sha": "f02c8231a522cb250d937d019580f3e047f54d7d",
 "size": 35284
 },
 "world/maps/azeroth/azeroth_36_28_obj1.adt": {
@@ -338560,8 +338560,8 @@
 },
 "world/maps/azeroth/azeroth_36_29_obj0.adt": {
 "id": 778738,
-"sha": "49d13c45fd6e24d9f33161f7fdc5fabe8cf74380",
-"size": 36424
+"sha": "9d9394a4773415defa472df7f617c33eaacbda11",
+"size": 36432
 },
 "world/maps/azeroth/azeroth_36_29_obj1.adt": {
 "id": 778739,
@@ -339240,8 +339240,8 @@
 },
 "world/maps/azeroth/azeroth_37_25_obj0.adt": {
 "id": 778908,
-"sha": "d3da52724868d549c27331e860be63bc5a6ef665",
-"size": 10792
+"sha": "b3d23f3653d496d3e8574b5fec6a01cc75481905",
+"size": 10828
 },
 "world/maps/azeroth/azeroth_37_25_obj1.adt": {
 "id": 778909,
@@ -339260,8 +339260,8 @@
 },
 "world/maps/azeroth/azeroth_37_26_obj0.adt": {
 "id": 778913,
-"sha": "e3d6217ab888c2805c449500adfbf8e4767921e6",
-"size": 28664
+"sha": "bc24acb289e3aa100eca7ba323eb6583202e3fd1",
+"size": 28796
 },
 "world/maps/azeroth/azeroth_37_26_obj1.adt": {
 "id": 778914,
@@ -339300,7 +339300,7 @@
 },
 "world/maps/azeroth/azeroth_37_28_obj0.adt": {
 "id": 778923,
-"sha": "90af64b28da2e888d3c58de65d253043d88509ab",
+"sha": "cbc461fb7dfcd3c383ea1305b6e0cbfd74efb6fb",
 "size": 25380
 },
 "world/maps/azeroth/azeroth_37_28_obj1.adt": {
@@ -339400,7 +339400,7 @@
 },
 "world/maps/azeroth/azeroth_37_33_obj0.adt": {
 "id": 778948,
-"sha": "ab46e66e939f1503d06125e2c34be14ee34a05fb",
+"sha": "01d6e37b4699741db85081e2d2f554d95c1f4951",
 "size": 28208
 },
 "world/maps/azeroth/azeroth_37_33_obj1.adt": {
@@ -339420,8 +339420,8 @@
 },
 "world/maps/azeroth/azeroth_37_34_obj0.adt": {
 "id": 778953,
-"sha": "d6dd46b5d2c7a2d74be29f8d02447d89a31c9e16",
-"size": 50132
+"sha": "d92c18a9472cebc4b677df9bbcffea76c4bfd902",
+"size": 50156
 },
 "world/maps/azeroth/azeroth_37_34_obj1.adt": {
 "id": 778954,
@@ -339680,7 +339680,7 @@
 },
 "world/maps/azeroth/azeroth_37_47_obj0.adt": {
 "id": 779018,
-"sha": "9cde77f4edcd0cab2eb4ecdcd1dedc0521672b7e",
+"sha": "a8da509b71945732578f0b9a382a5b74b9615b4e",
 "size": 10872
 },
 "world/maps/azeroth/azeroth_37_47_obj1.adt": {
@@ -339980,8 +339980,8 @@
 },
 "world/maps/azeroth/azeroth_38_25_obj0.adt": {
 "id": 779093,
-"sha": "c3e5fadcd123db15c31ebd9573403f083f48b8c2",
-"size": 18656
+"sha": "c088fa3c9764817f8cb8cd52959dfee5d54cadd0",
+"size": 18776
 },
 "world/maps/azeroth/azeroth_38_25_obj1.adt": {
 "id": 779094,
@@ -340000,8 +340000,8 @@
 },
 "world/maps/azeroth/azeroth_38_26_obj0.adt": {
 "id": 779098,
-"sha": "f4ae7350da64e9014a7384018d24b866e279e03f",
-"size": 52816
+"sha": "61167b40686c5aef637cfc2be36521b706645035",
+"size": 52900
 },
 "world/maps/azeroth/azeroth_38_26_obj1.adt": {
 "id": 779099,
@@ -340020,8 +340020,8 @@
 },
 "world/maps/azeroth/azeroth_38_27_obj0.adt": {
 "id": 779103,
-"sha": "4c6d84a88617c14ac9c6aa4e06ec41293ee15ecd",
-"size": 15060
+"sha": "e602ae2e56e58c1017bbb6c49bab8ab714a944ea",
+"size": 15156
 },
 "world/maps/azeroth/azeroth_38_27_obj1.adt": {
 "id": 779104,
@@ -340040,7 +340040,7 @@
 },
 "world/maps/azeroth/azeroth_38_28_obj0.adt": {
 "id": 779108,
-"sha": "64a36458459ace2e4f8bd56f08d03ad239d27fd5",
+"sha": "0e9b88b2b2c596bfdefea3ce713d20f21062ccc8",
 "size": 38268
 },
 "world/maps/azeroth/azeroth_38_28_obj1.adt": {
@@ -340060,7 +340060,7 @@
 },
 "world/maps/azeroth/azeroth_38_29_obj0.adt": {
 "id": 779113,
-"sha": "13e2d100655185825fc2e1343fe33ba7a89fb5bf",
+"sha": "f04fe2b83f37f411896d01ce23bacf33995ecf75",
 "size": 15068
 },
 "world/maps/azeroth/azeroth_38_29_obj1.adt": {
@@ -340520,8 +340520,8 @@
 },
 "world/maps/azeroth/azeroth_38_52_obj0.adt": {
 "id": 779228,
-"sha": "4d348eef2669f10de3464670c030de2686dfa72a",
-"size": 30160
+"sha": "5ce8b664329c459dcc1ed5d67ca2dfd53bcb0ab2",
+"size": 30184
 },
 "world/maps/azeroth/azeroth_38_52_obj1.adt": {
 "id": 779229,
@@ -340740,8 +340740,8 @@
 },
 "world/maps/azeroth/azeroth_39_26_obj0.adt": {
 "id": 779283,
-"sha": "d388994282dcc4b1f228095c4f12acb98695dd8e",
-"size": 47132
+"sha": "aab1f05ac158f3882fa18e93d530dddda96b65a6",
+"size": 47300
 },
 "world/maps/azeroth/azeroth_39_26_obj1.adt": {
 "id": 779284,
@@ -340760,8 +340760,8 @@
 },
 "world/maps/azeroth/azeroth_39_27_obj0.adt": {
 "id": 779288,
-"sha": "a8fa8c787b7c6ec01733fd91959e5897063c15a9",
-"size": 19704
+"sha": "c24ff8364d728f9ded57b59c39464ee6725f5abb",
+"size": 19768
 },
 "world/maps/azeroth/azeroth_39_27_obj1.adt": {
 "id": 779289,
@@ -340800,8 +340800,8 @@
 },
 "world/maps/azeroth/azeroth_39_29_obj0.adt": {
 "id": 779298,
-"sha": "ba431f19ba62e51a8f967ae94ab9ee5754c1bda0",
-"size": 11248
+"sha": "0151bb5609972214ee630cd7f3bf9c4d4fbfa51b",
+"size": 11336
 },
 "world/maps/azeroth/azeroth_39_29_obj1.adt": {
 "id": 779299,
@@ -341500,7 +341500,7 @@
 },
 "world/maps/azeroth/azeroth_40_27_obj0.adt": {
 "id": 779473,
-"sha": "210406a4f5da75cc033904c8b0a141d74ef5f6c8",
+"sha": "a921903263f76b857d09841d5eb6ada3160f4d3f",
 "size": 20528
 },
 "world/maps/azeroth/azeroth_40_27_obj1.adt": {
@@ -341520,8 +341520,8 @@
 },
 "world/maps/azeroth/azeroth_40_28_obj0.adt": {
 "id": 779478,
-"sha": "80f00fe4c8dafaa6fc10656696faf3305b8d1f25",
-"size": 37064
+"sha": "6ebd0228ef7e42a004e0fcdd6512f3ed03fcf866",
+"size": 37088
 },
 "world/maps/azeroth/azeroth_40_28_obj1.adt": {
 "id": 779479,
@@ -342180,7 +342180,7 @@
 },
 "world/maps/azeroth/azeroth_41_26_obj0.adt": {
 "id": 779643,
-"sha": "a7f73c8916ffe6616cf4d485e95d6b54dae75e4d",
+"sha": "c05de545a21b7a3492a3d5d1d02aa0c6ae8656b9",
 "size": 17312
 },
 "world/maps/azeroth/azeroth_41_26_obj1.adt": {
@@ -342200,7 +342200,7 @@
 },
 "world/maps/azeroth/azeroth_41_27_obj0.adt": {
 "id": 779648,
-"sha": "688a0113c351944b7132f9b7ae966374e43683e6",
+"sha": "a904c4376374670edeb6f2edd0bdf6a5a635a8f1",
 "size": 35148
 },
 "world/maps/azeroth/azeroth_41_27_obj1.adt": {
@@ -342840,7 +342840,7 @@
 },
 "world/maps/azeroth/azeroth_42_27_obj0.adt": {
 "id": 779808,
-"sha": "ce273b414391c8f3f5579fd1c30c73269b58b120",
+"sha": "b136c1e256ced10d52c927252f04a21102119469",
 "size": 45948
 },
 "world/maps/azeroth/azeroth_42_27_obj1.adt": {
@@ -342860,8 +342860,8 @@
 },
 "world/maps/azeroth/azeroth_42_28_obj0.adt": {
 "id": 779813,
-"sha": "ef7bb3c1a4d029b92551e62ebcd0910f92788150",
-"size": 39424
+"sha": "b422e226b46964a5cb8ea57e7229421b7abbe2f0",
+"size": 39512
 },
 "world/maps/azeroth/azeroth_42_28_obj1.adt": {
 "id": 779814,
@@ -342880,7 +342880,7 @@
 },
 "world/maps/azeroth/azeroth_42_29_obj0.adt": {
 "id": 779818,
-"sha": "08712af243c494f5aae8bfb1dd4488e999bb9283",
+"sha": "aa67033d88c865dccdbc04374e94ea38bbedba85",
 "size": 22192
 },
 "world/maps/azeroth/azeroth_42_29_obj1.adt": {
@@ -343480,7 +343480,7 @@
 },
 "world/maps/azeroth/azeroth_43_28_obj0.adt": {
 "id": 779968,
-"sha": "986164056972b18e06b030dc2c432f24d05c3f29",
+"sha": "84d9f7da3fa7f91b12f70e7e65c0566a3f63578f",
 "size": 13396
 },
 "world/maps/azeroth/azeroth_43_28_obj1.adt": {
@@ -343500,7 +343500,7 @@
 },
 "world/maps/azeroth/azeroth_43_29_obj0.adt": {
 "id": 779973,
-"sha": "739542d5995ab65a3d3bd7f6f2dca91021364141",
+"sha": "61acdbecfae352f69beb97726b10112621c5d41b",
 "size": 9144
 },
 "world/maps/azeroth/azeroth_43_29_obj1.adt": {
@@ -344284,8 +344284,8 @@
 "size": 314965
 },
 "repo_dir": "patches/azeroth",
-"total_bytes": 1645251639
+"total_bytes": 1645253759
 }
 },
-"published": "2026-10-15 23:10"
+"published": "2026-10-15 23:12"
 }
