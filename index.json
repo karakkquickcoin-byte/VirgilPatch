@@ -580,7 +580,7 @@
 },
 "world/maps/kalimdor/kalimdor_28_34_obj0.adt": {
 "id": 783931,
-"sha": "abd6603f8650a536208f47aef4ce6c6c19be8e4c",
+"sha": "f70b527126b5fafed60623a20771a273c0d54aef",
 "size": 25728
 },
 "world/maps/kalimdor/kalimdor_28_34_obj1.adt": {
@@ -760,7 +760,7 @@
 },
 "world/maps/kalimdor/kalimdor_29_34_obj0.adt": {
 "id": 784166,
-"sha": "5881b68be8b06ae3625131fae2f1f8c364354dc9",
+"sha": "915b9788388e062b60627016f92d4b8fd647c6f6",
 "size": 16132
 },
 "world/maps/kalimdor/kalimdor_29_34_obj1.adt": {
@@ -344287,5 +344287,5 @@
 "total_bytes": 1645253759
 }
 },
-"published": "2026-10-15 23:12"
+"published": "2026-10-15 23:13"
 }
