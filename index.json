@@ -1750,7 +1750,7 @@
 },
 "10cav_cavern_dragonislestunnel01.wmo": {
 "id": 4634687,
-"sha": "508d720e4f1b704dbd428722e9a4778789e10135",
+"sha": "e6869299c7dec619157123c92368732a195398e8",
 "size": 4664
 },
 "10cav_cavern_dragonislestunnel01_000.wmo": {
@@ -5260,7 +5260,7 @@
 },
 "6ih_ironhorde_smallbuilding01.wmo": {
 "id": 850555,
-"sha": "1abc787c0b0d27b01b7fe548a4b7c5920e0adf3c",
+"sha": "73d28abe49497978d2f6972b41e5e302bca1de7d",
 "size": 1220
 },
 "6ih_ironhorde_smallbuilding01_000.wmo": {
@@ -5320,7 +5320,7 @@
 },
 "6oc_warsong_townhall.wmo": {
 "id": 951966,
-"sha": "f5bb01f1d6ece9ba9da15ab8ee10a8e671943ccb",
+"sha": "90b053a324c0b4a100533e70b41cfa2d4c579c3e",
 "size": 1728
 },
 "6oc_warsong_townhall_000.wmo": {
@@ -6110,7 +6110,7 @@
 },
 "7hm_den_medium02.wmo": {
 "id": 1259980,
-"sha": "29891b1be7176aa50accd08ff09616eb6dd39347",
+"sha": "99e58bd90c3a2a6e06ee5a8201ae22a1691352e9",
 "size": 896
 },
 "7hm_den_medium02_000.wmo": {
@@ -7335,7 +7335,7 @@
 },
 "8tr_zandalari_ziggerut02.wmo": {
 "id": 1567451,
-"sha": "22ca747caf19868dbedee2b986122fb387d134c5",
+"sha": "41b157640280848a2fb249ebcdb79159fe7f6ed6",
 "size": 904
 },
 "8tr_zandalari_ziggerut02_000.wmo": {
@@ -7640,7 +7640,7 @@
 },
 "9hu_human_house01.wmo": {
 "id": 3762136,
-"sha": "604f07c24e50e12a13738587796a9e7667b165be",
+"sha": "240e28ab3f574a5400247d4be0b453e0e08b4942",
 "size": 3464
 },
 "9hu_human_house01_000.wmo": {
@@ -7770,7 +7770,7 @@
 },
 "9hu_human_twostory01.wmo": {
 "id": 3609724,
-"sha": "8ab1bc44fabaeb536c3132068d4c248af9500b85",
+"sha": "980f6a0670d099aa99c59cad7d27eaba00571d17",
 "size": 4972
 },
 "9hu_human_twostory01_000.wmo": {
@@ -7830,7 +7830,7 @@
 },
 "9mxt_korthia_cave02.wmo": {
 "id": 4049262,
-"sha": "a4b3d32044e4c969aa8d229b059fb8e54f411365",
+"sha": "1a8f7eefde520bc3ba7a70730e4d2a2ecf026e52",
 "size": 2416
 },
 "9mxt_korthia_cave02_000.wmo": {
@@ -7915,7 +7915,7 @@
 },
 "9vm_vampire_wallsmall01_deleteme.wmo": {
 "id": 2737404,
-"sha": "30a9aca7775b1f071852f9ed5e65df106043cc4e",
+"sha": "3e8a811a098d12a5144b4dc01d80d5b5480bbdeb",
 "size": 1624
 },
 "9vm_vampire_wallsmall01_deleteme_000.wmo": {
@@ -8860,7 +8860,7 @@
 },
 "andorhalabandoned_inn.wmo": {
 "id": 106810,
-"sha": "7ebadb5e7f49074c8377b394f19d33144406b366",
+"sha": "64670a15a36e386576197660eac462c35698c1af",
 "size": 2284
 },
 "andorhalabandoned_inn_000.wmo": {
@@ -9808,11 +9808,6 @@
 "sha": "3c8660671a15880b4ca2ba59268f86715a881587",
 "size": 12116
 },
-"cape_special_murlocbackpack_d_01_3922867.m2": {
-"id": 3922857,
-"sha": "794889d654fb188c7f4c444b6479cb2b0900cbc0",
-"size": 588184
-},
 "cape_special_murlocbackpack_d_01_392286700.skin": {
 "id": 3922862,
 "sha": "20c9dbc8291796900c62b6416b27dff5712b1fcb",
@@ -9860,7 +9855,7 @@
 },
 "castle01.wmo": {
 "id": 106685,
-"sha": "6c9d6881d3f025591925258e4c0bcdd47e37441e",
+"sha": "540d363caebb9548ec55d37299dbab9391432cbb",
 "size": 1400
 },
 "castle01_000.wmo": {
@@ -9985,7 +9980,7 @@
 },
 "chapel.wmo": {
 "id": 106692,
-"sha": "9e10e7ef6ba77a1e3b3de3e4201df9506dd5c498",
+"sha": "eaa294d099e4581ca3f1b63fbd3a0245a905e782",
 "size": 1236
 },
 "chapel_000.wmo": {
@@ -10242,6 +10237,31 @@
 "id": 1308501,
 "sha": "c3988389ec25c5024ed62199bc967afcff023b93",
 "size": 17670
+},
+"dbfilesclient/chrcustomizationelement.db2": {
+"id": 3512765,
+"sha": "be1d3ed032c2d555b9d2bd444a0b6d28b1629c22",
+"size": 1730786
+},
+"dbfilesclient/chrcustomizationmaterial.db2": {
+"id": 3459652,
+"sha": "cc38395da2d9d0ba83b5626c4ea442248c36f860",
+"size": 236570
+},
+"dbfilesclient/chrmodeltexturelayer.db2": {
+"id": 3548976,
+"sha": "4c656cfca60e8c251f3cf0143096d7a96a3d8f96",
+"size": 14886
+},
+"dbfilesclient/creaturemodeldata.db2": {
+"id": 1365368,
+"sha": "6a56ff5e1ae6f487d5a57a0b549c2cb1a0a0813b",
+"size": 472756
+},
+"dbfilesclient/texturefiledata.db2": {
+"id": 982459,
+"sha": "c63903cc8de0faed94484467ef9d04c3632a448d",
+"size": 2623977
 },
 "deadminecargoboxes.m2": {
 "id": 198085,
@@ -14148,6 +14168,666 @@
 "sha": "e1e8c8a4cc1bf5611a0b94e83c2dcf32dfb454bb",
 "size": 27708
 },
+"eversong12/wmo/original_slots_original_group_rebuild_20261012_001527/114139/bloodelf_smallgazebo01_aban_000.wmo": {
+"id": 927010890,
+"sha": "70956a39a92d9be04eb819c3554248d01aca84b5",
+"size": 3146672
+},
+"eversong12/wmo/original_slots_original_group_rebuild_20261012_001527/114141/bloodelf_smallhouse02_aban_000.wmo": {
+"id": 927010889,
+"sha": "b436ddee883025bb3cd2bd045bf9546c73f95916",
+"size": 2216754
+},
+"eversong12/wmo/original_slots_original_group_rebuild_20261012_001527/114143/bloodelf_smallhouse_aban01_000.wmo": {
+"id": 927010888,
+"sha": "4beb7894c5d0dc447a396dce9a1491172133c794",
+"size": 2393070
+},
+"eversong12/wmo/original_slots_original_group_rebuild_20261012_001527/114145/bloodelf_twostory01_aban_000.wmo": {
+"id": 927010885,
+"sha": "532e379f37d7c58572f749f473ff26ccbd3e17cc",
+"size": 1379450
+},
+"eversong12/wmo/original_slots_original_group_rebuild_20261012_001527/114145/bloodelf_twostory01_aban_001.wmo": {
+"id": 927010886,
+"sha": "01e9d0dbd8706920285bf5b6f060fedaba2553b8",
+"size": 1653160
+},
+"eversong12/wmo/original_slots_original_group_rebuild_20261012_001527/114145/bloodelf_twostory01_aban_002.wmo": {
+"id": 927010887,
+"sha": "e059ce97702812b0d94823bb7c392268893854ac",
+"size": 2588144
+},
+"eversong12/wmo/windrunner_foliage/model_4684687.m2": {
+"id": 927010791,
+"sha": "eea7627b742880535be88b892bc3c9c67a7ed709",
+"size": 3938
+},
+"eversong12/wmo/windrunner_foliage/model_468468700.skin": {
+"id": 927010809,
+"sha": "35808f4465bac33cf3609b046196dd551fbb7f38",
+"size": 504
+},
+"eversong12/wmo/windrunner_foliage/model_5902264.m2": {
+"id": 927010792,
+"sha": "fd75573b32f23615b85ece98ac7c7d23054a5a66",
+"size": 1922
+},
+"eversong12/wmo/windrunner_foliage/model_590226400.skin": {
+"id": 927010810,
+"sha": "cf0ee5bd9fa7e4b3087a12518b35752d91df1bd3",
+"size": 264
+},
+"eversong12/wmo/windrunner_foliage/model_6158965.m2": {
+"id": 927010842,
+"sha": "e8f1bcb40feed2285224f30d9f63f827f25993c3",
+"size": 49682
+},
+"eversong12/wmo/windrunner_foliage/model_615896500.skin": {
+"id": 927010847,
+"sha": "bcbaf84671324c0a7ba31b7177942ff14b5557f9",
+"size": 2888
+},
+"eversong12/wmo/windrunner_foliage/model_6158966.m2": {
+"id": 927010843,
+"sha": "2657faebeaa50340e96929af93b73c0f4518a14a",
+"size": 43202
+},
+"eversong12/wmo/windrunner_foliage/model_615896600.skin": {
+"id": 927010848,
+"sha": "cbc0760ddd794586cd83903fe4ae11852751b57d",
+"size": 2440
+},
+"eversong12/wmo/windrunner_foliage/model_6158967.m2": {
+"id": 927010793,
+"sha": "ea9086e444d7bf669d679038bbcc7d3ab7704126",
+"size": 37202
+},
+"eversong12/wmo/windrunner_foliage/model_615896700.skin": {
+"id": 927010811,
+"sha": "d51c7c5b53a21d8716eda26a2ddfb98a9b840e90",
+"size": 2216
+},
+"eversong12/wmo/windrunner_foliage/model_6158968.m2": {
+"id": 927010794,
+"sha": "8f06218fdb666b279eea5c57649d00be79d92a29",
+"size": 44978
+},
+"eversong12/wmo/windrunner_foliage/model_615896800.skin": {
+"id": 927010812,
+"sha": "dea15bddfa9d2e409dfd7f10b9387f3fcbcee9a7",
+"size": 2568
+},
+"eversong12/wmo/windrunner_foliage/model_6158969.m2": {
+"id": 927010795,
+"sha": "24950b75b5d38acd883d1672a100d7d2efbbc444",
+"size": 44738
+},
+"eversong12/wmo/windrunner_foliage/model_615896900.skin": {
+"id": 927010813,
+"sha": "7a1ed40d8f942b8bf60bfa065382bd1005c9dd2a",
+"size": 2472
+},
+"eversong12/wmo/windrunner_foliage/model_6158970.m2": {
+"id": 927010796,
+"sha": "659bbf1da678d97f4e019fce0629e1cb54f3cd26",
+"size": 62210
+},
+"eversong12/wmo/windrunner_foliage/model_615897000.skin": {
+"id": 927010814,
+"sha": "e48e445781ea2bee61c7a53a783b6b7e58f536af",
+"size": 3544
+},
+"eversong12/wmo/windrunner_foliage/model_6158971.m2": {
+"id": 927010797,
+"sha": "a4504b2962824529c91d20c898467f86bdf37e43",
+"size": 78434
+},
+"eversong12/wmo/windrunner_foliage/model_615897100.skin": {
+"id": 927010815,
+"sha": "2a109e0650123ca6bf3d4d491bb142a1c17936e4",
+"size": 4408
+},
+"eversong12/wmo/windrunner_foliage/model_6158974.m2": {
+"id": 927010798,
+"sha": "2b7697c1bfe9337e7600075fd75e8aecf836fdf4",
+"size": 13682
+},
+"eversong12/wmo/windrunner_foliage/model_615897400.skin": {
+"id": 927010816,
+"sha": "df836403bef76aae625ca402b0f2a319dd96fd49",
+"size": 1096
+},
+"eversong12/wmo/windrunner_foliage/model_6158975.m2": {
+"id": 927010799,
+"sha": "e5f202dbf54742918961aa29f6a6cea1a95d351c",
+"size": 8546
+},
+"eversong12/wmo/windrunner_foliage/model_615897500.skin": {
+"id": 927010817,
+"sha": "77a066c2ec1792ef2453764c1ad254ded87b511b",
+"size": 984
+},
+"eversong12/wmo/windrunner_foliage/model_6158977.m2": {
+"id": 927010800,
+"sha": "13cacb7a2268c94224692fd1164ab6a5eeaac253",
+"size": 22514
+},
+"eversong12/wmo/windrunner_foliage/model_615897700.skin": {
+"id": 927010818,
+"sha": "cc614fb32dac5ade32364fbba0d2adcb527344f9",
+"size": 1432
+},
+"eversong12/wmo/windrunner_foliage/model_6158979.m2": {
+"id": 927010801,
+"sha": "9838990017cd458bc3a3f813ed5b94e32d95aa02",
+"size": 45122
+},
+"eversong12/wmo/windrunner_foliage/model_615897900.skin": {
+"id": 927010819,
+"sha": "c4899deb5ffc78c6625a24e505f5db109709e24c",
+"size": 2408
+},
+"eversong12/wmo/windrunner_foliage/model_6158997.m2": {
+"id": 927010802,
+"sha": "957b3c14f8407f3a94cc5bbc5507acceb5a50e36",
+"size": 33458
+},
+"eversong12/wmo/windrunner_foliage/model_615899700.skin": {
+"id": 927010820,
+"sha": "293eaee32c63cb74be5c6bac707ac228369783b3",
+"size": 2200
+},
+"eversong12/wmo/windrunner_foliage/model_6158998.m2": {
+"id": 927010803,
+"sha": "a2b12641bac949f5fef024eeadc000cd08e2dd8f",
+"size": 62162
+},
+"eversong12/wmo/windrunner_foliage/model_615899800.skin": {
+"id": 927010821,
+"sha": "f3f30fbc2840252ad2270b40a9d21e98dd0e5b18",
+"size": 4008
+},
+"eversong12/wmo/windrunner_foliage/model_6158999.m2": {
+"id": 927010804,
+"sha": "08b469f50ca4815e455324c7046c4c1028567cd5",
+"size": 23762
+},
+"eversong12/wmo/windrunner_foliage/model_615899900.skin": {
+"id": 927010822,
+"sha": "b06f0afce9a8d7e7845a3d299bd7c2a6925e5efc",
+"size": 1544
+},
+"eversong12/wmo/windrunner_foliage/model_6159000.m2": {
+"id": 927010844,
+"sha": "8ac89c34dc9b24392745846c2d01b7e24db340da",
+"size": 15554
+},
+"eversong12/wmo/windrunner_foliage/model_615900000.skin": {
+"id": 927010849,
+"sha": "a404d85bae2f33cde4aa1dc707fa6e17bce4f325",
+"size": 1256
+},
+"eversong12/wmo/windrunner_foliage/model_6159001.m2": {
+"id": 927010805,
+"sha": "466d16fef7db35f91bc0bc2f368f249b96487491",
+"size": 20354
+},
+"eversong12/wmo/windrunner_foliage/model_615900100.skin": {
+"id": 927010823,
+"sha": "b8b2b4d7cf66e02787bbe57a0a242d950820a37c",
+"size": 1352
+},
+"eversong12/wmo/windrunner_foliage/model_6159002.m2": {
+"id": 927010845,
+"sha": "0b12f7d9e8c98fa7d1a1d0491e334722be673b85",
+"size": 61058
+},
+"eversong12/wmo/windrunner_foliage/model_615900200.skin": {
+"id": 927010850,
+"sha": "bf292d4f807006f5888de23569f90bee6b032aa4",
+"size": 3336
+},
+"eversong12/wmo/windrunner_foliage/model_6159003.m2": {
+"id": 927010806,
+"sha": "c685add2796da41b11acb4275b2efe635d0e453a",
+"size": 46610
+},
+"eversong12/wmo/windrunner_foliage/model_615900300.skin": {
+"id": 927010824,
+"sha": "1dd51d43ea905c2d6b66fe7be2b2490eba8f69e2",
+"size": 2520
+},
+"eversong12/wmo/windrunner_foliage/model_6159004.m2": {
+"id": 927010807,
+"sha": "40e2b6324e86b0cfb612e7870e8a811522a35243",
+"size": 38162
+},
+"eversong12/wmo/windrunner_foliage/model_615900400.skin": {
+"id": 927010825,
+"sha": "02c43243c7ac14c4c172d7b6d5d8309ace86333a",
+"size": 2104
+},
+"eversong12/wmo/windrunner_foliage/model_6159005.m2": {
+"id": 927010846,
+"sha": "5d160119f489f119f68723c12aac886e1001a3e7",
+"size": 84626
+},
+"eversong12/wmo/windrunner_foliage/model_615900500.skin": {
+"id": 927010851,
+"sha": "e5d90406360feee1185987a041557725aa10c121",
+"size": 4520
+},
+"eversong12/wmo/windrunner_foliage/model_878123.m2": {
+"id": 927010790,
+"sha": "e36aa3cee927996b85d25df914044e63085b4a94",
+"size": 7832
+},
+"eversong12/wmo/windrunner_foliage/model_87812300.skin": {
+"id": 927010808,
+"sha": "33b5c121827ad92ab808ff99e5bfa63188f8e009",
+"size": 840
+},
+"eversong12/wmo/windrunner_foliage/tex_4669701.blp": {
+"id": 927010836,
+"sha": "bf36eb8fc35ba57646abc0305dc97df2b726827a",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_foliage/tex_5902683.blp": {
+"id": 927010837,
+"sha": "9694065ef140de2e69652b8f938c9ffdd0f8d964",
+"size": 350724
+},
+"eversong12/wmo/windrunner_foliage/tex_6153261.blp": {
+"id": 927010838,
+"sha": "5d64ebee1172850b8a9ac4d5b94fdd5bb1913a3e",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_foliage/tex_6159616.blp": {
+"id": 927010839,
+"sha": "de7056747aced7e0ebbd864a8ec2e461cd547541",
+"size": 350724
+},
+"eversong12/wmo/windrunner_foliage/tex_878116.blp": {
+"id": 927010835,
+"sha": "b39b218e5fc21c56165a96f6940f5b1a82ea350e",
+"size": 350724
+},
+"eversong12/wmo/windrunner_gazebo01/bloodelf_smallgazebo01_aban.wmo": {
+"id": 114139,
+"sha": "ed3c7b1e3acb9dfcf5e3597546cd05525119f466",
+"size": 9612
+},
+"eversong12/wmo/windrunner_gazebo01/bloodelf_smallgazebo01_aban_000.wmo": {
+"id": 927010865,
+"sha": "d9b18abad1c2cc9ad1b44e7f9ed9cd24e0464aa8",
+"size": 2735054
+},
+"eversong12/wmo/windrunner_gazebo01/bloodelf_smallgazebo01_aban_001.wmo": {
+"id": 927010866,
+"sha": "169095feb1879d6b129227cbcb4be424862c4469",
+"size": 414032
+},
+"eversong12/wmo/windrunner_inn01/bloodelf_twostory01_aban_000.wmo": {
+"id": 927010867,
+"sha": "b59fd46f75db2caa3843d4d01b065921a18a7954",
+"size": 1462920
+},
+"eversong12/wmo/windrunner_inn01/bloodelf_twostory01_aban_001.wmo": {
+"id": 927010868,
+"sha": "1556eb9eb1a8f080de74d87b3b905cf454118775",
+"size": 1487688
+},
+"eversong12/wmo/windrunner_inn01/bloodelf_twostory01_aban_002.wmo": {
+"id": 927010869,
+"sha": "676f4e1c61199d62a9665fa7f3c14c7cf242e43f",
+"size": 1618676
+},
+"eversong12/wmo/windrunner_inn01/bloodelf_twostory01_aban_003.wmo": {
+"id": 927010870,
+"sha": "43aa35366e266b1db7aa36a345f8e38433c41261",
+"size": 1379450
+},
+"eversong12/wmo/windrunner_inn01/bloodelf_twostory01_aban_004.wmo": {
+"id": 927010871,
+"sha": "bf7705ddcc1362f1837ec1b36e2760d12ca4c851",
+"size": 22844
+},
+"eversong12/wmo/windrunner_medium01/bloodelf_twostory01_aban.wmo": {
+"id": 114145,
+"sha": "8acebd3ea01d0352cfd48ee4f0da7c81dd211c62",
+"size": 10480
+},
+"eversong12/wmo/windrunner_medium01/bloodelf_twostory01_aban_000.wmo": {
+"id": 927010840,
+"sha": "d2011183dfd47dc1740f84a3d2d646d9c98ff3f1",
+"size": 2735014
+},
+"eversong12/wmo/windrunner_medium01/bloodelf_twostory01_aban_001.wmo": {
+"id": 927010841,
+"sha": "2953557d3edac2de8c93fef09b7d80dae6c344c8",
+"size": 414032
+},
+"eversong12/wmo/windrunner_medium_deps/tex_5664197.blp": {
+"id": 927010872,
+"sha": "2953ee19763119d18cac0f3b27fc5ed4a9210e27",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_5664202.blp": {
+"id": 927010873,
+"sha": "21c7b094f98dc55aba2afca858c8bcc154a4d373",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_5795281.blp": {
+"id": 927010853,
+"sha": "47605c5685b2ba776a23d0f6eecb6ee4166bd2c3",
+"size": 5593604
+},
+"eversong12/wmo/windrunner_medium_deps/tex_5795289.blp": {
+"id": 927010854,
+"sha": "c587e949d3bb685aefad433e393c7e9c21c88691",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_5934199.blp": {
+"id": 927010874,
+"sha": "f52c98b693b4dcc5cb787cfd4b1c2bb69265e43d",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_5934205.blp": {
+"id": 927010855,
+"sha": "1a6545aef1f5a94e1335a8e1fb776e801efbfb61",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6018352.blp": {
+"id": 927010856,
+"sha": "15e00702239567549e655cc2363e1f00999eded9",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6043065.blp": {
+"id": 927010857,
+"sha": "740939b699ff8f685cad069ce7535a50d161e26a",
+"size": 700260
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6076578.blp": {
+"id": 927010858,
+"sha": "95161245516d9e2714d662da3aee6952a6abd06e",
+"size": 5593604
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6076579.blp": {
+"id": 927010859,
+"sha": "73b7eeec27b3af9b6c858999ff54c59489a79a7d",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6076581.blp": {
+"id": 927010860,
+"sha": "0a23079d034f08480cba777106966366c7bd993e",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6181444.blp": {
+"id": 927010875,
+"sha": "26d7fae02b57398a7660bcdc6ea90658b6269858",
+"size": 700260
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6211025.blp": {
+"id": 927010876,
+"sha": "a710b633a55d5abf2eefdc945e2a66b80ea0a64c",
+"size": 5593604
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6211026.blp": {
+"id": 927010861,
+"sha": "f2e403643128e94a76ae539718fec87a2f29cb6c",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6224627.blp": {
+"id": 927010877,
+"sha": "ccdc8b6284a98f7253811b05948b23224cfd2bb1",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6224629.blp": {
+"id": 927010878,
+"sha": "aa3fa615fbe9c9fdfaaffb3028bff2b2e5dbd433",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6242928.blp": {
+"id": 927010862,
+"sha": "cbb54978309d723b6747a14d67ed6b75ddaa8b7d",
+"size": 5593604
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6321084.blp": {
+"id": 927010879,
+"sha": "6efa553e8282d638c38df1d2c47b4a03c1639de3",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6391863.blp": {
+"id": 927010863,
+"sha": "38a21cd5709d058bd47b5a78c775458a39c7c063",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6391864.blp": {
+"id": 927010864,
+"sha": "d8bb31e020a9b327c05675aad5808a10ac888fed",
+"size": 350724
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6392056.blp": {
+"id": 927010880,
+"sha": "134a10bd631f84b2f5821e206bb53f99dc79d48d",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6392057.blp": {
+"id": 927010881,
+"sha": "3f910256e4e71acdd8b3156fe0ff18b309bccd4d",
+"size": 700260
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6392058.blp": {
+"id": 927010882,
+"sha": "b4be6860475621591e4b0b5910a5db74c091b9be",
+"size": 700260
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6392059.blp": {
+"id": 927010883,
+"sha": "17de2829fcf95d089033ccd53322bc079ac5527d",
+"size": 350724
+},
+"eversong12/wmo/windrunner_medium_deps/tex_6392060.blp": {
+"id": 927010884,
+"sha": "4fa46947ea4b38decf3549b668b658588617bc25",
+"size": 700260
+},
+"eversong12/wmo/windrunner_medium_deps/tex_660909.blp": {
+"id": 927010852,
+"sha": "b25f062b166f567667a14c0a253738ffc26f28a0",
+"size": 12108
+},
+"eversong12/wmo/windrunner_small01/bloodelf_smallhouse_aban01.wmo": {
+"id": 114143,
+"sha": "8e3968e1d49dd3bf57374b8264c2858944e5f4e3",
+"size": 4704
+},
+"eversong12/wmo/windrunner_small01/bloodelf_smallhouse_aban01_000.wmo": {
+"id": 927010763,
+"sha": "36af9f4301100a7ff4bec8403a76af140e95d9c7",
+"size": 1531702
+},
+"eversong12/wmo/windrunner_small01/bloodelf_smallhouse_aban01_001.wmo": {
+"id": 927010764,
+"sha": "b3198683fdd1935cfa928dde4b46dadc0b99071d",
+"size": 866358
+},
+"eversong12/wmo/windrunner_small01/tex_1267167.blp": {
+"id": 927010766,
+"sha": "fa38e021ccbfc894f3e031c7455b020b0e470221",
+"size": 12108
+},
+"eversong12/wmo/windrunner_small01/tex_351431.blp": {
+"id": 927010765,
+"sha": "0be9c38b826afefe741fcb691e94c6e4b5196862",
+"size": 12108
+},
+"eversong12/wmo/windrunner_small01/tex_5664190.blp": {
+"id": 927010767,
+"sha": "7eba67a80420d3f88fd1b3df155dd6cc220e0f04",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small01/tex_5664191.blp": {
+"id": 927010768,
+"sha": "7b13216c3caa7ea5457d3ffc5f49128d19e37de6",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small01/tex_5664195.blp": {
+"id": 927010769,
+"sha": "bef054bf3a7a0d3220aa40eb5c665621c0a9a4a5",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small01/tex_5664199.blp": {
+"id": 927010770,
+"sha": "f6c08f70f5ae67784f8f11b3fa124710966924ae",
+"size": 350724
+},
+"eversong12/wmo/windrunner_small01/tex_5664203.blp": {
+"id": 927010771,
+"sha": "3a5f150d745d37bae4dd5cccde142da68d031937",
+"size": 350724
+},
+"eversong12/wmo/windrunner_small01/tex_5664215.blp": {
+"id": 927010772,
+"sha": "46b44b127f5e0aadab1959e33e9287599fa57172",
+"size": 350724
+},
+"eversong12/wmo/windrunner_small01/tex_6076554.blp": {
+"id": 927010773,
+"sha": "6248a4de71257fd08f467d9080d97ed97f30559e",
+"size": 5593604
+},
+"eversong12/wmo/windrunner_small01/tex_6076555.blp": {
+"id": 927010774,
+"sha": "d1fdcd8fd3641d30ea7305dda095c39b9e0d0e29",
+"size": 350724
+},
+"eversong12/wmo/windrunner_small01/tex_6076556.blp": {
+"id": 927010775,
+"sha": "87ead1b95958c973943decb676e1e5c7561b0cc5",
+"size": 5593604
+},
+"eversong12/wmo/windrunner_small01/tex_6076557.blp": {
+"id": 927010776,
+"sha": "3f84284f11b329317631391628f79e905f4d9edc",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small01/tex_6076558.blp": {
+"id": 927010777,
+"sha": "cac5c485b3cc16ad9dcf727be1215ec7d0727651",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small01/tex_6076562.blp": {
+"id": 927010778,
+"sha": "81aadd865c73f5ba88b56972bd3d0d9524450793",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small01/tex_6076565.blp": {
+"id": 927010779,
+"sha": "1a3190b88706dbe52e37018c0b37b55e994453c6",
+"size": 5593604
+},
+"eversong12/wmo/windrunner_small01/tex_6076566.blp": {
+"id": 927010780,
+"sha": "4489427e892ed40235cef2167b1dfcf799b8e5b7",
+"size": 5593604
+},
+"eversong12/wmo/windrunner_small01/tex_6076568.blp": {
+"id": 927010781,
+"sha": "7e11eb0b7a108ae56b696527ef713a0e9f21f1c9",
+"size": 175972
+},
+"eversong12/wmo/windrunner_small01/tex_6076570.blp": {
+"id": 927010782,
+"sha": "397b5d1393e874ecafeb8f7d3d8cbc0ca3df4c22",
+"size": 700260
+},
+"eversong12/wmo/windrunner_small01/tex_6076571.blp": {
+"id": 927010783,
+"sha": "5c51d850bd4f676fedfa9a9b827749de168872b1",
+"size": 5593604
+},
+"eversong12/wmo/windrunner_small01/tex_6076572.blp": {
+"id": 927010784,
+"sha": "0cceac0fc03dbe6fe484f07f2f81d34d24cab131",
+"size": 23044
+},
+"eversong12/wmo/windrunner_small01/tex_6076573.blp": {
+"id": 927010785,
+"sha": "6d4ce9e1f4bf37f8e2adf2fe99ac56f6901e491a",
+"size": 350724
+},
+"eversong12/wmo/windrunner_small01/tex_6076574.blp": {
+"id": 927010786,
+"sha": "d7acb4c4189966b463673e0395014f44307fb7a9",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small01/tex_6211023.blp": {
+"id": 927010787,
+"sha": "c00ca58cefaa74d382de1e1c9315a09c9640f178",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small01/tex_6224626.blp": {
+"id": 927010788,
+"sha": "d4ed820f26b8f169c5d73aaef6d359d040ec3421",
+"size": 700260
+},
+"eversong12/wmo/windrunner_small01/tex_7152793.blp": {
+"id": 927010789,
+"sha": "3ca256dcaba2188a35f6775da51bd16e2f8806b0",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small02/bloodelf_smallhouse02_aban.wmo": {
+"id": 114141,
+"sha": "2a2013cbd548a9a1a3743855f55dbf99a0db22ab",
+"size": 5284
+},
+"eversong12/wmo/windrunner_small02/bloodelf_smallhouse02_aban_000.wmo": {
+"id": 927010826,
+"sha": "e9d009b1c0069406eed6f6333f5845cebc871451",
+"size": 753452
+},
+"eversong12/wmo/windrunner_small02/bloodelf_smallhouse02_aban_001.wmo": {
+"id": 927010827,
+"sha": "2a0a71a13212be9d59e8f2c4f172a789f923f88e",
+"size": 1470118
+},
+"eversong12/wmo/windrunner_small02/tex_5664194.blp": {
+"id": 927010828,
+"sha": "833ce2076fe948175550c8517e8725d928ee081a",
+"size": 1399300
+},
+"eversong12/wmo/windrunner_small02/tex_5795287.blp": {
+"id": 927010829,
+"sha": "f7f32e4b97b974031a69af60193ca72cb46db1cf",
+"size": 350724
+},
+"eversong12/wmo/windrunner_small02/tex_5934210.blp": {
+"id": 927010830,
+"sha": "f318aae6cec68677a09d1764f53fa8717e775c16",
+"size": 350724
+},
+"eversong12/wmo/windrunner_small02/tex_6076564.blp": {
+"id": 927010831,
+"sha": "408e0fc7f6788e670b860ac4fd4c99f75549df67",
+"size": 23044
+},
+"eversong12/wmo/windrunner_small02/tex_6211027.blp": {
+"id": 927010832,
+"sha": "d0f41991d58d5ac5eae43e9a8e67a0a671cd0483",
+"size": 175972
+},
+"eversong12/wmo/windrunner_small02/tex_6242923.blp": {
+"id": 927010833,
+"sha": "2c1df1b47a8eda022a5066ba8b1cb4c33dd81e8c",
+"size": 700260
+},
+"eversong12/wmo/windrunner_small02/tex_6391925.blp": {
+"id": 927010834,
+"sha": "06ae29a0ab780df5e85b91c2fc859a607fcafaf2",
+"size": 1399300
+},
 "eversonglynx/eversonglynx.m2": {
 "id": 307529,
 "sha": "f54bd72e110300a0e397d0a46b952e6e4e5226cb",
@@ -14470,7 +15150,7 @@
 },
 "forrest_troll_hut2story.wmo": {
 "id": 114449,
-"sha": "5f4f7728eeebb8bd19a392869721f5b23f96717d",
+"sha": "554933b78924ab213099412f3c226dff78a344d5",
 "size": 1488
 },
 "forrest_troll_hut2story_000.wmo": {
@@ -15807,6 +16487,671 @@
 "id": 7064562,
 "sha": "eae4c9c47826ad7528db2dbff988bb9d3c47e8a1",
 "size": 46480
+},
+"hd-player-models/bloodelf/female/bloodelffemale_hd.m2": {
+"id": 9300003,
+"sha": "7dcd4937793a3aba4df2c783fc7699ae3718d2fd",
+"size": 1924550
+},
+"hd-player-models/bloodelf/female/bloodelffemale_hd.skel": {
+"id": 9310106,
+"sha": "0ff79af79857514a1b6b5308cceb4f150e646ba9",
+"size": 23452160
+},
+"hd-player-models/bloodelf/female/bloodelffemale_hd00.skin": {
+"id": 9310070,
+"sha": "d326179351f5b8c980a867f4ddeecef463cb7616",
+"size": 550864
+},
+"hd-player-models/bloodelf/female/bloodelffemale_hd_lod01.skin": {
+"id": 9310071,
+"sha": "5fe9c786bb1803158412194601d83377bb821305",
+"size": 401792
+},
+"hd-player-models/bloodelf/female/bloodelffemale_hd_lod02.skin": {
+"id": 9310072,
+"sha": "19b9e47602d72695d741dd4d6af2a03a746b8b38",
+"size": 304448
+},
+"hd-player-models/bloodelf/female/bloodelffemale_hd_lod03.skin": {
+"id": 9310073,
+"sha": "8e91a577d1e2f8ee491a4ba7213128ac824f74c3",
+"size": 234672
+},
+"hd-player-models/bloodelf/male/bloodelfmale_hd.m2": {
+"id": 9300002,
+"sha": "8e5514442a09409129d371a11821f33cb13437dd",
+"size": 2744684
+},
+"hd-player-models/bloodelf/male/bloodelfmale_hd.skel": {
+"id": 9310105,
+"sha": "b0a720ca64f91b117b705addcbb9e34b918e62b6",
+"size": 23462416
+},
+"hd-player-models/bloodelf/male/bloodelfmale_hd00.skin": {
+"id": 9310066,
+"sha": "460d98207202de11dceeaf59ba16f6520647b0ef",
+"size": 781552
+},
+"hd-player-models/bloodelf/male/bloodelfmale_hd_lod01.skin": {
+"id": 9310067,
+"sha": "9edc66560c0a6648d78cde9783b18de64dceac33",
+"size": 481632
+},
+"hd-player-models/bloodelf/male/bloodelfmale_hd_lod02.skin": {
+"id": 9310068,
+"sha": "356fcd7bbf6ac430149761bc222fc0cb633b1fc4",
+"size": 369648
+},
+"hd-player-models/bloodelf/male/bloodelfmale_hd_lod03.skin": {
+"id": 9310069,
+"sha": "5056319eac5a51b3d9902921dc5f87b2137006d8",
+"size": 295504
+},
+"hd-player-models/draenei/female/draeneifemale_hd.m2": {
+"id": 9300005,
+"sha": "bc2c4512e4dca5d32234e275d1e8c699442d220d",
+"size": 2523302
+},
+"hd-player-models/draenei/female/draeneifemale_hd.skel": {
+"id": 9310108,
+"sha": "2f74a0854d6c39afcfed5041dd196683713476aa",
+"size": 15860976
+},
+"hd-player-models/draenei/female/draeneifemale_hd00.skin": {
+"id": 9310078,
+"sha": "de576e4f9d3faf0958d0ef924e26e326fba38c6a",
+"size": 732000
+},
+"hd-player-models/draenei/female/draeneifemale_hd_lod01.skin": {
+"id": 9310079,
+"sha": "36cd633b84fa3d3741e0e013cd5979b1d120fc28",
+"size": 464080
+},
+"hd-player-models/draenei/female/draeneifemale_hd_lod02.skin": {
+"id": 9310080,
+"sha": "e93748b28f0822761428d8721765269f56239598",
+"size": 356784
+},
+"hd-player-models/draenei/female/draeneifemale_hd_lod03.skin": {
+"id": 9310081,
+"sha": "e0d7d5e4579430186b70a2da99f617137ed156c0",
+"size": 287712
+},
+"hd-player-models/draenei/male/draeneimale_hd.m2": {
+"id": 9300004,
+"sha": "867b23c2a2d9bd7c064867d38497c431916b372d",
+"size": 2653324
+},
+"hd-player-models/draenei/male/draeneimale_hd.skel": {
+"id": 9310107,
+"sha": "cd3ddaf72d3b65cace1fa049ab711b344c3f2510",
+"size": 17447464
+},
+"hd-player-models/draenei/male/draeneimale_hd00.skin": {
+"id": 9310074,
+"sha": "38016ba544c186ceeae594a6ecdec8bba3115081",
+"size": 752720
+},
+"hd-player-models/draenei/male/draeneimale_hd_lod01.skin": {
+"id": 9310075,
+"sha": "f732965275673154cddf81776fecf4cbe4384295",
+"size": 422240
+},
+"hd-player-models/draenei/male/draeneimale_hd_lod02.skin": {
+"id": 9310076,
+"sha": "2c2a7cbc426c57de504f17cd9180893316f0d321",
+"size": 339472
+},
+"hd-player-models/draenei/male/draeneimale_hd_lod03.skin": {
+"id": 9310077,
+"sha": "b514e847fe2eb26b93753fc939dee005f12b77ea",
+"size": 289984
+},
+"hd-player-models/dwarf/female/dwarffemale_hd.m2": {
+"id": 118135,
+"sha": "ea3175aac11afbfba8323ac2faae8e8587a2191e",
+"size": 2533542
+},
+"hd-player-models/dwarf/female/dwarffemale_hd.skel": {
+"id": 9310095,
+"sha": "cef1c5caefe6fb011fbfa692497ae61fa4d39173",
+"size": 15643648
+},
+"hd-player-models/dwarf/female/dwarffemale_hd00.skin": {
+"id": 9310020,
+"sha": "09c67f7c8ce480c21571e791cd7a0ffda4986e44",
+"size": 680032
+},
+"hd-player-models/dwarf/female/dwarffemale_hd_lod01.skin": {
+"id": 9310021,
+"sha": "14e28219205d1b21d231299aa6569c5a4bc62872",
+"size": 483712
+},
+"hd-player-models/dwarf/female/dwarffemale_hd_lod02.skin": {
+"id": 9310022,
+"sha": "a0fd925759d8a70de813e523605489d90e558496",
+"size": 364064
+},
+"hd-player-models/dwarf/female/dwarffemale_hd_lod03.skin": {
+"id": 9310023,
+"sha": "682a33c357f05bc66310f5374bfadc5bef937f95",
+"size": 308448
+},
+"hd-player-models/dwarf/male/dwarfmale_hd.m2": {
+"id": 118355,
+"sha": "6202694f784eb06acd308d4fa258d2f2bf52a1a9",
+"size": 2996422
+},
+"hd-player-models/dwarf/male/dwarfmale_hd.skel": {
+"id": 9310094,
+"sha": "266836c2689dbdc34955490ac62994a8d2746088",
+"size": 16446504
+},
+"hd-player-models/dwarf/male/dwarfmale_hd00.skin": {
+"id": 9310016,
+"sha": "910ae4e7dfd295e9b2c3d98f56b3fd5e2166bd3b",
+"size": 815632
+},
+"hd-player-models/dwarf/male/dwarfmale_hd_lod01.skin": {
+"id": 9310017,
+"sha": "eb09649f5cf3a5814f7d74afcae33595685b7903",
+"size": 498336
+},
+"hd-player-models/dwarf/male/dwarfmale_hd_lod02.skin": {
+"id": 9310018,
+"sha": "6b83edee3ff9ca667d6404ff5265aee75edeeb74",
+"size": 390736
+},
+"hd-player-models/dwarf/male/dwarfmale_hd_lod03.skin": {
+"id": 9310019,
+"sha": "f32002ae17c153a5468b7f4825cfda74b1a30bc9",
+"size": 316224
+},
+"hd-player-models/gnome/female/gnomefemale_hd.m2": {
+"id": 119063,
+"sha": "73ab81d43b96ebbc476f8331138ee3ec9b7c8648",
+"size": 2051910
+},
+"hd-player-models/gnome/female/gnomefemale_hd.skel": {
+"id": 9310103,
+"sha": "9879c62aaf21328bc10bbda4d0d1ad04ecce01fd",
+"size": 12968064
+},
+"hd-player-models/gnome/female/gnomefemale_hd00.skin": {
+"id": 9310046,
+"sha": "e63637e11661ad385241d61b09e11c91d92496a6",
+"size": 543536
+},
+"hd-player-models/gnome/female/gnomefemale_hd_lod01.skin": {
+"id": 9310047,
+"sha": "95600f96cc21238e12502e31f1c3935459ca289d",
+"size": 395056
+},
+"hd-player-models/gnome/female/gnomefemale_hd_lod02.skin": {
+"id": 9310048,
+"sha": "79526df8ba15c0a99171640b68010afd4cca34ef",
+"size": 316576
+},
+"hd-player-models/gnome/female/gnomefemale_hd_lod03.skin": {
+"id": 9310049,
+"sha": "5136ac9b479c33e64fd809e0d210156c7db2a9a1",
+"size": 275728
+},
+"hd-player-models/gnome/male/gnomemale_hd.m2": {
+"id": 119159,
+"sha": "1a4487acae673efb69642c9994dade582cdb349b",
+"size": 1630758
+},
+"hd-player-models/gnome/male/gnomemale_hd.skel": {
+"id": 9310102,
+"sha": "72486c7c6bd1b266b5cb1f2f6a66ea7d2d07409e",
+"size": 11320592
+},
+"hd-player-models/gnome/male/gnomemale_hd00.skin": {
+"id": 9310042,
+"sha": "3eafe625d5ba420c4a602512627e02dae149b6e8",
+"size": 431216
+},
+"hd-player-models/gnome/male/gnomemale_hd_lod01.skin": {
+"id": 9310043,
+"sha": "7323621a2da4d625d06b8910b7aa569a5d0bd7e4",
+"size": 314144
+},
+"hd-player-models/gnome/male/gnomemale_hd_lod02.skin": {
+"id": 9310044,
+"sha": "f58fbb5a6e17070b7edf43788814343a5cd9f385",
+"size": 259760
+},
+"hd-player-models/gnome/male/gnomemale_hd_lod03.skin": {
+"id": 9310045,
+"sha": "f695b08dce0ff8673ed09680c7925a511a6cdcef",
+"size": 216384
+},
+"hd-player-models/goblin/female/goblinfemale.m2": {
+"id": 9300001,
+"sha": "9de20319d382a9a26d5bb0661659fe59f8b913d2",
+"size": 17281294
+},
+"hd-player-models/goblin/female/goblinfemale00.skin": {
+"id": 9310062,
+"sha": "bc8dc0673b8b323c7c90525d410768aafaae7a94",
+"size": 898736
+},
+"hd-player-models/goblin/female/goblinfemale_lod00.skin": {
+"id": 9310063,
+"sha": "dfd90e1563c4c5641424340c1143c852f3e7c694",
+"size": 449760
+},
+"hd-player-models/goblin/female/goblinfemale_lod01.skin": {
+"id": 9310064,
+"sha": "41502329fdfd8d8ad88c0fcd74c939d8be4dba6e",
+"size": 352064
+},
+"hd-player-models/goblin/female/goblinfemale_lod02.skin": {
+"id": 9310065,
+"sha": "f3c04be2946b18a4115ed339a9efd9f5e76cb828",
+"size": 289888
+},
+"hd-player-models/goblin/male/goblinmale-119376_lod00.skin": {
+"id": 9310059,
+"sha": "abc57733bb44e366b6da3e871bd637ca8fd81b44",
+"size": 455008
+},
+"hd-player-models/goblin/male/goblinmale-119376_lod01.skin": {
+"id": 9310060,
+"sha": "a3976d485e4716f1e0bcbc507500628d4f7fef16",
+"size": 342160
+},
+"hd-player-models/goblin/male/goblinmale-119376_lod02.skin": {
+"id": 9310061,
+"sha": "c19cadfbfe67014ce64bebed255439ec7c0d6f35",
+"size": 249536
+},
+"hd-player-models/goblin/male/goblinmale.m2": {
+"id": 9300000,
+"sha": "fee2bb6b0de020fe22f6cd81cc915f53f3a11417",
+"size": 2896690
+},
+"hd-player-models/goblin/male/goblinmale.skel": {
+"id": 9310104,
+"sha": "30e088ed484c1f4430033a47890a546e84a14d40",
+"size": 11879232
+},
+"hd-player-models/goblin/male/goblinmale00.skin": {
+"id": 9310058,
+"sha": "794a70149fa3a0e4b5bd46ef743fb45b3a7e2bf5",
+"size": 840928
+},
+"hd-player-models/human/female/humanfemale_hd.m2": {
+"id": 119563,
+"sha": "a8668dfcad943a32362afef178948beabf222e90",
+"size": 2502786
+},
+"hd-player-models/human/female/humanfemale_hd.skel": {
+"id": 9310091,
+"sha": "7893e9d3952a64b4cced3902bf7db9e73b931a4f",
+"size": 16220224
+},
+"hd-player-models/human/female/humanfemale_hd00.skin": {
+"id": 9310004,
+"sha": "8edee2eaf5da7a38859a4427c21f732492d5428a",
+"size": 705008
+},
+"hd-player-models/human/female/humanfemale_hd_lod01.skin": {
+"id": 9310005,
+"sha": "e8d0407dd01e5b9a48a80263da1f80671a286b64",
+"size": 496592
+},
+"hd-player-models/human/female/humanfemale_hd_lod02.skin": {
+"id": 9310006,
+"sha": "abf6f6f1a132f0f9537462226fe5ee50c869e894",
+"size": 378016
+},
+"hd-player-models/human/female/humanfemale_hd_lod03.skin": {
+"id": 9310007,
+"sha": "a122425a2a5b8de64c3fb99d7b7e5c17726345dd",
+"size": 297776
+},
+"hd-player-models/human/male/humanmale_hd.m2": {
+"id": 119940,
+"sha": "e9684bf5d0fb17e5ad1e30500ad153ab51b3a66e",
+"size": 2079388
+},
+"hd-player-models/human/male/humanmale_hd.skel": {
+"id": 9310090,
+"sha": "a7fe8b608f57c66e8777be6ea9548542c6b8895b",
+"size": 19221808
+},
+"hd-player-models/human/male/humanmale_hd00.skin": {
+"id": 9310000,
+"sha": "bd9e95aee15fb9a33fc137fea744bbc3930c44ed",
+"size": 576512
+},
+"hd-player-models/human/male/humanmale_hd_lod01.skin": {
+"id": 9310001,
+"sha": "9ad5d49bc4570186232a6cd5edbc1114b22eebe1",
+"size": 455792
+},
+"hd-player-models/human/male/humanmale_hd_lod02.skin": {
+"id": 9310002,
+"sha": "52397c8eff8741809ba7132b12a1004f7e7de96e",
+"size": 355280
+},
+"hd-player-models/human/male/humanmale_hd_lod03.skin": {
+"id": 9310003,
+"sha": "d968763cf498761597df892dd1977ff2ded2147f",
+"size": 280176
+},
+"hd-player-models/nightelf/female/nightelffemale_hd.m2": {
+"id": 120590,
+"sha": "614a7baf7d9b8a2d2c0a920979586c31dba2f334",
+"size": 2977860
+},
+"hd-player-models/nightelf/female/nightelffemale_hd.skel": {
+"id": 9310097,
+"sha": "72bf2c3b8446d05978e235acf3e26dbce90f0e54",
+"size": 19072432
+},
+"hd-player-models/nightelf/female/nightelffemale_hd00.skin": {
+"id": 9310028,
+"sha": "ec6aea09a98f70823b0d9c01bf3b7a39e0619d80",
+"size": 809616
+},
+"hd-player-models/nightelf/female/nightelffemale_hd_lod01.skin": {
+"id": 9310029,
+"sha": "003cc770e12f5526103544a5176c6a9e2f40261e",
+"size": 464992
+},
+"hd-player-models/nightelf/female/nightelffemale_hd_lod02.skin": {
+"id": 9310030,
+"sha": "d75f850876f2d00fb2d0514bb92a6a5986172e37",
+"size": 374496
+},
+"hd-player-models/nightelf/female/nightelffemale_hd_lod03.skin": {
+"id": 9310031,
+"sha": "acfbc59413223e6d781ad2fa4adf7b687de506ae",
+"size": 316736
+},
+"hd-player-models/nightelf/male/nightelfmale_hd.m2": {
+"id": 120791,
+"sha": "84ddd2f7128ebdd62029e9b31a469db8dcd792d1",
+"size": 3057064
+},
+"hd-player-models/nightelf/male/nightelfmale_hd.skel": {
+"id": 9310096,
+"sha": "8b7e5545d2f0164e9bbf73191f6b05c1d02d0ecb",
+"size": 14677440
+},
+"hd-player-models/nightelf/male/nightelfmale_hd00.skin": {
+"id": 9310024,
+"sha": "1a1c93da9246c0bb0d30673f38f5d2b0475d5a02",
+"size": 839312
+},
+"hd-player-models/nightelf/male/nightelfmale_hd_lod01.skin": {
+"id": 9310025,
+"sha": "50ec4c91719cd20a6fc6d39cf21be891f2a93e2f",
+"size": 487776
+},
+"hd-player-models/nightelf/male/nightelfmale_hd_lod02.skin": {
+"id": 9310026,
+"sha": "e7dec64321751cecdadd63923deb5ff3cf5dbd7b",
+"size": 392656
+},
+"hd-player-models/nightelf/male/nightelfmale_hd_lod03.skin": {
+"id": 9310027,
+"sha": "86f355953fec0ff71801d1bbbc72b265d49807ab",
+"size": 327616
+},
+"hd-player-models/orc/female/orcfemale_hd.m2": {
+"id": 121087,
+"sha": "9b9d4342cc65b169c049e2cf4caf512af887909e",
+"size": 2798172
+},
+"hd-player-models/orc/female/orcfemale_hd.skel": {
+"id": 9310093,
+"sha": "a11333944b356127a01612f618947447e7fbdea9",
+"size": 14418560
+},
+"hd-player-models/orc/female/orcfemale_hd00.skin": {
+"id": 9310012,
+"sha": "c16bcaab2500e7d870a6ec90a38f91bcc3fccfdc",
+"size": 802960
+},
+"hd-player-models/orc/female/orcfemale_hd_lod01.skin": {
+"id": 9310013,
+"sha": "6ab5284e0ef4d79c95668a55329ebf8a4c0bb1b6",
+"size": 536832
+},
+"hd-player-models/orc/female/orcfemale_hd_lod02.skin": {
+"id": 9310014,
+"sha": "418450733ee8c3cc9d87b638487e75fdb82bad79",
+"size": 415888
+},
+"hd-player-models/orc/female/orcfemale_hd_lod03.skin": {
+"id": 9310015,
+"sha": "14bf7d645aefc7fc00701814f46a7360fab81f9f",
+"size": 342272
+},
+"hd-player-models/orc/male/orcmale_hd.m2": {
+"id": 121287,
+"sha": "c0b7047a8884ea4199c09a15871169de36b4eec4",
+"size": 3001174
+},
+"hd-player-models/orc/male/orcmale_hd.skel": {
+"id": 9310092,
+"sha": "b84f3b7e96bb1d6451a4e21b65f513c8efee01aa",
+"size": 18226968
+},
+"hd-player-models/orc/male/orcmale_hd00.skin": {
+"id": 9310008,
+"sha": "d2487cfaea69e83bdd6a3d14e529e2587fa27c3b",
+"size": 884752
+},
+"hd-player-models/orc/male/orcmale_hd_lod01.skin": {
+"id": 9310009,
+"sha": "743f61583e32e893b8fbb377d29a65ea3e240b67",
+"size": 561568
+},
+"hd-player-models/orc/male/orcmale_hd_lod02.skin": {
+"id": 9310010,
+"sha": "2fa5729943ddbc720be920f2a15bd27b62e27940",
+"size": 448912
+},
+"hd-player-models/orc/male/orcmale_hd_lod03.skin": {
+"id": 9310011,
+"sha": "39de0f7bc1857dc1ddf43fbf3d1e198a33f5a2ed",
+"size": 366848
+},
+"hd-player-models/scourge/female/scourgefemale_hd.m2": {
+"id": 121608,
+"sha": "3cf95d97fcee1fc162ebe29c27780c2a6d63b6d7",
+"size": 2247918
+},
+"hd-player-models/scourge/female/scourgefemale_hd.skel": {
+"id": 9310099,
+"sha": "f37da7bffade8d9149d9d34ca3c68912d61281e2",
+"size": 11034752
+},
+"hd-player-models/scourge/female/scourgefemale_hd00.skin": {
+"id": 9310033,
+"sha": "547e0bc9e8db001742be65aa2fcdd086c9700579",
+"size": 617312
+},
+"hd-player-models/scourge/male/scourgemale_hd.m2": {
+"id": 121768,
+"sha": "2d975a198c4fd06e0803b23d72d318b9d3b5f936",
+"size": 2647292
+},
+"hd-player-models/scourge/male/scourgemale_hd.skel": {
+"id": 9310098,
+"sha": "401cdd2ea5b47c9cce3981b6f758d097b9fd6b8b",
+"size": 16596352
+},
+"hd-player-models/scourge/male/scourgemale_hd00.skin": {
+"id": 9310032,
+"sha": "84e0c32899517886ab57071519b9f4831f308c3e",
+"size": 733168
+},
+"hd-player-models/tauren/female/taurenfemale_hd.m2": {
+"id": 121961,
+"sha": "494d9f7d1d9350c4aeff2b4dcb4b4a09ffc57f68",
+"size": 2434594
+},
+"hd-player-models/tauren/female/taurenfemale_hd.skel": {
+"id": 9310101,
+"sha": "e0ac80469fa1ec844b0992f59eda9c7050e2d5cb",
+"size": 16440120
+},
+"hd-player-models/tauren/female/taurenfemale_hd00.skin": {
+"id": 9310038,
+"sha": "7b0c7f2e4fb851e9702b400dec1ea5d9346f6a4c",
+"size": 692336
+},
+"hd-player-models/tauren/female/taurenfemale_hd_lod01.skin": {
+"id": 9310039,
+"sha": "17f05a02726b8453928abdc572e9269f7488c1ad",
+"size": 441648
+},
+"hd-player-models/tauren/female/taurenfemale_hd_lod02.skin": {
+"id": 9310040,
+"sha": "fe6cf897798b8f53e4e8143863c2a95a24c1f769",
+"size": 318944
+},
+"hd-player-models/tauren/female/taurenfemale_hd_lod03.skin": {
+"id": 9310041,
+"sha": "48b8e497eb51d94f2c7e93892ff872fea1ea1da2",
+"size": 212304
+},
+"hd-player-models/tauren/male/taurenmale_hd.m2": {
+"id": 122055,
+"sha": "994034eb1f0e6b9b7733d0d1847feb0b8fbedddd",
+"size": 2874472
+},
+"hd-player-models/tauren/male/taurenmale_hd.skel": {
+"id": 9310100,
+"sha": "15817dbe1654991e6ef7ed57ed3b1ea66cd08b50",
+"size": 19114728
+},
+"hd-player-models/tauren/male/taurenmale_hd00.skin": {
+"id": 9310034,
+"sha": "76851403eeccc4573073fcf0867241c815e11da2",
+"size": 827824
+},
+"hd-player-models/tauren/male/taurenmale_hd_lod01.skin": {
+"id": 9310035,
+"sha": "a291f67840bf1a4e2f533fc6492325c773f3ffc9",
+"size": 455632
+},
+"hd-player-models/tauren/male/taurenmale_hd_lod02.skin": {
+"id": 9310036,
+"sha": "68c9f9b765803533ab7000e0261739d5e3aaf348",
+"size": 335072
+},
+"hd-player-models/tauren/male/taurenmale_hd_lod03.skin": {
+"id": 9310037,
+"sha": "66a1d297d39f2f231d661b809b00e5b465ff8096",
+"size": 230768
+},
+"hd-player-models/troll/female/trollfemale_hd.m2": {
+"id": 122414,
+"sha": "9400f78f56ee2630aad1b504c0d40660c86c8d14",
+"size": 17532354
+},
+"hd-player-models/troll/female/trollfemale_hd00.skin": {
+"id": 9310054,
+"sha": "b70f4cc71729af54a0a12b8ccf6a4d8bb1102b80",
+"size": 729552
+},
+"hd-player-models/troll/female/trollfemale_hd_lod01.skin": {
+"id": 9310055,
+"sha": "eff5452c8a9f79effa1fe55aa3b53520a74cfd42",
+"size": 340256
+},
+"hd-player-models/troll/female/trollfemale_hd_lod02.skin": {
+"id": 9310056,
+"sha": "940717bf7ab8e2d2683b75e5af46011f4f4d4781",
+"size": 272016
+},
+"hd-player-models/troll/female/trollfemale_hd_lod03.skin": {
+"id": 9310057,
+"sha": "b2816c7f6f00008e9cb24e935c46b9afa5f47931",
+"size": 228272
+},
+"hd-player-models/troll/male/trollmale_hd.m2": {
+"id": 122560,
+"sha": "7c1fd27877021c5647c9b68672e28bf38c6b0164",
+"size": 26626906
+},
+"hd-player-models/troll/male/trollmale_hd00.skin": {
+"id": 9310050,
+"sha": "6b1a78647a9fe3f5e843b8bcbdcced8ea337230d",
+"size": 900496
+},
+"hd-player-models/troll/male/trollmale_hd_lod01.skin": {
+"id": 9310051,
+"sha": "71e79113ac9c4fd67a55d7dfbe885d8dc354e17f",
+"size": 403104
+},
+"hd-player-models/troll/male/trollmale_hd_lod02.skin": {
+"id": 9310052,
+"sha": "b69c64666b58947a90a2d8ba456e23b0db7bc7f9",
+"size": 325568
+},
+"hd-player-models/troll/male/trollmale_hd_lod03.skin": {
+"id": 9310053,
+"sha": "b549e816821ff72159d65df34d9ae4ff1d1daf25",
+"size": 275088
+},
+"hd-player-models/worgen/female/worgenfemale.m2": {
+"id": 9300007,
+"sha": "6c64b21841bfe4fcb6949691e69a1dbd199ef13b",
+"size": 15715544
+},
+"hd-player-models/worgen/female/worgenfemale00.skin": {
+"id": 9310086,
+"sha": "9c7e442773e592ea2d1597a3fa50b9dd09e0fec5",
+"size": 713920
+},
+"hd-player-models/worgen/female/worgenfemale_lod00.skin": {
+"id": 9310087,
+"sha": "964aafba49438bc2fd571bc1fa57566e318eb8c1",
+"size": 359776
+},
+"hd-player-models/worgen/female/worgenfemale_lod01.skin": {
+"id": 9310088,
+"sha": "340f027056f36b78c38b4a80857706719beb5b7a",
+"size": 283728
+},
+"hd-player-models/worgen/female/worgenfemale_lod02.skin": {
+"id": 9310089,
+"sha": "094fcce0e778f1e5045961a0684a8159edbd2f5b",
+"size": 220784
+},
+"hd-player-models/worgen/male/worgenmale.m2": {
+"id": 9300006,
+"sha": "2df825ef79d1c886b18971c104ff0eb6d05e1947",
+"size": 17816972
+},
+"hd-player-models/worgen/male/worgenmale00.skin": {
+"id": 9310082,
+"sha": "3f997fc608b875e670bf4ac4bbb2777fb6842678",
+"size": 749024
+},
+"hd-player-models/worgen/male/worgenmale_lod01.skin": {
+"id": 9310083,
+"sha": "ae7d11d8f04a0229f2cf0deda2067c5a4535953b",
+"size": 377472
+},
+"hd-player-models/worgen/male/worgenmale_lod02.skin": {
+"id": 9310084,
+"sha": "97f9e6fd245f98b7c0b63575a65717af427e28ab",
+"size": 297792
+},
+"hd-player-models/worgen/male/worgenmale_lod03.skin": {
+"id": 9310085,
+"sha": "3f7a48a2f0c0e0a3efb2a1627ea76c58e9f5905c",
+"size": 231360
 },
 "hdtrike/6155539.blp": {
 "id": 6155539,
@@ -17633,6 +18978,146 @@
 "sha": "d56048e4749f9587321c2aa5fc74a3a934c3be99",
 "size": 175948
 },
+"kael_orbs/kael_orb_backpack00.skin": {
+"id": 927010897,
+"sha": "8d88468053af415759a03c75a0ecfc2a839ec549",
+"size": 3736
+},
+"kael_orbs/kael_orb_edge.blp": {
+"id": 927010903,
+"sha": "13b31f018d8bcc0e9ffa825af8a69b0fd4750ef5",
+"size": 88580
+},
+"kael_orbs/kael_orb_ember.blp": {
+"id": 927010898,
+"sha": "d8970dd2fc1e0045207d9bd4422ff83b2fa7f4b2",
+"size": 23044
+},
+"kael_orbs/kael_orb_green.blp": {
+"id": 927010900,
+"sha": "9a70b12e86defa505a98213db54f2ce285906b96",
+"size": 23044
+},
+"kael_orbs/kael_orb_red.blp": {
+"id": 927010899,
+"sha": "b90fc6f57dac911cbfd00f0b8f93970ad59ac3d3",
+"size": 23044
+},
+"kael_orbs/kael_orb_void_cyan.blp": {
+"id": 927010901,
+"sha": "cf7d3f80d7e8cf50991e15bf67f988d35143c1a2",
+"size": 23044
+},
+"kael_orbs/kael_orb_void_shadow.blp": {
+"id": 927010902,
+"sha": "88647e1f19aa6ffd59559e89076131cf5f7351d5",
+"size": 23044
+},
+"kael_orbs_v002/bonfire_2823151.blp": {
+"id": 927010911,
+"sha": "96067a1ab7bd42c60acf16d95e5e86d896c12e53",
+"size": 44900
+},
+"kael_orbs_v002/bonfire_2823152.blp": {
+"id": 927010914,
+"sha": "09702d1b572498dc25589f9dd80771a3181b0243",
+"size": 88580
+},
+"kael_orbs_v002/bonfire_2823154.blp": {
+"id": 927010915,
+"sha": "4b29ed41b1207d8b20f7077f0272bd6e0c2b16c1",
+"size": 88580
+},
+"kael_orbs_v002/bonfire_2823156.blp": {
+"id": 927010916,
+"sha": "255b5d5b02b84ddaa516d4889250ef4b6a34b935",
+"size": 23044
+},
+"kael_orbs_v002/bonfire_2823158.blp": {
+"id": 927010917,
+"sha": "590af4b8d4636e2e463bd3811bc9f3d7d8852940",
+"size": 23044
+},
+"kael_orbs_v002/bonfire_2823160.blp": {
+"id": 927010918,
+"sha": "05b6b9414a99d76768d36322708c1b2de28fae88",
+"size": 88580
+},
+"kael_orbs_v002/bonfire_2823162.blp": {
+"id": 927010919,
+"sha": "d07f20dd9903494acbb94074c1e8e7ae7df62d9b",
+"size": 88580
+},
+"kael_orbs_v002/bonfire_3669102.blp": {
+"id": 927010912,
+"sha": "88f3d924dd48206e7efe94e77749b008224c869c",
+"size": 23044
+},
+"kael_orbs_v002/bonfire_918768.blp": {
+"id": 927010920,
+"sha": "de9738c768347931edbbdb3f44d8ee738ecff754",
+"size": 12108
+},
+"kael_orbs_v002/bonfire_983128.blp": {
+"id": 927010913,
+"sha": "d21f3a8d8307ce40fced633ff4c0f81f71482024",
+"size": 1228
+},
+"kael_orbs_v002/item_colour_3922866.blp": {
+"id": 3922866,
+"sha": "b90fc6f57dac911cbfd00f0b8f93970ad59ac3d3",
+"size": 23044
+},
+"kael_orbs_v002/item_colour_3922867.blp": {
+"id": 3922867,
+"sha": "9a70b12e86defa505a98213db54f2ce285906b96",
+"size": 23044
+},
+"kael_orbs_v002/item_colour_3922868.blp": {
+"id": 3922868,
+"sha": "d8970dd2fc1e0045207d9bd4422ff83b2fa7f4b2",
+"size": 23044
+},
+"kael_orbs_v002/kael_orb_backpack.m2": {
+"id": 3922857,
+"sha": "29817cd83e29af8f5d1662311a353c29b54ffc13",
+"size": 72942
+},
+"kael_orbs_v002/kael_orb_backpack00.skin": {
+"id": 927010904,
+"sha": "ce97c21affb088a5a899a924658c94044f9a198a",
+"size": 7248
+},
+"kael_orbs_v002/kael_orb_edge.blp": {
+"id": 927010910,
+"sha": "13b31f018d8bcc0e9ffa825af8a69b0fd4750ef5",
+"size": 88580
+},
+"kael_orbs_v002/kael_orb_ember.blp": {
+"id": 927010905,
+"sha": "d8970dd2fc1e0045207d9bd4422ff83b2fa7f4b2",
+"size": 23044
+},
+"kael_orbs_v002/kael_orb_green.blp": {
+"id": 927010907,
+"sha": "9a70b12e86defa505a98213db54f2ce285906b96",
+"size": 23044
+},
+"kael_orbs_v002/kael_orb_red.blp": {
+"id": 927010906,
+"sha": "b90fc6f57dac911cbfd00f0b8f93970ad59ac3d3",
+"size": 23044
+},
+"kael_orbs_v002/kael_orb_void_cyan.blp": {
+"id": 927010908,
+"sha": "cf7d3f80d7e8cf50991e15bf67f988d35143c1a2",
+"size": 23044
+},
+"kael_orbs_v002/kael_orb_void_shadow.blp": {
+"id": 927010909,
+"sha": "88647e1f19aa6ffd59559e89076131cf5f7351d5",
+"size": 23044
+},
 "kidghoul00.skin": {
 "id": 8284233,
 "sha": "ff85802fea3d7e559b833e6dd1178c9c89214a53",
@@ -18135,8 +19620,8 @@
 },
 "loadscreennorthrend2wide.blp": {
 "id": 447134,
-"sha": "8071891c38b4bac10c58861d2834fb684357b402",
-"size": 844500
+"sha": "81c7b7e6bffdf1eac5c559f6056da36f7be65140",
+"size": 700236
 },
 "loadscreenoutland2.blp": {
 "id": 445512,
@@ -23295,7 +24780,7 @@
 },
 "nd_bearcave.wmo": {
 "id": 115622,
-"sha": "8ccda0cd3ce591993d3aa92cef367a52e5dde0ca",
+"sha": "875650f1573cde6dcd462c13f5ff327275001f29",
 "size": 3488
 },
 "nd_bearcave_000.wmo": {
@@ -23487,6 +24972,336 @@
 "id": 123077,
 "sha": "a801c33ee82fb06562114cd737cb6bd551587603",
 "size": 700260
+},
+"ogre/armour/base_933002000.blp": {
+"id": 933002000,
+"sha": "70f1628575d90c6ba069e7a685f6e3255ac46c46",
+"size": 699236
+},
+"ogre/armour/ogre_933002001.skin": {
+"id": 933002001,
+"sha": "030e20e68ea495e0332130deae9d1671f23edece",
+"size": 286020
+},
+"ogre/armour/ogre_933002002.m2": {
+"id": 933002002,
+"sha": "26c86284697c49fd48c8bb2b414a93910f5d1efd",
+"size": 4402142
+},
+"ogre/ogre_hd_body_933000700.blp": {
+"id": 933000700,
+"sha": "ad4a6f8fdc62b5932df4a9c0865b98e388cad8c9",
+"size": 349700
+},
+"ogre/ogre_hd_head_933000701.blp": {
+"id": 933000701,
+"sha": "a191d5f25ec5d0dcfd8ef19263bd7609ff25ec8c",
+"size": 87556
+},
+"ogre/ogre_native_933000703.m2": {
+"id": 933000703,
+"sha": "0c57f3ffcd6f4bdbba06d1fc84c86b365a08da9a",
+"size": 3711052
+},
+"ogre/ogrenative_93300070200.skin": {
+"id": 933000702,
+"sha": "8bf72d8100b18b5b04c3bf34bbfbf4f5d030b335",
+"size": 125464
+},
+"ogre/slots/body_219812_933003003.blp": {
+"id": 933003003,
+"sha": "a428d506ecbe9d5c84fd71aadf4978e6a12190df",
+"size": 699236
+},
+"ogre/slots/body_219813_933003004.blp": {
+"id": 933003004,
+"sha": "0cd48270f28415fd61e65d98c78342175efa0637",
+"size": 699236
+},
+"ogre/slots/body_219814_933003005.blp": {
+"id": 933003005,
+"sha": "3ec260c96570ba66d4a46b120f723d5fbef844c6",
+"size": 699236
+},
+"ogre/slots/body_219815_933003006.blp": {
+"id": 933003006,
+"sha": "678862e129ef32d9cac2e63c929e5919d93b5490",
+"size": 699236
+},
+"ogre/slots/body_219832_933003007.blp": {
+"id": 933003007,
+"sha": "dfc8ffb720eb1d1e0dc44db4ba9d35d24de6c846",
+"size": 699236
+},
+"ogre/slots/body_368_933003001.blp": {
+"id": 933003001,
+"sha": "2bbaa93a5c91bec379a62f46054a9b6a415380d9",
+"size": 699236
+},
+"ogre/slots/body_369_933003000.blp": {
+"id": 933003000,
+"sha": "ee8098ead4d6bf6985053b1622407d60ae7d22a2",
+"size": 699236
+},
+"ogre/slots/body_370_933003002.blp": {
+"id": 933003002,
+"sha": "171864652836ce3045c409a76d1b920505376181",
+"size": 699236
+},
+"ogre/slots/head_200696_933003042.blp": {
+"id": 933003042,
+"sha": "e196c0d165b8a95464fb4a1a49f83ac166d81116",
+"size": 87556
+},
+"ogre/slots/head_200697_933003043.blp": {
+"id": 933003043,
+"sha": "744614df2a82a3a01a423701f8d92a05568291fe",
+"size": 87556
+},
+"ogre/slots/head_200698_933003044.blp": {
+"id": 933003044,
+"sha": "410230a60472e66592b7ba5e7c6a7cd03b155ca0",
+"size": 87556
+},
+"ogre/slots/head_200699_933003045.blp": {
+"id": 933003045,
+"sha": "8af96866ca67c8cb4c7bc758bfe02ff85da4521c",
+"size": 87556
+},
+"ogre/slots/head_200700_933003046.blp": {
+"id": 933003046,
+"sha": "6d795a7c6b4893ac4b4a1f9959ce9c7ef940e4b4",
+"size": 87556
+},
+"ogre/slots/head_200701_933003047.blp": {
+"id": 933003047,
+"sha": "9a0d8eb7a1caaabc7e89dfb84a806cd14e81ed42",
+"size": 87556
+},
+"ogre/slots/head_215876_933003048.blp": {
+"id": 933003048,
+"sha": "2bbb23046741e65c06cbb5f9ea9e953b0cebc404",
+"size": 87556
+},
+"ogre/slots/head_215877_933003049.blp": {
+"id": 933003049,
+"sha": "8e8736546298b32009eadaf56e8e94695c2e7866",
+"size": 87556
+},
+"ogre/slots/head_215878_933003050.blp": {
+"id": 933003050,
+"sha": "8ddbebed7ebfa7bda39045ff7fb4e07577c2dfaf",
+"size": 87556
+},
+"ogre/slots/head_215879_933003051.blp": {
+"id": 933003051,
+"sha": "b0ae4b4d9f64037380a85140bcdc303364789447",
+"size": 87556
+},
+"ogre/slots/head_215880_933003052.blp": {
+"id": 933003052,
+"sha": "55a7d160be28ccf0ef64364328fc5e77be366991",
+"size": 87556
+},
+"ogre/slots/head_219812_933003053.blp": {
+"id": 933003053,
+"sha": "c3582023fc2698b26381814009cbc4d7eab97ff7",
+"size": 87556
+},
+"ogre/slots/head_219813_933003054.blp": {
+"id": 933003054,
+"sha": "361d9ab23d77950c065103d86c584bea2fa7ceaf",
+"size": 87556
+},
+"ogre/slots/head_219814_933003055.blp": {
+"id": 933003055,
+"sha": "d4f61ec675c7ee99164b54e0ff18b19c012f3a0f",
+"size": 87556
+},
+"ogre/slots/head_219815_933003056.blp": {
+"id": 933003056,
+"sha": "11a9de4c2f9936c829f1664bb642831fd8814580",
+"size": 87556
+},
+"ogre/slots/head_219832_933003057.blp": {
+"id": 933003057,
+"sha": "0cf8fae68cc03e013e21e59ee1190a48f868587c",
+"size": 87556
+},
+"ogre/slots/head_353_933003008.blp": {
+"id": 933003008,
+"sha": "00f7b5d01e4850ba89f27c6daadb71b18ade5a78",
+"size": 87556
+},
+"ogre/slots/head_354_933003009.blp": {
+"id": 933003009,
+"sha": "081ff61d272b90af0bc2e8b853b86760d4ab7d03",
+"size": 87556
+},
+"ogre/slots/head_355_933003010.blp": {
+"id": 933003010,
+"sha": "90b1c5c527e30764205e73f2b85ddc702af88b55",
+"size": 87556
+},
+"ogre/slots/head_356_933003011.blp": {
+"id": 933003011,
+"sha": "efc79519cf5191f45a14408d4790d2a3ae494f0a",
+"size": 87556
+},
+"ogre/slots/head_357_933003012.blp": {
+"id": 933003012,
+"sha": "d92842246cb80c3beb82f1270e8bfe2df68b92d9",
+"size": 87556
+},
+"ogre/slots/head_358_933003013.blp": {
+"id": 933003013,
+"sha": "727bc41b268b5ce5afd4308cfda3a3922c969160",
+"size": 87556
+},
+"ogre/slots/head_359_933003014.blp": {
+"id": 933003014,
+"sha": "18f03897063b35bf44b7f08e76c276591d005a7b",
+"size": 87556
+},
+"ogre/slots/head_360_933003015.blp": {
+"id": 933003015,
+"sha": "fcbbb04575ff4142ad92c9556ae9a683af23c0e1",
+"size": 87556
+},
+"ogre/slots/head_361_933003016.blp": {
+"id": 933003016,
+"sha": "806d4906c40df6f95e609a49faecbefdce9694de",
+"size": 87556
+},
+"ogre/slots/head_362_933003017.blp": {
+"id": 933003017,
+"sha": "7d752865fb0d2d7409e3386fcee103f1a17426c5",
+"size": 87556
+},
+"ogre/slots/head_363_933003018.blp": {
+"id": 933003018,
+"sha": "cc507813f4e0f7f7cc9592ea1bd60cb26ddc057f",
+"size": 87556
+},
+"ogre/slots/head_364_933003019.blp": {
+"id": 933003019,
+"sha": "6ebce86dd2df64cffe61cb98a03eea08cb9ed7fd",
+"size": 87556
+},
+"ogre/slots/head_365_933003020.blp": {
+"id": 933003020,
+"sha": "28522f400eea8155d56b1d48425fa9dd23477f67",
+"size": 87556
+},
+"ogre/slots/head_366_933003021.blp": {
+"id": 933003021,
+"sha": "da7a20c51238022b9373a43acc43d1540eb959a1",
+"size": 87556
+},
+"ogre/slots/head_367_933003022.blp": {
+"id": 933003022,
+"sha": "476a73f44d875b858c690bc8e51e66916cb3887f",
+"size": 87556
+},
+"ogre/slots/head_368_933003023.blp": {
+"id": 933003023,
+"sha": "359ac2ff300c6de851e702f24a05723096078d18",
+"size": 87556
+},
+"ogre/slots/head_369_933003024.blp": {
+"id": 933003024,
+"sha": "f476f2391eb6f494fd929e37754b7f053bf05e01",
+"size": 87556
+},
+"ogre/slots/head_370_933003025.blp": {
+"id": 933003025,
+"sha": "a2fedc21ba8e830d805d53f5f28bd2f6c71aa649",
+"size": 87556
+},
+"ogre/slots/head_371_933003026.blp": {
+"id": 933003026,
+"sha": "b325274d0af2979a87d505f634cf5d0adbbcb5be",
+"size": 87556
+},
+"ogre/slots/head_372_933003027.blp": {
+"id": 933003027,
+"sha": "cb546fd50e287b9c3e264bd75e9e55a36c7860a6",
+"size": 87556
+},
+"ogre/slots/head_373_933003028.blp": {
+"id": 933003028,
+"sha": "6416cc4ab4a71a83a7db3ce7492ba7d5441e0e32",
+"size": 87556
+},
+"ogre/slots/head_374_933003029.blp": {
+"id": 933003029,
+"sha": "1c4cd00af10bce182aab3d245359afd20065e986",
+"size": 87556
+},
+"ogre/slots/head_375_933003030.blp": {
+"id": 933003030,
+"sha": "194e2a569ff8347e0d2cf6d1297ed03f03c74973",
+"size": 87556
+},
+"ogre/slots/head_376_933003031.blp": {
+"id": 933003031,
+"sha": "fadec9c8f612bec92660f995466f025195cac645",
+"size": 87556
+},
+"ogre/slots/head_377_933003032.blp": {
+"id": 933003032,
+"sha": "fee61e5e0bf83d9a84780b473b8f3b556bcaeffd",
+"size": 87556
+},
+"ogre/slots/head_378_933003033.blp": {
+"id": 933003033,
+"sha": "19be4b1302fd94f1a87d34dfd270a9e667094bef",
+"size": 87556
+},
+"ogre/slots/head_379_933003034.blp": {
+"id": 933003034,
+"sha": "4745a589f1f81914f51c3b890ce8c9e519509822",
+"size": 87556
+},
+"ogre/slots/head_380_933003035.blp": {
+"id": 933003035,
+"sha": "351e9ce7f9123af8e5942ba919ece0e82a8987fc",
+"size": 87556
+},
+"ogre/slots/head_381_933003036.blp": {
+"id": 933003036,
+"sha": "f74ec40a7ba1189d338236bfa0bc399deca52c8d",
+"size": 87556
+},
+"ogre/slots/head_382_933003037.blp": {
+"id": 933003037,
+"sha": "76d40d80ad9ac4d176488e7bb54f2774821c554b",
+"size": 87556
+},
+"ogre/slots/head_383_933003038.blp": {
+"id": 933003038,
+"sha": "895f80fb5d93f661f5ab3fcdc9185ee2565da82f",
+"size": 87556
+},
+"ogre/slots/head_9350_933003039.blp": {
+"id": 933003039,
+"sha": "feb1fb55dce3952e5bc954be9ccf34552194ef26",
+"size": 87556
+},
+"ogre/slots/head_9351_933003040.blp": {
+"id": 933003040,
+"sha": "2d471c03179547fa191e3d758e46d8d5b2462c99",
+"size": 87556
+},
+"ogre/slots/head_9352_933003041.blp": {
+"id": 933003041,
+"sha": "e562c9a620126280b91e8b706157f3a37a309d78",
+"size": 87556
+},
+"ogre/slots/ogre_933003058.m2": {
+"id": 933003058,
+"sha": "45834e5c96b6c9cf72835f7d54b48d750ea9ed6f",
+"size": 14456380
 },
 "ogredraenorbutcher.m2": {
 "id": 1039724,
@@ -24111,6 +25926,11 @@
 "plaguepinetrunk11.blp": {
 "id": 203817,
 "sha": "2332b6c983d0ef9a9f91dcfa8ff29e79b62bc896",
+"size": 1399300
+},
+"plaguewagon01.blp": {
+"id": 203753,
+"sha": "7e03193caa4129f0fa51356b43599e9e089df6cc",
 "size": 1399300
 },
 "plate_b_02black_boot_fo_u.blp": {
@@ -29513,6 +31333,101 @@
 "sha": "d0554214e4d9267813d400fffd0646f21b3b4326",
 "size": 350724
 },
+"tauren_fel_v001/bloodtotem_fel_fx.blp": {
+"id": 927010924,
+"sha": "3522410649d2a4c830e6f5af74f821a9f7aa861d",
+"size": 88580
+},
+"tauren_fel_v001/fel_outline_fade.blp": {
+"id": 927010922,
+"sha": "80e6f6c65e28a1f1d2d0c790513bc7c7eaa36bb0",
+"size": 23044
+},
+"tauren_fel_v001/fel_tusk.blp": {
+"id": 927010923,
+"sha": "77fdbbacf13cdfd74390373e978eea1fd2d6c659",
+"size": 23044
+},
+"tauren_fel_v001/tauren_fel00.skin": {
+"id": 927010921,
+"sha": "71f5306b5a612d2084ff40034a3cf37498588069",
+"size": 43016
+},
+"tauren_fel_v002/tauren_fel00.skin": {
+"id": 927010925,
+"sha": "4c20e37e990609d3fbe699e09f21ed3a1e19d2ff",
+"size": 43016
+},
+"tauren_fel_v003/tauren_fel_lod00.skin": {
+"id": 927010926,
+"sha": "f12e39992a461b4bc598c299b3fbea7961589549",
+"size": 43016
+},
+"tauren_fel_v003/tauren_fel_lod01.skin": {
+"id": 927010927,
+"sha": "f12e39992a461b4bc598c299b3fbea7961589549",
+"size": 43016
+},
+"tauren_fel_v003/tauren_fel_lod02.skin": {
+"id": 927010928,
+"sha": "f12e39992a461b4bc598c299b3fbea7961589549",
+"size": 43016
+},
+"tauren_fel_v003/tauren_fel_lod03.skin": {
+"id": 927010929,
+"sha": "f12e39992a461b4bc598c299b3fbea7961589549",
+"size": 43016
+},
+"tauren_fel_v004/ItemDisplayInfoMaterialRes.db2": {
+"id": 1280614,
+"sha": "9df1b86af4697a36c1ff18267d3f417ca1fc11d6",
+"size": 3454394
+},
+"tauren_fel_v004/tauren_fel_lod00.skin": {
+"id": 927010930,
+"sha": "6b50210a1bf4652f57b254dd5d7e445ea4e5050e",
+"size": 43016
+},
+"tauren_fel_v004/tauren_fel_lod01.skin": {
+"id": 927010931,
+"sha": "6b50210a1bf4652f57b254dd5d7e445ea4e5050e",
+"size": 43016
+},
+"tauren_fel_v004/tauren_fel_lod02.skin": {
+"id": 927010932,
+"sha": "6b50210a1bf4652f57b254dd5d7e445ea4e5050e",
+"size": 43016
+},
+"tauren_fel_v004/tauren_fel_lod03.skin": {
+"id": 927010933,
+"sha": "6b50210a1bf4652f57b254dd5d7e445ea4e5050e",
+"size": 43016
+},
+"tauren_fel_v005/tauren_fel_collection.m2": {
+"id": 2429554,
+"sha": "f851c5024c202a1170ea25ad03b67a87145e783f",
+"size": 804606
+},
+"tauren_fel_v005/tauren_fel_lod00.skin": {
+"id": 927010934,
+"sha": "5980f5facda1bbd6bc731e605c984e4bd0c5bdc2",
+"size": 43016
+},
+"tauren_fel_v005/tauren_fel_lod01.skin": {
+"id": 927010935,
+"sha": "5980f5facda1bbd6bc731e605c984e4bd0c5bdc2",
+"size": 43016
+},
+"tauren_fel_v005/tauren_fel_lod02.skin": {
+"id": 927010936,
+"sha": "5980f5facda1bbd6bc731e605c984e4bd0c5bdc2",
+"size": 43016
+},
+"tauren_fel_v005/tauren_fel_lod03.skin": {
+"id": 927010937,
+"sha": "5980f5facda1bbd6bc731e605c984e4bd0c5bdc2",
+"size": 43016
+},
 "taurenmalefaceupper04_21_hd.blp": {
 "id": 976741,
 "sha": "4fa13e26281a02991b547e87fbb2a8d16f636e76",
@@ -29520,8 +31435,8 @@
 },
 "taurenmaleskin00_21_hd.blp": {
 "id": 976829,
-"sha": "f4e7287d59c227fc04eb160c17ddfd8440610205",
-"size": 700244
+"sha": "fb483a96940543418256430478c025b325ff18b8",
+"size": 700260
 },
 "taurentotem09_nocol.m2": {
 "id": 512781,
@@ -29932,6 +31847,36 @@
 "id": 125130,
 "sha": "d305b73a64f1e7dd3a1dccaaa0fa79694f9a6f56",
 "size": 700260
+},
+"textures/terrain_1817429_927010891.blp": {
+"id": 927010891,
+"sha": "75b82d68212c09b0ee7dddfe85111cd02604a993",
+"size": 88580
+},
+"textures/terrain_1817430_927010892.blp": {
+"id": 927010892,
+"sha": "b0651d6e90e36e042c98702a4db25f22db396be3",
+"size": 88580
+},
+"textures/terrain_4210250_927010893.blp": {
+"id": 927010893,
+"sha": "be436d1b594eaab511d85735e6c4f58ba182842b",
+"size": 350724
+},
+"textures/terrain_4210251_927010894.blp": {
+"id": 927010894,
+"sha": "2b0038831e4a06efa1db4b282bb813f3403416e5",
+"size": 350724
+},
+"textures/terrain_5268590_927010895.blp": {
+"id": 927010895,
+"sha": "469e1651bdc4bb684a4d888aded7da124895dac2",
+"size": 88580
+},
+"textures/terrain_5268591_927010896.blp": {
+"id": 927010896,
+"sha": "8b5deba357b11baa2397f4aeb50d931f1fd027ca",
+"size": 88580
 },
 "th_corrupt_03_s.blp": {
 "id": 357270,
@@ -37605,11 +39550,11 @@
 }
 },
 "patch_json": {
-"sha": "8fdb1a2355c3e2d755713202396cb471d3776f49",
-"size": 436852
+"sha": "1280f03affb2bfa0f09bb72455be2d2549bbe237",
+"size": 465479
 },
 "repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
-"total_bytes": 2833152096
+"total_bytes": 3507746945
 },
 "Chronicles-Classic": {
 "files": {
@@ -342342,5 +344287,5 @@
 "total_bytes": 1645251639
 }
 },
-"published": "2026-10-15 22:36"
+"published": "2026-10-15 23:10"
 }
