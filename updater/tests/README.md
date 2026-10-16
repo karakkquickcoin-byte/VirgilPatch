@@ -6,7 +6,7 @@ From this directory, in PowerShell:
 $testRoot = Join-Path $env:TEMP ('VirgilTests-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $testRoot | Out-Null
 $compiler = Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
-& $compiler /nologo /target:exe /optimize+ /main:SecurityTests "/out:$testRoot\SecurityTests.exe" /r:System.Web.Extensions.dll /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll ../VirgilUpdater.cs SecurityTests.cs
+& $compiler /nologo /target:exe /optimize+ /main:SecurityTests "/out:$testRoot\SecurityTests.exe" /r:System.Web.Extensions.dll /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll ../VirgilUpdater.cs ../SelfUpdate.cs SecurityTests.cs
 & "$testRoot\SecurityTests.exe" $testRoot
 ```
 
@@ -22,3 +22,11 @@ small game asset. It does not install patches. The test binary contains the upda
 The updater suite covers security safeguards and individual asset downloading, including more than 400 changed files,
 an update exceeding the old 40-percent threshold, no-op updates, missing/corrupt assets and a lost state file.
 The release also runs a first-install/second-run smoke test of the built EXE. Publisher code is unchanged in v1.3.1.
+
+
+`SelfUpdateTests.cs` validates signatures, trusted payload scope, size/hash/version checks and Windows argument
+quoting. Compile it alongside `VirgilUpdater.cs` and `SelfUpdate.cs` with `/main:SelfUpdateTests`. It takes a
+test fixture EXE (assembly name `VirgilUpdater`, version `1.4.1.0`) and a test-only private RSA XML key path.
+Never use a production signing key for these fixtures. The accompanying audit's process harness tests real
+replacement/restart, startup rollback, tampering, invalid signatures, downgrade rejection, read-only EXEs and the
+actual Program/MainForm startup confirmation using a separate temporary test key and invisible offline windows.

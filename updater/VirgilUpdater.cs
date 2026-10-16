@@ -29,9 +29,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("VirgilPatch")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.3.1.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.3.1.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.3.1")]
+[assembly: System.Reflection.AssemblyVersion("1.4.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.4.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.4.0")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -41,7 +41,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.3.1";
+        public const string UserAgent = "VirgilPatchUpdater/1.4.0";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
     }
 
@@ -149,7 +149,7 @@ namespace VirgilPatch
         {
             using (var resp = Response(RawUrl(commit, repoPath), null))
             using (var s = resp.GetResponseStream())
-                return ReadLimited(s, repoPath == "index.json" ? Safety.MaxIndexBytes : Safety.MaxMetadataBytes);
+                return ReadLimited(s, repoPath == ProgramRelease.ManifestPath ? 65536 : repoPath == "index.json" ? Safety.MaxIndexBytes : Safety.MaxMetadataBytes);
         }
 
         public void Download(string commit, string repoPath, string dest, long maxBytes, Action<long> progress)
@@ -667,10 +667,17 @@ namespace VirgilPatch
         Plan plan;
         CancellationTokenSource cts;
 
-        public MainForm(ISource source)
+        readonly string confirmationDirectory;
+        readonly bool skipProgramCheck;
+        readonly string[] programArguments;
+
+        public MainForm(ISource source, string confirmationDirectory = null, bool skipProgramCheck = false, string[] programArguments = null)
         {
             this.source = source;
-            Text = "VirgilPatch Updater";
+            this.confirmationDirectory = confirmationDirectory;
+            this.skipProgramCheck = skipProgramCheck;
+            this.programArguments = programArguments ?? new string[0];
+            Text = "VirgilPatch Updater " + SelfUpdate.CurrentVersion.ToString(3);
             ClientSize = new Size(640, 420);
             MinimumSize = new Size(480, 320);
             StartPosition = FormStartPosition.CenterScreen;
@@ -692,7 +699,11 @@ namespace VirgilPatch
             dirBox.Text = state.patches_dir ?? "";
             status.Text = state.commit == null ? "Not installed by this updater yet." :
                 "Installed version: " + state.published + " (" + state.commit.Substring(0, Math.Min(7, state.commit.Length)) + ")";
-            Shown += delegate { if (!string.IsNullOrEmpty(state.patches_dir)) RunCheck(); };
+            Shown += delegate {
+                if (this.confirmationDirectory != null) SelfUpdate.ConfirmStartup(this.confirmationDirectory);
+                if (source is GitHubSource && !this.skipProgramCheck) RunProgramCheck(false);
+                else if (!string.IsNullOrEmpty(state.patches_dir)) RunPatchCheck();
+            };
         }
 
         static string Detect()
@@ -757,6 +768,31 @@ namespace VirgilPatch
 
         void RunCheck()
         {
+            if (source is GitHubSource && !skipProgramCheck) RunProgramCheck(true);
+            else RunPatchCheck();
+        }
+
+        void RunProgramCheck(bool chooseFolder)
+        {
+            Busy(true);
+            plan = null;
+            status.Text = "Checking for an updater upgrade ...";
+            Task.Factory.StartNew(() => {
+                var directory = SelfUpdate.Prepare(source, SelfUpdate.Here, programArguments, Say);
+                if (directory == null) return false;
+                Say("Program upgrade verified. Restarting the updater ...");
+                return SelfUpdate.StartHelper(directory);
+            }).ContinueWith(t => BeginInvoke(new Action(() => {
+                if (t.IsFaulted) Say("Program upgrade unavailable: " + t.Exception.GetBaseException().Message + " Continuing with the current updater.");
+                else if (!t.IsCanceled && t.Result) { Close(); return; }
+                Busy(false);
+                if (chooseFolder || !string.IsNullOrEmpty(state.patches_dir)) RunPatchCheck();
+                else status.Text = "Choose your Epsilon Patches folder to check for patch updates.";
+            })));
+        }
+
+        void RunPatchCheck()
+        {
             if (string.IsNullOrEmpty(state.patches_dir) && !PickFolder()) return;
             Busy(true);
             plan = null;
@@ -815,9 +851,10 @@ namespace VirgilPatch
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;     // TLS 1.2
             ServicePointManager.CheckCertificateRevocationList = true;
             ServicePointManager.DefaultConnectionLimit = 8;
+            if (args.Length == 2 && args[0] == "--apply-self-update") return SelfUpdate.RunHelper(args[1]);
             ISource src = new GitHubSource();
-            string patches = null, logFile = null;
-            bool cli = false;
+            string patches = null, logFile = null, confirmationDirectory = null;
+            bool cli = false, skipProgramCheck = false;
             for (int i = 0; i < args.Length; i++)
             {
                 if (args[i] == "--source" && i + 1 < args.Length) src = new FolderSource(args[++i]);
@@ -825,6 +862,8 @@ namespace VirgilPatch
                 else if (args[i] == "--state" && i + 1 < args.Length) Config.StateDir = args[++i];
                 else if (args[i] == "--log" && i + 1 < args.Length) logFile = args[++i];
                 else if (args[i] == "--cli") cli = true;
+                else if (args[i] == "--confirm-self-update" && i + 1 < args.Length) confirmationDirectory = args[++i];
+                else if (args[i] == "--skip-self-update-once") skipProgramCheck = true;
             }
             if (cli)
             {
@@ -847,7 +886,7 @@ namespace VirgilPatch
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(src));
+            Application.Run(new MainForm(src, confirmationDirectory, skipProgramCheck, SelfUpdate.UserArguments(args)));
             return 0;
         }
     }

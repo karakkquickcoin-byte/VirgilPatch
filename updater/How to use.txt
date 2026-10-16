@@ -1,15 +1,14 @@
-VirgilPatch Updater 1.3.1
+VirgilPatch Updater 1.4.0
 
-1. Extract VirgilUpdater.exe to a normal folder.
+1. Extract VirgilUpdater.exe into a normal folder you can write to.
 2. Run it and choose your Epsilon _retail_\Patches folder if needed.
-3. Close WoW, then click Update.
+3. Close WoW, then click Update. Only missing or changed game assets are downloaded.
 
-Only missing or changed files are downloaded. The full repository ZIP is never fetched.
-Replace an older VirgilUpdater.exe with this version to receive this change.
+This version checks for signed program upgrades automatically and restarts when one is ready.
+It keeps a previous-version backup and restores it if the new program fails to start.
+Users on v1.3.x or earlier must replace their EXE once to enable automatic program upgrades.
 
-If antivirus reports a threat, stop and keep the file blocked or quarantined.
-Do not disable protection or add an antivirus exclusion.
-Report the URL, threat name, affected file path and ZIP SHA-256 to the developer.
+If antivirus reports a threat, keep the file blocked/quarantined and report the exact detection.
+Do not disable protection or add an antivirus exclusion. Release signatures are not an antivirus clearance.
 
-This release is unsigned. Source and security information:
 https://github.com/karakkquickcoin-byte/VirgilPatch

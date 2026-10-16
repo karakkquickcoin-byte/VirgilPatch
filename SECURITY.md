@@ -1,4 +1,4 @@
-# Security policy and release 1.3.1
+# Security policy and release 1.4.0
 
 Report an antivirus detection with its exact URL, ZIP SHA-256, detected file path and antivirus definition version.
 Keep detected files blocked while they are investigated. Do not use exclusions as a workaround.
@@ -23,3 +23,19 @@ No code-signing key is bundled. Protect the GitHub account with strong authentic
 Game asset parsers, a compromised machine, and concurrent filesystem changes by another process with the same
 user permissions are outside this updater's security boundary. The path checks are defense in depth, not an OS sandbox.
 Clean local tests do not prove an antivirus report is false or establish client runtime acceptance.
+
+
+## Program upgrade trust
+
+Program upgrades use a separate `updater-release.json` channel, not the game asset index. The manifest's version,
+fixed EXE path, byte size and SHA-256 are covered by an RSA-4096/SHA-256 signature verified against an embedded
+public key. The private release key is not in this repository. Same-version/downgrade releases are ignored.
+Only a verified .NET updater with matching assembly identity/version can be launched. Raw HTTPS URLs stay
+within the configured GitHub repository and are pinned to one commit.
+
+The helper verifies its current EXE/parent identity, waits for the old process to exit, replaces the EXE atomically
+on the same volume and keeps a backup. The new window confirms startup; a failed start triggers rollback and
+suppresses repeated attempts of the same failed release. This is startup acceptance, not proof that every new
+program feature is correct. Signing-key theft or compromise of the initial installed EXE remains outside this trust boundary.
+No privilege elevation, antivirus changes or silent executable updates through game patch entries are supported.
+The initial download is not Authenticode-signed, and release signatures do not remove antivirus warnings.

@@ -15,9 +15,22 @@ Existing v1.2/v1.3.0 updaters remain compatible without replacing the EXE. On la
 display "Downloading the full archive", but that generated archive now contains only source/updater files;
 game assets are excluded. They then fetch only the missing or changed assets through their existing fallback.
 Start a fresh check to pick up this repository change. An already running update stays pinned to its earlier commit.
-New downloads use v1.3.1, which skips the archive request entirely. Replacing an old EXE is still necessary to
-receive the newer application security protections; the old updater cannot update its own program.
+New downloads use v1.4.0, which skips the archive request entirely and supports automatic program upgrades. Replacing an old EXE once is still necessary to
+receive the newer application security protections and automatic-upgrade support; v1.2/v1.3.x cannot update their own program.
 Classic and TexturePatch remain independently published alternatives; Epsilon controls which is enabled.
+
+## Automatic updater upgrades
+
+From v1.4.0 onward the app checks for its own upgrades on startup and when you check for updates.
+A newer program release is verified against an RSA-4096 public key embedded in the app, including its version,
+SHA-256 and exact size. It downloads only the updater EXE, restarts automatically and retains the previous EXE.
+If the new program fails to confirm startup, the helper restores the previous version and avoids retrying that
+same failed release. Your Patches folder and saved selection are retained.
+
+Keep the updater in a normal folder you can write to, and close other copies while upgrading. A failed download,
+invalid signature or unwritable folder leaves the current program in place and patch checks can continue.
+No administrator elevation or antivirus exclusions are requested. Users with an older EXE need to replace it
+once to enable this feature; future signed releases can then arrive automatically.
 
 ## Antivirus alerts
 
@@ -27,7 +40,7 @@ Report the download URL, the threat name, the affected file path and the ZIP's S
 The developer can submit the exact detected file to [Microsoft for analysis](https://www.microsoft.com/en-us/wdsi/filesubmission).
 A clean source review or matching checksum does not establish that an antivirus alert is a false positive.
 
-Version 1.3.1 is unsigned. A Windows reputation warning and an antivirus malware detection are different checks;
+Version 1.4.0 is not Authenticode-signed. A Windows reputation warning and an antivirus malware detection are different checks;
 neither should be dismissed solely because a program is open source or unsigned.
 
 ## What the updater does
@@ -52,8 +65,11 @@ or a guarantee about how the game parses asset files. See [SECURITY.md](SECURITY
 
 ## Build from source
 
-Open PowerShell in `updater` and run `./build.ps1`. This uses the .NET Framework compiler already installed
-with Windows; no downloaded build tools are required. The resulting EXE remains unsigned.
+For a local development build, open PowerShell in `updater` and run `./build.ps1 -CompileOnly`.
+This uses the .NET Framework compiler already installed with Windows; no downloaded build tools are required.
+A private release key is required to publish automatic upgrades. See [the maintainer release instructions](updater/RELEASING.md).
+Release-metadata signatures authenticate program upgrades after the initial installation; they are separate from
+Windows Authenticode signatures and do not establish an antivirus clearance.
 
 ## Repository source archives
 
