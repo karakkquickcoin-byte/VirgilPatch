@@ -5,7 +5,7 @@ Epsilon (9.2.7) game patches, maintained as independently selectable patch folde
 ## Install / update
 
 1. Download [VirgilUpdater.zip](VirgilUpdater.zip?raw=1) from this repository and extract it.
-2. Run `VirgilUpdater.exe`. Browse to your Epsilon `_retail_\Patches` folder if needed.
+2. Run `VirgilUpdater.exe`. In the Chronicles of Lordaeron launcher, click **Select folder** and choose your Epsilon `_retail_\Patches` folder if needed.
 3. Close WoW, then click **Update**.
 
 Every update downloads only missing or changed assets as individual files, including large updates and first installs.
@@ -15,8 +15,10 @@ Existing v1.2/v1.3.0 updaters remain compatible without replacing the EXE. On la
 display "Downloading the full archive", but that generated archive now contains only source/updater files;
 game assets are excluded. They then fetch only the missing or changed assets through their existing fallback.
 Start a fresh check to pick up this repository change. An already running update stays pinned to its earlier commit.
-New downloads use v1.4.0, which skips the archive request entirely and supports automatic program upgrades. Replacing an old EXE once is still necessary to
+New downloads use v1.4.1, which skips the archive request entirely and supports automatic program upgrades. Replacing an old EXE once is still necessary to
 receive the newer application security protections and automatic-upgrade support; v1.2/v1.3.x cannot update their own program.
+The launcher uses a single Update button, an instruction panel and embedded Lordaeron artwork.
+Existing v1.4.0 launchers receive this design through their automatic program upgrade.
 Classic and TexturePatch remain independently published alternatives; Epsilon controls which is enabled.
 
 ## Automatic updater upgrades
@@ -40,7 +42,7 @@ Report the download URL, the threat name, the affected file path and the ZIP's S
 The developer can submit the exact detected file to [Microsoft for analysis](https://www.microsoft.com/en-us/wdsi/filesubmission).
 A clean source review or matching checksum does not establish that an antivirus alert is a false positive.
 
-Version 1.4.0 is not Authenticode-signed. A Windows reputation warning and an antivirus malware detection are different checks;
+Version 1.4.1 is not Authenticode-signed. A Windows reputation warning and an antivirus malware detection are different checks;
 neither should be dismissed solely because a program is open source or unsigned.
 
 ## What the updater does
@@ -54,8 +56,8 @@ neither should be dismissed solely because a program is open source or unsigned.
 * Remembers your selected folder in `%APPDATA%\VirgilPatch\state.json`.
 
 The updater requests normal user permissions. It does not run downloaded assets or install another program.
-These integrity checks trust this repository and GitHub's HTTPS delivery. They are not a signed release system
-or a guarantee about how the game parses asset files. See [SECURITY.md](SECURITY.md).
+Game-asset integrity checks trust this repository and GitHub's HTTPS delivery. Game assets are not individually
+release-signed, and these checks do not guarantee how the game parses asset files. See [SECURITY.md](SECURITY.md).
 
 ## Layout
 

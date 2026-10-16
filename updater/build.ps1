@@ -21,7 +21,7 @@ if (-not $CompileOnly -and (Test-Path -LiteralPath (Join-Path (Split-Path $PSScr
 }
 Push-Location $PSScriptRoot
 try {
-    & $compiler /nologo /target:winexe /optimize+ /out:VirgilUpdater.exe /r:System.Web.Extensions.dll /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll /win32icon:virgil.ico /win32manifest:app.manifest VirgilUpdater.cs SelfUpdate.cs
+    & $compiler /nologo /target:winexe /optimize+ /out:VirgilUpdater.exe /r:System.Web.Extensions.dll /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll /win32icon:virgil.ico /win32manifest:app.manifest /resource:assets/lordaeron-background.png,VirgilPatch.LauncherBackground VirgilUpdater.cs SelfUpdate.cs LauncherTheme.cs
     if ($LASTEXITCODE -ne 0) { throw 'Updater build failed.' }
     if ($CompileOnly) { return }
     $entropy=[Text.Encoding]::UTF8.GetBytes('VirgilPatchUpdaterReleaseKey/v1')

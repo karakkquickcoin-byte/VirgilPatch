@@ -247,6 +247,26 @@ namespace VirgilPatch
             return result.ToArray();
         }
 
+        // Windows may briefly retain the image mapping after process exit. Retry only
+        // sharing/lock violations; revalidate every path and both binary identities each time.
+        static void ReplaceAfterExit(string payload, string target, string backup, string expectedPayload, string expectedTarget)
+        {
+            var timer = Stopwatch.StartNew();
+            while (true)
+            {
+                Safety.NoLinks(payload); Safety.NoLinks(target); Safety.NoLinks(backup);
+                if (ProgramRelease.FileHash(payload) != expectedPayload || ProgramRelease.FileHash(target) != expectedTarget)
+                    throw new InvalidDataException("Updater changed before atomic replacement.");
+                try { File.Replace(payload, target, backup); return; }
+                catch (IOException ex)
+                {
+                    int code = ex.HResult & 0xffff;
+                    if ((code != 32 && code != 33) || timer.Elapsed >= TimeSpan.FromSeconds(5)) throw;
+                    Thread.Sleep(100);
+                }
+            }
+        }
+
         internal static int RunHelper(string jobFile)
         {
             var directory = Path.GetDirectoryName(Path.GetFullPath(jobFile));
@@ -281,7 +301,7 @@ namespace VirgilPatch
                     if (ProgramRelease.FileHash(job.target) != originalHash) throw new InvalidDataException("Updater changed before replacement.");
                     release.ValidateBinary(payload);
                     var backup = Safety.Under(directory, "previous.exe");
-                    File.Replace(payload, job.target, backup);
+                    ReplaceAfterExit(payload, job.target, backup, release.Sha256, originalHash);
                     replaced = true;
                     release.ValidateBinary(job.target);
                     candidate = Launch(job.target, job.arguments.Concat(new[] { "--confirm-self-update", directory }));
@@ -307,14 +327,20 @@ namespace VirgilPatch
                 {
                     try
                     {
-                        if (candidate != null && !candidate.HasExited) { candidate.Kill(); candidate.WaitForExit(5000); }
+                        if (candidate != null)
+                        {
+                            if (!candidate.HasExited) candidate.Kill();
+                            if (!candidate.WaitForExit(5000)) throw new IOException("The failed updater is still running; recovery backup was retained.");
+                            candidate.Dispose(); candidate = null;
+                        }
                         if (replaced)
                         {
                             Safety.NoLinks(job.target);
                             if (ProgramRelease.FileHash(Safety.Under(directory, "previous.exe")) != ProgramRelease.FileHash(Here))
                                 throw new InvalidDataException("Previous updater backup checksum mismatch.");
-                            File.Replace(Safety.Under(directory, "previous.exe"), job.target, Safety.Under(directory, "failed.exe"));
                             var release = ReadRelease(directory);
+                            ReplaceAfterExit(Safety.Under(directory, "previous.exe"), job.target, Safety.Under(directory, "failed.exe"),
+                                ProgramRelease.FileHash(Here), release.Sha256);
                             Safety.NoLinks(job.target + ".self-update-failed");
                             File.WriteAllText(job.target + ".self-update-failed", release.Sha256);
                             Note(directory, "Previous EXE restored; failed release will not be retried automatically.");

@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using VirgilPatch;
 
@@ -35,6 +38,35 @@ class SelfUpdateTests
     }
     static byte[] Bytes(Dictionary<string,object> d) { return Encoding.UTF8.GetBytes(js.Serialize(d)); }
     static ProgramRelease Parse(Dictionary<string,object> d) { return ProgramRelease.Parse(Bytes(d),key.ToXmlString(false)); }
+    static void ReplacementLockTest(bool tamper)
+    {
+        var root = Path.Combine(Path.GetDirectoryName(payload), "lock-test-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        var next = Path.Combine(root, "next.exe"); var target = Path.Combine(root, "current.exe"); var backup = Path.Combine(root, "previous.exe");
+        File.WriteAllText(next, "verified replacement"); File.WriteAllText(target, "original binary");
+        var nextHash = ProgramRelease.FileHash(next); var targetHash = ProgramRelease.FileHash(target);
+        var method = typeof(SelfUpdate).GetMethod("ReplaceAfterExit", BindingFlags.Static | BindingFlags.NonPublic);
+        Exception failure = null;
+        Task task;
+        using (var started = new ManualResetEvent(false))
+        using (var locked = new FileStream(target, FileMode.Open, FileAccess.Read, FileShare.Read))
+        {
+            task = Task.Factory.StartNew(delegate {
+                started.Set();
+                try { method.Invoke(null, new object[] { next, target, backup, nextHash, targetHash }); }
+                catch (TargetInvocationException ex) { failure = ex.InnerException; }
+            });
+            Assert(started.WaitOne(5000), "Replacement worker did not start.");
+            Thread.Sleep(300);
+            Assert(!task.IsCompleted, "Replacement did not wait for the locked target.");
+            if (tamper) File.WriteAllText(next, "changed after verification");
+        }
+        Assert(task.Wait(10000), "Atomic replacement did not finish.");
+        if (tamper)
+            Assert(failure is InvalidDataException && ProgramRelease.FileHash(target) == targetHash && !File.Exists(backup), "Replacement retry accepted a changed payload.");
+        else
+            Assert(failure == null && ProgramRelease.FileHash(target) == nextHash && ProgramRelease.FileHash(backup) == targetHash, "Replacement did not recover from a temporary file lock.");
+    }
     [DllImport("shell32.dll",CharSet=CharSet.Unicode,SetLastError=true)] static extern IntPtr CommandLineToArgvW(string command,out int count);
     [DllImport("kernel32.dll")] static extern IntPtr LocalFree(IntPtr ptr);
     static int Main(string[] args)
@@ -86,6 +118,8 @@ class SelfUpdateTests
                 var clean=SelfUpdate.UserArguments(new[] {"--state","path with spaces","--confirm-self-update","old-job","--skip-self-update-once"});
                 Assert(clean.SequenceEqual(new[] {"--state","path with spaces"}),"Internal control arguments accumulated.");
             });
+            Test("atomic-replacement-retries-temporary-windows-lock", () => ReplacementLockTest(false));
+            Test("replacement-retry-rechecks-payload-integrity", () => ReplacementLockTest(true));
             Console.WriteLine("TOTAL "+passed+" self-update validation tests passed"); return 0;
         }
         catch(Exception ex) {Console.WriteLine("FAIL "+ex);return 1;}

@@ -13,6 +13,11 @@ It rejects a release version that does not exceed the currently committed manife
 development and does not create a release signature or package. Normal game patch publishing preserves the
 existing updater release manifest; it does not require signing or rebuild the updater.
 
+The Chronicles of Lordaeron launcher embeds `assets/lordaeron-background.png` as
+`VirgilPatch.LauncherBackground`. Keep this resource in all builds, including regression-test builds that create
+the window. An automatic upgrade downloads only the EXE, so its interface must not depend on sidecar artwork.
+Keep the assembly filename/identity `VirgilUpdater` and the existing state directory for installed clients.
+
 Keep the private key outside this repository. It is protected with Windows DPAPI for the maintainer's current
 user account, plus a restricted file ACL. Losing access to this account/key prevents signing releases trusted by
 installed clients; retain an appropriate secured account/key recovery backup. Never commit the private key,

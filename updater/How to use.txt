@@ -1,7 +1,7 @@
-VirgilPatch Updater 1.4.0
+Chronicles of Lordaeron Launcher 1.4.1
 
 1. Extract VirgilUpdater.exe into a normal folder you can write to.
-2. Run it and choose your Epsilon _retail_\Patches folder if needed.
+2. Run it, click Select folder, and choose your Epsilon _retail_\Patches folder if needed.
 3. Close WoW, then click Update. Only missing or changed game assets are downloaded.
 
 This version checks for signed program upgrades automatically and restarts when one is ready.
@@ -12,3 +12,5 @@ If antivirus reports a threat, keep the file blocked/quarantined and report the 
 Do not disable protection or add an antivirus exclusion. Release signatures are not an antivirus clearance.
 
 https://github.com/karakkquickcoin-byte/VirgilPatch
+
+The launcher artwork is embedded in the EXE; no separate image download is needed.

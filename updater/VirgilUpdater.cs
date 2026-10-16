@@ -6,9 +6,7 @@
 // that is no longer published disappears completely). Every install and update downloads only the individual
 // files it needs; the full repository archive is never downloaded.
 //
-// Build (no SDK needed, .NET Framework 4.8 ships with Windows 10/11):
-//   C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe /optimize+ /out:VirgilUpdater.exe
-//     /r:System.Web.Extensions.dll /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll VirgilUpdater.cs
+// Build: powershell -File build.ps1 -CompileOnly (.NET Framework 4.8, no SDK needed).
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,14 +22,14 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
-[assembly: System.Reflection.AssemblyTitle("VirgilPatch Updater")]
+[assembly: System.Reflection.AssemblyTitle("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyDescription("Keeps the VirgilPatch Epsilon patch folders up to date from github.com/karakkquickcoin-byte/VirgilPatch")]
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
-[assembly: System.Reflection.AssemblyProduct("VirgilPatch")]
+[assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.4.0.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.4.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.4.0")]
+[assembly: System.Reflection.AssemblyVersion("1.4.1.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.4.1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.4.1")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -41,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.4.0";
+        public const string UserAgent = "VirgilPatchUpdater/1.4.1";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
     }
 
@@ -651,16 +649,15 @@ namespace VirgilPatch
     }
 
     // ------------------------------------------------------------------ window
-    class MainForm : Form
+    partial class MainForm : LauncherWindow
     {
         readonly State state = State.Load();
         readonly ISource source;
         readonly TextBox dirBox = new TextBox { ReadOnly = true, Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top };
-        readonly Button browse = new Button { Text = "Browse...", Anchor = AnchorStyles.Right | AnchorStyles.Top };
+        readonly Button browse = new LauncherButton { Text = "Browse...", Anchor = AnchorStyles.Right | AnchorStyles.Top };
         readonly Label status = new Label { AutoSize = false, Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top };
-        readonly Button checkBtn = new Button { Text = "Check for updates", Width = 140 };
-        readonly Button updateBtn = new Button { Text = "Update", Width = 140, Enabled = false };
-        readonly ProgressBar bar = new ProgressBar { Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top, Maximum = 1000 };
+        readonly Button updateBtn = new LauncherButton { Text = "Update", Primary = true };
+        readonly LauncherProgress bar = new LauncherProgress();
         readonly TextBox log = new TextBox { Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical,
                                              Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom,
                                              Font = new Font("Consolas", 9f), BackColor = SystemColors.Window };
@@ -677,28 +674,13 @@ namespace VirgilPatch
             this.confirmationDirectory = confirmationDirectory;
             this.skipProgramCheck = skipProgramCheck;
             this.programArguments = programArguments ?? new string[0];
-            Text = "VirgilPatch Updater " + SelfUpdate.CurrentVersion.ToString(3);
-            ClientSize = new Size(640, 420);
-            MinimumSize = new Size(480, 320);
-            StartPosition = FormStartPosition.CenterScreen;
-            try { Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath); } catch { }
-            var lbl = new Label { Text = "Epsilon Patches folder:", AutoSize = true, Location = new Point(12, 15) };
-            dirBox.SetBounds(150, 12, 390, 23);
-            browse.SetBounds(548, 11, 80, 25);
-            status.SetBounds(12, 44, 616, 36);
-            checkBtn.Location = new Point(12, 84);
-            updateBtn.Location = new Point(160, 84);
-            bar.SetBounds(310, 86, 318, 22);
-            log.SetBounds(12, 118, 616, 290);
-            Controls.AddRange(new Control[] { lbl, dirBox, browse, status, checkBtn, updateBtn, bar, log });
-            browse.Click += delegate { PickFolder(); };
-            checkBtn.Click += delegate { RunCheck(); };
+            BuildLauncher();
+            browse.Click += delegate { if (PickFolder()) RunPatchCheck(); };
             updateBtn.Click += delegate { RunUpdate(); };
             FormClosing += (s, e) => { if (cts != null) cts.Cancel(); };
             if (string.IsNullOrEmpty(state.patches_dir) || !Directory.Exists(state.patches_dir)) state.patches_dir = Detect();
             dirBox.Text = state.patches_dir ?? "";
-            status.Text = state.commit == null ? "Not installed by this updater yet." :
-                "Installed version: " + state.published + " (" + state.commit.Substring(0, Math.Min(7, state.commit.Length)) + ")";
+            status.Text = "Choose your Patches folder, then click Update.";
             Shown += delegate {
                 if (this.confirmationDirectory != null) SelfUpdate.ConfirmStartup(this.confirmationDirectory);
                 if (source is GitHubSource && !this.skipProgramCheck) RunProgramCheck(false);
@@ -734,14 +716,14 @@ namespace VirgilPatch
                 dirBox.Text = p;
                 state.Save();
                 plan = null;
-                updateBtn.Enabled = false;
+                updateBtn.Enabled = true;
                 return true;
             }
         }
 
         void Say(string s)
         {
-            if (InvokeRequired) { BeginInvoke(new Action<string>(Say), s); return; }
+            if (InvokeRequired) { Post(delegate { Say(s); }); return; }
             log.AppendText(s + "\r\n");
         }
 
@@ -751,14 +733,15 @@ namespace VirgilPatch
             var now = Environment.TickCount;
             if (done < total && now - Interlocked.Read(ref lastTick) < 100) return;
             Interlocked.Exchange(ref lastTick, now);
-            BeginInvoke(new Action(() => bar.Value = total <= 0 ? 0 : (int)Math.Min(1000, done * 1000 / total)));
+            Post(delegate { bar.Value = total <= 0 ? 0 : (int)Math.Min(1000, done * 1000 / total); });
         }
 
         void Busy(bool on)
         {
-            checkBtn.Enabled = !on;
+            isBusy = on;
             browse.Enabled = !on;
-            updateBtn.Enabled = !on && plan != null && !plan.UpToDate;
+            updateBtn.Enabled = !on;
+            updateBtn.Text = on ? "Please wait..." : "Update";
         }
 
         Updater MakeUpdater()
@@ -766,13 +749,13 @@ namespace VirgilPatch
             return new Updater(source, state) { Log = Say, Progress = Prog };
         }
 
-        void RunCheck()
+        void RunCheck(bool applyAfterCheck = false)
         {
-            if (source is GitHubSource && !skipProgramCheck) RunProgramCheck(true);
-            else RunPatchCheck();
+            if (source is GitHubSource && !skipProgramCheck) RunProgramCheck(true, applyAfterCheck);
+            else RunPatchCheck(applyAfterCheck);
         }
 
-        void RunProgramCheck(bool chooseFolder)
+        void RunProgramCheck(bool chooseFolder, bool applyAfterCheck = false)
         {
             Busy(true);
             plan = null;
@@ -782,24 +765,25 @@ namespace VirgilPatch
                 if (directory == null) return false;
                 Say("Program upgrade verified. Restarting the updater ...");
                 return SelfUpdate.StartHelper(directory);
-            }).ContinueWith(t => BeginInvoke(new Action(() => {
+            }).ContinueWith(t => Post(() => {
                 if (t.IsFaulted) Say("Program upgrade unavailable: " + t.Exception.GetBaseException().Message + " Continuing with the current updater.");
                 else if (!t.IsCanceled && t.Result) { Close(); return; }
                 Busy(false);
-                if (chooseFolder || !string.IsNullOrEmpty(state.patches_dir)) RunPatchCheck();
+                if (chooseFolder || !string.IsNullOrEmpty(state.patches_dir)) RunPatchCheck(applyAfterCheck);
                 else status.Text = "Choose your Epsilon Patches folder to check for patch updates.";
-            })));
+            }));
         }
 
-        void RunPatchCheck()
+        void RunPatchCheck(bool applyAfterCheck = false)
         {
             if (string.IsNullOrEmpty(state.patches_dir) && !PickFolder()) return;
             Busy(true);
             plan = null;
+            status.Text = "Checking your installed patch files...";
             var u = MakeUpdater();
-            Task.Factory.StartNew(() => u.Check()).ContinueWith(t => BeginInvoke(new Action(() =>
+            Task.Factory.StartNew(() => u.Check()).ContinueWith(t => Post(() =>
             {
-                if (t.IsFaulted) Say("Error: " + t.Exception.GetBaseException().Message);
+                if (t.IsFaulted) { Say("Error: " + t.Exception.GetBaseException().Message); status.Text = "Update unavailable. Open Details for the error, then try again."; }
                 else
                 {
                     plan = t.Result;
@@ -814,32 +798,37 @@ namespace VirgilPatch
                         status.Text = msg;
                     }
                 }
-                bar.Value = 0;
+                bar.Value = plan != null && plan.UpToDate ? 1000 : 0;
                 Busy(false);
-            })));
+                if (applyAfterCheck && plan != null && !plan.UpToDate) RunUpdate();
+            }));
         }
 
         void RunUpdate()
         {
-            if (plan == null) return;
+            if (isBusy) return;
+            if (plan == null || plan.UpToDate) { RunCheck(true); return; }
             if (Process.GetProcessesByName("Wow").Length > 0 &&
                 MessageBox.Show(this, "WoW is running. Close it first so the patch files aren't in use.\r\n\r\nUpdate anyway?", Text,
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                 return;
             Busy(true);
+            updateBtn.Text = "Updating...";
+            status.Text = "Updating your patch files. Please keep the launcher open.";
             var u = MakeUpdater();
             var p = plan;
             cts = new CancellationTokenSource();
             var tok = cts.Token;
-            Task.Factory.StartNew(() => u.Apply(p, tok)).ContinueWith(t => BeginInvoke(new Action(() =>
+            Task.Factory.StartNew(() => u.Apply(p, tok)).ContinueWith(t => Post(() =>
             {
-                if (t.IsFaulted) Say("Error: " + t.Exception.GetBaseException().Message);
-                else if (t.IsCanceled) Say("Update cancelled.");
+                if (t.IsFaulted) { Say("Error: " + t.Exception.GetBaseException().Message); status.Text = "Update unavailable. Open Details for the error, then try again."; }
+                else if (t.IsCanceled) { Say("Update cancelled."); status.Text = "Update cancelled. Click Update to try again."; }
                 else status.Text = "Up to date: " + p.Published;
                 plan = null;
+                cts.Dispose(); cts = null;
                 bar.Value = t.IsFaulted || t.IsCanceled ? 0 : 1000;
                 Busy(false);
-            })));
+            }));
         }
     }
 
