@@ -282090,7 +282090,7 @@
 },
 "world/maps/northrend/northrend.wdt": {
 "id": 822688,
-"sha": "02952b95a2850c573ff22ca11119b27603f7e8e1",
+"sha": "702212dc22acb1b6542679b8ff28ee5ad5bc2bf9",
 "size": 163924
 },
 "world/maps/northrend/northrend_11_23.adt": {
@@ -344527,5 +344527,5 @@
 "total_bytes": 1645253759
 }
 },
-"published": "2026-10-16 01:41"
+"published": "2026-10-16 13:11"
 }
