@@ -236593,6 +236593,31 @@
 "sha": "6a082b52bb13a8c8b507b01dbe3f1359665e3a98",
 "size": 174924
 },
+"dsslasherfarmer.phys": {
+"id": 8284640,
+"sha": "8560b088feda4eeada8abd28d3715e9df6737258",
+"size": 1610
+},
+"dsslasherfarmer00.skin": {
+"id": 8284577,
+"sha": "9aa51da197c48594222e1778302276d225d9bb05",
+"size": 90360
+},
+"dsslasherfarmer_body.blp": {
+"id": 8284578,
+"sha": "e418df096a5a96c8585d12bdfabb14e7a3dc4f60",
+"size": 700236
+},
+"dsslasherfarmer_hair.blp": {
+"id": 8284580,
+"sha": "6750d5a82fa7d7f71f397fe314e204d68ee46f9e",
+"size": 350724
+},
+"dsslasherfarmer_head.blp": {
+"id": 8284579,
+"sha": "253eac9448939f103e86b9acfb26a74f5fa3355d",
+"size": 700236
+},
 "duskwood_barn.wmo": {
 "id": 106701,
 "sha": "12e40d5d10b3b941d404fe584ff83ed6522e24e5",
@@ -243377,6 +243402,71 @@
 "id": 1339683,
 "sha": "cde1b17ab88cfae648ce7a13c07ae33ccf039bd1",
 "size": 175948
+},
+"humanmalefarmer.m2": {
+"id": 124490,
+"sha": "eee8ee6088e31ced224797ddc475c046ed6979d2",
+"size": 15398970
+},
+"humanmalefarmer_lod01.skin": {
+"id": 8284581,
+"sha": "70749bca3473973d6075b3fa12d5bc1574209ffb",
+"size": 90232
+},
+"humanmalefarmer_lod01_tex01_512.blp": {
+"id": 8284584,
+"sha": "acb75599be5e8490e64125d91df6b43e795dae0a",
+"size": 350724
+},
+"humanmalefarmer_lod01_tex02_512.blp": {
+"id": 8284585,
+"sha": "eded0e5b130d95c8157c0a44853c17f94c255e1c",
+"size": 350724
+},
+"humanmalefarmer_lod01_tex03_256.blp": {
+"id": 8284586,
+"sha": "903bf610ab61bc87e0a1b22d6add3e79fac1b1ff",
+"size": 88580
+},
+"humanmalefarmer_lod02.skin": {
+"id": 8284582,
+"sha": "a0f3b4dd52c7cb030bf01ac9a6d63dacdf4bb699",
+"size": 73080
+},
+"humanmalefarmer_lod02_tex01_256.blp": {
+"id": 8284587,
+"sha": "d1ed2c094c3646a893c6a578eaba72b0b3deec2f",
+"size": 88580
+},
+"humanmalefarmer_lod02_tex02_256.blp": {
+"id": 8284588,
+"sha": "f1807728336267acf303151d6c17eaaa67b3a6fa",
+"size": 88580
+},
+"humanmalefarmer_lod02_tex03_128.blp": {
+"id": 8284589,
+"sha": "e4c5cee95092ae4805f206f04e4e4a060d99e9da",
+"size": 23044
+},
+"humanmalefarmer_lod03.skin": {
+"id": 8284583,
+"sha": "96ffba8e2834db6779f2b4ac8c38a9b7460790cf",
+"size": 55784
+},
+"humanmalefarmer_lod03_tex01_128.blp": {
+"id": 8284590,
+"sha": "922f59b8105bf9c5981473f1935316a8cfd1c79b",
+"size": 23044
+},
+"humanmalefarmer_lod03_tex02_128.blp": {
+"id": 8284591,
+"sha": "c4221fddf1a264b1b8742b247b81818428637de5",
+"size": 23044
+},
+"humanmalefarmer_lod03_tex03_64.blp": {
+"id": 8284592,
+"sha": "3fd547d4aec343d20b2fd656ff32ce58cae16f8c",
+"size": 6660
 },
 "humanmaleguard.m2": {
 "id": 124494,
@@ -281830,11 +281920,11 @@
 }
 },
 "patch_json": {
-"sha": "6efa50bb383ada28020e3cc18260690680d3092f",
-"size": 3282038
+"sha": "0938651d4e12254e54f9748474d80f48a72a3f5f",
+"size": 3283011
 },
 "repo_dir": "patches/Chronicles-Classic",
-"total_bytes": 7880172738
+"total_bytes": 7898676950
 },
 "Chronicles-Northrend": {
 "files": {
@@ -344287,5 +344377,5 @@
 "total_bytes": 1645253759
 }
 },
-"published": "2026-10-15 23:13"
+"published": "2026-10-16 01:40"
 }
