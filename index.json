@@ -6483,6 +6483,31 @@
 "sha": "709ccf1dcef658c90b4c29be928358f03cf6441a",
 "size": 11186004
 },
+"8284641.skin": {
+"id": 8284641,
+"sha": "4e11a4aa2dcc9eccebcbcdee0eda7c096693965a",
+"size": 9764
+},
+"8284642.blp": {
+"id": 8284642,
+"sha": "8fec1dcd72f0627c7e9363d0e5436720c9664085",
+"size": 175948
+},
+"8284643.blp": {
+"id": 8284643,
+"sha": "a99bb17a80d1a3ca3d99d860e51c00c23df9708c",
+"size": 44900
+},
+"8284668.blp": {
+"id": 8284668,
+"sha": "3bddd9a27b4d5333a0eb31e764ea77489eeaa1f0",
+"size": 44876
+},
+"8284669.blp": {
+"id": 8284669,
+"sha": "eefe0baa7cf326963851828f25043045a442bf37",
+"size": 44876
+},
 "8345013.blp": {
 "id": 8345013,
 "sha": "aa420cfa40370e5cc573a144adac27e53c8f3b23",
@@ -10878,6 +10903,21 @@
 "sha": "674de3deeef7d5db1bc1a664855bc46bcbe267cd",
 "size": 88580
 },
+"dsbrute00.skin": {
+"id": 8284644,
+"sha": "bf17f6beae285d4cf80699c25d4ccc42bc0d08c7",
+"size": 102780
+},
+"dsbrute_arm.blp": {
+"id": 8284646,
+"sha": "3a03b9719b5fc5ccaf98b551a541330d9ab918b7",
+"size": 700236
+},
+"dsbrute_body.blp": {
+"id": 8284645,
+"sha": "dfa400c0458e87eee0c9bffbe9f47381362552a4",
+"size": 700236
+},
 "dsinfector00.skin": {
 "id": 8284333,
 "sha": "ab6b531831079f212d6668c33d59b41f388ee28a",
@@ -10981,6 +11021,21 @@
 "dsslasherfarmer_head.blp": {
 "id": 8284579,
 "sha": "253eac9448939f103e86b9acfb26a74f5fa3355d",
+"size": 700236
+},
+"dstripod00.skin": {
+"id": 8284656,
+"sha": "be13193b462b22325681e9351ae2842bd9d6e7b8",
+"size": 118552
+},
+"dstripod_body.blp": {
+"id": 8284657,
+"sha": "c6fc19e49a31a1ec6cc70ee80136f7a0d89bb664",
+"size": 700236
+},
+"dstripod_legs.blp": {
+"id": 8284658,
+"sha": "d61b75923ddd2e6b531a83531955a2ec24443f5c",
 "size": 700236
 },
 "duskwood_barn.wmo": {
@@ -11410,7 +11465,7 @@
 },
 "duskwoodlamppost.m2": {
 "id": 198303,
-"sha": "e1bdc8b32260d753f2a0b13b92a9c425ac8251c5",
+"sha": "14154894f91c6f7454a92702d47f749e826b506c",
 "size": 207932
 },
 "duskwoodtreecanopy03.m2": {
@@ -18538,6 +18593,56 @@
 "sha": "aa146beffd0bed1c68f7f71ad5041393ae60f05a",
 "size": 88580
 },
+"humanmaleblacksmith.m2": {
+"id": 124482,
+"sha": "1e6f8863df8bfaaa30f11c20adfebc4a528b5275",
+"size": 34469764
+},
+"humanmaleblacksmith_lod01.skin": {
+"id": 8284647,
+"sha": "a0af44896a4454b840911992bfbd030620268b2b",
+"size": 102660
+},
+"humanmaleblacksmith_lod01_tex01_512.blp": {
+"id": 8284650,
+"sha": "382d90ccdcb9e12ab2e7a1cad7bfe71de043db40",
+"size": 350724
+},
+"humanmaleblacksmith_lod01_tex02_512.blp": {
+"id": 8284651,
+"sha": "aa1501c53b43f973e9a55ba5d29008db1db57816",
+"size": 350724
+},
+"humanmaleblacksmith_lod02.skin": {
+"id": 8284648,
+"sha": "80d5995c74b6405eaaf61ede5542a147c8cfc994",
+"size": 81700
+},
+"humanmaleblacksmith_lod02_tex01_256.blp": {
+"id": 8284652,
+"sha": "4beac62d6a1f4958eb5c15e548b90723d71ff756",
+"size": 88580
+},
+"humanmaleblacksmith_lod02_tex02_256.blp": {
+"id": 8284653,
+"sha": "3a1d0338368dd119a4b30a7c94131cefa7d1ff09",
+"size": 88580
+},
+"humanmaleblacksmith_lod03.skin": {
+"id": 8284649,
+"sha": "b8681f7055645c87e56f767f0fd6f2f7cb541265",
+"size": 59556
+},
+"humanmaleblacksmith_lod03_tex01_128.blp": {
+"id": 8284654,
+"sha": "beb6b6506a26adbb69e66a1e76e110a80dce85b9",
+"size": 23044
+},
+"humanmaleblacksmith_lod03_tex02_128.blp": {
+"id": 8284655,
+"sha": "bebf97c3449a0619c03a1abca6f605d0b00cd674",
+"size": 23044
+},
 "humanmalefaceupper00_00_hd.blp": {
 "id": 1027494,
 "sha": "593dba4b39669919b3604f0d32f6222a3b52afa4",
@@ -18642,6 +18747,56 @@
 "id": 1339684,
 "sha": "9329e85622028d6e975363c4963396cd400a1466",
 "size": 23028
+},
+"humanmalenoble.m2": {
+"id": 124506,
+"sha": "9d3fe7b7626470ed89d82ac34c1844bab7f2a081",
+"size": 22919668
+},
+"humanmalenoble_lod01.skin": {
+"id": 8284659,
+"sha": "2d3858c5442e956b9b53041a7c5cd82eb95a8981",
+"size": 117336
+},
+"humanmalenoble_lod01_tex01_512.blp": {
+"id": 8284662,
+"sha": "06f957def8fb5d51209095d7db33d233cdd76efd",
+"size": 350724
+},
+"humanmalenoble_lod01_tex02_512.blp": {
+"id": 8284663,
+"sha": "3b1d4202f26f6ae1beafaf411a14207ae285b0ce",
+"size": 350724
+},
+"humanmalenoble_lod02.skin": {
+"id": 8284660,
+"sha": "5e9c751c3508b77134c16f81c1c803cb65f0ed67",
+"size": 91160
+},
+"humanmalenoble_lod02_tex01_256.blp": {
+"id": 8284664,
+"sha": "4d9affdba9acc8acaf40ae7b62ba9e9a5f7ce049",
+"size": 88580
+},
+"humanmalenoble_lod02_tex02_256.blp": {
+"id": 8284665,
+"sha": "ff4cf375ef37e9cd892f61b5a2e66fad6739c19f",
+"size": 88580
+},
+"humanmalenoble_lod03.skin": {
+"id": 8284661,
+"sha": "5caace6afaa70e109480d68a4f314bdd26a5c5e1",
+"size": 59848
+},
+"humanmalenoble_lod03_tex01_128.blp": {
+"id": 8284666,
+"sha": "c16fcc88ef0915685719657b3d62ca488fdf74ab",
+"size": 23044
+},
+"humanmalenoble_lod03_tex02_128.blp": {
+"id": 8284667,
+"sha": "4e032b267e809607e3e0c7681e47052117f4b3c4",
+"size": 23044
 },
 "humanmalepirateswashbuckler.m2": {
 "id": 124533,
@@ -31365,8 +31520,8 @@
 },
 "talktomequestion_white.m2": {
 "id": 130737,
-"sha": "1ad0096ad7861fbb8d8306aad0d8bc20a3dc0cfd",
-"size": 154440
+"sha": "c225f6c51417bb9877608a39c8d953ddef0d2053",
+"size": 45788
 },
 "talktomequestionmark.m2": {
 "id": 130738,
@@ -39700,11 +39855,11 @@
 }
 },
 "patch_json": {
-"sha": "8d2567b339db9da4f91e20e0ff08938fafb0e6c1",
-"size": 467300
+"sha": "bfdf7beeca0fdf427ef93c5cbde81ba88af4fda0",
+"size": 468865
 },
 "repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
-"total_bytes": 3529937550
+"total_bytes": 3592922622
 },
 "Chronicles-Classic": {
 "files": {
@@ -344527,5 +344682,5 @@
 "total_bytes": 1645253759
 }
 },
-"published": "2026-10-16 13:11"
+"published": "2026-10-16 23:40"
 }
