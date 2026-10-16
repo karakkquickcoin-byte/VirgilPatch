@@ -10253,6 +10253,16 @@
 "sha": "4c656cfca60e8c251f3cf0143096d7a96a3d8f96",
 "size": 14886
 },
+"dbfilesclient/creaturedisplayinfo.db2": {
+"id": 1108759,
+"sha": "6e226a086be42c0e275494ce522c1589ad1c89c0",
+"size": 2309764
+},
+"dbfilesclient/creaturedisplayinfogeosetdata.db2": {
+"id": 1720141,
+"sha": "bf5024ad60331d3a1315c2bdf261262e851e53a9",
+"size": 389705
+},
 "dbfilesclient/creaturemodeldata.db2": {
 "id": 1365368,
 "sha": "6a56ff5e1ae6f487d5a57a0b549c2cb1a0a0813b",
@@ -10946,6 +10956,31 @@
 "dslurkerb_body.blp": {
 "id": 8284326,
 "sha": "f0cfd59d5fdd1059dee9917ef1e2963a512659f2",
+"size": 700236
+},
+"dsslasherfarmer.phys": {
+"id": 8284640,
+"sha": "8560b088feda4eeada8abd28d3715e9df6737258",
+"size": 1610
+},
+"dsslasherfarmer00.skin": {
+"id": 8284577,
+"sha": "9aa51da197c48594222e1778302276d225d9bb05",
+"size": 90360
+},
+"dsslasherfarmer_body.blp": {
+"id": 8284578,
+"sha": "e418df096a5a96c8585d12bdfabb14e7a3dc4f60",
+"size": 700236
+},
+"dsslasherfarmer_hair.blp": {
+"id": 8284580,
+"sha": "6750d5a82fa7d7f71f397fe314e204d68ee46f9e",
+"size": 350724
+},
+"dsslasherfarmer_head.blp": {
+"id": 8284579,
+"sha": "253eac9448939f103e86b9acfb26a74f5fa3355d",
 "size": 700236
 },
 "duskwood_barn.wmo": {
@@ -18517,6 +18552,71 @@
 "id": 1339683,
 "sha": "cde1b17ab88cfae648ce7a13c07ae33ccf039bd1",
 "size": 175948
+},
+"humanmalefarmer.m2": {
+"id": 124490,
+"sha": "eee8ee6088e31ced224797ddc475c046ed6979d2",
+"size": 15398970
+},
+"humanmalefarmer_lod01.skin": {
+"id": 8284581,
+"sha": "70749bca3473973d6075b3fa12d5bc1574209ffb",
+"size": 90232
+},
+"humanmalefarmer_lod01_tex01_512.blp": {
+"id": 8284584,
+"sha": "acb75599be5e8490e64125d91df6b43e795dae0a",
+"size": 350724
+},
+"humanmalefarmer_lod01_tex02_512.blp": {
+"id": 8284585,
+"sha": "eded0e5b130d95c8157c0a44853c17f94c255e1c",
+"size": 350724
+},
+"humanmalefarmer_lod01_tex03_256.blp": {
+"id": 8284586,
+"sha": "903bf610ab61bc87e0a1b22d6add3e79fac1b1ff",
+"size": 88580
+},
+"humanmalefarmer_lod02.skin": {
+"id": 8284582,
+"sha": "a0f3b4dd52c7cb030bf01ac9a6d63dacdf4bb699",
+"size": 73080
+},
+"humanmalefarmer_lod02_tex01_256.blp": {
+"id": 8284587,
+"sha": "d1ed2c094c3646a893c6a578eaba72b0b3deec2f",
+"size": 88580
+},
+"humanmalefarmer_lod02_tex02_256.blp": {
+"id": 8284588,
+"sha": "f1807728336267acf303151d6c17eaaa67b3a6fa",
+"size": 88580
+},
+"humanmalefarmer_lod02_tex03_128.blp": {
+"id": 8284589,
+"sha": "e4c5cee95092ae4805f206f04e4e4a060d99e9da",
+"size": 23044
+},
+"humanmalefarmer_lod03.skin": {
+"id": 8284583,
+"sha": "96ffba8e2834db6779f2b4ac8c38a9b7460790cf",
+"size": 55784
+},
+"humanmalefarmer_lod03_tex01_128.blp": {
+"id": 8284590,
+"sha": "922f59b8105bf9c5981473f1935316a8cfd1c79b",
+"size": 23044
+},
+"humanmalefarmer_lod03_tex02_128.blp": {
+"id": 8284591,
+"sha": "c4221fddf1a264b1b8742b247b81818428637de5",
+"size": 23044
+},
+"humanmalefarmer_lod03_tex03_64.blp": {
+"id": 8284592,
+"sha": "3fd547d4aec343d20b2fd656ff32ce58cae16f8c",
+"size": 6660
 },
 "humanmaleguard.m2": {
 "id": 124494,
@@ -35623,6 +35723,56 @@
 "sha": "35180a5f077e67656ccaaa0e831ffa571e72031f",
 "size": 88580
 },
+"workshop/zombie/shoulder_933021000.blp": {
+"id": 933021000,
+"sha": "c191302360f1e76371ad4b36e6d3d0780993609a",
+"size": 5636
+},
+"workshop/zombie/shoulder_933021005.blp": {
+"id": 933021005,
+"sha": "4df2c5549defb9f38d491a75dec80b2371b5accc",
+"size": 3916
+},
+"workshop/zombie/zombie_shoulder_933021001.skin": {
+"id": 933021001,
+"sha": "a6685852e030001fddd324d404ba33ae74c4b0d6",
+"size": 98628
+},
+"workshop/zombie/zombie_shoulder_933021002.skin": {
+"id": 933021002,
+"sha": "82513c6ab83bd015691ada2777d77d16c511d370",
+"size": 101028
+},
+"workshop/zombie/zombie_shoulder_933021003.skin": {
+"id": 933021003,
+"sha": "82513c6ab83bd015691ada2777d77d16c511d370",
+"size": 101028
+},
+"workshop/zombie/zombie_shoulder_933021004.skin": {
+"id": 933021004,
+"sha": "82513c6ab83bd015691ada2777d77d16c511d370",
+"size": 101028
+},
+"workshop/zombie/zombie_shoulder_933021006.skin": {
+"id": 933021006,
+"sha": "5e41f86fefacd13ade8bd2d737daeb636224c6a2",
+"size": 98436
+},
+"workshop/zombie/zombie_shoulder_933021007.skin": {
+"id": 933021007,
+"sha": "8ee9c531456197c785665dab3b42b35b67dc99bf",
+"size": 100836
+},
+"workshop/zombie/zombie_shoulder_933021008.skin": {
+"id": 933021008,
+"sha": "8ee9c531456197c785665dab3b42b35b67dc99bf",
+"size": 100836
+},
+"workshop/zombie/zombie_shoulder_933021009.skin": {
+"id": 933021009,
+"sha": "8ee9c531456197c785665dab3b42b35b67dc99bf",
+"size": 100836
+},
 "world/expansion10/doodads/11xp_plantflower_pink01.m2": {
 "id": 4853640,
 "sha": "1488182ca6ea451adb6256bbd9f3f6dd8fbdb5ed",
@@ -39420,8 +39570,8 @@
 },
 "zombie2.m2": {
 "id": 1888300,
-"sha": "5378ab23b325f3cc9396b1274768a5724a1d4867",
-"size": 692062
+"sha": "7e324c6ca2d649d5b4f53dcc8ac5551e94950968",
+"size": 866778
 },
 "zombie200.skin": {
 "id": 1888310,
@@ -39550,11 +39700,11 @@
 }
 },
 "patch_json": {
-"sha": "1280f03affb2bfa0f09bb72455be2d2549bbe237",
-"size": 465479
+"sha": "8d2567b339db9da4f91e20e0ff08938fafb0e6c1",
+"size": 467300
 },
 "repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
-"total_bytes": 3507746945
+"total_bytes": 3529937550
 },
 "Chronicles-Classic": {
 "files": {
@@ -344377,5 +344527,5 @@
 "total_bytes": 1645253759
 }
 },
-"published": "2026-10-16 01:40"
+"published": "2026-10-16 01:41"
 }
