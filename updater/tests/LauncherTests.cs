@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -15,10 +16,11 @@ class LauncherFixtureSource : ISource
 {
     public Dictionary<string, byte[]> Data = new Dictionary<string, byte[]>();
     public List<string> Downloads = new List<string>();
+    public int Reads;
     public ManualResetEvent DownloadGate;
     public string ResolveCommit() { return "local"; }
     public string Describe() { return "offline launcher test"; }
-    public byte[] Get(string commit, string path) { return Data[path]; }
+    public byte[] Get(string commit, string path) { Interlocked.Increment(ref Reads); return Data[path]; }
     public void Download(string commit, string path, string dest, long max, Action<long> progress)
     {
         lock (Downloads) Downloads.Add(path);
@@ -46,12 +48,44 @@ class LauncherFixtureSource : ISource
 
 class LauncherTests
 {
+    delegate bool WindowVisitor(IntPtr window, IntPtr parameter);
+    [DllImport("kernel32.dll")] static extern uint GetCurrentThreadId();
+    [DllImport("user32.dll")] static extern bool EnumThreadWindows(uint thread, WindowVisitor visitor, IntPtr parameter);
+    [DllImport("user32.dll")] static extern bool EnumChildWindows(IntPtr parent, WindowVisitor visitor, IntPtr parameter);
+    [DllImport("user32.dll")] static extern IntPtr GetWindow(IntPtr window, uint command);
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)] static extern int GetClassName(IntPtr window, StringBuilder text, int length);
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)] static extern int GetWindowText(IntPtr window, StringBuilder text, int length);
+    [DllImport("user32.dll")] static extern IntPtr PostMessage(IntPtr window, uint message, IntPtr wParam, IntPtr lParam);
+    // The owner uses only synthetic files in the scratch folder. If the real game is open,
+    // accept ONLY this test form's specific WoW warning, leaving the user's game untouched.
+    static System.Windows.Forms.Timer AcceptFixtureWarning(MainForm owner)
+    {
+        var thread = GetCurrentThreadId();
+        var timer = new System.Windows.Forms.Timer { Interval = 50 };
+        timer.Tick += delegate {
+            EnumThreadWindows(thread, delegate(IntPtr dialog, IntPtr unused) {
+                if (GetWindow(dialog, 4) != owner.Handle) return true;
+                var name = new StringBuilder(64); GetClassName(dialog, name, name.Capacity);
+                if (name.ToString() != "#32770") return true;
+                bool warning = false;
+                EnumChildWindows(dialog, delegate(IntPtr child, IntPtr ignored) {
+                    var text = new StringBuilder(512); GetWindowText(child, text, text.Capacity);
+                    if (text.ToString().StartsWith("WoW is running. Close it first")) warning = true;
+                    return true;
+                }, IntPtr.Zero);
+                if (warning) PostMessage(dialog, 0x0111, new IntPtr(6), IntPtr.Zero);
+                return true;
+            }, IntPtr.Zero);
+        };
+        timer.Start(); return timer;
+    }
+    static MainForm observed;
     static object Field(MainForm form, string name) { return typeof(MainForm).GetField(name, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(form); }
     static void Assert(bool condition, string message) { if (!condition) throw new Exception(message); }
     static void Pump(Func<bool> ready)
     {
         var end = DateTime.UtcNow.AddSeconds(15);
-        while (!ready()) { if (DateTime.UtcNow > end) throw new Exception("Launcher operation timed out."); Application.DoEvents(); Thread.Sleep(10); }
+        while (!ready()) { if (DateTime.UtcNow > end) throw new Exception("Launcher operation timed out. " + (observed == null ? "" : "busy=" + Field(observed, "isBusy") + "; " + ((TextBox)Field(observed, "log")).Text)); Application.DoEvents(); Thread.Sleep(10); }
         Application.DoEvents();
     }
     [STAThread]
@@ -63,17 +97,23 @@ class LauncherTests
             var patches = Path.Combine(root, "Patches"); Directory.CreateDirectory(patches);
             Config.StateDir = Path.Combine(root, "state"); new State { patches_dir = patches }.Save();
             var source = new LauncherFixtureSource(); source.Publish("first asset");
+            Config.StartAmbienceMuted = true;
             Application.EnableVisualStyles(); Application.SetCompatibleTextRenderingDefault(false);
             using (var form = new MainForm(source) { Opacity = 0, ShowInTaskbar = false, StartPosition = FormStartPosition.Manual, Location = new Point(-32000, -32000) })
             {
-                form.Show(); Pump(() => Field(form, "plan") != null && !(bool)Field(form, "isBusy"));
-                Assert(source.Downloads.Count == 0 && !File.Exists(Path.Combine(patches, "Test/a.ogg")), "Startup must only check; patch installation needs a click.");
-                Console.WriteLine("PASS launcher startup checks without installing assets");
+                using (var warnings = AcceptFixtureWarning(form))
+                {
+                observed = form;
+                form.Show(); Pump(() => Field(form, "ambience") != null && ((LauncherAmbience)Field(form, "ambience")).Player.Position > TimeSpan.FromMilliseconds(150));
+                Assert(source.Reads == 0 && source.Downloads.Count == 0 && Field(form, "plan") == null && !File.Exists(Path.Combine(patches, "Test/a.ogg")), "Startup must not check or update patches.");
+                Console.WriteLine("PASS launcher startup makes no patch requests or changes");
                 var update = (Button)Field(form, "updateBtn"); var browse = (Button)Field(form, "browse");
                 Assert(form.Text == "Chronicles of Lordaeron" && update.Text == "Update" && browse.Text == "Select folder", "Incorrect launcher branding/actions.");
                 using (source.DownloadGate = new ManualResetEvent(false))
                 {
-                    update.PerformClick(); Pump(() => source.Downloads.Count > 0);
+                    update.PerformClick();
+                    Assert((bool)Field(form, "isBusy"), "Update click did not start a check; selectable=" + update.CanSelect + "; visible=" + update.Visible + "; enabled=" + update.Enabled);
+                    Pump(() => source.Downloads.Count > 0);
                     Assert(!update.Enabled && !browse.Enabled, "Actions must be disabled while updating.");
                     update.PerformClick();
                     if (args.Length > 1) using (var bitmap = new Bitmap(form.Width, form.Height)) { form.DrawToBitmap(bitmap, new Rectangle(Point.Empty, bitmap.Size)); bitmap.Save(args[1]); }
@@ -97,6 +137,7 @@ class LauncherTests
                 Assert(update.Enabled && browse.Enabled && ((Label)Field(form, "status")).Text.Contains("Details") && source.Downloads.Count == 3, "Failure must be visible and allow a safe retry.");
                 Console.WriteLine("PASS invalid manifest leaves assets untouched and exposes a recoverable error");
                 form.Close();
+                }
             }
             Console.WriteLine("TOTAL 6 launcher integration scenarios passed"); return 0;
         }

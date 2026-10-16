@@ -6,3 +6,7 @@
 /patches export-ignore
 /patches/** export-ignore
 /index.json export-ignore
+
+# Keep legacy archive fallback downloads to source/resources; release packages are available directly.
+/VirgilUpdater.zip export-ignore
+/updater/VirgilUpdater.exe export-ignore

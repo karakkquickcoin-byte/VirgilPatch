@@ -37,6 +37,7 @@ class SelfUpdateGuiTests
             var patches=Path.Combine(root,"Patches");Directory.CreateDirectory(patches);
             new State {patches_dir=patches}.Save();
             var source=new FailingProgramSource {Mode=args[1]};
+            Config.StartAmbienceMuted = true;
             Application.EnableVisualStyles();Application.SetCompatibleTextRenderingDefault(false);
             var form=new MainForm(source) {Opacity=0,ShowInTaskbar=false,StartPosition=FormStartPosition.Manual,Location=new System.Drawing.Point(-32000,-32000)};
             var log=(TextBox)typeof(MainForm).GetField("log",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(form);
@@ -46,7 +47,7 @@ class SelfUpdateGuiTests
                 {result=0;timer.Stop();form.Close();}
                 else if(DateTime.UtcNow-started>TimeSpan.FromSeconds(15)) {Console.WriteLine(log.Text);timer.Stop();form.Close();}
             };
-            form.Shown+=delegate {timer.Start();};Application.Run(form);
+            form.Shown+=delegate {((Button)typeof(MainForm).GetField("updateBtn",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(form)).PerformClick();timer.Start();};Application.Run(form);
             if(result==0) Console.WriteLine("PASS GUI "+args[1]+" program-upgrade failure: current program retained and patch check completed");
             return result;
         }

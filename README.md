@@ -15,15 +15,25 @@ Existing v1.2/v1.3.0 updaters remain compatible without replacing the EXE. On la
 display "Downloading the full archive", but that generated archive now contains only source/updater files;
 game assets are excluded. They then fetch only the missing or changed assets through their existing fallback.
 Start a fresh check to pick up this repository change. An already running update stays pinned to its earlier commit.
-New downloads use v1.4.1, which skips the archive request entirely and supports automatic program upgrades. Replacing an old EXE once is still necessary to
+New downloads use v1.4.2, which skips the archive request entirely and supports automatic program upgrades. Replacing an old EXE once is still necessary to
 receive the newer application security protections and automatic-upgrade support; v1.2/v1.3.x cannot update their own program.
 The launcher uses a single Update button, an instruction panel and embedded Lordaeron artwork.
-Existing v1.4.0 launchers receive this design through their automatic program upgrade.
+Existing v1.4.0 and newer launchers receive this design through their automatic program upgrade.
 Classic and TexturePatch remain independently published alternatives; Epsilon controls which is enabled.
+
+The full ambience track plays automatically at 40% player volume and loops while the launcher is open.
+Use **Sound on (40%) / Sound off** at the bottom right to mute or unmute it. Audio stops when the launcher closes;
+patch updates still work if Windows cannot play the audio. Headless `--cli` updates never play sound; `--mute` starts
+the GUI muted. The soundtrack is embedded in the EXE and cached locally with SHA-256 verification.
 
 ## Automatic updater upgrades
 
-From v1.4.0 onward the app checks for its own upgrades on startup and when you check for updates.
+Version 1.4.2 opens without contacting the update source or scanning/changing patch files. Selecting a folder
+only remembers its path. **Update** explicitly starts both the signed launcher-upgrade check and patch updating.
+Clicking Update synchronizes published files, so do this only when you intend to update your selected patches.
+If a launcher upgrade restarts the app, click Update again to update patches; the restarted window stays idle.
+Earlier v1.4.0/v1.4.1 programs check their own upgrades on startup and can receive this version once.
+Their program upgrade does not install patch files.
 A newer program release is verified against an RSA-4096 public key embedded in the app, including its version,
 SHA-256 and exact size. It downloads only the updater EXE, restarts automatically and retains the previous EXE.
 If the new program fails to confirm startup, the helper restores the previous version and avoids retrying that
@@ -42,7 +52,7 @@ Report the download URL, the threat name, the affected file path and the ZIP's S
 The developer can submit the exact detected file to [Microsoft for analysis](https://www.microsoft.com/en-us/wdsi/filesubmission).
 A clean source review or matching checksum does not establish that an antivirus alert is a false positive.
 
-Version 1.4.1 is not Authenticode-signed. A Windows reputation warning and an antivirus malware detection are different checks;
+Version 1.4.2 is not Authenticode-signed. A Windows reputation warning and an antivirus malware detection are different checks;
 neither should be dismissed solely because a program is open source or unsigned.
 
 ## What the updater does
@@ -75,6 +85,6 @@ Windows Authenticode signatures and do not establish an antivirus clearance.
 
 ## Repository source archives
 
-GitHub's **Code > Download ZIP** and generated source archives omit `patches/` and `index.json` to keep older
+GitHub's **Code > Download ZIP** and generated source archives omit `patches/`, `index.json` and the compiled EXE/ZIP to keep older
 updater downloads small. The files remain tracked in the repository and are available through raw URLs or a Git clone.
 For patch installation use the updater. The separate `VirgilUpdater.zip` download still contains the latest updater.

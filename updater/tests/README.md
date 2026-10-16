@@ -6,7 +6,8 @@ From this directory, in PowerShell:
 $testRoot = Join-Path $env:TEMP ('VirgilTests-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $testRoot | Out-Null
 $compiler = Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
-& $compiler /nologo /target:exe /optimize+ /main:SecurityTests "/out:$testRoot\SecurityTests.exe" /r:System.Web.Extensions.dll /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll ../VirgilUpdater.cs ../SelfUpdate.cs ../LauncherTheme.cs /resource:../assets/lordaeron-background.png,VirgilPatch.LauncherBackground SecurityTests.cs
+$wpf = Join-Path (Split-Path $compiler) 'WPF'
+& $compiler /nologo /target:exe /optimize+ /main:SecurityTests "/out:$testRoot\SecurityTests.exe" /r:System.Web.Extensions.dll "/r:$wpf\PresentationCore.dll" "/r:$wpf\WindowsBase.dll" /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll ../VirgilUpdater.cs ../SelfUpdate.cs ../LauncherTheme.cs ../LauncherAmbience.cs /resource:../assets/lordaeron-ambience.mp3,VirgilPatch.LauncherAmbience /resource:../assets/lordaeron-background.png,VirgilPatch.LauncherBackground SecurityTests.cs
 & "$testRoot\SecurityTests.exe" $testRoot
 ```
 
@@ -25,17 +26,27 @@ The release also runs a first-install/second-run smoke test of the built EXE. Pu
 
 
 `SelfUpdateTests.cs` validates signatures, trusted payload scope, size/hash/version checks and Windows argument
-quoting. Compile it alongside `VirgilUpdater.cs`, `SelfUpdate.cs` and `LauncherTheme.cs` (embed the background as above) with `/main:SelfUpdateTests`. It takes a
+quoting. Compile it alongside `VirgilUpdater.cs`, `SelfUpdate.cs`, `LauncherTheme.cs` and `LauncherAmbience.cs` (use both media resources and WPF references above) with `/main:SelfUpdateTests`. It takes a
 test fixture EXE (assembly name `VirgilUpdater`, version `1.4.1.0`) and a test-only private RSA XML key path.
 Never use a production signing key for these fixtures. The accompanying audit's process harness tests real
 replacement/restart, startup rollback, tampering, invalid signatures, downgrade rejection, read-only EXEs and the
 actual Program/MainForm startup confirmation using a separate temporary test key and invisible offline windows.
 
-`LauncherTests.cs` exercises the actual window with synthetic offline assets: startup checks without installing,
+`LauncherTests.cs` exercises the actual window with synthetic offline assets: idle startup with zero patch requests,
 explicit Update with disabled actions during download, no-op updates, changed-file-only downloads, folder
-retention, diagnostic disclosure and recoverable manifest failure. Compile with `/main:LauncherTests`, the three
-updater source files, `System.Web.Extensions.dll` and the embedded background resource shown above. Pass a new
+retention, diagnostic disclosure and recoverable manifest failure. Compile with `/main:LauncherTests`, the four
+updater source files, WPF references, `System.Web.Extensions.dll` and both embedded media resources shown above. Pass a new
 empty scratch folder, followed optionally by an output PNG path for an invisible-window updating preview.
 
 `SelfUpdateGuiTests.cs` uses the same sources/resource and `/main:SelfUpdateGuiTests`. Pass a new scratch folder
 and `network` or `signature` to verify that program-upgrade failures still allow normal patch checks.
+
+`ManualUpdateTests.cs` verifies that launch and folder selection make zero source requests and preserve
+unpublished development files and saved patch state, while explicit Update checks both channels. Compile with
+the same four sources, resources and references and `/main:ManualUpdateTests`; pass a fresh scratch folder.
+
+`AmbienceTests.cs` verifies the real full-track playback at volume 0.4, mute, end-of-track looping, shutdown,
+cache integrity/read locks/reuse and safe patch checks after audio fails. Compile with `/main:AmbienceTests`
+and the same sources/resources/references, then pass a fresh scratch folder. Playback tests start muted.
+LauncherTests automatically answers only its own scratch-fixture WoW-running warning if the user's game is open.
+It does not close or modify the game. Actual release EXE CLI smoke tests use synthetic files and never play audio.

@@ -108,7 +108,35 @@ namespace VirgilPatch
     partial class MainForm
     {
         readonly Button details = new Button();
+        readonly Button sound = new Button();
+        LauncherAmbience ambience;
         bool isBusy;
+
+        void StartAmbience()
+        {
+            try
+            {
+                ambience = new LauncherAmbience(Say, delegate(bool ready) {
+                    if (IsDisposed || Disposing) return;
+                    sound.Enabled = ready;
+                    if (!ready) sound.Text = "Sound unavailable";
+                });
+                ambience.Start(Config.StartAmbienceMuted);
+                sound.Text = ambience.Muted ? "Sound off" : "Sound on (40%)";
+            }
+            catch (Exception ex)
+            {
+                if (ambience != null) { ambience.Dispose(); ambience = null; }
+                sound.Enabled = false; sound.Text = "Sound unavailable";
+                Say("Ambience unavailable: " + ex.Message + " Patch updates can continue.");
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && ambience != null) { ambience.Dispose(); ambience = null; }
+            base.Dispose(disposing);
+        }
 
         Label Caption(string text, int x, int y, int w, int h, Font font, Color color)
         {
@@ -140,7 +168,7 @@ namespace VirgilPatch
             Caption("Close World of Warcraft before updating.", 115, 316, 333, 24, normal, ForeColor);
             Caption("03", 73, 357, 35, 24, normal, gold);
             Caption("Click Update to get the latest patch files.", 115, 357, 330, 24, normal, ForeColor);
-            Caption("Only missing or changed files are downloaded.", 73, 400, 375, 20, small, muted);
+            Caption("Nothing updates until you click Update.", 73, 400, 375, 20, small, muted);
 
             Caption("PATCHES FOLDER", 48, 485, 500, 23, small, gold);
             dirBox.BorderStyle = BorderStyle.FixedSingle;
@@ -181,6 +209,22 @@ namespace VirgilPatch
             log.TabIndex = 4;
             details.Click += delegate { log.Visible = !log.Visible; details.Text = log.Visible ? "Hide details" : "Details"; if (log.Visible) log.BringToFront(); };
             Controls.AddRange(new Control[] { dirBox, browse, status, updateBtn, bar, details, log });
+            sound.FlatStyle = FlatStyle.Flat;
+            sound.FlatAppearance.BorderSize = 0;
+            sound.BackColor = Color.FromArgb(17, 16, 14);
+            sound.ForeColor = muted;
+            sound.Font = new Font("Segoe UI", 8f);
+            sound.Text = "Sound on (40%)";
+            sound.AccessibleName = "Mute or unmute launcher ambience at 40 percent";
+            sound.Cursor = Cursors.Hand;
+            sound.TabIndex = 5;
+            sound.SetBounds(812, 632, 140, 18);
+            sound.Click += delegate {
+                if (ambience == null) return;
+                ambience.Muted = !ambience.Muted;
+                sound.Text = ambience.Muted ? "Sound off" : "Sound on (40%)";
+            };
+            Controls.Add(sound);
             var minimize = new Button { Text = "\u2013", AccessibleName = "Minimize", TabStop = false };
             var close = new Button { Text = "\u00d7", AccessibleName = "Close", TabStop = false };
             foreach (var button in new[] { minimize, close })

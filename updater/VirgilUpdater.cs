@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.4.1.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.4.1.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.4.1")]
+[assembly: System.Reflection.AssemblyVersion("1.4.2.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.4.2.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.4.2")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,8 +39,9 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.4.1";
+        public const string UserAgent = "VirgilPatchUpdater/1.4.2";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
+        public static bool StartAmbienceMuted;
     }
 
     // ------------------------------------------------------------------ where the files come from
@@ -675,16 +676,16 @@ namespace VirgilPatch
             this.skipProgramCheck = skipProgramCheck;
             this.programArguments = programArguments ?? new string[0];
             BuildLauncher();
-            browse.Click += delegate { if (PickFolder()) RunPatchCheck(); };
+            browse.Click += delegate { PickFolder(); };
             updateBtn.Click += delegate { RunUpdate(); };
             FormClosing += (s, e) => { if (cts != null) cts.Cancel(); };
             if (string.IsNullOrEmpty(state.patches_dir) || !Directory.Exists(state.patches_dir)) state.patches_dir = Detect();
             dirBox.Text = state.patches_dir ?? "";
-            status.Text = "Choose your Patches folder, then click Update.";
+            status.Text = string.IsNullOrEmpty(state.patches_dir) ? "Choose your Patches folder, then click Update." :
+                "Ready. Your patches change only when you click Update.";
             Shown += delegate {
                 if (this.confirmationDirectory != null) SelfUpdate.ConfirmStartup(this.confirmationDirectory);
-                if (source is GitHubSource && !this.skipProgramCheck) RunProgramCheck(false);
-                else if (!string.IsNullOrEmpty(state.patches_dir)) RunPatchCheck();
+                StartAmbience();
             };
         }
 
@@ -712,13 +713,19 @@ namespace VirgilPatch
                     MessageBox.Show(this, "This doesn't look like Epsilon's _retail_\\Patches folder (no Wow.exe next to it).\r\nUse it anyway?",
                                     Text, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return false;
-                state.patches_dir = p;
-                dirBox.Text = p;
-                state.Save();
-                plan = null;
-                updateBtn.Enabled = true;
+                RememberFolder(p);
                 return true;
             }
+        }
+
+        void RememberFolder(string path)
+        {
+            state.patches_dir = path;
+            dirBox.Text = path;
+            state.Save();
+            plan = null;
+            updateBtn.Enabled = true;
+            status.Text = "Folder selected. Click Update when you are ready.";
         }
 
         void Say(string s)
@@ -800,14 +807,20 @@ namespace VirgilPatch
                 }
                 bar.Value = plan != null && plan.UpToDate ? 1000 : 0;
                 Busy(false);
-                if (applyAfterCheck && plan != null && !plan.UpToDate) RunUpdate();
+                if (applyAfterCheck && plan != null && !plan.UpToDate) ApplyUpdate();
             }));
         }
 
         void RunUpdate()
         {
             if (isBusy) return;
-            if (plan == null || plan.UpToDate) { RunCheck(true); return; }
+            if (string.IsNullOrEmpty(state.patches_dir) && !PickFolder()) return;
+            RunCheck(true);
+        }
+
+        void ApplyUpdate()
+        {
+            if (isBusy || plan == null || plan.UpToDate) return;
             if (Process.GetProcessesByName("Wow").Length > 0 &&
                 MessageBox.Show(this, "WoW is running. Close it first so the patch files aren't in use.\r\n\r\nUpdate anyway?", Text,
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
@@ -851,6 +864,7 @@ namespace VirgilPatch
                 else if (args[i] == "--state" && i + 1 < args.Length) Config.StateDir = args[++i];
                 else if (args[i] == "--log" && i + 1 < args.Length) logFile = args[++i];
                 else if (args[i] == "--cli") cli = true;
+                else if (args[i] == "--mute") Config.StartAmbienceMuted = true;
                 else if (args[i] == "--confirm-self-update" && i + 1 < args.Length) confirmationDirectory = args[++i];
                 else if (args[i] == "--skip-self-update-once") skipProgramCheck = true;
             }

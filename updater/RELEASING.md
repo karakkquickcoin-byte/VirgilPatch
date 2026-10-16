@@ -6,7 +6,7 @@
 3. Run `./build.ps1 -SigningKeyPath <private-DPAPI-key-file>` from `updater`, using the Windows account that owns
    the release key. The maintainer's local `BuildUpdater.ps1` wrapper supplies the configured key path.
 4. Commit/push the new EXE, `VirgilUpdater.zip`, ZIP checksum, `updater-release.json`, source and guidance together.
-   Existing self-updating clients will verify the signature and install the newer EXE at their next check.
+   Existing self-updating clients will verify the signature and install the newer EXE when they click Update. Earlier v1.4.0/v1.4.1 clients may receive this once on startup.
 
 The build verifies the private key against `release-public-key.xml` and the public key embedded in `SelfUpdate.cs`.
 It rejects a release version that does not exceed the currently committed manifest. `-CompileOnly` is for local
@@ -29,3 +29,8 @@ the public key in metadata alone. The application pins its trusted key; unauthen
 Staging/backups are in a hidden `.virgil-update-<id>` folder beside the EXE. `result.log` records the upgrade result;
 `previous.exe` is retained after success. A failed startup restores the old EXE and records the failed payload hash
 beside it. A genuinely newer/different signed release can be attempted later. No downloaded game asset is executed.
+
+The ambience track is embedded as VirgilPatch.LauncherAmbience from assets/lordaeron-ambience.mp3.
+Compile LauncherAmbience.cs and reference Windows' .NET Framework WPF PresentationCore/WindowsBase assemblies.
+Keep the complete EXE below the existing 16 MiB signed-channel limit, which older clients enforce too.
+The build now checks this before signing. Do not raise the channel limit to accommodate large media.

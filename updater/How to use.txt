@@ -1,10 +1,12 @@
-Chronicles of Lordaeron Launcher 1.4.1
+Chronicles of Lordaeron Launcher 1.4.2
 
 1. Extract VirgilUpdater.exe into a normal folder you can write to.
 2. Run it, click Select folder, and choose your Epsilon _retail_\Patches folder if needed.
 3. Close WoW, then click Update. Only missing or changed game assets are downloaded.
 
-This version checks for signed program upgrades automatically and restarts when one is ready.
+Launch and folder selection do not check, download or change patches or update the launcher.
+Click Update to check for signed program upgrades and update patch files.
+If the launcher restarts after upgrading itself, click Update again to update your patches.
 It keeps a previous-version backup and restores it if the new program fails to start.
 Users on v1.3.x or earlier must replace their EXE once to enable automatic program upgrades.
 
@@ -14,3 +16,7 @@ Do not disable protection or add an antivirus exclusion. Release signatures are 
 https://github.com/karakkquickcoin-byte/VirgilPatch
 
 The launcher artwork is embedded in the EXE; no separate image download is needed.
+
+Ambience starts at 40% volume and repeats while the launcher is open.
+Click Sound on (40%) / Sound off at the bottom right to mute or unmute.
+The audio is embedded in the EXE; no separate audio download is needed.
