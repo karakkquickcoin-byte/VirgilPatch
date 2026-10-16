@@ -1,4 +1,4 @@
-# Security policy and release 1.3.0
+# Security policy and release 1.3.1
 
 Report an antivirus detection with its exact URL, ZIP SHA-256, detected file path and antivirus definition version.
 Keep detected files blocked while they are investigated. Do not use exclusions as a workaround.
@@ -14,6 +14,7 @@ and symbolic links/junctions are rejected. Download sizes are bounded, checksums
 file replacement, and deletion candidates are rehashed at use time. Individual files are replaced atomically;
 an interrupted multi-file update can still require another update. Close WoW before updating.
 
+All assets are downloaded individually only when missing or changed; repository archive downloads are not supported.
 The release uses HTTPS and pins all requests in an update to one commit. It refuses redirects and other repositories.
 This relies on the security of GitHub, the maintainer account and the build machine. Blob SHA-1 checks detect
 transfer/content mismatches; they do not authenticate the maintainer independently. This release is unsigned.

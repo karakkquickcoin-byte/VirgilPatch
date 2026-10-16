@@ -8,7 +8,10 @@ Epsilon (9.2.7) game patches, maintained as independently selectable patch folde
 2. Run `VirgilUpdater.exe`. Browse to your Epsilon `_retail_\Patches` folder if needed.
 3. Close WoW, then click **Update**.
 
-The first update downloads the published assets. Later updates download only changed or missing files.
+Every update downloads only missing or changed assets as individual files, including large updates and first installs.
+The updater never downloads the full repository ZIP. It checks existing files against the current index before updating;
+if all assets already match, none are downloaded again. The index is still retrieved to check for changes.
+Existing users must download the new ZIP and replace their old `VirgilUpdater.exe` to get this behavior.
 Classic and TexturePatch remain independently published alternatives; Epsilon controls which is enabled.
 
 ## Antivirus alerts
@@ -19,7 +22,7 @@ Report the download URL, the threat name, the affected file path and the ZIP's S
 The developer can submit the exact detected file to [Microsoft for analysis](https://www.microsoft.com/en-us/wdsi/filesubmission).
 A clean source review or matching checksum does not establish that an antivirus alert is a false positive.
 
-Version 1.3.0 is unsigned. A Windows reputation warning and an antivirus malware detection are different checks;
+Version 1.3.1 is unsigned. A Windows reputation warning and an antivirus malware detection are different checks;
 neither should be dismissed solely because a program is open source or unsigned.
 
 ## What the updater does

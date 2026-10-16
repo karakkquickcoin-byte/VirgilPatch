@@ -3,8 +3,8 @@
 //
 // Only files that are new or different are downloaded (each verified against its git blob SHA-1 from index.json);
 // each patch.json is written last, files the previous version installed and the new one dropped are removed (a patch
-// that is no longer published disappears completely). A fresh install (or a very large update) downloads the
-// repository archive once instead of thousands of files.
+// that is no longer published disappears completely). Every install and update downloads only the individual
+// files it needs; the full repository archive is never downloaded.
 //
 // Build (no SDK needed, .NET Framework 4.8 ships with Windows 10/11):
 //   C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe /optimize+ /out:VirgilUpdater.exe
@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -30,9 +29,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("VirgilPatch")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.3.0.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.3.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.3.0")]
+[assembly: System.Reflection.AssemblyVersion("1.3.1.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.3.1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.3.1")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -42,7 +41,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.3";
+        public const string UserAgent = "VirgilPatchUpdater/1.3.1";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
     }
 
@@ -52,7 +51,6 @@ namespace VirgilPatch
         string ResolveCommit();
         byte[] Get(string commit, string repoPath);                                  // small text files
         void Download(string commit, string repoPath, string dest, long maxBytes, Action<long> progress);
-        string ArchiveUrl(string commit);                                            // null = no archive
         string Describe();
     }
 
@@ -68,7 +66,7 @@ namespace VirgilPatch
             {
                 case "api.github.com": prefix = "/repos/" + Config.Owner + "/" + Config.Repo + "/"; break;
                 case "raw.githubusercontent.com":
-                case "codeload.github.com": prefix = "/" + Config.Owner + "/" + Config.Repo + "/"; break;
+                    prefix = "/" + Config.Owner + "/" + Config.Repo + "/"; break;
                 case "github.com": prefix = "/" + Config.Owner + "/" + Config.Repo + ".git/"; break;
                 default: throw new InvalidDataException("Unexpected download host.");
             }
@@ -169,10 +167,6 @@ namespace VirgilPatch
             }
         }
 
-        public string ArchiveUrl(string commit)
-        {
-            return "https://codeload.github.com/" + Config.Owner + "/" + Config.Repo + "/zip/" + commit;
-        }
     }
 
     // a local copy of the repository - used to test the updater without touching GitHub
@@ -197,7 +191,6 @@ namespace VirgilPatch
                 GitHubSource.CopyLimited(input, output, maxBytes, null);
             if (progress != null) progress(new FileInfo(dest).Length);
         }
-        public string ArchiveUrl(string commit) { return null; }
     }
 
     // Treat both remote manifests and local state as untrusted input.
@@ -206,7 +199,6 @@ namespace VirgilPatch
         internal const long MaxIndexBytes = 64L * 1024 * 1024;
         internal const long MaxMetadataBytes = 16L * 1024 * 1024;
         internal const long MaxAssetBytes = 2L * 1024 * 1024 * 1024;
-        internal const long MaxArchiveBytes = 100L * 1024 * 1024 * 1024;
         static readonly HashSet<string> Extensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         { ".adt", ".anim", ".blp", ".bone", ".db2", ".m2", ".ogg", ".phys", ".skel", ".skin", ".wdl", ".wdt", ".wmo" };
 
@@ -563,14 +555,6 @@ namespace VirgilPatch
             foreach (var entry in p.Files.Values) Local(entry);
             long total = p.FetchBytes, done = 0;
             var pending = new List<FileInfoEntry>(p.Fetch);
-            var archive = src.ArchiveUrl(p.Commit);
-            if (archive != null && pending.Count > 0 && (pending.Count > 400 || total > 0.4 * p.TotalBytes))
-            {
-                try { pending = FromArchive(p, archive, pending, cancel); }
-                catch (OperationCanceledException) { throw; }
-                catch (Exception ex) { Log("Archive download failed (" + ex.Message + "), downloading file by file instead."); }
-                done = total - pending.Sum(f => f.Size);
-            }
             if (pending.Count > 0)
             {
                 Log(string.Format("Downloading {0} files ({1:0.0} MB) ...", pending.Count, pending.Sum(f => f.Size) / 1e6));
@@ -663,66 +647,6 @@ namespace VirgilPatch
             Log("Done - you have the version from " + p.Published + ".");
         }
 
-        List<FileInfoEntry> FromArchive(Plan p, string url, List<FileInfoEntry> pending, CancellationToken cancel)
-        {
-            var zipPath = Safety.Under(state.patches_dir, "VirgilPatch_" + Guid.NewGuid().ToString("N") + ".zip.part");
-            Log(string.Format("Downloading the full archive (about {0:0.00} GB, one download) ...", p.TotalBytes / 1e9));
-            long got = 0;
-            try
-            {
-            GitHubSource.Fetch(url, zipPath, Safety.MaxArchiveBytes, n =>
-            {
-                cancel.ThrowIfCancellationRequested();
-                got += n;
-                Progress(Math.Min(got, p.TotalBytes), p.TotalBytes);
-            });
-                return ExtractArchive(p, zipPath, pending, cancel);
-            }
-            finally { Safety.DeleteTemp(zipPath); }
-        }
-        internal List<FileInfoEntry> ExtractArchive(Plan p, string zipPath, List<FileInfoEntry> pending, CancellationToken cancel)
-        {
-            Safety.NoLinks(zipPath);
-            var left = new List<FileInfoEntry>();
-                using (var z = ZipFile.OpenRead(zipPath))
-                {
-                    var top = z.Entries.Count > 0 ? z.Entries[0].FullName.Split('/')[0] + "/" : "";
-                    var map = new Dictionary<string, ZipArchiveEntry>(StringComparer.OrdinalIgnoreCase);
-                    foreach (var e in z.Entries)
-                        if (e.FullName.StartsWith(top, StringComparison.OrdinalIgnoreCase))
-                        {
-                            var key = e.FullName.Substring(top.Length);
-                            if (map.ContainsKey(key)) throw new InvalidDataException("Duplicate archive path.");
-                            map.Add(key, e);
-                        }
-                    Log("Unpacking " + pending.Count + " files ...");
-                    long done = 0, total = pending.Sum(f => f.Size);
-                    foreach (var f in pending)
-                    {
-                        cancel.ThrowIfCancellationRequested();
-                        ZipArchiveEntry e;
-                        if (!map.TryGetValue(f.RepoPath, out e)) { left.Add(f); continue; }
-                        var dest = Local(f);
-                        Directory.CreateDirectory(Path.GetDirectoryName(dest));
-                        var tmp = dest + "." + Guid.NewGuid().ToString("N") + ".vtmp";
-                        try
-                        {
-                            if (e.Length != f.Size) throw new InvalidDataException("Archive size does not match manifest.");
-                            using (var input = e.Open())
-                            using (var output = new FileStream(tmp, FileMode.CreateNew, FileAccess.Write, FileShare.None))
-                                GitHubSource.CopyLimited(input, output, f.Size, n => cancel.ThrowIfCancellationRequested());
-                            Place(tmp, Local(f), f);
-                        }
-                        catch (OperationCanceledException) { throw; }
-                        catch (Exception) { left.Add(f); }
-                        finally { Safety.DeleteTemp(tmp); }
-                        done += f.Size;
-                        Progress(done, total);
-                    }
-                }
-            state.Save();
-            return left;
-        }
 
     }
 

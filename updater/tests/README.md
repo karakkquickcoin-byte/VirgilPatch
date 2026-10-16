@@ -19,5 +19,6 @@ to a separate prepared fixture with a `jump` junction to a scratch folder, for j
 output file path. It contacts only the configured public repository, retrieves its current index and verifies one
 small game asset. It does not install patches. The test binary contains the updater code; use the explicit main selector.
 
-The release audit ran 48 updater cases, 9 publisher tests, the live network test, and a first-install/second-run
-smoke test of the built release EXE. Full evidence is in the accompanying audit bundle.
+The updater suite covers security safeguards and individual asset downloading, including more than 400 changed files,
+an update exceeding the old 40-percent threshold, no-op updates, missing/corrupt assets and a lost state file.
+The release also runs a first-install/second-run smoke test of the built EXE. Publisher code is unchanged in v1.3.1.

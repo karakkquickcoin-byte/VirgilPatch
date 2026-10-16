@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -14,16 +13,18 @@ class MemorySource : ISource
 {
     public Dictionary<string, byte[]> Data = new Dictionary<string, byte[]>();
     public Action OnDownload;
+    public List<string> Downloads = new List<string>();
+    public List<string> Reads = new List<string>();
     public string ResolveCommit() { return "local"; }
-    public byte[] Get(string commit, string path) { return Data[path]; }
+    public byte[] Get(string commit, string path) { Reads.Add(path); return Data[path]; }
     public void Download(string commit, string path, string dest, long maxBytes, Action<long> progress)
     {
+        lock (Downloads) Downloads.Add(path);
         if (OnDownload != null) OnDownload();
         using (var input = new MemoryStream(Data[path]))
         using (var output = new FileStream(dest, FileMode.CreateNew, FileAccess.Write))
             GitHubSource.CopyLimited(input, output, maxBytes, progress);
     }
-    public string ArchiveUrl(string commit) { return null; }
     public string Describe() { return "isolated test"; }
 }
 
@@ -76,6 +77,31 @@ class SecurityTests
             new Dictionary<string, object> { { patch, new { repo_dir = dir, patch_json = Info(metadata, 0), files =
                 new Dictionary<string, object> { { name, Info(content, 123) } } } } } }));
         return source;
+    }
+    static MemorySource ManyFiles(int count, int size = 16)
+    {
+        var source = new MemorySource();
+        var files = new Dictionary<string, object>();
+        var entries = new List<object>();
+        for (int i = 0; i < count; i++)
+        {
+            var name = "file" + i.ToString("D4") + ".ogg";
+            var bytes = Enumerable.Repeat((byte)(i % 251), size).ToArray();
+            source.Data["patches/TestPatch/" + name] = bytes;
+            files.Add(name, Info(bytes, (uint)(1000 + i)));
+            entries.Add(new { file = name, id = 1000 + i });
+        }
+        var metadata = Bytes(js.Serialize(new { name = "TestPatch", version = "1", files = entries }));
+        source.Data["patches/TestPatch/patch.json"] = metadata;
+        source.Data["index.json"] = Bytes(js.Serialize(new { format = 2, published = "test", patches =
+            new Dictionary<string, object> { { "TestPatch", new { repo_dir = "patches/TestPatch", patch_json = Info(metadata, 0), files = files } } } }));
+        return source;
+    }
+    static void Seed(Updater updater, MemorySource source, string name)
+    {
+        var dest = updater.Local("TestPatch/" + name);
+        Directory.CreateDirectory(Path.GetDirectoryName(dest));
+        File.WriteAllBytes(dest, source.Data["patches/TestPatch/" + name]);
     }
     static Updater U(MemorySource source, State state) { return new Updater(source, state); }
     static void InvalidManifest(string label, string patch, string name, string repoDir = null)
@@ -177,7 +203,7 @@ class SecurityTests
             });
             Test("network-host-and-https-policy", delegate {
                 var request = typeof(GitHubSource).GetMethod("Req", BindingFlags.Static | BindingFlags.NonPublic);
-                foreach (var url in new[] { "http://raw.githubusercontent.com/karakkquickcoin-byte/VirgilPatch/main/a", "https://evil.invalid/a",
+                foreach (var url in new[] { "http://raw.githubusercontent.com/karakkquickcoin-byte/VirgilPatch/main/a", "https://evil.invalid/a", "https://codeload.github.com/karakkquickcoin-byte/VirgilPatch/zip/main",
                     "https://raw.githubusercontent.com/another/repo/main/a", "https://raw.githubusercontent.com:444/karakkquickcoin-byte/VirgilPatch/main/a" })
                 {
                     try { request.Invoke(null, new object[] { url, null }); throw new Exception("Unsafe URL accepted."); }
@@ -186,35 +212,46 @@ class SecurityTests
                 var good = (System.Net.HttpWebRequest)request.Invoke(null, new object[] { GitHubSource.RawUrl(new string('a',40), "index.json"), null });
                 Assert(!good.AllowAutoRedirect, "Redirect policy not enforced.");
             });
-            Test("archive-extracts-only-verified-assets", delegate {
-                var state = Fresh("archive"); var source = Source(name: "a.blp"); var u = U(source, state); var p = u.Check();
-                var zipPath = Path.Combine(root, "valid-archive.zip");
-                using (var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
-                {
-                    using (var stream = zip.CreateEntry("repo/patches/TestPatch/a.blp").Open())
-                    { var bytes = source.Data["patches/TestPatch/a.blp"]; stream.Write(bytes, 0, bytes.Length); }
-                    using (var stream = zip.CreateEntry("repo/../../escape.exe").Open())
-                    { var bytes = Bytes("unselected entry"); stream.Write(bytes, 0, bytes.Length); }
-                }
-                Assert(u.ExtractArchive(p, zipPath, p.Fetch, CancellationToken.None).Count == 0, "Valid archive entry not installed.");
-                Assert(File.ReadAllText(u.Local("TestPatch/a.blp")) == "asset content", "Incorrect asset.");
-                Assert(!File.Exists(Path.Combine(root, "escape.exe")), "Unselected traversal entry extracted.");
+            Test("large-update-downloads-only-402-missing-files", delegate {
+                Assert(typeof(ISource).GetMethod("ArchiveUrl") == null, "Archive source API still exists.");
+                var state = Fresh("large-update"); var source = ManyFiles(404); var u = U(source, state);
+                Seed(u, source, "file0402.ogg"); Seed(u, source, "file0403.ogg");
+                var existing = u.Local("TestPatch/file0403.ogg"); var stamp = File.GetLastWriteTimeUtc(existing);
+                var p = u.Check(); Assert(p.Fetch.Count == 402, "Large update plan incorrect.");
+                u.Apply(p, CancellationToken.None);
+                Assert(source.Downloads.Count == 402 && source.Downloads.Distinct().Count() == 402, "Wrong number of individual downloads.");
+                Assert(!source.Downloads.Contains("patches/TestPatch/file0402.ogg") && !source.Downloads.Contains("patches/TestPatch/file0403.ogg"), "Unchanged assets downloaded.");
+                Assert(File.GetLastWriteTimeUtc(existing) == stamp, "Unchanged asset rewritten.");
+                Assert(u.Check().UpToDate, "Large update did not finish correctly.");
             });
-            Test("archive-rejects-oversized-entry-and-keeps-original", delegate {
-                var state = Fresh("archive-size"); var source = Source(name: "a.blp"); var u = U(source, state);
-                var dest = u.Local("TestPatch/a.blp"); Directory.CreateDirectory(Path.GetDirectoryName(dest)); File.WriteAllText(dest, "original");
-                var p = u.Check(); var zipPath = Path.Combine(root, "oversized-archive.zip");
-                using (var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
-                using (var stream = zip.CreateEntry("repo/patches/TestPatch/a.blp").Open()) stream.Write(new byte[100], 0, 100);
-                Assert(u.ExtractArchive(p, zipPath, p.Fetch, CancellationToken.None).Count == 1, "Oversized entry accepted.");
-                Assert(File.ReadAllText(dest) == "original", "Archive destroyed original file.");
+            Test("update-over-40-percent-downloads-only-needed-assets", delegate {
+                var state = Fresh("majority-update"); var source = ManyFiles(2, 32); var u = U(source, state);
+                Seed(u, source, "file0001.ogg");
+                var p = u.Check(); Assert(p.FetchBytes > 0.4 * p.TotalBytes, "Fixture did not exceed old size threshold.");
+                u.Apply(p, CancellationToken.None);
+                Assert(source.Downloads.SequenceEqual(new[] { "patches/TestPatch/file0000.ogg" }), "Unchanged asset downloaded in majority update.");
             });
-            Test("archive-rejects-case-duplicate-entry", delegate {
-                var state = Fresh("archive-duplicate"); var source = Source(name: "a.blp"); var u = U(source, state); var p = u.Check();
-                var zipPath = Path.Combine(root, "duplicate-archive.zip");
-                using (var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
-                { zip.CreateEntry("repo/patches/TestPatch/a.blp"); zip.CreateEntry("repo/patches/TestPatch/A.blp"); }
-                Reject(() => u.ExtractArchive(p, zipPath, p.Fetch, CancellationToken.None));
+            Test("no-op-update-downloads-no-assets-or-patch-metadata", delegate {
+                var state = Fresh("no-op"); var source = ManyFiles(3); var u = U(source, state);
+                u.Apply(u.Check(), CancellationToken.None); source.Downloads.Clear(); source.Reads.Clear();
+                var p = u.Check(); Assert(p.UpToDate, "Unchanged install not current.");
+                u.Apply(p, CancellationToken.None);
+                Assert(source.Downloads.Count == 0 && source.Reads.SequenceEqual(new[] { "index.json" }), "No-op fetched an unnecessary file.");
+            });
+            Test("missing-and-corrupt-assets-only-are-downloaded", delegate {
+                var state = Fresh("repair"); var source = ManyFiles(3); var u = U(source, state);
+                Seed(u, source, "file0000.ogg"); Seed(u, source, "file0001.ogg");
+                File.WriteAllBytes(u.Local("TestPatch/file0001.ogg"), new byte[16]);
+                var p = u.Check(); Assert(p.Fetch.Count == 2, "Repair plan incorrect.");
+                u.Apply(p, CancellationToken.None);
+                Assert(new HashSet<string>(source.Downloads).SetEquals(new[] { "patches/TestPatch/file0001.ogg", "patches/TestPatch/file0002.ogg" }), "Repair redownloaded a valid asset.");
+            });
+            Test("lost-state-does-not-redownload-matching-assets", delegate {
+                var state = Fresh("lost-state"); var source = ManyFiles(3); var u = U(source, state);
+                u.Apply(u.Check(), CancellationToken.None); source.Downloads.Clear();
+                var fresh = new State { patches_dir = state.patches_dir };
+                var next = U(source, fresh).Check();
+                Assert(next.UpToDate && source.Downloads.Count == 0, "Existing assets require a state cache to be reused.");
             });
             if (args.Length > 1)
                 Test("production-index-and-all-patch-metadata-compatible", delegate {
