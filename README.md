@@ -1,36 +1,48 @@
 # VirgilPatch
 
-Epsilon (9.2.7) patches - starting with the Chronicles texture patch, with LODs and texture optimisation - kept up
-to date from here.
+Epsilon (9.2.7) game patches, maintained as independently selectable patch folders.
 
 ## Install / update
 
-1. Download **[VirgilUpdater.zip](VirgilUpdater.zip?raw=1)** and unzip `VirgilUpdater.exe` anywhere, e.g. into your
-   Epsilon `_retail_` folder.
-2. Run it. If it doesn't find your `_retail_\Patches` folder itself, click **Browse...** and pick it.
-3. Click **Update**. Close WoW first.
+1. Download [VirgilUpdater.zip](VirgilUpdater.zip?raw=1) from this repository and extract it.
+2. Run `VirgilUpdater.exe`. Browse to your Epsilon `_retail_\Patches` folder if needed.
+3. Close WoW, then click **Update**.
 
-The first run downloads everything once. After that, each update only downloads the files that changed. Files you
-already have are checked and kept.
+The first update downloads the published assets. Later updates download only changed or missing files.
+Classic and TexturePatch remain independently published alternatives; Epsilon controls which is enabled.
 
-**"Windows protected your PC" / "unrecognised app"**: click **More info** → **Run anyway**. Windows and browsers warn
-about every program that isn't signed with a paid code-signing certificate. If your antivirus quarantines it, restore
-it and add an exception - it's a false positive. The updater is a small .NET program (version info, manifest and icon
-included); its full source is [updater/VirgilUpdater.cs](updater/VirgilUpdater.cs), and it only talks to this
-GitHub repository.
+## Antivirus alerts
 
-## What it does
+If your antivirus reports a threat, stop and keep the file blocked or quarantined.
+Do not disable protection, restore a detected file, or add an exclusion to install this updater.
+Report the download URL, the threat name, the affected file path and the ZIP's SHA-256 hash.
+The developer can submit the exact detected file to [Microsoft for analysis](https://www.microsoft.com/en-us/wdsi/filesubmission).
+A clean source review or matching checksum does not establish that an antivirus alert is a false positive.
 
-* reads `index.json` (every patch folder, every file, its FileDataID, size and git SHA-1) from the latest commit
-* installs each published patch as its own folder in `Patches`, downloading only missing or different files and
-  verifying each one
-* writes each `patch.json` last, so the game never sees a file list whose files aren't there yet
-* removes files that an earlier update installed and the new version dropped - including a whole patch folder that is
-  no longer published (files you changed yourself are left alone)
-* remembers your folder in `%APPDATA%\VirgilPatch\state.json`
+Version 1.3.0 is unsigned. A Windows reputation warning and an antivirus malware detection are different checks;
+neither should be dismissed solely because a program is open source or unsigned.
+
+## What the updater does
+
+* Resolves one commit in this GitHub repository over HTTPS, then uses that commit for every file in the update.
+* Validates manifest paths and limits installation to supported game assets inside the selected Patches folder.
+* Rejects symbolic links and junctions in source, destination and state paths; choose the real folder path.
+* Checks declared sizes and git blob SHA-1 hashes before replacing downloaded files.
+* Writes each verified `patch.json` after its assets and checks that its file list matches the manifest.
+* Rechecks old files before deleting them and retains files you have edited yourself.
+* Remembers your selected folder in `%APPDATA%\VirgilPatch\state.json`.
+
+The updater requests normal user permissions. It does not run downloaded assets or install another program.
+These integrity checks trust this repository and GitHub's HTTPS delivery. They are not a signed release system
+or a guarantee about how the game parses asset files. See [SECURITY.md](SECURITY.md).
 
 ## Layout
 
-* `patches/<folder>/` - each patch folder exactly as it is installed (`patch.json` + files)
-* `index.json` - manifest the updater reads
-* `updater/` - updater source and build
+* `patches/<folder>/`: published game assets and `patch.json`
+* `index.json`: version manifest
+* `updater/`: reviewed source and Windows build
+
+## Build from source
+
+Open PowerShell in `updater` and run `./build.ps1`. This uses the .NET Framework compiler already installed
+with Windows; no downloaded build tools are required. The resulting EXE remains unsigned.
