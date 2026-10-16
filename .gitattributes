@@ -1,1 +1,8 @@
 * -text
+
+# Older updaters request a repository archive for large updates. Keep that
+# archive small so their existing missing-entry fallback fetches only needed assets.
+# Raw URLs and git clones still include the complete patches and manifest.
+/patches export-ignore
+/patches/** export-ignore
+/index.json export-ignore

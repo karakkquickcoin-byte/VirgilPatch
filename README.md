@@ -11,7 +11,12 @@ Epsilon (9.2.7) game patches, maintained as independently selectable patch folde
 Every update downloads only missing or changed assets as individual files, including large updates and first installs.
 The updater never downloads the full repository ZIP. It checks existing files against the current index before updating;
 if all assets already match, none are downloaded again. The index is still retrieved to check for changes.
-Existing users must download the new ZIP and replace their old `VirgilUpdater.exe` to get this behavior.
+Existing v1.2/v1.3.0 updaters remain compatible without replacing the EXE. On large updates they may still
+display "Downloading the full archive", but that generated archive now contains only source/updater files;
+game assets are excluded. They then fetch only the missing or changed assets through their existing fallback.
+Start a fresh check to pick up this repository change. An already running update stays pinned to its earlier commit.
+New downloads use v1.3.1, which skips the archive request entirely. Replacing an old EXE is still necessary to
+receive the newer application security protections; the old updater cannot update its own program.
 Classic and TexturePatch remain independently published alternatives; Epsilon controls which is enabled.
 
 ## Antivirus alerts
@@ -49,3 +54,9 @@ or a guarantee about how the game parses asset files. See [SECURITY.md](SECURITY
 
 Open PowerShell in `updater` and run `./build.ps1`. This uses the .NET Framework compiler already installed
 with Windows; no downloaded build tools are required. The resulting EXE remains unsigned.
+
+## Repository source archives
+
+GitHub's **Code > Download ZIP** and generated source archives omit `patches/` and `index.json` to keep older
+updater downloads small. The files remain tracked in the repository and are available through raw URLs or a Git clone.
+For patch installation use the updater. The separate `VirgilUpdater.zip` download still contains the latest updater.
