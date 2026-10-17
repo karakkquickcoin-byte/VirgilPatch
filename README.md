@@ -15,11 +15,15 @@ Existing v1.2/v1.3.0 updaters remain compatible without replacing the EXE. On la
 display "Downloading the full archive", but that generated archive now contains only source/updater files;
 game assets are excluded. They then fetch only the missing or changed assets through their existing fallback.
 Start a fresh check to pick up this repository change. An already running update stays pinned to its earlier commit.
-New downloads use v1.4.2, which skips the archive request entirely and supports automatic program upgrades. Replacing an old EXE once is still necessary to
+New downloads use v1.4.3, which skips the archive request entirely and supports automatic program upgrades. Replacing an old EXE once is still necessary to
 receive the newer application security protections and automatic-upgrade support; v1.2/v1.3.x cannot update their own program.
 The launcher uses a single Update button, an instruction panel and embedded Lordaeron artwork.
 Existing v1.4.0 and newer launchers receive this design through their automatic program upgrade.
 Classic and TexturePatch remain independently published alternatives; Epsilon controls which is enabled.
+
+Version 1.4.3 adds resizing (drag any edge or the bottom-right grip; the artwork ratio is kept), a **Guides & Links**
+window with the Chronicles guides, registers, wiki and the Watch2gether music room (opened in your browser; only
+those fixed https addresses can be opened), and an **Epsilon phase ID 35602** plaque that copies the id when clicked.
 
 The full ambience track plays automatically at 40% player volume and loops while the launcher is open.
 Use **Sound on (40%) / Sound off** at the bottom right to mute or unmute it. Audio stops when the launcher closes;
@@ -28,7 +32,7 @@ the GUI muted. The soundtrack is embedded in the EXE and cached locally with SHA
 
 ## Automatic updater upgrades
 
-Version 1.4.2 opens without contacting the update source or scanning/changing patch files. Selecting a folder
+Versions 1.4.2 and later open without contacting the update source or scanning/changing patch files. Selecting a folder
 only remembers its path. **Update** explicitly starts both the signed launcher-upgrade check and patch updating.
 Clicking Update synchronizes published files, so do this only when you intend to update your selected patches.
 If a launcher upgrade restarts the app, click Update again to update patches; the restarted window stays idle.

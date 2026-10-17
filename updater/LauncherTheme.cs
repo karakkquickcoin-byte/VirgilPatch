@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
@@ -8,11 +9,18 @@ using System.Windows.Forms;
 namespace VirgilPatch
 {
     // Artwork is embedded in the program so an EXE-only automatic upgrade is complete.
+    // The window is laid out on a fixed 1000 x 650 design grid. Dragging an edge or corner resizes it with the aspect
+    // ratio locked; every control and font is scaled from its design bounds (DPI included).
     class LauncherWindow : Form
     {
+        public const int DesignW = 1000, DesignH = 650;
         readonly Image landscape;
+        readonly List<KeyValuePair<Control, Rectangle>> design = new List<KeyValuePair<Control, Rectangle>>();
+        readonly Dictionary<Control, Font> designFonts = new Dictionary<Control, Font>();
+        readonly Dictionary<string, Font> scaledFonts = new Dictionary<string, Font>();
         [DllImport("user32.dll")] static extern bool ReleaseCapture();
         [DllImport("user32.dll")] static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+        [StructLayout(LayoutKind.Sequential)] struct RECT { public int Left, Top, Right, Bottom; }
 
         public LauncherWindow()
         {
@@ -23,11 +31,99 @@ namespace VirgilPatch
             }
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             FormBorderStyle = FormBorderStyle.None;
-            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(21, 17, 14);
             ForeColor = Color.FromArgb(232, 224, 207);
             Font = new Font("Segoe UI", 10f);
             KeyPreview = true;
+        }
+
+        float Dpi { get { return DeviceDpi / 96f; } }
+        public float LayoutScale { get { return ClientSize.Width / (float)DesignW; } }
+
+        // Call once after the controls are placed in design units: records them, then sizes the window for the DPI.
+        protected void CaptureLayout()
+        {
+            design.Clear(); designFonts.Clear();
+            foreach (Control c in Controls)
+            {
+                c.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+                design.Add(new KeyValuePair<Control, Rectangle>(c, c.Bounds));
+                designFonts[c] = c.Font;
+            }
+            var screen = Screen.FromPoint(Cursor.Position).WorkingArea;
+            float fit = Math.Min(1f, Math.Min(screen.Width / (DesignW * Dpi), screen.Height / (DesignH * Dpi)));
+            MinimumSize = new Size((int)(700 * Dpi * Math.Min(1f, fit / 0.7f)), (int)(455 * Dpi * Math.Min(1f, fit / 0.7f)));
+            ClientSize = new Size((int)Math.Round(DesignW * Dpi * fit), (int)Math.Round(DesignH * Dpi * fit));
+            ApplyLayout();
+        }
+
+        void ApplyLayout()
+        {
+            if (design.Count == 0) return;
+            float s = LayoutScale, fs = s / Dpi;
+            SuspendLayout();
+            foreach (var item in design)
+            {
+                var r = item.Value;
+                item.Key.SetBounds((int)Math.Round(r.X * s), (int)Math.Round(r.Y * s), Math.Max(1, (int)Math.Round(r.Width * s)), Math.Max(1, (int)Math.Round(r.Height * s)));
+                Font f;
+                if (designFonts.TryGetValue(item.Key, out f)) item.Key.Font = Scaled(f, fs);
+            }
+            ResumeLayout(false);
+            Invalidate(true);
+        }
+
+        Font Scaled(Font f, float fs)
+        {
+            float size = (float)Math.Round(f.SizeInPoints * fs * 4f) / 4f;
+            if (Math.Abs(size - f.SizeInPoints) < .01f) return f;
+            var key = f.FontFamily.Name + "|" + size.ToString(System.Globalization.CultureInfo.InvariantCulture) + "|" + (int)f.Style;
+            Font cached;
+            if (!scaledFonts.TryGetValue(key, out cached)) scaledFonts[key] = cached = new Font(f.FontFamily, size, f.Style);
+            return cached;
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (WindowState != FormWindowState.Minimized) ApplyLayout();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCHITTEST = 0x84, WM_SIZING = 0x214;
+            if (m.Msg == WM_NCHITTEST && WindowState == FormWindowState.Normal)
+            {
+                base.WndProc(ref m);
+                var p = PointToClient(new Point(unchecked((short)(long)m.LParam), unchecked((short)((long)m.LParam >> 16))));
+                int grip = Math.Max(6, (int)(8 * Dpi));
+                bool left = p.X < grip, right = p.X >= ClientSize.Width - grip, top = p.Y < grip, bottom = p.Y >= ClientSize.Height - grip;
+                if (right && bottom || p.X >= ClientSize.Width - grip * 3 && p.Y >= ClientSize.Height - grip * 3) m.Result = (IntPtr)17;
+                else if (left && bottom) m.Result = (IntPtr)16;
+                else if (right && top) m.Result = (IntPtr)14;
+                else if (left && top) m.Result = (IntPtr)13;
+                else if (bottom) m.Result = (IntPtr)15;
+                else if (top) m.Result = (IntPtr)12;
+                else if (right) m.Result = (IntPtr)11;
+                else if (left) m.Result = (IntPtr)10;
+                return;
+            }
+            if (m.Msg == WM_SIZING)
+            {
+                // Keep the 1000:650 artwork ratio while dragging any edge or corner.
+                var r = (RECT)Marshal.PtrToStructure(m.LParam, typeof(RECT));
+                int edge = m.WParam.ToInt32();
+                int w = Math.Max(MinimumSize.Width, r.Right - r.Left), h = Math.Max(MinimumSize.Height, r.Bottom - r.Top);
+                if (edge == 3 || edge == 6) w = (int)Math.Round(h * DesignW / (float)DesignH);
+                else h = (int)Math.Round(w * DesignH / (float)DesignW);
+                if (edge == 1 || edge == 4 || edge == 7) r.Left = r.Right - w; else r.Right = r.Left + w;
+                if (edge == 3 || edge == 4 || edge == 5) r.Top = r.Bottom - h; else r.Bottom = r.Top + h;
+                Marshal.StructureToPtr(r, m.LParam, false);
+                m.Result = (IntPtr)1;
+                return;
+            }
+            base.WndProc(ref m);
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
@@ -47,6 +143,8 @@ namespace VirgilPatch
             using (var fill = new SolidBrush(Color.FromArgb(238, 17, 16, 14))) g.FillRectangle(fill, 0, 466, 1000, 184);
             using (var line = new Pen(Color.FromArgb(112, 156, 114, 59))) g.DrawLine(line, 48, 466, 952, 466);
             using (var line = new Pen(Color.FromArgb(100, 173, 130, 65))) g.DrawRectangle(line, 0, 0, 999, 649);
+            using (var grip = new Pen(Color.FromArgb(130, 173, 130, 65)))          // resize grip, bottom-right corner
+                for (int i = 0; i < 3; i++) g.DrawLine(grip, 996 - i * 5, 646, 996, 646 - i * 5);
             g.ResetTransform();
         }
 
@@ -239,7 +337,35 @@ namespace VirgilPatch
             minimize.SetBounds(912, 8, 36, 32); close.SetBounds(952, 8, 36, 32);
             minimize.Click += delegate { WindowState = FormWindowState.Minimized; };
             close.Click += delegate { Close(); };
+
+            phasePlaque.SetBounds(752, 56, 200, 74);
+            phasePlaque.TabIndex = 6;
+            linksBtn.Text = "Guides && Links";
+            linksBtn.Font = normal;
+            linksBtn.AccessibleName = "Open Chronicles guides and links";
+            linksBtn.SetBounds(752, 142, 200, 40);
+            linksBtn.TabIndex = 7;
+            linksBtn.Click += delegate { ShowLinks(); };
+            Controls.Add(phasePlaque);
+            Controls.Add(linksBtn);
             AcceptButton = updateBtn;
+            CaptureLayout();
+        }
+
+        readonly PhasePlaque phasePlaque = new PhasePlaque();
+        readonly Button linksBtn = new LauncherButton();
+        LinksWindow links;
+
+        void ShowLinks()
+        {
+            if (links != null && !links.IsDisposed) { links.Activate(); return; }
+            links = new LinksWindow();
+            links.FormClosed += delegate { links.Dispose(); links = null; };
+            links.StartPosition = FormStartPosition.Manual;
+            var area = Screen.FromControl(this).WorkingArea;
+            links.Location = new Point(Math.Max(area.Left, Math.Min(area.Right - links.Width, Left + (Width - links.Width) / 2)),
+                                       Math.Max(area.Top, Math.Min(area.Bottom - links.Height, Top + (Height - links.Height) / 2)));
+            links.Show(this);
         }
 
         void Post(Action action)

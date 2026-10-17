@@ -136,10 +136,28 @@ class LauncherTests
                 source.Data["index.json"] = Encoding.UTF8.GetBytes("invalid manifest"); update.PerformClick(); Pump(() => !(bool)Field(form, "isBusy"));
                 Assert(update.Enabled && browse.Enabled && ((Label)Field(form, "status")).Text.Contains("Details") && source.Downloads.Count == 3, "Failure must be visible and allow a safe retry.");
                 Console.WriteLine("PASS invalid manifest leaves assets untouched and exposes a recoverable error");
+                var before = update.Bounds; var size = form.ClientSize;
+                form.ClientSize = new Size(size.Width * 13 / 10, size.Height * 13 / 10); Application.DoEvents();
+                Assert(Math.Abs(update.Width - before.Width * 1.3) <= 2 && Math.Abs(update.Left - before.Left * 1.3) <= 2, "Resizing did not scale the launcher layout.");
+                if (args.Length > 1) using (var bitmap = new Bitmap(form.Width, form.Height)) { form.DrawToBitmap(bitmap, new Rectangle(Point.Empty, bitmap.Size)); bitmap.Save(Path.ChangeExtension(args[1], ".resized.png")); }
+                form.ClientSize = size; Application.DoEvents();
+                Assert(update.Bounds == before, "Restoring the size did not restore the layout.");
+                Console.WriteLine("PASS resizing scales every control and restores exactly");
+                Assert(ChroniclesLinks.All.Length == 7 && ChroniclesLinks.All.All(l => ChroniclesLinks.IsAllowed(l.Url)) && ChroniclesLinks.All.Count(l => l.Featured) == 1, "Guides & Links list is incomplete or unsafe.");
+                Assert(!ChroniclesLinks.IsAllowed("http://docs.google.com/x") && !ChroniclesLinks.IsAllowed("https://example.com/") && !ChroniclesLinks.IsAllowed("file:///C:/Windows"), "Link allow-list accepted an unexpected address.");
+                Assert(ChroniclesLinks.PhaseId == "35602" && Field(form, "phasePlaque") is PhasePlaque && ((Control)Field(form, "phasePlaque")).Visible, "Phase ID plaque is missing.");
+                using (var linksWindow = new LinksWindow { Opacity = 0, ShowInTaskbar = false, StartPosition = FormStartPosition.Manual, Location = new Point(-32000, -32000) })
+                {
+                    linksWindow.Show(); Application.DoEvents();
+                    Assert(linksWindow.Cards.Length == 7 && linksWindow.Cards.All(c => c.Visible && c.Width > 0), "Guides & Links window did not show every link.");
+                    if (args.Length > 1) using (var bitmap = new Bitmap(linksWindow.Width, linksWindow.Height)) { linksWindow.DrawToBitmap(bitmap, new Rectangle(Point.Empty, bitmap.Size)); bitmap.Save(Path.ChangeExtension(args[1], ".links.png")); }
+                    linksWindow.Close();
+                }
+                Console.WriteLine("PASS Guides & Links window lists the seven allowed links and the phase ID");
                 form.Close();
                 }
             }
-            Console.WriteLine("TOTAL 6 launcher integration scenarios passed"); return 0;
+            Console.WriteLine("TOTAL 8 launcher integration scenarios passed"); return 0;
         }
         catch (Exception ex) { Console.WriteLine("FAIL " + ex); return 1; }
     }

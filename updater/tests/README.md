@@ -7,7 +7,7 @@ $testRoot = Join-Path $env:TEMP ('VirgilTests-' + [Guid]::NewGuid().ToString('N'
 New-Item -ItemType Directory -Path $testRoot | Out-Null
 $compiler = Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 $wpf = Join-Path (Split-Path $compiler) 'WPF'
-& $compiler /nologo /target:exe /optimize+ /main:SecurityTests "/out:$testRoot\SecurityTests.exe" /r:System.Web.Extensions.dll "/r:$wpf\PresentationCore.dll" "/r:$wpf\WindowsBase.dll" /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll ../VirgilUpdater.cs ../SelfUpdate.cs ../LauncherTheme.cs ../LauncherAmbience.cs /resource:../assets/lordaeron-ambience.mp3,VirgilPatch.LauncherAmbience /resource:../assets/lordaeron-background.png,VirgilPatch.LauncherBackground SecurityTests.cs
+& $compiler /nologo /target:exe /optimize+ /main:SecurityTests "/out:$testRoot\SecurityTests.exe" /r:System.Web.Extensions.dll "/r:$wpf\PresentationCore.dll" "/r:$wpf\WindowsBase.dll" /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll ../VirgilUpdater.cs ../SelfUpdate.cs ../LauncherTheme.cs ../LauncherAmbience.cs ../LauncherLinks.cs /resource:../assets/lordaeron-ambience.mp3,VirgilPatch.LauncherAmbience /resource:../assets/lordaeron-background.png,VirgilPatch.LauncherBackground SecurityTests.cs
 & "$testRoot\SecurityTests.exe" $testRoot
 ```
 

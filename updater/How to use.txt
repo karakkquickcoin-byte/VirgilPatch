@@ -1,8 +1,12 @@
-Chronicles of Lordaeron Launcher 1.4.2
+Chronicles of Lordaeron Launcher 1.4.3
 
 1. Extract VirgilUpdater.exe into a normal folder you can write to.
 2. Run it, click Select folder, and choose your Epsilon _retail_\Patches folder if needed.
 3. Close WoW, then click Update. Only missing or changed game assets are downloaded.
+
+Drag any edge or the bottom-right corner to resize the launcher.
+Guides & Links opens the Chronicles guides, registers, wiki and the Watch2gether music room in your browser.
+The Epsilon phase ID (35602) is shown on the launcher; click it to copy.
 
 Launch and folder selection do not check, download or change patches or update the launcher.
 Click Update to check for signed program upgrades and update patch files.
