@@ -15120,8 +15120,8 @@
 },
 "felgiantgreen.blp": {
 "id": 124947,
-"sha": "c213f736eedb205b7cf9c75034935a0f54ea7489",
-"size": 2797396
+"sha": "49f7d66355338957c5174b102b9566d325b198f7",
+"size": 2797412
 },
 "female/femaleogre-beige.blp": {
 "id": 125324,
@@ -15235,8 +15235,8 @@
 },
 "forestgiant.blp": {
 "id": 124948,
-"sha": "bc9240352ad9d19230b0ac790f23b7b80c28d9ec",
-"size": 2797396
+"sha": "53ecd24115bf51c51fb0677a8e2d83b2aecb05be",
+"size": 2797412
 },
 "foresttrolltablet.m2": {
 "id": 194086,
@@ -17685,8 +17685,8 @@
 },
 "hillgiant.blp": {
 "id": 124949,
-"sha": "e657fe0fecb8e6c112070bd91ba3f940b05e8c9e",
-"size": 2797396
+"sha": "ee1c5a93bf37ebb03331ec0b6dffb62d31acfb74",
+"size": 2797412
 },
 "hobgoblin/armorreflect4hob.blp": {
 "id": 5899951,
@@ -17820,23 +17820,23 @@
 },
 "hobgoblin/hobgoblin2_body_brown.blp": {
 "id": 321671,
-"sha": "2013a46fb01d6e355425ad944a880ba549678752",
-"size": 2797396
+"sha": "ae88eb7631a461eed28714e67155c6487c17b47f",
+"size": 2797412
 },
 "hobgoblin/hobgoblin2_body_grey.blp": {
 "id": 321672,
-"sha": "d70a6b4e4bde89d6799186c650b416a6b20b03cd",
-"size": 2797396
+"sha": "75b5162f044477bd6052f2405b36d5f13fdd6898",
+"size": 2797412
 },
 "hobgoblin/hobgoblin2_body_purple.blp": {
 "id": 321673,
-"sha": "5f9790a4a7f286850a68e9138a6a661874e12e22",
-"size": 2797396
+"sha": "6631c34fecde30c2cd72dd0082f070a8643664e9",
+"size": 2797412
 },
 "hobgoblin/hobgoblin2_body_red.blp": {
 "id": 321674,
-"sha": "ab1ff96a8c589d40cc1964203cbdd87a88b8d0e5",
-"size": 2797396
+"sha": "acaa22e677b15b7341bc44525dceb8b23427a183",
+"size": 2797412
 },
 "hobgoblin/hobgoblin2_lod01.skin": {
 "id": 5899976,
@@ -24960,13 +24960,13 @@
 },
 "mountaingiantpartialwhitecrystal.blp": {
 "id": 124953,
-"sha": "75f96c59ee5f5bbec3836316b0af83e73ec9e4e4",
-"size": 2797396
+"sha": "a6b6c2d6cc9bf2d9b9d1b61a1743a150e0e2f18a",
+"size": 2797412
 },
 "mountaingiantwhitecrystal.blp": {
 "id": 124954,
-"sha": "c6d4653ce17582a100556e90771d24efa0f347be",
-"size": 2797396
+"sha": "4f7a243fb8ffce940ecaef697a395a785f377618",
+"size": 2797412
 },
 "murloc2_purple.blp": {
 "id": 1113060,
@@ -34840,8 +34840,8 @@
 },
 "tundragiant.blp": {
 "id": 124955,
-"sha": "c9438df1f806d2a6e6c8df060145c9986dfd9a22",
-"size": 2797396
+"sha": "61106d4b61f65319aff1ae0789b1850095822aa2",
+"size": 2797412
 },
 "twistedancient.m2": {
 "id": 123961,
@@ -39864,7 +39864,7 @@
 "size": 468932
 },
 "repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
-"total_bytes": 3602768004
+"total_bytes": 3602768164
 },
 "Chronicles-Classic": {
 "files": {
@@ -344842,5 +344842,5 @@
 "total_bytes": 1645253759
 }
 },
-"published": "2026-10-17 11:53"
+"published": "2026-10-17 11:57"
 }
