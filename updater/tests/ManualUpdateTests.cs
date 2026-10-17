@@ -48,25 +48,36 @@ class ManualUpdateTests
             using (var form = new MainForm(source) { Opacity = 0, ShowInTaskbar = false, StartPosition = FormStartPosition.Manual, Location = new System.Drawing.Point(-32000, -32000) })
             {
                 form.Show();
-                Pump(() => Field(form, "ambience") != null && ((LauncherAmbience)Field(form, "ambience")).Player.Position > TimeSpan.FromMilliseconds(300));
-                Assert(source.Resolves == 0 && source.Programs == 0 && source.Indexes == 0 && source.Downloads == 0 && Field(form, "plan") == null, "Launch contacted the update source or scanned a manifest.");
+                Pump(() => Field(form, "ambience") != null && ((LauncherAmbience)Field(form, "ambience")).Player.Position > TimeSpan.FromMilliseconds(300) &&
+                           source.Programs == 1 && !(bool)Field(form, "isBusy"));
+                Assert(source.Resolves == 1 && source.Programs == 1 && source.Indexes == 0 && source.Downloads == 0 && Field(form, "plan") == null, "Launch must check only the launcher channel, never the patch index.");
                 Assert(File.ReadAllText(local) == "UNPUBLISHED DEVELOPMENT CONTENT" && File.GetLastWriteTimeUtc(local) == stamp, "Launch touched unpublished files.");
                 Assert(File.ReadAllText(statePath) == stateBytes && File.GetLastWriteTimeUtc(statePath) == stateStamp, "Launch rewrote saved patch state.");
-                Console.WriteLine("PASS launch makes zero program/patch requests and preserves unpublished files and saved patch state");
+                Assert(((TextBox)Field(form, "log")).Text.Contains("Launcher update check unavailable") && ((Button)Field(form, "updateBtn")).Enabled, "A failed launch check must be reported and leave Update usable.");
+                Console.WriteLine("PASS launch checks only for a launcher upgrade (no patch requests) and preserves unpublished files and saved patch state");
                 var other = Path.Combine(root, "Other-DEV-Patches"); Directory.CreateDirectory(other);
                 var otherFile = Path.Combine(other, "local.blp"); File.WriteAllText(otherFile, "ANOTHER UNPUBLISHED FILE");
                 typeof(MainForm).GetMethod("RememberFolder", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(form, new object[] { other });
                 Application.DoEvents();
-                Assert(source.Resolves == 0 && source.Indexes == 0 && source.Programs == 0 && File.ReadAllText(otherFile) == "ANOTHER UNPUBLISHED FILE" && State.Load().patches_dir == other, "Selecting a folder triggered an update.");
+                Assert(source.Resolves == 1 && source.Indexes == 0 && source.Programs == 1 && File.ReadAllText(otherFile) == "ANOTHER UNPUBLISHED FILE" && State.Load().patches_dir == other, "Selecting a folder triggered an update.");
                 Console.WriteLine("PASS folder selection only remembers the path; it does not check or change patches");
                 ((Button)Field(form, "updateBtn")).PerformClick();
                 Pump(() => ((TextBox)Field(form, "log")).Text.Contains("You're up to date.") && !(bool)Field(form, "isBusy"));
-                Assert(source.Programs == 1 && source.Indexes == 1 && source.Resolves == 2 && source.Downloads == 0, "Explicit Update did not check both channels exactly once.");
+                Assert(source.Programs == 2 && source.Indexes == 1 && source.Resolves == 3 && source.Downloads == 0, "Explicit Update did not check both channels exactly once.");
                 Assert(File.ReadAllText(local) == "UNPUBLISHED DEVELOPMENT CONTENT" && File.ReadAllText(otherFile) == "ANOTHER UNPUBLISHED FILE", "Unmanaged development files changed.");
                 Console.WriteLine("PASS explicit Update checks both program and patch channels and preserves unmanaged development files");
                 form.Close();
             }
-            Console.WriteLine("TOTAL 3 manual-update integration scenarios passed"); return 0;
+            var restarted = new ManualUpdateSource();          // the relaunch after an upgrade (--skip-self-update-once)
+            using (var form = new MainForm(restarted, null, true) { Opacity = 0, ShowInTaskbar = false, StartPosition = FormStartPosition.Manual, Location = new System.Drawing.Point(-32000, -32000) })
+            {
+                form.Show();
+                Pump(() => Field(form, "ambience") != null && ((LauncherAmbience)Field(form, "ambience")).Player.Position > TimeSpan.FromMilliseconds(300));
+                Assert(restarted.Resolves == 0 && restarted.Programs == 0 && restarted.Indexes == 0 && restarted.Downloads == 0, "The post-upgrade relaunch must not check again.");
+                Console.WriteLine("PASS the relaunch after an upgrade makes no requests");
+                form.Close();
+            }
+            Console.WriteLine("TOTAL 4 manual-update integration scenarios passed"); return 0;
         }
         catch (Exception ex) { Console.WriteLine("FAIL " + ex); return 1; }
     }

@@ -1,4 +1,4 @@
-Chronicles of Lordaeron Launcher 1.4.3
+Chronicles of Lordaeron Launcher 1.4.4
 
 1. Extract VirgilUpdater.exe into a normal folder you can write to.
 2. Run it, click Select folder, and choose your Epsilon _retail_\Patches folder if needed.
@@ -8,9 +8,9 @@ Drag any edge or the bottom-right corner to resize the launcher.
 Guides & Links opens the Chronicles guides, registers, wiki and the Watch2gether music room in your browser.
 The Epsilon phase ID (35602) is shown on the launcher; click it to copy.
 
-Launch and folder selection do not check, download or change patches or update the launcher.
-Click Update to check for signed program upgrades and update patch files.
-If the launcher restarts after upgrading itself, click Update again to update your patches.
+The launcher keeps itself up to date: every time you open it, it checks for a newer signed launcher and,
+if one is published, installs it and restarts by itself. No redownload is needed.
+Patch files are different: they are only checked and changed when you click Update.
 It keeps a previous-version backup and restores it if the new program fails to start.
 Users on v1.3.x or earlier must replace their EXE once to enable automatic program upgrades.
 

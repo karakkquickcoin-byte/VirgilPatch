@@ -15,7 +15,7 @@ Existing v1.2/v1.3.0 updaters remain compatible without replacing the EXE. On la
 display "Downloading the full archive", but that generated archive now contains only source/updater files;
 game assets are excluded. They then fetch only the missing or changed assets through their existing fallback.
 Start a fresh check to pick up this repository change. An already running update stays pinned to its earlier commit.
-New downloads use v1.4.3, which skips the archive request entirely and supports automatic program upgrades. Replacing an old EXE once is still necessary to
+New downloads use v1.4.4, which skips the archive request entirely and supports automatic program upgrades. Replacing an old EXE once is still necessary to
 receive the newer application security protections and automatic-upgrade support; v1.2/v1.3.x cannot update their own program.
 The launcher uses a single Update button, an instruction panel and embedded Lordaeron artwork.
 Existing v1.4.0 and newer launchers receive this design through their automatic program upgrade.
@@ -32,7 +32,12 @@ the GUI muted. The soundtrack is embedded in the EXE and cached locally with SHA
 
 ## Automatic updater upgrades
 
-Versions 1.4.2 and later open without contacting the update source or scanning/changing patch files. Selecting a folder
+**Golden rule (v1.4.4+):** the launcher program updates itself on every launch when a newer signed release is published -
+it downloads only the signed EXE, verifies it, restarts and keeps the previous EXE; no redownload is needed. Patch files
+are never checked or changed at launch, only when **Update** is clicked. Launchers 1.4.2/1.4.3 check for program upgrades
+only on Update, so they reach 1.4.4 on their next Update click; from then on upgrades arrive at launch.
+
+Versions 1.4.2 and later never scan or change patch files at launch. Selecting a folder
 only remembers its path. **Update** explicitly starts both the signed launcher-upgrade check and patch updating.
 Clicking Update synchronizes published files, so do this only when you intend to update your selected patches.
 If a launcher upgrade restarts the app, click Update again to update patches; the restarted window stays idle.

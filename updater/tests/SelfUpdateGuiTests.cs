@@ -42,13 +42,17 @@ class SelfUpdateGuiTests
             var form=new MainForm(source) {Opacity=0,ShowInTaskbar=false,StartPosition=FormStartPosition.Manual,Location=new System.Drawing.Point(-32000,-32000)};
             var log=(TextBox)typeof(MainForm).GetField("log",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(form);
             int result=1;var started=DateTime.UtcNow;var timer=new System.Windows.Forms.Timer {Interval=100};
+            var update=(Button)typeof(MainForm).GetField("updateBtn",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(form);
+            var busy=typeof(MainForm).GetField("isBusy",BindingFlags.Instance|BindingFlags.NonPublic);bool clicked=false;
             timer.Tick+=delegate {
-                if(log.Text.Contains("Program upgrade unavailable:") && log.Text.Contains("You're up to date.") && source.PatchChecks==1)
+                // the launch-time launcher check runs first; click Update once it has finished, as a user would
+                if(!clicked && !(bool)busy.GetValue(form)) {clicked=true;update.PerformClick();return;}
+                if(log.Text.Contains("Launcher update check unavailable:") && log.Text.Contains("Program upgrade unavailable:") && log.Text.Contains("You're up to date.") && source.PatchChecks==1)
                 {result=0;timer.Stop();form.Close();}
                 else if(DateTime.UtcNow-started>TimeSpan.FromSeconds(15)) {Console.WriteLine(log.Text);timer.Stop();form.Close();}
             };
-            form.Shown+=delegate {((Button)typeof(MainForm).GetField("updateBtn",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(form)).PerformClick();timer.Start();};Application.Run(form);
-            if(result==0) Console.WriteLine("PASS GUI "+args[1]+" program-upgrade failure: current program retained and patch check completed");
+            form.Shown+=delegate {timer.Start();};Application.Run(form);
+            if(result==0) Console.WriteLine("PASS GUI "+args[1]+" program-upgrade failure at launch and on Update: current program retained and patch check completed");
             return result;
         }
         catch(Exception ex) {Console.WriteLine("FAIL "+ex);return 1;}

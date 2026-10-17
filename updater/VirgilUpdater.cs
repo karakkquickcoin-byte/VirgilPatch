@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.4.3.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.4.3.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.4.3")]
+[assembly: System.Reflection.AssemblyVersion("1.4.4.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.4.4.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.4.4")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.4.3";
+        public const string UserAgent = "VirgilPatchUpdater/1.4.4";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }
@@ -684,8 +684,15 @@ namespace VirgilPatch
             status.Text = string.IsNullOrEmpty(state.patches_dir) ? "Choose your Patches folder, then click Update." :
                 "Ready. Your patches change only when you click Update.";
             Shown += delegate {
-                if (this.confirmationDirectory != null) SelfUpdate.ConfirmStartup(this.confirmationDirectory);
+                if (this.confirmationDirectory != null)
+                {
+                    SelfUpdate.ConfirmStartup(this.confirmationDirectory);
+                    status.Text = "Launcher updated to " + SelfUpdate.CurrentVersion.ToString(3) + ". Click Update to update your patches.";
+                }
                 StartAmbience();
+                // Golden rule: the launcher program updates itself on every launch when a newer signed release is
+                // published. Patch files are never checked or changed until Update is clicked.
+                if (this.source is GitHubSource && !this.skipProgramCheck && this.confirmationDirectory == null) RunStartupProgramCheck();
             };
         }
 
@@ -778,6 +785,26 @@ namespace VirgilPatch
                 Busy(false);
                 if (chooseFolder || !string.IsNullOrEmpty(state.patches_dir)) RunPatchCheck(applyAfterCheck);
                 else status.Text = "Choose your Epsilon Patches folder to check for patch updates.";
+            }));
+        }
+
+        // Launch-time launcher upgrade: program channel only (signed release manifest + EXE), never the patch index.
+        void RunStartupProgramCheck()
+        {
+            Busy(true);
+            var ready = status.Text;
+            status.Text = "Checking for a launcher update ...";
+            Task.Factory.StartNew(() => {
+                var directory = SelfUpdate.Prepare(source, SelfUpdate.Here, programArguments, Say);
+                if (directory == null) return false;
+                Say("Launcher upgrade verified. Restarting the launcher ...");
+                return SelfUpdate.StartHelper(directory);
+            }).ContinueWith(t => Post(() => {
+                if (t.IsFaulted) Say("Launcher update check unavailable: " + t.Exception.GetBaseException().Message + " Continuing with the current launcher.");
+                else if (!t.IsCanceled && t.Result) { Close(); return; }
+                else Say("Launcher is up to date (" + SelfUpdate.CurrentVersion.ToString(3) + ").");
+                Busy(false);
+                status.Text = ready;
             }));
         }
 
