@@ -17,7 +17,7 @@ an interrupted multi-file update can still require another update. Close WoW bef
 All assets are downloaded individually only when missing or changed; repository archive downloads are not supported.
 The release uses HTTPS and pins all requests in an update to one commit. It refuses redirects and other repositories.
 This relies on the security of GitHub, the maintainer account and the build machine. Blob SHA-1 checks detect
-transfer/content mismatches; they do not authenticate the maintainer independently. This release is unsigned.
+transfer/content mismatches; they do not authenticate the maintainer independently. The initial EXE is not Authenticode-signed; program-upgrade authentication is described below.
 No code-signing key is bundled. Protect the GitHub account with strong authentication and restrict repository write access.
 
 Game asset parsers, a compromised machine, and concurrent filesystem changes by another process with the same
@@ -39,3 +39,17 @@ suppresses repeated attempts of the same failed release. This is startup accepta
 program feature is correct. Signing-key theft or compromise of the initial installed EXE remains outside this trust boundary.
 No privilege elevation, antivirus changes or silent executable updates through game patch entries are supported.
 The initial download is not Authenticode-signed, and release signatures do not remove antivirus warnings.
+
+## Recovery and publication consistency (1.5.0)
+
+Patch selection limits local scanning, writes and removals to selected folders. Metadata is always rehashed;
+legacy asset caches are reverified once, with optional Deep repair thereafter. JSON rejects duplicate decoded
+keys, invalid UTF-8, non-JSON syntax and excessive nesting; IDs, paths, hashes and integer sizes are validated.
+Each patch's metadata is validated before its asset transfers and installed only after the patch verifies.
+Completed patches are finalized independently and successful assets survive a retry. Individual replacement is
+atomic; the whole patch is not a transactional directory replacement. Stop WoW before modifying its files.
+
+The matching publisher builds the index from staged Git blobs with exact case-sensitive paths, hashes and sizes.
+Immutable blob-size caching accelerates repeated checks. Batched uploads use a temporary Git ref, then atomically
+promote the validated complete snapshot to main. Existing staged changes block patch publication; unrelated
+unpublished mirror directories are preserved. Keep publisher and updater source changes together.

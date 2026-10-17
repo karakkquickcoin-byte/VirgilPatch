@@ -265,8 +265,8 @@ namespace VirgilPatch
             Caption("02", 73, 316, 35, 24, normal, gold);
             Caption("Close World of Warcraft before updating.", 115, 316, 333, 24, normal, ForeColor);
             Caption("03", 73, 357, 35, 24, normal, gold);
-            Caption("Click Update to get the latest patch files.", 115, 357, 330, 24, normal, ForeColor);
-            Caption("Nothing updates until you click Update.", 73, 400, 375, 20, small, muted);
+            Caption("Click Update, then choose the patches you want.", 115, 357, 330, 24, normal, ForeColor);
+            Caption("Patch files change only after you confirm Update.", 73, 400, 375, 20, small, muted);
 
             Caption("PATCHES FOLDER", 48, 485, 500, 23, small, gold);
             dirBox.BorderStyle = BorderStyle.FixedSingle;
@@ -283,7 +283,7 @@ namespace VirgilPatch
             status.BackColor = Color.Transparent;
             status.ForeColor = Color.FromArgb(223, 211, 187);
             status.Font = normal;
-            status.SetBounds(48, 568, 680, 47);
+            status.SetBounds(48, 565, 680, 37);
             updateBtn.Font = new Font("Segoe UI", 12f, FontStyle.Bold);
             updateBtn.SetBounds(750, 565, 202, 48);
             updateBtn.TabIndex = 2;
@@ -316,7 +316,7 @@ namespace VirgilPatch
             sound.AccessibleName = "Mute or unmute launcher ambience at 40 percent";
             sound.Cursor = Cursors.Hand;
             sound.TabIndex = 5;
-            sound.SetBounds(812, 632, 140, 18);
+            sound.SetBounds(812, 630, 140, 20);
             sound.Click += delegate {
                 if (ambience == null) return;
                 ambience.Muted = !ambience.Muted;
@@ -349,6 +349,16 @@ namespace VirgilPatch
             Controls.Add(phasePlaque);
             Controls.Add(linksBtn);
             AcceptButton = updateBtn;
+            transferText.SetBounds(48, 604, 594, 19);
+            transferText.Font = new Font("Segoe UI", 8.5f);
+            transferText.Text = "Ready 0% | Choose patches with Update | ETA --";
+            cancelWork.SetBounds(650, 601, 78, 22);
+            cancelWork.Font = new Font("Segoe UI", 8f);
+            cancelWork.Click += delegate { if (cts != null) { cts.Cancel(); cancelWork.Enabled = false; status.Text = "Cancelling safely; completed files will be kept."; } };
+            changesButton.SetBounds(752, 190, 200, 32);
+            changesButton.Enabled = false;
+            changesButton.Click += delegate { if (lastPlan != null) PatchDialogs.Review(this, lastPlan, false); };
+            Controls.AddRange(new Control[] { transferText, cancelWork, changesButton });
             CaptureLayout();
         }
 

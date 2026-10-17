@@ -1,8 +1,8 @@
 {
-    "format":  1,
-    "version":  "1.4.4.0",
-    "file":  "updater/VirgilUpdater.exe",
-    "size":  12096000,
-    "sha256":  "b5bdedb6804731a832decc91684e5068f19180a8a78c4f316448f0cc37131284",
-    "signature":  "kcyzyubIjmkbQgtPuhLwy1ekbslgd28Mm4U+ETfql/5YkVuVunmeRwl/L0agNz23GIQqNDeQyUgNKTu6EAngP+zoHFYAlcptFc4RBvq/TwDqBOleTXYs53gUhU65/fOkxWC152QwuiVwzHSG7bPAaO34/UynWFmE/VRstsYcbRpGWqLzdF9cTAop8abe+m6/9OUvkPeJw5el24f/i0jMGv+VW6rGHjb0iAdyRKuP5pLR21Yc6FW/OHzS7vZ7xH5G8gCJY7zfO01rf0YIRQ/IpH2hMVt6EJzwJLIWu4S60R3mQRyzx1bBsSV1OsZccazteKniNbWeA5p4/kYQAsRLoen065K490vmVmW+UfTA3LAyitUVVtpy0OrJ9gUgXDa+ztVgPDnkxBzDXnpxfYBBigJDy6Yxa75GT3LcM7Kerz1jM5aZnCUdwbYhlVPOH2KPx6+XZveir+CS8RG0izPT23xm6gkLSjycF7F1HaczK63iydHX0sMmnT8J8ZSmVxgKZNhifnJktKlN1xtBjXrUuRVZkptrZ6z1Wx4tw7U8iVU+VJv421E5OV67KpBNz6K+6Tkyrt63e8v6BXxPpesIiaQzOrKtx02Gti7//mU/UTqOFP/ozI2iDLRLzm8epTYrDEVy1izrHUNz/UALhl6CsSXuRFWUcWJcZtpBw+j/X7k="
+  "format": 1,
+  "version": "1.5.0.0",
+  "file": "updater/VirgilUpdater.exe",
+  "size": 12120576,
+  "sha256": "23c7155d8c21e44808a49e883f71789c0ee62c84ca382d511da5bb29d6d627b1",
+  "signature": "IY0ZuFnkQzmEGybKwds87+NUiOhVwNWFiIsdMsfyGGe2AD0p/mxmaPoCPmcZaQ6KteXJJQFNo+7vtfQiS+yen+shymS86LNBAW9azlVQZAQpTbFzeppyBQP+rn976j7sA3aADzgTvRbNWR1pNr5Rj+kvSxOzmciiyDFxjyLckG7JSr2auUi36NkWRZAy5FgFqW9ujcZJwUEBfs14ZGymIEk9aNk9iQGX/KZDZMav/jUX3XsCUws7JeeGV6BBzwvC1MoS+TgwVR1Z91uFTRlvopc0al0rw+w0wUIrfKcHY7MgnmBAA9sjUTMsWSSlpbqV0ObRk+bZb2Htk0LX3j1ZRRmUPgElTjmGxM0RXnUG0oEyLOi5YoMSpXLLlmoNWqkHJ4xNCiTNJgfvhNEi9mOPX80BbnUCUhKPHT2zqN49+FGCahNsPneGo04WAxesm1xYpsWxXmKGOsVycq0V9qKAaT+d6uOJJIYAJ5qOQpuprKubKla9rw7XksbVtrfU7MdgkuW6AOXUITIEcs/5aswIQ7T0Vlx4vGYiXboS59k8QYJfxWF2Vz8pNljxMgv06ZpufItdKR4uywnFrT7Mfk8Py3SiL63cKBU8uyxSSn2cJu54aP5iYQLp5F0v6NiFQkZxc8+D+gM62DzbbiP3P7sKwty1NWeu8j21y/IcOXlhQIo="
 }

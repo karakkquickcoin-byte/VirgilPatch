@@ -22,7 +22,7 @@ if (-not $CompileOnly -and (Test-Path -LiteralPath (Join-Path (Split-Path $PSScr
 $wpf=Join-Path (Split-Path $compiler) 'WPF'
 Push-Location $PSScriptRoot
 try {
-    & $compiler /nologo /target:winexe /optimize+ /out:VirgilUpdater.exe /r:System.Web.Extensions.dll "/r:$wpf\PresentationCore.dll" "/r:$wpf\WindowsBase.dll" /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll /win32icon:virgil.ico /win32manifest:app.manifest /resource:assets/lordaeron-background.png,VirgilPatch.LauncherBackground /resource:assets/lordaeron-ambience.mp3,VirgilPatch.LauncherAmbience VirgilUpdater.cs SelfUpdate.cs LauncherTheme.cs LauncherAmbience.cs LauncherLinks.cs
+    & $compiler /nologo /target:winexe /optimize+ /out:VirgilUpdater.exe /r:System.Web.Extensions.dll "/r:$wpf\PresentationCore.dll" "/r:$wpf\WindowsBase.dll" /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll /win32icon:virgil.ico /win32manifest:app.manifest /resource:assets/lordaeron-background.png,VirgilPatch.LauncherBackground /resource:assets/lordaeron-ambience.mp3,VirgilPatch.LauncherAmbience VirgilUpdater.cs SelfUpdate.cs LauncherTheme.cs LauncherAmbience.cs LauncherLinks.cs PatchSelection.cs StrictJson.cs
     if ($LASTEXITCODE -ne 0) { throw 'Updater build failed.' }
     if ((Get-Item -LiteralPath 'VirgilUpdater.exe').Length -gt 16MB) { throw 'Updater exceeds the 16 MiB size limit trusted by existing self-updating clients.' }
     if ($CompileOnly) { return }

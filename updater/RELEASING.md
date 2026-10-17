@@ -6,7 +6,7 @@
 3. Run `./build.ps1 -SigningKeyPath <private-DPAPI-key-file>` from `updater`, using the Windows account that owns
    the release key. The maintainer's local `BuildUpdater.ps1` wrapper supplies the configured key path.
 4. Commit/push the new EXE, `VirgilUpdater.zip`, ZIP checksum, `updater-release.json`, source and guidance together.
-   Existing self-updating clients will verify the signature and install the newer EXE when they click Update. Earlier v1.4.0/v1.4.1 clients may receive this once on startup.
+   Existing self-updating clients verify the signature and install the newer EXE. 1.4.4 and later check at launch; 1.4.2/1.4.3 check on Update. Patch files require an explicit Update, selection and confirmation.
 
 The build verifies the private key against `release-public-key.xml` and the public key embedded in `SelfUpdate.cs`.
 It rejects a release version that does not exceed the currently committed manifest. `-CompileOnly` is for local
@@ -34,3 +34,8 @@ The ambience track is embedded as VirgilPatch.LauncherAmbience from assets/lorda
 Compile LauncherAmbience.cs and reference Windows' .NET Framework WPF PresentationCore/WindowsBase assemblies.
 Keep the complete EXE below the existing 16 MiB signed-channel limit, which older clients enforce too.
 The build now checks this before signing. Do not raise the channel limit to accommodate large media.
+
+For 1.5.0 compile all seven root C# source files, including PatchSelection.cs and StrictJson.cs. Run recovery,
+selection/preview, security, launcher, audio and self-update regression checks before signing. Keep the E-drive
+publisher's virgil_publish.py and virgil_integrity.py in sync with publisher/ in the release repository.
+Publisher changes do not require altering development patch assets. Restart an already-running publisher to load them.

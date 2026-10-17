@@ -104,6 +104,8 @@ class LauncherTests
                 using (var warnings = AcceptFixtureWarning(form))
                 {
                 observed = form;
+                form.ChoosePatches = catalog => new PatchSelection { Names = catalog.Patches.ToArray() };
+                form.ConfirmChanges = preview => true;
                 form.Show(); Pump(() => Field(form, "ambience") != null && ((LauncherAmbience)Field(form, "ambience")).Player.Position > TimeSpan.FromMilliseconds(150));
                 Assert(source.Reads == 0 && source.Downloads.Count == 0 && Field(form, "plan") == null && !File.Exists(Path.Combine(patches, "Test/a.ogg")), "Startup must not check or update patches.");
                 Console.WriteLine("PASS launcher startup makes no patch requests or changes");

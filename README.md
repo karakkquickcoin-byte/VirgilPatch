@@ -6,7 +6,24 @@ Epsilon (9.2.7) game patches, maintained as independently selectable patch folde
 
 1. Download [VirgilUpdater.zip](VirgilUpdater.zip?raw=1) from this repository and extract it.
 2. Run `VirgilUpdater.exe`. In the Chronicles of Lordaeron launcher, click **Select folder** and choose your Epsilon `_retail_\Patches` folder if needed.
-3. Close WoW, then click **Update**.
+3. Close WoW, click **Update**, and select only the patch folders you want.
+4. Review **What's new / repair preview**, then confirm **Update / repair selected**.
+
+Launcher **1.5.0** repairs existing interrupted installations as well as installing updates. It reuses matching
+assets and restores missing or corrupt `patch.json` after that patch is complete. A failure in one patch does
+not prevent another completed patch from being registered. Progress includes percentage, transfer size and ETA;
+Cancel keeps completed files for the next attempt. Invalid content stops promptly; transient transfers get at most
+three attempts with bounded timeouts.
+
+Choose Classic, Northrend, HD or other folders separately. Unselected patches and their tracking stay untouched.
+The preview lists your required changes/repairs and the publisher's latest change summary. The first 1.5.0 check
+re-verifies existing selected assets locally once to discard stale legacy caches. Later checks reuse verified
+size/time/hash entries. **Deep repair** rechecks every selected asset if hidden corruption is suspected.
+
+If an older updater is still stuck downloading, close it and reopen it so it resolves the repaired publication.
+Existing self-updating versions receive 1.5.0 through the same signed channel. Versions 1.4.2/1.4.3 check that
+channel when Update is clicked; 1.4.4 checks at launch. Patch files still change only after explicit selection
+and confirmation. Versions before 1.4.0 need a one-time launcher download to obtain these new interface features.
 
 Every update downloads only missing or changed assets as individual files, including large updates and first installs.
 The updater never downloads the full repository ZIP. It checks existing files against the current index before updating;
@@ -61,7 +78,7 @@ Report the download URL, the threat name, the affected file path and the ZIP's S
 The developer can submit the exact detected file to [Microsoft for analysis](https://www.microsoft.com/en-us/wdsi/filesubmission).
 A clean source review or matching checksum does not establish that an antivirus alert is a false positive.
 
-Version 1.4.2 is not Authenticode-signed. A Windows reputation warning and an antivirus malware detection are different checks;
+The launcher is not Authenticode-signed. A Windows reputation warning and an antivirus malware detection are different checks;
 neither should be dismissed solely because a program is open source or unsigned.
 
 ## What the updater does
@@ -83,6 +100,7 @@ release-signed, and these checks do not guarantee how the game parses asset file
 * `patches/<folder>/`: published game assets and `patch.json`
 * `index.json`: version manifest
 * `updater/`: reviewed source and Windows build
+* `publisher/`: matching publisher source and snapshot-integrity validation
 
 ## Build from source
 

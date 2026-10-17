@@ -1,8 +1,16 @@
-Chronicles of Lordaeron Launcher 1.4.4
+Chronicles of Lordaeron Launcher 1.5.0
 
 1. Extract VirgilUpdater.exe into a normal folder you can write to.
 2. Run it, click Select folder, and choose your Epsilon _retail_\Patches folder if needed.
-3. Close WoW, then click Update. Only missing or changed game assets are downloaded.
+3. Close WoW, then click Update. Select only the patch folders you want.
+4. Review What's new / repair preview, then click Update / repair selected.
+
+Existing broken or interrupted patches are repaired automatically in selected folders. Matching assets are
+reused; missing/corrupt files download individually. Missing patch.json is restored after its files verify.
+Unselected folders stay untouched. Progress shows %, transfer size and estimated time remaining.
+Cancel keeps completed files for retry. Close an old stuck updater and reopen before trying the repaired release.
+The first check reads existing selected files locally once to discard stale caches. Deep repair repeats that
+verification when needed; it does not force a full download. Subsequent normal checks use verified caches.
 
 Drag any edge or the bottom-right corner to resize the launcher.
 Guides & Links opens the Chronicles guides, registers, wiki and the Watch2gether music room in your browser.

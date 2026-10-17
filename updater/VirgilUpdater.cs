@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.4.4.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.4.4.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.4.4")]
+[assembly: System.Reflection.AssemblyVersion("1.5.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.5.0")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.4.4";
+        public const string UserAgent = "VirgilPatchUpdater/1.5.0";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }
@@ -75,8 +75,8 @@ namespace VirgilPatch
             var r = (HttpWebRequest)WebRequest.Create(url);
             r.UserAgent = Config.UserAgent;
             r.AllowAutoRedirect = false;
-            r.Timeout = 60000;
-            r.ReadWriteTimeout = 120000;
+            r.Timeout = 20000;
+            r.ReadWriteTimeout = 30000;
             r.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             if (accept != null) r.Accept = accept;
             return r;
@@ -213,7 +213,7 @@ namespace VirgilPatch
                 if (segment.Length == 0 || segment == "." || segment == ".." || segment.EndsWith(".") || segment.EndsWith(" ") ||
                     segment.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || segment.Any(c => char.IsControl(c)) ||
                     segment.Equals(".git", StringComparison.OrdinalIgnoreCase) ||
-                    Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9Â¹Â²Â³]|LPT[1-9Â¹Â²Â³])\z", RegexOptions.IgnoreCase))
+                    Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9Ãƒâ€šÃ‚Â¹Ãƒâ€šÃ‚Â²Ãƒâ€šÃ‚Â³]|LPT[1-9Ãƒâ€šÃ‚Â¹Ãƒâ€šÃ‚Â²Ãƒâ€šÃ‚Â³])\z", RegexOptions.IgnoreCase))
                     throw new InvalidDataException("Unsafe Windows path component.");
             }
         }
@@ -291,15 +291,21 @@ namespace VirgilPatch
             if (!Directory.EnumerateFileSystemEntries(dir).Any()) Directory.Delete(dir);
         }
 
+        internal static uint FileId(object value)
+        {
+            if (!(value is int) && !(value is long) && !(value is uint)) throw new InvalidDataException("Invalid FileDataID type.");
+            try { var id = Convert.ToUInt32(value); if (id == 0) throw new InvalidDataException("FileDataID must be positive."); return id; }
+            catch (OverflowException) { throw new InvalidDataException("FileDataID is out of range."); }
+        }
+
         internal static void PatchMetadata(byte[] bytes, string patch, Dictionary<string, FileInfoEntry> expected)
         {
             if (bytes.LongLength > MaxMetadataBytes) throw new InvalidDataException("Patch metadata exceeds size limit.");
-            var text = Encoding.UTF8.GetString(bytes).TrimStart('\ufeff');
-            var js = new JavaScriptSerializer { MaxJsonLength = (int)MaxMetadataBytes };
-            var metadata = js.Deserialize<Dictionary<string, object>>(text);
+            var metadata = StrictJson.Read(bytes, (int)MaxMetadataBytes);
             var entries = metadata["files"] as System.Collections.IEnumerable;
             if (entries == null || metadata["files"] is string) throw new InvalidDataException("Invalid patch file list.");
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var ids = new HashSet<uint>();
             foreach (var item in entries)
             {
                 var file = item as Dictionary<string, object>;
@@ -308,7 +314,7 @@ namespace VirgilPatch
                 Asset(name, false);
                 FileInfoEntry match;
                 if (!seen.Add(name) || !expected.TryGetValue(patch + "/" + name, out match) || match.Name == "patch.json" ||
-                    Convert.ToUInt32(file["id"]) != match.Id)
+                    FileId(file["id"]) != match.Id || !ids.Add(match.Id))
                     throw new InvalidDataException("patch.json does not match the verified manifest.");
             }
             if (seen.Count != expected.Values.Count(f => f.Patch == patch && f.Name != "patch.json"))
@@ -341,12 +347,19 @@ namespace VirgilPatch
         public long TotalBytes;
         public int TotalFiles;
         public Dictionary<string, string> Installed = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public HashSet<string> Scope = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public List<string> Added = new List<string>(), Changed = new List<string>(), Repairs = new List<string>();
+        public List<string> CompletedPatches = new List<string>();
+        public Dictionary<string, string> LatestUpdates = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public bool UpToDate { get { return Fetch.Count == 0 && Remove.Count == 0 && PatchJsons.Count == 0; } }
     }
 
     class State
     {
         public string patches_dir;
+        public string selection_root;
+        public List<string> verified_patches = new List<string>();
+        public List<string> selected_patches = new List<string>();
         public string commit;
         public string published;
         public Dictionary<string, object[]> hashes = new Dictionary<string, object[]>(StringComparer.OrdinalIgnoreCase);
@@ -365,6 +378,11 @@ namespace VirgilPatch
                 var s = new State();
                 object v;
                 if (d.TryGetValue("patches_dir", out v)) s.patches_dir = v as string;
+                if (d.TryGetValue("verified_patches", out v) && v is System.Collections.IEnumerable && !(v is string))
+                    foreach (var name in (System.Collections.IEnumerable)v) if (name is string && s.verified_patches.Count < 128) s.verified_patches.Add((string)name);
+                if (d.TryGetValue("selection_root", out v)) s.selection_root = v as string;
+                if (d.TryGetValue("selected_patches", out v) && v is System.Collections.IEnumerable && !(v is string))
+                    foreach (var choice in (System.Collections.IEnumerable)v) if (choice is string && s.selected_patches.Count < 128) s.selected_patches.Add((string)choice);
                 if (d.TryGetValue("commit", out v)) s.commit = v as string;
                 if (d.TryGetValue("published", out v)) s.published = v as string;
                 if (d.TryGetValue("hashes", out v) && v is Dictionary<string, object>)
@@ -388,7 +406,7 @@ namespace VirgilPatch
             var js = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
             var tmp = FilePath + "." + Guid.NewGuid().ToString("N") + ".tmp";
             File.WriteAllText(tmp, js.Serialize(new Dictionary<string, object> {
-                { "patches_dir", patches_dir }, { "commit", commit }, { "published", published },
+                { "patches_dir", patches_dir }, { "selection_root", selection_root }, { "verified_patches", verified_patches }, { "selected_patches", selected_patches }, { "commit", commit }, { "published", published },
                 { "hashes", hashes }, { "installed", installed } }));
             Safety.NoLinks(FilePath);
             if (File.Exists(FilePath)) File.Replace(tmp, FilePath, null);
@@ -399,12 +417,14 @@ namespace VirgilPatch
     class Updater
     {
         public Action<string> Log = delegate { };
+        public Action<string> Phase = delegate { };
         public Action<long, long> Progress = delegate { };       // done, total
         readonly ISource src;
         readonly State state;
+        public bool VerifyExisting;
         public Updater(ISource src, State state) { this.src = src; this.state = state; }
 
-        public static string BlobSha(string path)
+        public static string BlobSha(string path, CancellationToken cancel = default(CancellationToken))
         {
             using (var sha = SHA1.Create())
             using (var f = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 1 << 20))
@@ -413,22 +433,24 @@ namespace VirgilPatch
                 sha.TransformBlock(head, 0, head.Length, null, 0);
                 var buf = new byte[1 << 20];
                 int n;
-                while ((n = f.Read(buf, 0, buf.Length)) > 0) sha.TransformBlock(buf, 0, n, null, 0);
+                while ((n = f.Read(buf, 0, buf.Length)) > 0) { cancel.ThrowIfCancellationRequested(); sha.TransformBlock(buf, 0, n, null, 0); }
                 sha.TransformFinalBlock(new byte[0], 0, 0);
                 return BitConverter.ToString(sha.Hash).Replace("-", "").ToLowerInvariant();
             }
         }
 
-        string CachedSha(string path)
+        string CachedSha(string path, bool force = false, CancellationToken cancel = default(CancellationToken))
         {
             var fi = new FileInfo(path);
             object[] hit;
-            if (state.hashes.TryGetValue(path, out hit) && Convert.ToInt64(hit[0]) == fi.Length &&
-                Convert.ToString(hit[1]) == fi.LastWriteTimeUtc.Ticks.ToString())
-                return (string)hit[2];
-            var s = BlobSha(path);
-            state.hashes[path] = new object[] { fi.Length, fi.LastWriteTimeUtc.Ticks.ToString(), s };
-            return s;
+            if (!force && state.hashes.TryGetValue(path, out hit) && hit != null && hit.Length == 3)
+                try {
+                    if (Convert.ToInt64(hit[0]) == fi.Length && Convert.ToString(hit[1]) == fi.LastWriteTimeUtc.Ticks.ToString() && Safety.IsSha(hit[2] as string))
+                        return (string)hit[2];
+                } catch (FormatException) { } catch (InvalidCastException) { } catch (OverflowException) { }
+            var sha = BlobSha(path, cancel);
+            state.hashes[path] = new object[] { fi.Length, fi.LastWriteTimeUtc.Ticks.ToString(), sha };
+            return sha;
         }
 
         static FileInfoEntry Entry(string patch, string repoDir, string name, object o)
@@ -437,12 +459,13 @@ namespace VirgilPatch
             Safety.Asset(name, true);
             Safety.Relative(repoDir);
             var d = (Dictionary<string, object>)o;
+            if (!(d["size"] is int) && !(d["size"] is long)) throw new InvalidDataException("Manifest size must be an integer.");
             var size = Convert.ToInt64(d["size"]);
             var sha = d["sha"] as string;
             if (size < 0 || size > (name == "patch.json" ? Safety.MaxMetadataBytes : Safety.MaxAssetBytes) || !Safety.IsSha(sha))
                 throw new InvalidDataException("Invalid size or checksum in manifest.");
             return new FileInfoEntry { Patch = patch, Name = name, RepoPath = repoDir + "/" + name,
-                                       Size = size, Sha = sha, Id = name == "patch.json" ? 0 : Convert.ToUInt32(d["id"]) };
+                                       Size = size, Sha = sha, Id = name == "patch.json" ? 0 : Safety.FileId(d["id"]) };
         }
 
         public string Local(string key)
@@ -453,15 +476,11 @@ namespace VirgilPatch
 
         public string Local(FileInfoEntry f) { return Local(f.Key); }
 
-        public Plan Check()
+        public Plan Catalog()
         {
-            if (string.IsNullOrWhiteSpace(state.patches_dir)) throw new InvalidDataException("Choose a Patches folder first.");
-            state.patches_dir = Path.GetFullPath(state.patches_dir);
-            Safety.NoLinks(state.patches_dir);
-            Log("Looking for the latest version on " + src.Describe() + " ...");
             var p = new Plan { Commit = src.ResolveCommit() };
             var js = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
-            var index = js.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(src.Get(p.Commit, "index.json")));
+            var index = StrictJson.Read(src.Get(p.Commit, "index.json"), (int)Safety.MaxIndexBytes);
             p.Published = index.ContainsKey("published") ? Convert.ToString(index["published"]) : "";
             // format 2: {"patches": {name: {repo_dir, patch_json, files}}}; format 1: one patch at the top level
             var patches = new List<KeyValuePair<string, Dictionary<string, object>>>();
@@ -477,17 +496,26 @@ namespace VirgilPatch
                 Safety.Patch(kv.Key);
                 if (p.Patches.Contains(kv.Key, StringComparer.OrdinalIgnoreCase)) throw new InvalidDataException("Duplicate patch folder.");
                 var d = kv.Value;
+                object latest;
+                if (d.TryGetValue("changes", out latest)) p.LatestUpdates[kv.Key] = PatchDialogs.Latest(latest);
                 var repoDir = d.ContainsKey("repo_dir") ? (string)d["repo_dir"] : "patches/" + kv.Key;
                 if (repoDir != "patches/" + kv.Key && !(patches.Count == 1 && !index.ContainsKey("patches") && repoDir == "patch"))
                     throw new InvalidDataException("Unexpected repository path for patch.");
                 p.Patches.Add(kv.Key);
+                if (p.Patches.Count > 128) throw new InvalidDataException("Too many published patches.");
                 jsons.Add(Entry(kv.Key, repoDir, "patch.json", d["patch_json"]));
-                all.AddRange(((Dictionary<string, object>)d["files"]).Select(f => Entry(kv.Key, repoDir, f.Key, f.Value)));
+                var ids = new HashSet<uint>();
+                foreach (var file in (Dictionary<string, object>)d["files"])
+                {
+                    var entry = Entry(kv.Key, repoDir, file.Key, file.Value);
+                    if (!ids.Add(entry.Id)) throw new InvalidDataException("Duplicate FileDataID in " + kv.Key + ".");
+                    all.Add(entry);
+                }
             }
             foreach (var entry in all.Concat(jsons))
             {
                 // Validate the complete manifest, including links, before writing any state or files.
-                Local(entry);
+                Safety.Key(entry.Key);
                 if (p.Files.ContainsKey(entry.Key)) throw new InvalidDataException("Duplicate destination in manifest.");
                 p.Files.Add(entry.Key, entry);
             }
@@ -495,40 +523,124 @@ namespace VirgilPatch
                 for (int slash = key.LastIndexOf('/'); slash > 0; slash = key.LastIndexOf('/', slash - 1))
                     if (p.Files.ContainsKey(key.Substring(0, slash)))
                         throw new InvalidDataException("Manifest file is also used as a directory.");
-            p.TotalFiles = all.Count;
-            p.TotalBytes = all.Sum(f => f.Size);
-            Log(string.Format("Latest version: {0} ({1}): {2} - {3} files, {4:0.00} GB", p.Commit.Substring(0, Math.Min(7, p.Commit.Length)),
-                              p.Published, string.Join(", ", p.Patches), p.TotalFiles, p.TotalBytes / 1e9));
-            Log("Checking your files in " + state.patches_dir + " ...");
-            long done = 0, total = p.TotalBytes;
+            p.TotalFiles = all.Count; p.TotalBytes = all.Sum(f => f.Size);
+            return p;
+        }
+
+        public Plan Check(IEnumerable<string> selection = null, Plan catalog = null, CancellationToken cancel = default(CancellationToken))
+        {
+            if (string.IsNullOrWhiteSpace(state.patches_dir)) throw new InvalidDataException("Choose a Patches folder first.");
+            state.patches_dir = Path.GetFullPath(state.patches_dir); Safety.NoLinks(state.patches_dir);
+            Phase("Checking selected patches");
+            catalog = catalog ?? Catalog();
+            var chosen = new HashSet<string>(selection ?? catalog.Patches, StringComparer.OrdinalIgnoreCase);
+            if (selection != null && (chosen.Count == 0 || chosen.Any(n => !catalog.Patches.Contains(n, StringComparer.OrdinalIgnoreCase))))
+                throw new InvalidDataException("Choose at least one published patch folder.");
+            var p = new Plan { Commit = catalog.Commit, Published = catalog.Published };
+            foreach (var note in catalog.LatestUpdates.Where(kv => chosen.Contains(kv.Key))) p.LatestUpdates[note.Key] = note.Value;
+            p.Patches = catalog.Patches.Where(chosen.Contains).ToList();
+            foreach (var patch in p.Patches) p.Scope.Add(patch);
+            // Legacy all-patches CLI behavior can remove retired tracked patches. Explicit selections never do.
+            if (selection == null) foreach (var key in state.installed.Keys) if (key.IndexOf('/') > 0) p.Scope.Add(key.Substring(0, key.IndexOf('/')));
+            foreach (var entry in catalog.Files.Values.Where(f => chosen.Contains(f.Patch))) { Local(entry); p.Files.Add(entry.Key, entry); }
+            foreach (var old in state.installed)
+                if (old.Key.IndexOf('/') > 0 && !p.Scope.Contains(old.Key.Substring(0, old.Key.IndexOf('/')))) p.Installed[old.Key] = old.Value;
+            var all = p.Files.Values.Where(f => f.Name != "patch.json").ToList();
+            var jsons = p.Files.Values.Where(f => f.Name == "patch.json").ToList();
+            p.TotalFiles = all.Count; p.TotalBytes = all.Sum(f => f.Size);
+            Log(string.Format("Selected version: {0} ({1}): {2} - {3} files, {4:0.00} GB", p.Commit.Substring(0, Math.Min(7, p.Commit.Length)),
+                p.Published, string.Join(", ", p.Patches), p.TotalFiles, p.TotalBytes / 1e9));
+            long done = 0;
             foreach (var f in all)
             {
-                var path = Local(f);
-                var fi = new FileInfo(path);
-                if (!fi.Exists || fi.Length != f.Size || CachedSha(path) != f.Sha) p.Fetch.Add(f);
-                p.Installed[f.Key] = f.Sha;
-                done += f.Size;
-                Progress(done, total);
+                cancel.ThrowIfCancellationRequested();
+                var path = Local(f); var info = new FileInfo(path);
+                if (!info.Exists || info.Length != f.Size || CachedSha(path, VerifyExisting || !state.verified_patches.Contains(f.Patch, StringComparer.OrdinalIgnoreCase), cancel) != f.Sha)
+                {
+                    p.Fetch.Add(f);
+                    if (info.Exists) p.Changed.Add(f.Key);
+                    else if (state.installed.ContainsKey(f.Key)) p.Repairs.Add(f.Key);
+                    else p.Added.Add(f.Key);
+                }
+                p.Installed[f.Key] = f.Sha; done += f.Size; Progress(done, p.TotalBytes);
             }
             foreach (var j in jsons)
             {
                 var path = Local(j);
-                if (!File.Exists(path) || CachedSha(path) != j.Sha) p.PatchJsons.Add(j);
+                // Metadata is small and must never be skipped because of a stale size/mtime cache.
+                if (!File.Exists(path) || new FileInfo(path).Length != j.Size || BlobSha(path) != j.Sha) p.PatchJsons.Add(j);
                 p.Installed[j.Key] = j.Sha;
             }
-            // files an earlier update installed that the new version no longer has (left alone if you changed them),
-            // including whole patches that are no longer published
-            foreach (var kv in state.installed)
-                if (!p.Installed.ContainsKey(kv.Key) && kv.Key.IndexOf('/') > 0)
+            foreach (var old in state.installed)
+                if (!p.Installed.ContainsKey(old.Key) && old.Key.IndexOf('/') > 0 && p.Scope.Contains(old.Key.Substring(0, old.Key.IndexOf('/'))))
                 {
-                    // Old state is untrusted too; never use it to delete outside the install root.
                     string path;
-                    try { path = Local(kv.Key); }
-                    catch (InvalidDataException) { Log("Ignored unsafe entry in previous state."); continue; }
-                    if (Safety.IsSha(kv.Value) && File.Exists(path) && BlobSha(path) == kv.Value) p.Remove.Add(kv.Key);
+                    try { path = Local(old.Key); } catch (InvalidDataException) { Log("Ignored unsafe entry in previous state."); continue; }
+                    if (Safety.IsSha(old.Value) && File.Exists(path) && BlobSha(path) == old.Value) p.Remove.Add(old.Key);
                 }
+            foreach (var patch in p.Patches) if (!state.verified_patches.Contains(patch, StringComparer.OrdinalIgnoreCase)) state.verified_patches.Add(patch);
             state.Save();
             return p;
+        }
+
+        static string ByteSha(byte[] bytes)
+        {
+            using (var sha = SHA1.Create())
+            {
+                var header = Encoding.ASCII.GetBytes("blob " + bytes.Length + "\0");
+                sha.TransformBlock(header, 0, header.Length, null, 0); sha.TransformFinalBlock(bytes, 0, bytes.Length);
+                return BitConverter.ToString(sha.Hash).Replace("-", "").ToLowerInvariant();
+            }
+        }
+
+        public void Apply(Plan p, CancellationToken cancel)
+        {
+            cancel.ThrowIfCancellationRequested();
+            foreach (var entry in p.Files.Values) Local(entry);
+            if (p.UpToDate) { Progress(0, 0); Phase("Complete"); return; }
+            var errors = new List<string>(); var progress = Progress; long offset = 0;
+            Phase("Downloading selected patches");
+            try
+            {
+                foreach (var patch in p.Patches.Concat(p.Scope.Where(n => !p.Patches.Contains(n, StringComparer.OrdinalIgnoreCase))))
+                {
+                    cancel.ThrowIfCancellationRequested();
+                    var unit = new Plan { Commit = p.Commit, Published = p.Published };
+                    unit.Patches.Add(patch); unit.Scope.Add(patch);
+                    foreach (var f in p.Files.Values.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase))) unit.Files.Add(f.Key, f);
+                    unit.Fetch = p.Fetch.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase)).ToList();
+                    unit.PatchJsons = p.PatchJsons.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase)).ToList();
+                    unit.Remove = p.Remove.Where(k => k.StartsWith(patch + "/", StringComparison.OrdinalIgnoreCase)).ToList();
+                    unit.Installed = new Dictionary<string, string>(state.installed, StringComparer.OrdinalIgnoreCase);
+                    foreach (var key in unit.Installed.Keys.Where(k => k.StartsWith(patch + "/", StringComparison.OrdinalIgnoreCase)).ToList()) unit.Installed.Remove(key);
+                    foreach (var f in unit.Files.Values) unit.Installed[f.Key] = f.Sha;
+                    if (unit.UpToDate) { p.CompletedPatches.Add(patch); continue; }
+                    long received = 0;
+                    Progress = (done, total) => { received = done; progress(offset + done, p.FetchBytes); };
+                    try
+                    {
+                        byte[] metadata = null;
+                        var entry = unit.Files.Values.FirstOrDefault(f => f.Name == "patch.json");
+                        if (entry != null)
+                        {
+                            metadata = src.Get(p.Commit, entry.RepoPath);
+                            if (metadata.LongLength != entry.Size || ByteSha(metadata) != entry.Sha)
+                                throw new InvalidDataException("Published patch.json size/checksum mismatch for " + patch + "; no assets in this patch were changed.");
+                            Safety.PatchMetadata(metadata, patch, unit.Files);
+                        }
+                        ApplyPatch(unit, metadata, cancel);
+                        p.CompletedPatches.Add(patch);
+                        Log("Completed " + patch + ".");
+                    }
+                    catch (OperationCanceledException) { throw; }
+                    catch (Exception ex) { errors.Add(patch + ": " + ex.Message); Log("Patch incomplete: " + patch + ". Its previous patch.json was preserved. " + ex.Message); }
+                    offset += received;
+                }
+            }
+            finally { Progress = progress; }
+            if (errors.Count > 0) throw new Exception(errors.Count + " patches / files failed. Completed patches: " + string.Join(", ", p.CompletedPatches) +
+                ". Successful files are kept for retry.\r\n" + string.Join("\r\n", errors.Take(8)));
+            progress(p.FetchBytes, p.FetchBytes); Phase("Complete");
         }
 
         void Place(string tmp, string dest, FileInfoEntry entry)
@@ -547,7 +659,7 @@ namespace VirgilPatch
             state.hashes[dest] = new object[] { fi.Length, fi.LastWriteTimeUtc.Ticks.ToString(), sha };
         }
 
-        public void Apply(Plan p, CancellationToken cancel)
+        void ApplyPatch(Plan p, byte[] preparedMetadata, CancellationToken cancel)
         {
             cancel.ThrowIfCancellationRequested();
             // Validate plans again at use time, including after a folder became a junction.
@@ -559,8 +671,10 @@ namespace VirgilPatch
                 Log(string.Format("Downloading {0} files ({1:0.0} MB) ...", pending.Count, pending.Sum(f => f.Size) / 1e6));
                 var errors = new List<string>();
                 var opts = new ParallelOptions { MaxDegreeOfParallelism = 4, CancellationToken = cancel };
-                Parallel.ForEach(pending, opts, f =>
+                int stopped = 0;
+                Parallel.ForEach(pending, opts, (f, loop) =>
                 {
+                    if (System.Threading.Volatile.Read(ref stopped) != 0) return;
                     var dest = Local(f);
                     Directory.CreateDirectory(Path.GetDirectoryName(dest));
                     var tmp = dest + "." + Guid.NewGuid().ToString("N") + ".vtmp";
@@ -582,12 +696,14 @@ namespace VirgilPatch
                             Interlocked.Add(ref done, -got);
                             var we = ex as WebException;
                             var code = we != null && we.Response is HttpWebResponse ? (int)((HttpWebResponse)we.Response).StatusCode : 0;
-                            if (attempt >= 4 || ex is InvalidDataException || ex is IOException && !(ex is WebException))
+                            if (attempt >= 3 || ex is InvalidDataException || ex is IOException && !(ex is WebException) || code >= 400 && code < 500 && code != 429)
                             {
                                 lock (errors) errors.Add(f.Key + ": " + ex.Message);
+                                Interlocked.Exchange(ref stopped, 1); loop.Stop();
                                 break;
                             }
-                            Thread.Sleep(code == 429 || code == 403 ? 30000 * attempt : 2000 * attempt);
+                                                        Log("Retrying " + f.Key + " (" + (attempt + 1) + "/3): " + ex.Message);
+                            if (cancel.WaitHandle.WaitOne(Math.Min(4000, 1000 * attempt))) cancel.ThrowIfCancellationRequested();
                         }
                     }
                 });
@@ -598,6 +714,13 @@ namespace VirgilPatch
                                         "\r\n(If a file is in use, close WoW and run the update again - finished files are kept.)");
                 }
             }
+            // Never advertise an incomplete patch, including missing files that a stale cache claimed were installed.
+            foreach (var asset in p.Files.Values.Where(f => f.Name != "patch.json"))
+            {
+                cancel.ThrowIfCancellationRequested(); var path = Local(asset);
+                if (!File.Exists(path) || new FileInfo(path).Length != asset.Size || CachedSha(path) != asset.Sha)
+                    throw new InvalidDataException("Patch remains incomplete: " + asset.Key);
+            }
             // each patch.json last: until now the game still sees the previous file lists
             foreach (var j in p.PatchJsons)
             {
@@ -607,7 +730,7 @@ namespace VirgilPatch
                 var tmp = dest + "." + Guid.NewGuid().ToString("N") + ".vtmp";
                 try
                 {
-                    var bytes = src.Get(p.Commit, j.RepoPath);
+                    var bytes = preparedMetadata;
                     Safety.PatchMetadata(bytes, j.Patch, p.Files);
                     using (var output = new FileStream(tmp, FileMode.CreateNew, FileAccess.Write, FileShare.None))
                         output.Write(bytes, 0, bytes.Length);
@@ -727,6 +850,11 @@ namespace VirgilPatch
 
         void RememberFolder(string path)
         {
+            if (!string.Equals(state.patches_dir, path, StringComparison.OrdinalIgnoreCase))
+            {
+                state.installed.Clear(); state.hashes.Clear(); state.verified_patches.Clear(); state.selected_patches.Clear();
+                state.selection_root = null; state.commit = null; state.published = null;
+            }
             state.patches_dir = path;
             dirBox.Text = path;
             state.Save();
@@ -747,20 +875,21 @@ namespace VirgilPatch
             var now = Environment.TickCount;
             if (done < total && now - Interlocked.Read(ref lastTick) < 100) return;
             Interlocked.Exchange(ref lastTick, now);
-            Post(delegate { bar.Value = total <= 0 ? 0 : (int)Math.Min(1000, done * 1000 / total); });
+            Post(delegate { bar.Value = total <= 0 ? 0 : (int)Math.Min(1000, Math.Max(0, done) * 1000 / total); transferText.Text = estimate.Format(done, total); });
         }
 
         void Busy(bool on)
         {
             isBusy = on;
             browse.Enabled = !on;
+            cancelWork.Enabled = on && cts != null;
             updateBtn.Enabled = !on;
             updateBtn.Text = on ? "Please wait..." : "Update";
         }
 
         Updater MakeUpdater()
         {
-            return new Updater(source, state) { Log = Say, Progress = Prog };
+            return new Updater(source, state) { Log = Say, Progress = Prog, Phase = Phase };
         }
 
         void RunCheck(bool applyAfterCheck = false)
@@ -811,30 +940,32 @@ namespace VirgilPatch
         void RunPatchCheck(bool applyAfterCheck = false)
         {
             if (string.IsNullOrEmpty(state.patches_dir) && !PickFolder()) return;
-            Busy(true);
-            plan = null;
-            status.Text = "Checking your installed patch files...";
-            var u = MakeUpdater();
-            Task.Factory.StartNew(() => u.Check()).ContinueWith(t => Post(() =>
-            {
-                if (t.IsFaulted) { Say("Error: " + t.Exception.GetBaseException().Message); status.Text = "Update unavailable. Open Details for the error, then try again."; }
-                else
+            cts = new CancellationTokenSource();
+            Busy(true); plan = null;
+            status.Text = "Loading the patch list. No game files are downloading yet.";
+            Phase("Loading patch list");
+            var updater = MakeUpdater();
+            Task.Factory.StartNew(() => updater.Catalog()).ContinueWith(t => Post(delegate {
+                if (t.IsFaulted || t.IsCanceled || cts.IsCancellationRequested)
                 {
-                    plan = t.Result;
-                    if (plan.UpToDate) { Say("You're up to date."); status.Text = "Up to date: " + plan.Published; }
-                    else
-                    {
-                        var msg = string.Format("Update available ({0}): {1} files to download ({2:0.0} MB){3}{4}", plan.Published,
-                                                plan.Fetch.Count, plan.FetchBytes / 1e6,
-                                                plan.Remove.Count > 0 ? ", " + plan.Remove.Count + " old files to remove" : "",
-                                                plan.Fetch.Count == 0 && plan.PatchJsons.Count > 0 ? ", file list changed" : "");
-                        Say(msg);
-                        status.Text = msg;
-                    }
+                    if (t.IsFaulted) Say("Error: " + t.Exception.GetBaseException().Message);
+                    status.Text = "Could not load patches, or the check was cancelled. Open Details or try again.";
+                    Busy(false); cts.Dispose(); cts = null; return;
                 }
-                bar.Value = plan != null && plan.UpToDate ? 1000 : 0;
-                Busy(false);
-                if (applyAfterCheck && plan != null && !plan.UpToDate) ApplyUpdate();
+                if (t.Result.Patches.Count == 0)
+                {
+                    Busy(false); cts.Dispose(); cts = null;
+                    Say("You're up to date. No patch folders are currently published.");
+                    status.Text = "No patch folders are currently published. Your patches were left unchanged.";
+                    return;
+                }
+                var choice = ChoosePatches != null ? ChoosePatches(t.Result) : PatchDialogs.Choose(this, t.Result, state);
+                if (choice == null || choice.Names == null || choice.Names.Length == 0)
+                {
+                    Busy(false); cts.Dispose(); cts = null; status.Text = "No patch folders selected. Your patches were left unchanged."; return;
+                }
+                try { CheckChosen(updater, t.Result, choice, applyAfterCheck); }
+                catch (Exception ex) { Say("Error: " + ex.Message); Busy(false); cts.Dispose(); cts = null; status.Text = "Could not save patch selection. Open Details."; }
             }));
         }
 
@@ -850,20 +981,20 @@ namespace VirgilPatch
             if (isBusy || plan == null || plan.UpToDate) return;
             if (Process.GetProcessesByName("Wow").Length > 0 &&
                 MessageBox.Show(this, "WoW is running. Close it first so the patch files aren't in use.\r\n\r\nUpdate anyway?", Text,
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
                 return;
+            cts = new CancellationTokenSource();
             Busy(true);
             updateBtn.Text = "Updating...";
             status.Text = "Updating your patch files. Please keep the launcher open.";
             var u = MakeUpdater();
             var p = plan;
-            cts = new CancellationTokenSource();
             var tok = cts.Token;
             Task.Factory.StartNew(() => u.Apply(p, tok)).ContinueWith(t => Post(() =>
             {
                 if (t.IsFaulted) { Say("Error: " + t.Exception.GetBaseException().Message); status.Text = "Update unavailable. Open Details for the error, then try again."; }
                 else if (t.IsCanceled) { Say("Update cancelled."); status.Text = "Update cancelled. Click Update to try again."; }
-                else status.Text = "Up to date: " + p.Published;
+                else { status.Text = "Your selected patches are complete: " + p.Published; Phase("Complete"); transferText.Text = "Complete 100% | Selected patches ready | ETA done"; }
                 plan = null;
                 cts.Dispose(); cts = null;
                 bar.Value = t.IsFaulted || t.IsCanceled ? 0 : 1000;
@@ -884,6 +1015,7 @@ namespace VirgilPatch
             ISource src = new GitHubSource();
             string patches = null, logFile = null, confirmationDirectory = null;
             bool cli = false, skipProgramCheck = false;
+            var include = new List<string>(); bool verify = false;
             for (int i = 0; i < args.Length; i++)
             {
                 if (args[i] == "--source" && i + 1 < args.Length) src = new FolderSource(args[++i]);
@@ -891,6 +1023,8 @@ namespace VirgilPatch
                 else if (args[i] == "--state" && i + 1 < args.Length) Config.StateDir = args[++i];
                 else if (args[i] == "--log" && i + 1 < args.Length) logFile = args[++i];
                 else if (args[i] == "--cli") cli = true;
+                else if (args[i] == "--include" && i + 1 < args.Length) include.Add(args[++i]);
+                else if (args[i] == "--verify") verify = true;
                 else if (args[i] == "--mute") Config.StartAmbienceMuted = true;
                 else if (args[i] == "--confirm-self-update" && i + 1 < args.Length) confirmationDirectory = args[++i];
                 else if (args[i] == "--skip-self-update-once") skipProgramCheck = true;
@@ -904,8 +1038,8 @@ namespace VirgilPatch
                 {
                     var st = State.Load();
                     if (patches != null) st.patches_dir = patches;
-                    var u = new Updater(src, st) { Log = say };
-                    var plan = u.Check();
+                    var u = new Updater(src, st) { Log = say, VerifyExisting = verify };
+                    var plan = u.Check(include.Count == 0 ? null : include);
                     say(string.Format("plan: fetch {0} files / {1} bytes, remove {2}, patch.json changed {3}", plan.Fetch.Count,
                                       plan.FetchBytes, plan.Remove.Count, plan.PatchJsons.Count));
                     if (!plan.UpToDate) u.Apply(plan, CancellationToken.None);
