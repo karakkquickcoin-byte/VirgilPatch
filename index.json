@@ -10293,6 +10293,11 @@
 "sha": "6a56ff5e1ae6f487d5a57a0b549c2cb1a0a0813b",
 "size": 472756
 },
+"dbfilesclient/spellvisualkitmodelattach.db2": {
+"id": 897953,
+"sha": "ba70d41686f82bc183c022899f928312a0c8723f",
+"size": 9845382
+},
 "dbfilesclient/texturefiledata.db2": {
 "id": 982459,
 "sha": "c63903cc8de0faed94484467ef9d04c3632a448d",
@@ -39855,11 +39860,11 @@
 }
 },
 "patch_json": {
-"sha": "bfdf7beeca0fdf427ef93c5cbde81ba88af4fda0",
-"size": 468865
+"sha": "dfdf71c64bbeda32387bb240555348ed2508df2e",
+"size": 468932
 },
 "repo_dir": "patches/!Chronicles-TexturePatch(3.2.0)",
-"total_bytes": 3592922622
+"total_bytes": 3602768004
 },
 "Chronicles-Classic": {
 "files": {
@@ -344837,5 +344842,5 @@
 "total_bytes": 1645253759
 }
 },
-"published": "2026-10-16 23:50"
+"published": "2026-10-17 11:53"
 }
