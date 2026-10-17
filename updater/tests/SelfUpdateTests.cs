@@ -69,6 +69,16 @@ class SelfUpdateTests
     }
     [DllImport("shell32.dll",CharSet=CharSet.Unicode,SetLastError=true)] static extern IntPtr CommandLineToArgvW(string command,out int count);
     [DllImport("kernel32.dll")] static extern IntPtr LocalFree(IntPtr ptr);
+    static void AtomicHandoffTest()
+    {
+        var root=Path.Combine(Path.GetDirectoryName(payload),"ack-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(root);
+        var path=Path.Combine(root,"started.ok");var nonce=new string('a',32);File.WriteAllText(path,nonce);
+        using(var locked=new FileStream(path,FileMode.Open,FileAccess.ReadWrite,FileShare.None))
+        {
+            Assert(!SelfUpdate.HandoffMatches(path,nonce),"Locked acknowledgement was accepted.");
+        }
+        Assert(SelfUpdate.HandoffMatches(path,nonce),"Released acknowledgement was not accepted.");
+    }
     static int Main(string[] args)
     {
         try
@@ -120,6 +130,18 @@ class SelfUpdateTests
             });
             Test("atomic-replacement-retries-temporary-windows-lock", () => ReplacementLockTest(false));
             Test("replacement-retry-rechecks-payload-integrity", () => ReplacementLockTest(true));
+            Test("handoff-polling-tolerates-temporary-sharing-lock",AtomicHandoffTest);
+            Test("handoff-rejects-wrong-nonce-and-oversized-record",delegate {
+                var path=Path.Combine(Path.GetDirectoryName(payload),"nonce-"+Guid.NewGuid().ToString("N"));File.WriteAllText(path,new string('b',32));
+                Assert(!SelfUpdate.HandoffMatches(path,new string('a',32)),"Wrong nonce accepted.");File.WriteAllText(path,new string('a',129));
+                Reject(()=>SelfUpdate.HandoffMatches(path,new string('a',32)));
+            });
+            Test("atomic-handoff-still-refuses-existing-target",delegate {
+                var path=Path.Combine(Path.GetDirectoryName(payload),"ack-existing-"+Guid.NewGuid().ToString("N"));File.WriteAllText(path,"keep original");
+                var method=typeof(SelfUpdate).GetMethod("ExclusiveWrite",BindingFlags.Static|BindingFlags.NonPublic);bool rejected=false;
+                try {method.Invoke(null,new object[]{path,Encoding.UTF8.GetBytes("replacement")});}catch(TargetInvocationException ex){rejected=ex.InnerException is IOException;}
+                Assert(rejected && File.ReadAllText(path)=="keep original","Acknowledgement overwrote an existing file.");
+            });
             Console.WriteLine("TOTAL "+passed+" self-update validation tests passed"); return 0;
         }
         catch(Exception ex) {Console.WriteLine("FAIL "+ex);return 1;}

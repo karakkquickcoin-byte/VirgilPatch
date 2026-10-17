@@ -7,7 +7,7 @@ $testRoot = Join-Path $env:TEMP ('VirgilTests-' + [Guid]::NewGuid().ToString('N'
 New-Item -ItemType Directory -Path $testRoot | Out-Null
 $compiler = Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 $wpf = Join-Path (Split-Path $compiler) 'WPF'
-& $compiler /nologo /target:exe /optimize+ /main:SecurityTests "/out:$testRoot\SecurityTests.exe" /r:System.Web.Extensions.dll "/r:$wpf\PresentationCore.dll" "/r:$wpf\WindowsBase.dll" /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll ../VirgilUpdater.cs ../SelfUpdate.cs ../LauncherTheme.cs ../LauncherAmbience.cs ../LauncherLinks.cs ../PatchSelection.cs ../StrictJson.cs /resource:../assets/lordaeron-ambience.mp3,VirgilPatch.LauncherAmbience /resource:../assets/lordaeron-background.png,VirgilPatch.LauncherBackground SecurityTests.cs
+& $compiler /nologo /target:exe /optimize+ /main:SecurityTests "/out:$testRoot\SecurityTests.exe" /r:System.Web.Extensions.dll /r:System.Xaml.dll "/r:$wpf\PresentationCore.dll" "/r:$wpf\WindowsBase.dll" /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll ../VirgilUpdater.cs ../SelfUpdate.cs ../LauncherTheme.cs ../LauncherAmbience.cs ../LauncherLinks.cs ../PatchSelection.cs ../StrictJson.cs ../LauncherVideo.cs /resource:../assets/lordaeron-leaves.mp4,VirgilPatch.LauncherVideo /resource:../assets/lordaeron-ambience.mp3,VirgilPatch.LauncherAmbience /resource:../assets/lordaeron-background.png,VirgilPatch.LauncherBackground SecurityTests.cs
 & "$testRoot\SecurityTests.exe" $testRoot
 ```
 
@@ -26,7 +26,7 @@ The release also runs a first-install/second-run smoke test of the built EXE. Pu
 
 
 `SelfUpdateTests.cs` validates signatures, trusted payload scope, size/hash/version checks and Windows argument
-quoting. Compile it alongside all seven root updater C# files (use both media resources and WPF references above) with `/main:SelfUpdateTests`. It takes a
+quoting. Compile it alongside all eight root updater C# files (use both media resources and WPF references above) with `/main:SelfUpdateTests`. It takes a
 test fixture EXE (assembly name `VirgilUpdater`, version `1.4.1.0`) and a test-only private RSA XML key path.
 Never use a production signing key for these fixtures. The accompanying audit's process harness tests real
 replacement/restart, startup rollback, tampering, invalid signatures, downgrade rejection, read-only EXEs and the
@@ -34,7 +34,7 @@ actual Program/MainForm startup confirmation using a separate temporary test key
 
 `LauncherTests.cs` exercises the actual window with synthetic offline assets: idle startup with zero patch requests,
 explicit Update with disabled actions during download, no-op updates, changed-file-only downloads, folder
-retention, diagnostic disclosure and recoverable manifest failure. Compile with `/main:LauncherTests`, all seven
+retention, diagnostic disclosure and recoverable manifest failure. Compile with `/main:LauncherTests`, all eight
 updater source files, WPF references, `System.Web.Extensions.dll` and both embedded media resources shown above. Pass a new
 empty scratch folder, followed optionally by an output PNG path for an invisible-window updating preview.
 
@@ -43,7 +43,7 @@ and `network` or `signature` to verify that program-upgrade failures still allow
 
 `ManualUpdateTests.cs` verifies that launch only checks the program channel and folder selection makes no source requests; both preserve
 unpublished development files and saved patch state, while explicit Update checks both channels. Compile with
-the same seven sources, resources and references and `/main:ManualUpdateTests`; pass a fresh scratch folder.
+the same eight sources, resources and references and `/main:ManualUpdateTests`; pass a fresh scratch folder.
 
 `AmbienceTests.cs` verifies the real full-track playback at volume 0.4, mute, end-of-track looping, shutdown,
 cache integrity/read locks/reuse and safe patch checks after audio fails. Compile with `/main:AmbienceTests`
@@ -53,7 +53,17 @@ It does not close or modify the game. Actual release EXE CLI smoke tests use syn
 
 `RepairTests.cs` adds selected-folder isolation, interrupted installs, missing/corrupt metadata, stale legacy
 hash caches, lost state, per-patch finalization, bad publications, bounded failure, cancellation and strict JSON.
-Compile all seven root C# files with the same references/resources and `/main:RepairTests`; pass a scratch folder.
+Compile all eight root C# files with the same references/resources and `/main:RepairTests`; pass a scratch folder.
 `DialogTests.cs` uses `LauncherTests.cs` for its fixture and exercises the actual selection/preview windows,
 default selection, Deep repair and cancelling without downloading assets. Select `/main:DialogTests` and pass
 a scratch folder plus an absolute image filename prefix. Fixtures never touch a real game installation.
+
+`VideoTests.cs` exercises actual native playback/rendering of the silent 12-second embedded loop, cache hash/size
+verification and read locks/reuse, looping, pause/resume, launcher minimize/shutdown, development-file/startup
+request isolation, corrupt-media still fallback with a usable Update, and continued rejection of MP4 game payloads.
+Compile with all eight root C# files and all three media resources, select `/main:VideoTests`, and pass a scratch
+folder plus an absolute screenshot prefix. Test audio remains muted; the video is always silent.
+
+SelfUpdateTests verifies temporarily locked handoff files are retried, wrong nonces and oversized records are
+rejected, and existing handoff files cannot be overwritten. Real process tests also exercise shipped older
+helpers. These checks accompany the unchanged signature, path, version, checksum, binary lock and rollback tests.

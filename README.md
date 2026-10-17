@@ -2,6 +2,14 @@
 
 Epsilon (9.2.7) game patches, maintained as independently selectable patch folders.
 
+The 1.5.1 interface adds a silent, embedded 12-second falling-leaves background. It is cropped from the
+supplied scene to keep leaf motion near the right third and remove recording overlays. A soft blend joins the
+repeat point. The original separate ambience stays at 40%; the video adds no sound. Playback pauses while
+minimized/hidden and uses a matching still image if decoding is unavailable. No external media download is needed.
+
+The 1.5.0 patch engine, recovery/selection controls, JSON validation, publisher fixes and signed-upgrade trust are
+unchanged in this visual release. Patches still require Update, selection and confirmation.
+
 ## Install / update
 
 1. Download [VirgilUpdater.zip](VirgilUpdater.zip?raw=1) from this repository and extract it.
@@ -9,7 +17,7 @@ Epsilon (9.2.7) game patches, maintained as independently selectable patch folde
 3. Close WoW, click **Update**, and select only the patch folders you want.
 4. Review **What's new / repair preview**, then confirm **Update / repair selected**.
 
-Launcher **1.5.0** repairs existing interrupted installations as well as installing updates. It reuses matching
+Launcher **1.5.1** repairs existing interrupted installations as well as installing updates. It reuses matching
 assets and restores missing or corrupt `patch.json` after that patch is complete. A failure in one patch does
 not prevent another completed patch from being registered. Progress includes percentage, transfer size and ETA;
 Cancel keeps completed files for the next attempt. Invalid content stops promptly; transient transfers get at most

@@ -129,8 +129,34 @@ namespace VirgilPatch
         static void ExclusiveWrite(string path, byte[] bytes)
         {
             Safety.NoLinks(path);
-            using (var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None))
-                stream.Write(bytes, 0, bytes.Length);
+            // Older helpers poll ready/started.ok with File.ReadAllText. Publish only a closed, complete
+            // file, so those already-installed readers never race a writer holding FileShare.None.
+            var temporary = Safety.Under(Path.GetDirectoryName(Path.GetFullPath(path)), Guid.NewGuid().ToString("N") + ".tmp");
+            try
+            {
+                using (var stream = new FileStream(temporary, FileMode.CreateNew, FileAccess.Write, FileShare.None))
+                { stream.Write(bytes, 0, bytes.Length); stream.Flush(true); }
+                Safety.NoLinks(path);
+                File.Move(temporary, path); // Same-volume atomic publication; still refuses an existing target.
+            }
+            finally { Safety.DeleteTemp(temporary); }
+        }
+
+        internal static bool HandoffMatches(string path, string nonce)
+        {
+            Safety.NoLinks(path);
+            if (!File.Exists(path)) return false;
+            try
+            {
+                if (new FileInfo(path).Length > 128) throw new InvalidDataException("Invalid self-update handoff record.");
+                return File.ReadAllText(path) == nonce;
+            }
+            catch (IOException ex)
+            {
+                int code = ex.HResult & 0xffff;
+                if (code != 32 && code != 33) throw;
+                return false; // The existing 15/45-second polling deadline still applies.
+            }
         }
 
         internal static string Prepare(ISource source, string target, string[] arguments, Action<string> log)
@@ -203,7 +229,7 @@ namespace VirgilPatch
                 var ready = Safety.Under(directory, "ready");
                 while (timer.Elapsed < TimeSpan.FromSeconds(15))
                 {
-                    if (File.Exists(ready) && File.ReadAllText(ready) == job.nonce) return true;
+                    if (HandoffMatches(ready, job.nonce)) return true;
                     if (child.HasExited) throw new IOException("Self-update helper could not prepare the upgrade. Current EXE was kept.");
                     Thread.Sleep(100);
                 }
@@ -309,7 +335,7 @@ namespace VirgilPatch
                     var started = Safety.Under(directory, "started.ok");
                     while (timer.Elapsed < TimeSpan.FromSeconds(45))
                     {
-                        if (File.Exists(started) && File.ReadAllText(started) == job.nonce)
+                        if (HandoffMatches(started, job.nonce))
                         {
                             Note(directory, "Upgrade started successfully. Previous EXE retained as previous.exe.");
                             return 0;

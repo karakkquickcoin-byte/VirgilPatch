@@ -1,4 +1,4 @@
-Chronicles of Lordaeron Launcher 1.5.0
+Chronicles of Lordaeron Launcher 1.5.1
 
 1. Extract VirgilUpdater.exe into a normal folder you can write to.
 2. Run it, click Select folder, and choose your Epsilon _retail_\Patches folder if needed.
@@ -32,3 +32,7 @@ The launcher artwork is embedded in the EXE; no separate image download is neede
 Ambience starts at 40% volume and repeats while the launcher is open.
 Click Sound on (40%) / Sound off at the bottom right to mute or unmute.
 The audio is embedded in the EXE; no separate audio download is needed.
+
+The falling-leaves background is an embedded silent 12-second loop; it adds no extra audio.
+It pauses while minimized and uses a matching still image if the video cannot play.
+All 1.5.0 repair, selected-folder, progress and safety behavior remains intact.

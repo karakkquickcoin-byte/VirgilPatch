@@ -35,7 +35,23 @@ Compile LauncherAmbience.cs and reference Windows' .NET Framework WPF Presentati
 Keep the complete EXE below the existing 16 MiB signed-channel limit, which older clients enforce too.
 The build now checks this before signing. Do not raise the channel limit to accommodate large media.
 
-For 1.5.0 compile all seven root C# source files, including PatchSelection.cs and StrictJson.cs. Run recovery,
+For 1.5.1 compile all eight root C# source files, including LauncherVideo.cs, PatchSelection.cs and StrictJson.cs. Run recovery,
 selection/preview, security, launcher, audio and self-update regression checks before signing. Keep the E-drive
 publisher's virgil_publish.py and virgil_integrity.py in sync with publisher/ in the release repository.
 Publisher changes do not require altering development patch assets. Restart an already-running publisher to load them.
+
+The video background is embedded as VirgilPatch.LauncherVideo from assets/lordaeron-leaves.mp4.
+Compile with System.Xaml.dll as well as the existing WPF references. Use H.264/yuv420p, 1000x466, 24 fps,
+an integer-second seamless loop and no audio track. Keep the matching still image in LauncherBackground.
+Never add videos to the game-asset allowlist or accept a video URL from game manifests. The video cache uses
+verified embedded bytes and a lifetime read lock. Native decode/render failures must retain the still backdrop
+and leave updater behavior usable. Test looping, cache tampering, pause/minimize, close, and old helper upgrades.
+The existing 16 MiB signed-channel limit and release-version guard must not be raised or bypassed for media.
+
+The 1.5.1 handoff-file writer publishes ready/started.ok only after writing and closing a temporary file,
+then atomically moving it into place. Keep CreateNew/no-overwrite semantics, path validation, nonce contents,
+signature checks and rollback protocol intact. Old helpers poll these files; publishing an open file can cause
+an unnecessary rollback on a sharing violation. This compatibility fix is independent of video playback.
+
+Handoff readers retry only Windows sharing/lock violations within the existing 15/45-second deadlines.
+They recheck paths and exact nonce content and reject oversized records. Other I/O/validation failures still fail.

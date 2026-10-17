@@ -11,7 +11,7 @@ namespace VirgilPatch
     // Artwork is embedded in the program so an EXE-only automatic upgrade is complete.
     // The window is laid out on a fixed 1000 x 650 design grid. Dragging an edge or corner resizes it with the aspect
     // ratio locked; every control and font is scaled from its design bounds (DPI included).
-    class LauncherWindow : Form
+    partial class LauncherWindow : Form
     {
         public const int DesignW = 1000, DesignH = 650;
         readonly Image landscape;
@@ -88,6 +88,7 @@ namespace VirgilPatch
         {
             base.OnResize(e);
             if (WindowState != FormWindowState.Minimized) ApplyLayout();
+            SyncVideoPlayback();
         }
 
         protected override void WndProc(ref Message m)
@@ -133,7 +134,7 @@ namespace VirgilPatch
             float sx = ClientSize.Width / 1000f, sy = ClientSize.Height / 650f;
             g.ScaleTransform(sx, sy);
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.DrawImage(landscape, new Rectangle(0, 0, 1040, 650), new Rectangle(0, 0, landscape.Width, landscape.Height), GraphicsUnit.Pixel);
+            DrawBackgroundMedia(g);
             using (var shade = new LinearGradientBrush(new Rectangle(0, 0, 1000, 650), Color.FromArgb(205, 10, 9, 8), Color.FromArgb(35, 10, 9, 8), 0f))
                 g.FillRectangle(shade, 0, 0, 1000, 650);
             using (var shade = new LinearGradientBrush(new Rectangle(0, 0, 1000, 650), Color.FromArgb(20, 10, 9, 8), Color.FromArgb(180, 10, 9, 8), 90f))
@@ -156,7 +157,7 @@ namespace VirgilPatch
         protected void DragWindow() { ReleaseCapture(); SendMessage(Handle, 0xA1, new IntPtr(2), IntPtr.Zero); }
         protected override void Dispose(bool disposing)
         {
-            if (disposing) landscape.Dispose();
+            if (disposing) { DisposeBackgroundVideo(); landscape.Dispose(); }
             base.Dispose(disposing);
         }
     }
