@@ -52,7 +52,7 @@ the GUI muted. The soundtrack is embedded in the EXE and cached locally with SHA
 **Golden rule (v1.4.4+):** the launcher program updates itself on every launch when a newer signed release is published -
 it downloads only the signed EXE, verifies it, restarts and keeps the previous EXE; no redownload is needed. Patch files
 are never checked or changed at launch, only when **Update** is clicked. Launchers 1.4.2/1.4.3 check for program upgrades
-only on Update, so they reach 1.4.4 on their next Update click; from then on upgrades arrive at launch.
+only on Update, so they receive the latest release on their next Update click; newer launchers check at launch.
 
 Versions 1.4.2 and later never scan or change patch files at launch. Selecting a folder
 only remembers its path. **Update** explicitly starts both the signed launcher-upgrade check and patch updating.

@@ -26,7 +26,7 @@ The release also runs a first-install/second-run smoke test of the built EXE. Pu
 
 
 `SelfUpdateTests.cs` validates signatures, trusted payload scope, size/hash/version checks and Windows argument
-quoting. Compile it alongside `VirgilUpdater.cs`, `SelfUpdate.cs`, `LauncherTheme.cs` and `LauncherAmbience.cs` (use both media resources and WPF references above) with `/main:SelfUpdateTests`. It takes a
+quoting. Compile it alongside all seven root updater C# files (use both media resources and WPF references above) with `/main:SelfUpdateTests`. It takes a
 test fixture EXE (assembly name `VirgilUpdater`, version `1.4.1.0`) and a test-only private RSA XML key path.
 Never use a production signing key for these fixtures. The accompanying audit's process harness tests real
 replacement/restart, startup rollback, tampering, invalid signatures, downgrade rejection, read-only EXEs and the
@@ -41,7 +41,7 @@ empty scratch folder, followed optionally by an output PNG path for an invisible
 `SelfUpdateGuiTests.cs` uses the same sources/resource and `/main:SelfUpdateGuiTests`. Pass a new scratch folder
 and `network` or `signature` to verify that program-upgrade failures still allow normal patch checks.
 
-`ManualUpdateTests.cs` verifies that launch only checks the program channel and folder selection makes no source requests and preserve
+`ManualUpdateTests.cs` verifies that launch only checks the program channel and folder selection makes no source requests; both preserve
 unpublished development files and saved patch state, while explicit Update checks both channels. Compile with
 the same seven sources, resources and references and `/main:ManualUpdateTests`; pass a fresh scratch folder.
 
