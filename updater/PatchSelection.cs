@@ -58,14 +58,19 @@ namespace VirgilPatch
                 foreach (var name in catalog.Patches)
                 {
                     bool existing = false;
-                    try { existing = Directory.Exists(Safety.Under(state.patches_dir, name)); }
+                    string existingRoot = null;
+                    try {
+                        string canonical;
+                        existingRoot = catalog.InstallFolders.TryGetValue(name, out canonical) ? FolderMigration.Discover(state, name, canonical).Preferred : Safety.Under(state.patches_dir, name);
+                        existing = Directory.Exists(existingRoot);
+                    }
                     catch (IOException) { } // An unselected junction must not prevent checking unrelated patches.
                     string available, display;
                     if (!catalog.Versions.TryGetValue(name, out available)) available = "legacy";
                     if (!catalog.DisplayNames.TryGetValue(name, out display)) display = name;
                     string installed = existing ? "unknown" : "-";
                     if (existing) try {
-                        var metadata = Safety.Under(state.patches_dir, name + "/patch.json");
+                        var metadata = Safety.Under(existingRoot, "patch.json");
                         if (File.Exists(metadata) && new FileInfo(metadata).Length <= Safety.MaxMetadataBytes) {
                             var data = StrictJson.Read(File.ReadAllBytes(metadata), (int)Safety.MaxMetadataBytes);
                             object version; if (data.TryGetValue("version", out version) && version is string)
@@ -104,6 +109,8 @@ namespace VirgilPatch
                 var files = plan.Fetch.Where(f => f.Patch == patch).ToList();
                 string display; if (!plan.DisplayNames.TryGetValue(patch, out display)) display = patch;
                 text.AppendLine(display).AppendLine("  " + plan.Added.Count(here) + " new / missing, " + plan.Changed.Count(here) + " changed, " + plan.Repairs.Count(here) + " repairs, " + plan.Remove.Count(here) + " retired");
+                FolderMigration migration;
+                if (plan.Migrations.TryGetValue(patch, out migration)) text.AppendLine("  Rename / reconcile: " + string.Join(", ", migration.Sources.Select(Path.GetFileName)) + " -> " + Path.GetFileName(migration.Target) + ". Duplicates move outside Patches after verification.");
                 string latest; if (plan.LatestUpdates.TryGetValue(patch, out latest) && latest.Length > 0) text.AppendLine("  " + latest);
                 text.AppendLine("  Transfer: " + Size(files.Sum(f => f.Size)) + (plan.PatchJsons.Any(f => f.Patch == patch) ? "; patch.json will be restored or refreshed after files are complete." : "; patch.json is already current."));
                 foreach (var f in files.Take(80)) text.AppendLine("    " + f.Name);

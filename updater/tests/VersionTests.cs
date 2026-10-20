@@ -23,12 +23,12 @@ class VersionTests {
   var state=new State{patches_dir=Path.Combine(root,"Patches")};Directory.CreateDirectory(state.patches_dir);
   var src=new RepairSource();Publish(src,"5.0.0","first");var u=new Updater(src,state);
   var catalog=u.Catalog();Assert(catalog.Patches.Single()==key && catalog.Versions[key]=="5.0.0","Catalog lost stable identity or version");
-  Apply(u);string local=Path.Combine(state.patches_dir,key+"/a.ogg");Assert(File.Exists(local),"First install renamed local folder");
+  Apply(u);string local=Path.Combine(state.patches_dir,"Test(5.0.0)/a.ogg");Assert(File.Exists(local),"First install renamed local folder");
   int count=src.Downloads.Count;Publish(src,"5.0.0.1","first");Apply(u);Assert(src.Downloads.Count==count,"Metadata revision redownloaded unchanged assets");
   Assert(!Directory.Exists(Path.Combine(state.patches_dir,"Test(5.0.0.1)")),"Created versioned local folder");
   Publish(src,"5.0.0.2","second");Apply(u);Assert(src.Downloads.Count==count+1 && File.ReadAllText(local)=="second","Differential update failed");
   File.Delete(local);Apply(u);Assert(File.Exists(local),"Repair missing asset failed");File.WriteAllText(local,"corrupt");Apply(u);Assert(File.ReadAllText(local)=="second","Repair corrupt asset failed");
-  File.Delete(Path.Combine(state.patches_dir,key+"/patch.json"));Apply(u);Assert(File.Exists(Path.Combine(state.patches_dir,key+"/patch.json")),"Repair metadata failed");
+  File.Delete(Path.Combine(state.patches_dir,"Test(5.0.0)/patch.json"));Apply(u);Assert(File.Exists(Path.Combine(state.patches_dir,"Test(5.0.0)/patch.json")),"Repair metadata failed");
   foreach(string bad in new[]{"patches/Other(5.0.0.2)","patches/../Test(5.0.0.2)","patches/Test(3.2.0)","patches/Test(5.0.0.3)"}){
    Publish(src,"5.0.0.2","second");var index=StrictJson.Read(src.Data["index.json"],100000);var entry=(Dictionary<string,object>)((Dictionary<string,object>)index["patches"])[key];entry["repo_dir"]=bad;src.Data["index.json"]=Bytes(js.Serialize(index));
    bool rejected=false;try{u.Catalog();}catch(InvalidDataException){rejected=true;}Assert(rejected,"Forged repository path accepted");

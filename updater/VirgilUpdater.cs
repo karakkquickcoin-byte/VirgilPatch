@@ -27,8 +27,8 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.2.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.2.0")]
+[assembly: System.Reflection.AssemblyVersion("1.5.3.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.3.0")]
 [assembly: System.Reflection.AssemblyInformationalVersion("1.5.1")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
@@ -213,7 +213,7 @@ namespace VirgilPatch
                 if (segment.Length == 0 || segment == "." || segment == ".." || segment.EndsWith(".") || segment.EndsWith(" ") ||
                     segment.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || segment.Any(c => char.IsControl(c)) ||
                     segment.Equals(".git", StringComparison.OrdinalIgnoreCase) ||
-                    Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9Ãƒâ€šÃ‚Â¹Ãƒâ€šÃ‚Â²Ãƒâ€šÃ‚Â³]|LPT[1-9Ãƒâ€šÃ‚Â¹Ãƒâ€šÃ‚Â²Ãƒâ€šÃ‚Â³])\z", RegexOptions.IgnoreCase))
+                    Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³]|LPT[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³])\z", RegexOptions.IgnoreCase))
                     throw new InvalidDataException("Unsafe Windows path component.");
             }
         }
@@ -334,6 +334,63 @@ namespace VirgilPatch
         public string Key { get { return Patch + "/" + Name; } }
     }
 
+    sealed class FolderMigration
+    {
+        public string Key, Target, Preferred;
+        public List<string> Sources = new List<string>();
+        public bool Completed;
+        public bool Needed { get { return Sources.Count > 1 || Sources.Any(p => !p.Equals(Target, StringComparison.OrdinalIgnoreCase)); } }
+        static string Stem(string name) { return System.Text.RegularExpressions.Regex.Replace(name, @"\([0-9]+\.[0-9]+\.[0-9]+(?:\.[0-9]+)?\)$", "").TrimEnd(); }
+        public static string Canonical(string key) { string name = Stem(key) + "(5.0.0)"; Safety.Patch(name); return name; }
+        static Version Rank(string folder)
+        {
+            string version = null;
+            try {
+                string path = Safety.Under(folder, "patch.json");
+                if (File.Exists(path) && new FileInfo(path).Length <= Safety.MaxMetadataBytes) {
+                    object value; var data = StrictJson.Read(File.ReadAllBytes(path), (int)Safety.MaxMetadataBytes);
+                    if (data.TryGetValue("version", out value)) version = value as string;
+                }
+            } catch (IOException) { } catch (ArgumentException) { }
+            Version parsed;
+            if (version != null && version.Length <= 40 && Version.TryParse(version, out parsed))
+                return new Version(parsed.Major, parsed.Minor, Math.Max(0, parsed.Build), Math.Max(0, parsed.Revision));
+            var match = System.Text.RegularExpressions.Regex.Match(Path.GetFileName(folder), @"\(([0-9]+\.[0-9]+\.[0-9]+(?:\.[0-9]+)?)\)$");
+            if (match.Success && Version.TryParse(match.Groups[1].Value, out parsed))
+                return new Version(parsed.Major, parsed.Minor, Math.Max(0, parsed.Build), Math.Max(0, parsed.Revision));
+            return new Version(0, 0, 0, 0);
+        }
+        public static FolderMigration Discover(State state, string key, string targetName)
+        {
+            Safety.Patch(key); Safety.Patch(targetName);
+            var result = new FolderMigration { Key = key, Target = Safety.Under(state.patches_dir, targetName) };
+            if (Directory.Exists(state.patches_dir)) {
+                string number = @"(?:0|[1-9][0-9]{0,8})";
+                string pattern = @"\A" + System.Text.RegularExpressions.Regex.Escape(Stem(key)) + @"(?:\s*\(" + number + @"\." + number + @"\." + number + @"(?:\." + number + @")?\))?\z";
+                foreach (var dir in Directory.GetDirectories(state.patches_dir))
+                    if (System.Text.RegularExpressions.Regex.IsMatch(Path.GetFileName(dir), pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase)) {
+                        var safe = Safety.Under(state.patches_dir, Path.GetFileName(dir)); Safety.NoLinks(safe); result.Sources.Add(safe);
+                    }
+            }
+            result.Sources = result.Sources.OrderByDescending(Rank).ThenByDescending(p => p.Equals(result.Target, StringComparison.OrdinalIgnoreCase)).ThenBy(p => p, StringComparer.OrdinalIgnoreCase).ToList();
+            result.Preferred = result.Sources.FirstOrDefault() ?? result.Target;
+            return result;
+        }
+        public static void ValidateTree(string root, CancellationToken cancel)
+        {
+            Safety.NoLinks(root);
+            var pending = new Stack<string>(); pending.Push(root);
+            while (pending.Count > 0) {
+                cancel.ThrowIfCancellationRequested();
+                foreach (var path in Directory.GetFileSystemEntries(pending.Pop())) {
+                    var attributes = File.GetAttributes(path);
+                    if ((attributes & FileAttributes.ReparsePoint) != 0) throw new InvalidDataException("Migration refuses links/junctions: " + path);
+                    if ((attributes & FileAttributes.Directory) != 0) pending.Push(path);
+                }
+            }
+        }
+    }
+
     class Plan
     {
         public string Commit;
@@ -353,7 +410,9 @@ namespace VirgilPatch
         public Dictionary<string, string> Versions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, string> DisplayNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, string> LatestUpdates = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        public bool UpToDate { get { return Fetch.Count == 0 && Remove.Count == 0 && PatchJsons.Count == 0; } }
+        public Dictionary<string, string> InstallFolders = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, FolderMigration> Migrations = new Dictionary<string, FolderMigration>(StringComparer.OrdinalIgnoreCase);
+        public bool UpToDate { get { return Fetch.Count == 0 && Remove.Count == 0 && PatchJsons.Count == 0 && Migrations.Values.All(m => m.Completed); } }
     }
 
     class State
@@ -362,6 +421,7 @@ namespace VirgilPatch
         public string selection_root;
         public List<string> verified_patches = new List<string>();
         public List<string> selected_patches = new List<string>();
+        public Dictionary<string, string> install_folders = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public string commit;
         public string published;
         public Dictionary<string, object[]> hashes = new Dictionary<string, object[]>(StringComparer.OrdinalIgnoreCase);
@@ -385,6 +445,11 @@ namespace VirgilPatch
                 if (d.TryGetValue("selection_root", out v)) s.selection_root = v as string;
                 if (d.TryGetValue("selected_patches", out v) && v is System.Collections.IEnumerable && !(v is string))
                     foreach (var choice in (System.Collections.IEnumerable)v) if (choice is string && s.selected_patches.Count < 128) s.selected_patches.Add((string)choice);
+                if (d.TryGetValue("install_folders", out v) && v is Dictionary<string, object>)
+                    foreach (var pair in ((Dictionary<string, object>)v).Take(128)) {
+                        try { Safety.Patch(pair.Key); if (string.Equals(pair.Value as string, FolderMigration.Canonical(pair.Key), StringComparison.OrdinalIgnoreCase)) s.install_folders[pair.Key] = (string)pair.Value; }
+                        catch (IOException) { } catch (ArgumentException) { }
+                    }
                 if (d.TryGetValue("commit", out v)) s.commit = v as string;
                 if (d.TryGetValue("published", out v)) s.published = v as string;
                 if (d.TryGetValue("hashes", out v) && v is Dictionary<string, object>)
@@ -409,7 +474,7 @@ namespace VirgilPatch
             var tmp = FilePath + "." + Guid.NewGuid().ToString("N") + ".tmp";
             File.WriteAllText(tmp, js.Serialize(new Dictionary<string, object> {
                 { "patches_dir", patches_dir }, { "selection_root", selection_root }, { "verified_patches", verified_patches }, { "selected_patches", selected_patches }, { "commit", commit }, { "published", published },
-                { "hashes", hashes }, { "installed", installed } }));
+                { "hashes", hashes }, { "installed", installed }, { "install_folders", install_folders } }));
             Safety.NoLinks(FilePath);
             if (File.Exists(FilePath)) File.Replace(tmp, FilePath, null);
             else File.Move(tmp, FilePath);
@@ -470,9 +535,18 @@ namespace VirgilPatch
                                        Size = size, Sha = sha, Id = name == "patch.json" ? 0 : Safety.FileId(d["id"]) };
         }
 
+        readonly Dictionary<string, string> localFolders = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
         public string Local(string key)
         {
             Safety.Key(key);
+            int slash = key.IndexOf('/'); string mapped = null, saved;
+            if (slash > 0) {
+                string patch = key.Substring(0, slash);
+                if (!localFolders.TryGetValue(patch, out mapped) && state.install_folders.TryGetValue(patch, out saved) && string.Equals(saved, FolderMigration.Canonical(patch), StringComparison.OrdinalIgnoreCase))
+                    mapped = Safety.Under(state.patches_dir, saved);
+                if (mapped != null) return Safety.Under(mapped, key.Substring(slash + 1));
+            }
             return Safety.Under(state.patches_dir, key);
         }
 
@@ -513,6 +587,7 @@ namespace VirgilPatch
                     string display = stem + "(" + version + ")";
                     Safety.Patch(display);
                     expected = "patches/" + display;
+                    p.InstallFolders[kv.Key] = FolderMigration.Canonical(kv.Key);
                     p.Versions[kv.Key] = version;
                     p.DisplayNames[kv.Key] = display;
                 }
@@ -560,6 +635,12 @@ namespace VirgilPatch
             foreach (var patch in p.Patches) {
                 if (catalog.Versions.ContainsKey(patch)) p.Versions[patch] = catalog.Versions[patch];
                 if (catalog.DisplayNames.ContainsKey(patch)) p.DisplayNames[patch] = catalog.DisplayNames[patch];
+                if (catalog.InstallFolders.ContainsKey(patch)) {
+                    p.InstallFolders[patch] = catalog.InstallFolders[patch];
+                    var migration = FolderMigration.Discover(state, patch, catalog.InstallFolders[patch]);
+                    localFolders[patch] = migration.Preferred;
+                    if (migration.Needed) p.Migrations[patch] = migration;
+                }
             }
             foreach (var patch in p.Patches) p.Scope.Add(patch);
             // Legacy all-patches CLI behavior can remove retired tracked patches. Explicit selections never do.
@@ -577,7 +658,14 @@ namespace VirgilPatch
             {
                 cancel.ThrowIfCancellationRequested();
                 var path = Local(f); var info = new FileInfo(path);
-                if (!info.Exists || info.Length != f.Size || CachedSha(path, VerifyExisting || !state.verified_patches.Contains(f.Patch, StringComparer.OrdinalIgnoreCase), cancel) != f.Sha)
+                bool matches = Matches(f, path, VerifyExisting || !state.verified_patches.Contains(f.Patch, StringComparer.OrdinalIgnoreCase), cancel);
+                FolderMigration migration;
+                if (!matches && p.Migrations.TryGetValue(f.Patch, out migration))
+                    foreach (var source in migration.Sources) {
+                        if (source.Equals(localFolders[f.Patch], StringComparison.OrdinalIgnoreCase)) continue;
+                        if (Matches(f, Safety.Under(source, f.Name), true, cancel)) { matches = true; break; }
+                    }
+                if (!matches)
                 {
                     p.Fetch.Add(f);
                     if (info.Exists) p.Changed.Add(f.Key);
@@ -590,7 +678,7 @@ namespace VirgilPatch
             {
                 var path = Local(j);
                 // Metadata is small and must never be skipped because of a stale size/mtime cache.
-                if (!File.Exists(path) || new FileInfo(path).Length != j.Size || BlobSha(path) != j.Sha) p.PatchJsons.Add(j);
+                if (p.Migrations.ContainsKey(j.Patch) || !File.Exists(path) || new FileInfo(path).Length != j.Size || BlobSha(path) != j.Sha) p.PatchJsons.Add(j);
                 p.Installed[j.Key] = j.Sha;
             }
             foreach (var old in state.installed)
@@ -603,6 +691,62 @@ namespace VirgilPatch
             foreach (var patch in p.Patches) if (!state.verified_patches.Contains(patch, StringComparer.OrdinalIgnoreCase)) state.verified_patches.Add(patch);
             state.Save();
             return p;
+        }
+
+        bool Matches(FileInfoEntry entry, string path, bool force, CancellationToken cancel)
+        {
+            Safety.NoLinks(path); var info = new FileInfo(path);
+            return info.Exists && info.Length == entry.Size && CachedSha(path, force, cancel) == entry.Sha;
+        }
+        void PrepareMigration(Plan plan, FolderMigration migration, CancellationToken cancel)
+        {
+            Phase("Reusing existing patch folders");
+            foreach (var folder in migration.Sources) FolderMigration.ValidateTree(folder, cancel);
+            Safety.NoLinks(migration.Target);
+            if (!Directory.Exists(migration.Target) && Directory.Exists(migration.Preferred)) {
+                string before = migration.Preferred;
+                Directory.Move(before, migration.Target);
+                foreach (var key in state.hashes.Keys.Where(k => k.StartsWith(before + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)).ToList()) {
+                    state.hashes[migration.Target + key.Substring(before.Length)] = state.hashes[key]; state.hashes.Remove(key);
+                }
+                state.install_folders[migration.Key] = Path.GetFileName(migration.Target); state.Save();
+                migration.Sources.Remove(before); migration.Sources.Insert(0, migration.Target);
+                Log("Renamed " + Path.GetFileName(before) + " to " + Path.GetFileName(migration.Target) + ".");
+            }
+            localFolders[migration.Key] = migration.Target;
+            foreach (var asset in plan.Files.Values.Where(f => f.Name != "patch.json")) {
+                cancel.ThrowIfCancellationRequested(); var target = Local(asset);
+                if (Matches(asset, target, false, cancel)) continue;
+                foreach (var folder in migration.Sources) {
+                    if (folder.Equals(migration.Target, StringComparison.OrdinalIgnoreCase)) continue;
+                    string source = Safety.Under(folder, asset.Name);
+                    if (!Matches(asset, source, false, cancel)) continue;
+                    Directory.CreateDirectory(Path.GetDirectoryName(target));
+                    string temp = target + "." + Guid.NewGuid().ToString("N") + ".vtmp";
+                    try { File.Copy(source, temp, false); Place(temp, target, asset); }
+                    finally { Safety.DeleteTemp(temp); }
+                    break;
+                }
+            }
+            plan.Fetch = plan.Fetch.Where(f => !Matches(f, Local(f), false, cancel)).ToList();
+        }
+        void FinishMigration(FolderMigration migration, CancellationToken cancel)
+        {
+            Safety.NoLinks(migration.Target);
+            foreach (var source in migration.Sources.Where(p => !p.Equals(migration.Target, StringComparison.OrdinalIgnoreCase))) {
+                cancel.ThrowIfCancellationRequested();
+                if (!Directory.Exists(source)) continue;
+                FolderMigration.ValidateTree(source, cancel);
+                string parent = Path.GetDirectoryName(Path.GetFullPath(state.patches_dir));
+                string backups = Safety.Under(parent, "VirgilPatch-Migration-Backups");
+                string operation = Safety.Under(backups, DateTime.UtcNow.ToString("yyyyMMdd-HHmmss") + "-" + Guid.NewGuid().ToString("N"));
+                Directory.CreateDirectory(operation);
+                string destination = Safety.Under(operation, Path.GetFileName(source));
+                Directory.Move(source, destination);
+                foreach (var key in state.hashes.Keys.Where(k => k.StartsWith(source + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)).ToList()) state.hashes.Remove(key);
+                Log("Removed duplicate " + Path.GetFileName(source) + " from Patches; rollback copy: " + destination);
+            }
+            migration.Completed = true; state.Save();
         }
 
         static string ByteSha(byte[] bytes)
@@ -618,6 +762,10 @@ namespace VirgilPatch
         public void Apply(Plan p, CancellationToken cancel)
         {
             cancel.ThrowIfCancellationRequested();
+            foreach (var pair in p.InstallFolders) {
+                FolderMigration migration;
+                localFolders[pair.Key] = p.Migrations.TryGetValue(pair.Key, out migration) ? migration.Preferred : Safety.Under(state.patches_dir, pair.Value);
+            }
             foreach (var entry in p.Files.Values) Local(entry);
             if (p.UpToDate) { Progress(0, 0); Phase("Complete"); return; }
             var errors = new List<string>(); var progress = Progress; long offset = 0;
@@ -629,6 +777,8 @@ namespace VirgilPatch
                     cancel.ThrowIfCancellationRequested();
                     var unit = new Plan { Commit = p.Commit, Published = p.Published };
                     unit.Patches.Add(patch); unit.Scope.Add(patch);
+                    if (p.Migrations.ContainsKey(patch)) unit.Migrations[patch] = p.Migrations[patch];
+                    if (p.InstallFolders.ContainsKey(patch)) unit.InstallFolders[patch] = p.InstallFolders[patch];
                     foreach (var f in p.Files.Values.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase))) unit.Files.Add(f.Key, f);
                     unit.Fetch = p.Fetch.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase)).ToList();
                     unit.PatchJsons = p.PatchJsons.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -650,7 +800,9 @@ namespace VirgilPatch
                                 throw new InvalidDataException("Published patch.json size/checksum mismatch for " + patch + "; no assets in this patch were changed.");
                             Safety.PatchMetadata(metadata, patch, unit.Files);
                         }
+                        if (unit.Migrations.ContainsKey(patch)) PrepareMigration(unit, unit.Migrations[patch], cancel);
                         ApplyPatch(unit, metadata, cancel);
+                        if (unit.Migrations.ContainsKey(patch)) FinishMigration(unit.Migrations[patch], cancel);
                         p.CompletedPatches.Add(patch);
                         Log("Completed " + patch + ".");
                     }
@@ -774,7 +926,7 @@ namespace VirgilPatch
                     Safety.NoLinks(path);
                     File.Delete(path);
                     Log("removed " + key);
-                    touchedDirs.Add(Safety.Under(state.patches_dir, key.Substring(0, key.IndexOf('/'))));
+                    touchedDirs.Add(Path.GetDirectoryName(Local(key.Substring(0, key.IndexOf('/')) + "/patch.json")));
                 }
                 catch (IOException ex) { Log("could not remove " + key + ": " + ex.Message); }
             }
@@ -784,6 +936,8 @@ namespace VirgilPatch
                     Safety.PruneEmpty(dir);
                 }
                 catch (IOException) { }
+            foreach (var pair in p.InstallFolders) state.install_folders[pair.Key] = pair.Value;
+            foreach (var patch in p.Scope) if (!p.Files.Values.Any(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase))) state.install_folders.Remove(patch);
             state.commit = p.Commit;
             state.published = p.Published;
             state.installed = p.Installed;
@@ -874,7 +1028,7 @@ namespace VirgilPatch
         {
             if (!string.Equals(state.patches_dir, path, StringComparison.OrdinalIgnoreCase))
             {
-                state.installed.Clear(); state.hashes.Clear(); state.verified_patches.Clear(); state.selected_patches.Clear();
+                state.installed.Clear(); state.install_folders.Clear(); state.hashes.Clear(); state.verified_patches.Clear(); state.selected_patches.Clear();
                 state.selection_root = null; state.commit = null; state.published = null;
             }
             state.patches_dir = path;

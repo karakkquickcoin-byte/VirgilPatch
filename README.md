@@ -136,3 +136,12 @@ Use updater 1.5.2 or later for the versioned catalog. Startup still checks the s
 Maintainers can optionally set `E:\M2FX_Work\virgil\repository.json` to `{"path":"E:\\path\\to\\mirror"}` to use a different Git mirror without changing `published.json` source paths. The mirror must track the same GitHub main branch; keep existing pending commits and staged work separate.
 
 The configured publisher mirror may use Git sparse checkout: its working folders can contain only metadata and recently changed assets. Unchanged assets remain in verified Git objects and are staged under their new online paths without copying or reuploading their bytes. The final catalog is rebuilt from the complete staged Git snapshot, not from the sparse directory listing. Before a normal online publish, the publisher fetches GitHub main and accepts only a fast-forward update; diverged pending commits stop publication for reconciliation.
+
+
+### Existing-folder migration (updater 1.5.3)
+
+On an explicitly confirmed patch update, the updater consolidates recognized old folder versions into a fixed `Name(5.0.0)` local folder. It prefers existing files matching the current published checksum, including useful files from another duplicate, so it does not redownload matching payloads. Folder metadata versions rank the starting copy; an inaccurate folder label does not override verified content.
+
+The chooser/preview reports the rename. Checking, cancelling and ordinary launcher startup do not move game folders. The winning directory is renamed on the same volume, with its hash cache carried over. Repair, selected-patch isolation and resumable installation retain stable internal keys; a validated folder map survives restarts and supports retirement of renamed packages. Future `5.0.0.1` updates change version metadata and assets inside the existing `Name(5.0.0)` directory.
+
+After the current catalog's assets and patch metadata verify, duplicate folders move outside the active Patches directory into sibling `VirgilPatch-Migration-Backups` for rollback. This removes active duplicates quickly without deleting user data. Failed/cancelled updates retain recovery copies. Recognized package families are exact matches; unrelated packages stay untouched. Migration rejects reparse points/junctions before moving directories and never recursively deletes a directory tree.

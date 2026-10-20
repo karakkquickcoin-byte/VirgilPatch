@@ -67,3 +67,6 @@ folder plus an absolute screenshot prefix. Test audio remains muted; the video i
 SelfUpdateTests verifies temporarily locked handoff files are retried, wrong nonces and oversized records are
 rejected, and existing handoff files cannot be overwritten. Real process tests also exercise shipped older
 helpers. These checks accompany the unchanged signature, path, version, checksum, binary lock and rollback tests.
+
+
+`MigrationTests.cs` (compile with `RepairTests.cs`, `/main:MigrationTests`, the same root sources and resources) covers side-effect-free checks/cancellation, in-place rename, metadata-ranked and checksum-correct duplicate reuse, complementary partial installs, an existing outdated canonical folder, failure/retry, unrelated-folder isolation, portable plans, fixed baseline folder names across revisions, persisted repair/retirement mapping and malicious mapping/identity rejection. Runtime junction creation needs an NTFS scratch filesystem; the migration additionally validates every directory entry for reparse points before any move. Duplicate rollback directories are siblings of the scratch Patches root.
