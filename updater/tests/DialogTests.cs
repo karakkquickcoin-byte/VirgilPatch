@@ -21,7 +21,7 @@ class DialogTests
             {
                 timer.Tick+=delegate {
                     var form=Application.OpenForms.Cast<Form>().FirstOrDefault(f=>f.Text.StartsWith("Choose patches")); if(form==null)return;
-                    timer.Stop();var list=form.Controls.OfType<CheckedListBox>().Single();
+                    timer.Stop();var list=form.Controls.OfType<ListView>().Single();
                     Assert(list.CheckedItems.Count==1,"Existing patch not selected by default.");
                     form.Controls.OfType<CheckBox>().Single().Checked=true;
                     using(var image=new Bitmap(form.Width,form.Height)) {form.DrawToBitmap(image,new Rectangle(Point.Empty,image.Size));image.Save(args[1]+".selection.png");}

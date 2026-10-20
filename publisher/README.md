@@ -1,7 +1,7 @@
-# Matching Virgil publisher (1.5.0)
+# Matching Virgil publisher (1.5.2)
 
 These scripts mirror the maintainer's E-drive publisher. Keep virgil_core.py, virgil_publish.py and
-virgil_integrity.py together. Existing local configuration and build/signing wrapper remain on the maintainer machine.
+virgil_integrity.py and virgil_versions.py together. Existing local configuration and build/signing wrapper remain on the maintainer machine.
 No private release key or development assets belong here.
 
 Final manifests are rebuilt from staged Git objects: exact casing, immutable SHA and exact blob size. Missing
@@ -12,5 +12,10 @@ Interrupted uploads leave main unchanged. A later retry may create a fresh tempo
 be removed by the maintainer after confirming no publication is running. Pre-existing staged edits block publishing.
 Unpublished directories are preserved by full-mirror synchronization. Per-folder publishing retains other folders.
 
-For offline regression tests run `python tests/test_integrity.py` with Git installed. Tests use disposable local
+For offline regression tests run `python -B -m unittest discover -s tests -v` with Git installed. Tests use disposable local
 repositories and a bare local remote; no GitHub credentials or real patches are required.
+
+
+Online releases use stable installation keys plus a separate version/display name. Baseline is 5.0.0; each changed publication advances the fourth component by one. No-op or completed-commit retries do not advance it. Source folder names and source patch.json are untouched. Normal online publishing fetches GitHub main before numbering and refuses divergent pending histories.
+
+The optional E-drive repository.json selects the Git mirror independently of published.json source folders. Sparse mirrors retain unchanged assets as immutable Git blobs; release staging moves those blob references to the strictly derived versioned online folder, hashes every new/changed mirror asset, and rebuilds the final index from staged objects. The complete-snapshot integrity gate still precedes every push to main. Case-only differences in source metadata preserve exact published Git casing and cannot consume endless revisions.

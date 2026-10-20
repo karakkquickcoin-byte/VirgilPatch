@@ -4,6 +4,7 @@ import os
 import subprocess
 import tempfile
 import re
+import virgil_versions as vv
 
 
 def strict_json(raw):
@@ -22,7 +23,7 @@ def strict_json(raw):
 
 
 def git_bytes(repo, *args, input=None):
-    result = subprocess.run(['git', '-C', repo, *args], input=input, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    result = subprocess.run(['git', '-c', 'safe.directory=' + os.path.abspath(repo), '-C', repo, *args], input=input, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
     if result.returncode:
         raise RuntimeError(result.stderr.decode('utf-8', 'replace'))
@@ -105,15 +106,30 @@ class ObjectSizes:
             write_json(self.path, self.values)
 
 
-def canonicalize(repo, names):
+def canonicalize(repo, names, index=None):
     import virgil_core as vc
     tracked = records(repo)
     folded = {path.casefold(): path for path in tracked}
     if len(folded) != len(tracked):
         raise ValueError('Git contains case-colliding paths that cannot be installed on Windows.')
+    try:
+        previous = strict_json(git_bytes(repo, 'show', 'HEAD:index.json')).get('patches', {})
+    except RuntimeError:
+        previous = {}
+    # A sparse mirror retains immutable asset blobs in Git. Preserve exact Git casing
+    # across the controlled online-folder rename without checking every asset out.
+    for name in names:
+        if index and name in previous and name in index.get('patches', {}):
+            old_prefix = vv.repo_dir(name, previous[name]) + '/'
+            new_prefix = vv.repo_dir(name, index['patches'][name]) + '/'
+            for path in tracked:
+                if path.startswith(old_prefix):
+                    alias = new_prefix + path[len(old_prefix):]
+                    folded.setdefault(alias.casefold(), alias)
     for name in names:
         vc.safe_relative(name, folder=True)
-        root = vc.path_in(repo, 'patches/' + name)
+        prefix = vv.repo_dir(name, (index or {}).get('patches', {}).get(name, {}))
+        root = vc.path_in(repo, prefix)
         patch = vc.Patch(root)
         with open(vc.path_in(root, 'patch.json'), 'rb') as source:
             strict_json(source.read())
@@ -123,10 +139,10 @@ def canonicalize(repo, names):
             if entry['id'] in ids:
                 raise ValueError('Duplicate FileDataID in ' + name)
             ids.add(entry['id'])
-            path = 'patches/' + name + '/' + entry['file']
+            path = prefix + '/' + entry['file']
             actual = folded.get(path.casefold())
             if actual:
-                filename = actual[len('patches/' + name + '/'):]
+                filename = actual[len(prefix + '/'):]
             else:
                 match = patch.tree.get(entry['file'].lower())
                 if not match:
@@ -159,11 +175,12 @@ def finalize(repo, index, baseline=None, verified_sizes=None):
         return measured.get(sha)
     for name, previous in index['patches'].items():
         vc.safe_relative(name, folder=True)
-        prefix = 'patches/' + name
+        prefix = vv.repo_dir(name, previous)
         metadata_path = prefix + '/patch.json'
         if metadata_path not in objects:
             raise ValueError('Missing staged patch.json: ' + name)
         metadata = strict_json(git_bytes(repo, 'show', ':' + metadata_path))
+        vv.verify_metadata(name, previous, metadata)
         vc.validate_entries(metadata.get('files'))
         if not isinstance(metadata.get('name'), str) or not metadata['name'].strip():
             raise ValueError('Missing patch name: ' + name)
@@ -210,9 +227,7 @@ def validate_head(repo):
     errors = []
     for name, patch in index.get('patches', {}).items():
         vc.safe_relative(name, folder=True)
-        prefix = patch.get('repo_dir')
-        if prefix != 'patches/' + name:
-            raise ValueError('Invalid patch repository path.')
+        prefix = vv.repo_dir(name, patch)
         for filename, info in list(patch['files'].items()) + [('patch.json', patch['patch_json'])]:
             vc.safe_relative(filename, asset=filename != 'patch.json')
             actual = objects.get(prefix + '/' + filename)
@@ -220,6 +235,7 @@ def validate_head(repo):
                 errors.append(prefix + '/' + filename)
         raw = git_bytes(repo, 'show', 'HEAD:' + prefix + '/patch.json')
         metadata = strict_json(raw)
+        vv.verify_metadata(name, patch, metadata)
         vc.validate_entries(metadata.get('files'))
         if not isinstance(metadata.get('name'), str) or not metadata['name'].strip():
             errors.append(prefix + '/patch.json missing name')
@@ -232,3 +248,61 @@ def validate_head(repo):
         raise ValueError('Publication snapshot is inconsistent; main was not changed. Repair: ' + '; '.join(errors[:8]))
     measured.save()
     return index
+
+
+def stage_release(repo, index, baseline, names=None):
+    """Stage exact release blobs, including folder renames, without materializing unchanged assets.
+
+    Reused blobs must exist under the old committed patch path with the declared
+    hash. Every other blob comes from a checked regular mirror file. finalize()
+    then rebuilds and verifies all metadata against the resulting Git index.
+    """
+    import virgil_core as vc
+    previous = (baseline or {}).get('patches', {})
+    desired = index.get('patches', {})
+    names = set(names if names is not None else set(previous) | set(desired))
+    tracked = records(repo)
+    scopes = {vv.repo_dir(name, entry) + '/' for mapping in (previous, desired)
+              for name, entry in mapping.items() if name in names}
+    remove = [path for path in tracked if any(path.startswith(prefix) for prefix in scopes)]
+    rows = [('0 ' + '0'*40 + '\t' + path).encode('utf-8') for path in remove]
+    sparse = []
+    for name in sorted(names):
+        if name not in desired:
+            continue
+        entry = desired[name]
+        prefix = vv.repo_dir(name, entry)
+        old_prefix = vv.repo_dir(name, previous[name]) if name in previous else None
+        metadata_path = vc.path_in(repo, prefix + '/patch.json')
+        if os.path.getsize(metadata_path) > 16 * 1024 * 1024:
+            raise ValueError('Patch metadata exceeds size limit.')
+        with open(metadata_path, 'rb') as source:
+            metadata = strict_json(source.read())
+        vc.validate_entries(metadata.get('files'))
+        vv.verify_metadata(name, entry, metadata)
+        indexed = {n.casefold(): info for n, info in entry['files'].items()}
+        canonical_files = []
+        for item in metadata['files']:
+            info = indexed.get(item['file'].casefold())
+            if not info or info['id'] != item['id']:
+                raise ValueError('Release metadata disagrees with source file IDs: ' + name)
+            canonical_files.append((item['file'], info))
+        for filename, info in canonical_files + [('patch.json', entry['patch_json'])]:
+            vc.safe_relative(filename, asset=filename != 'patch.json')
+            path = prefix + '/' + filename
+            actual = vc.path_in(repo, path)
+            old = tracked.get(old_prefix + '/' + filename) if old_prefix else None
+            if filename != 'patch.json' and old and old['mode'] in ('100644', '100755') and old['sha'] == info['sha']:
+                sha = old['sha']
+                mode = old['mode']
+            else:
+                if not os.path.isfile(actual):
+                    raise ValueError('Missing changed mirror asset: ' + path)
+                sha = git_bytes(repo, 'hash-object', '-w', '--', path).decode().strip()
+                mode = '100644'
+            rows.append((mode + ' ' + sha + '\t' + path).encode('utf-8'))
+            if not os.path.exists(actual):
+                sparse.append(path.encode('utf-8'))
+    git_bytes(repo, 'update-index', '-z', '--index-info', input=b'\0'.join(rows) + (b'\0' if rows else b''))
+    if sparse:
+        git_bytes(repo, 'update-index', '--skip-worktree', '-z', '--stdin', input=b'\0'.join(sparse) + b'\0')

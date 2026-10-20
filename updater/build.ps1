@@ -7,10 +7,10 @@ if (-not $CompileOnly -and (-not $SigningKeyPath -or -not (Test-Path -LiteralPat
 }
 if (-not $CompileOnly -and (Test-Path -LiteralPath (Join-Path (Split-Path $PSScriptRoot) '.git'))) {
     $repoRoot=Split-Path $PSScriptRoot
-    $tracked=@(& git -C $repoRoot ls-tree --name-only HEAD -- updater-release.json)
+    $tracked=@(& git -c "safe.directory=$repoRoot" -C $repoRoot ls-tree --name-only HEAD -- updater-release.json)
     if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect the previous committed updater release.' }
     if ($tracked.Count -gt 0) {
-        $previous=(& git -C $repoRoot show HEAD:updater-release.json | Out-String | ConvertFrom-Json)
+        $previous=(& git -c "safe.directory=$repoRoot" -C $repoRoot show HEAD:updater-release.json | Out-String | ConvertFrom-Json)
         if ($LASTEXITCODE -ne 0) { throw 'Cannot read the previous committed updater release.' }
         $source=[IO.File]::ReadAllText((Join-Path $PSScriptRoot 'VirgilUpdater.cs'))
         $versionMatch=[regex]::Match($source,'AssemblyVersion\("([^"]+)"\)')

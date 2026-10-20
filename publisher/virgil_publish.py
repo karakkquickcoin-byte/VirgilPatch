@@ -34,6 +34,7 @@ import os, sys, json, time, shutil, struct, argparse, subprocess, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import virgil_core as vc
 import virgil_integrity as vi
+import virgil_versions as vv
 
 HASH_CACHE = os.path.join(vc.WORK, "hash_cache.json")
 _hash_cache = None
@@ -99,10 +100,10 @@ def save_hash_cache():
 def published_index():
     """index.json as last committed (the working-tree copy is rewritten by every sync), as {"patches": {name: {...}}}."""
     flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
-    head = subprocess.run(["git", "-C", vc.REPO, "rev-parse", "HEAD"], capture_output=True, creationflags=flags).stdout.strip()
+    head = subprocess.run(["git", "-c", "safe.directory=" + os.path.abspath(vc.REPO), "-C", vc.REPO, "rev-parse", "HEAD"], capture_output=True, creationflags=flags).stdout.strip()
     if head and head in _index_cache:                         # same commit: reuse the parsed index (it is several MB)
         return json.loads(_index_cache[head])
-    r = subprocess.run(["git", "-C", vc.REPO, "show", "HEAD:index.json"], capture_output=True, creationflags=flags)
+    r = subprocess.run(["git", "-c", "safe.directory=" + os.path.abspath(vc.REPO), "-C", vc.REPO, "show", "HEAD:index.json"], capture_output=True, creationflags=flags)
     if r.returncode:
         return None
     try:
@@ -541,7 +542,7 @@ GIT_ENV = dict(os.environ, GIT_TERMINAL_PROMPT="0")     # never wait on a consol
 
 def git(*args, check_rc=True, input=None):
     # CREATE_NO_WINDOW: under the GUI (pyw) every git call otherwise opens an empty console window
-    r = subprocess.run(["git", "-C", vc.REPO, "-c", "http.sslBackend=schannel"] + list(args), capture_output=True,
+    r = subprocess.run(["git", "-c", "safe.directory=" + os.path.abspath(vc.REPO), "-C", vc.REPO, "-c", "http.sslBackend=schannel"] + list(args), capture_output=True,
                        text=True, input=input, encoding="utf-8", errors="replace", env=GIT_ENV,
                        creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     if check_rc and r.returncode:
@@ -570,17 +571,21 @@ def ensure_credential_helper():
         git("config", "--local", "credential.helper", "manager")
 
 
-def _mirror(src_path, dst_dir):
+def _mirror(src_path, dst_dir, version=None, previous=None):
     """Listed files + patch.json of one patch into dst_dir; returns its index entry."""
     p = vc.Patch(src_path)
     vc.no_links(dst_dir)
     os.makedirs(dst_dir, exist_ok=True)
     files = {}
-    for e in p.entries:
+    canonical_names = {n.casefold(): n for n in (previous or {}).get("files", {})}
+    entries = [dict(e, file=canonical_names.get(e["file"].casefold(), e["file"])) for e in p.entries]
+    for e in entries:
         n = e["file"]
         src, dst = vc.path_in(src_path, n), vc.path_in(dst_dir, n)
         sha = blob_sha(src)
-        if not os.path.exists(dst) or os.path.getsize(dst) != os.path.getsize(src) or blob_sha(dst) != sha:
+        old = (previous or {}).get("files", {}).get(n, {})
+        reusable = not os.path.exists(dst) and old.get("sha") == sha and old.get("size") == os.path.getsize(src)
+        if not reusable and (not os.path.exists(dst) or os.path.getsize(dst) != os.path.getsize(src) or blob_sha(dst) != sha):
             shutil.copy2(src, _mk(dst))
         files[n] = {"id": e["id"], "size": os.path.getsize(src), "sha": sha}
     keep = {e["file"].lower() for e in p.entries} | {"patch.json"}
@@ -588,9 +593,12 @@ def _mirror(src_path, dst_dir):
         if f.lower() not in keep:
             os.remove(vc.path_in(dst_dir, f))            # the local patch is the master; git history keeps the old copy
     pj = vc.path_in(dst_dir, "patch.json")
-    shutil.copy2(vc.path_in(src_path, "patch.json"), pj)
+    if version:
+        vc.write_patch_json(dst_dir, vv.metadata(p.meta, pname(src_path), version), entries)
+    else:
+        shutil.copy2(vc.path_in(src_path, "patch.json"), pj)
     rel = os.path.relpath(dst_dir, vc.REPO).replace("\\", "/")
-    return {"repo_dir": rel, "total_bytes": sum(v["size"] for v in files.values()),
+    return {"repo_dir": rel, **({"version": version, "display_name": vv.display_name(pname(src_path), version), "source_manifest": vv.manifest_hash(p.meta)} if version else {}), "total_bytes": sum(v["size"] for v in files.values()),
             "patch_json": {"size": os.path.getsize(pj), "sha": vc.git_blob_sha(pj)}, "files": files}
 
 
@@ -603,22 +611,27 @@ def _prune_empty_dirs(root):
 def sync_repo(published=None):
     """Mirror every published patch into <repo>/patches/<name> and write index.json (format 2)."""
     published = vc.load_published() if published is None else published
-    previous_names = set((published_index() or {}).get("patches", {}))
-    old_single = os.path.join(vc.REPO, "patch")
-    if os.path.isdir(old_single):                      # format-1 layout: one patch in patch/ -> patches/<name> (rename)
-        dst = os.path.join(vc.REPO_PATCHES, vc.MAIN_NAME)
-        if not os.path.exists(dst):
-            os.makedirs(vc.REPO_PATCHES, exist_ok=True)
-            os.rename(old_single, dst)
+    previous = (published_index() or {}).get("patches", {})
     os.makedirs(vc.REPO_PATCHES, exist_ok=True)
     patches = {}
+    destinations = set()
     for path in published:
-        patches[pname(path)] = _mirror(path, vc.path_in(vc.REPO_PATCHES, pname(path)))
-    for d in os.listdir(vc.REPO_PATCHES):              # no longer published: leaves GitHub with this commit
-        if d in previous_names and d not in patches:
-            shutil.rmtree(vc.path_in(vc.REPO_PATCHES, d))
-    if os.path.isdir(old_single):
-        shutil.rmtree(old_single)
+        name = pname(path)
+        sc = scan_folder(path)
+        prior = previous.get(name)
+        changed = sc["first"] or sc["new"] or sc["changed"] or sc["removed"] or sc["patch_json_changed"]
+        version = vv.next_version(prior) if changed or not (prior or {}).get("version") else prior["version"]
+        folder = vv.display_name(name, version).casefold()
+        if folder in destinations:
+            raise ValueError("Two patch names resolve to the same online folder.")
+        destinations.add(folder)
+        dst = vv.prepare(vc.REPO, name, prior, version)
+        patches[name] = dict(prior or {}, **_mirror(path, dst, version, prior))
+    for name, prior in previous.items():
+        if name not in patches:
+            dst = vc.path_in(vc.REPO, vv.repo_dir(name, prior))
+            if os.path.isdir(dst):
+                shutil.rmtree(dst)
     _prune_empty_dirs(vc.REPO_PATCHES)
     index = {"format": 2, "published": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), "patches": patches}
     try:
@@ -651,6 +664,19 @@ def describe_changes(before, after):
     return "; ".join(parts) or "no file changes"
 
 
+def refresh_remote(say=log):
+    """Number releases against current GitHub main without overwriting pending local publications."""
+    say("reading current GitHub publication ...")
+    git("fetch", "-q", "origin")
+    if not git("rev-parse", "--verify", "-q", "origin/main", check_rc=False).strip():
+        return
+    behind, ahead = map(int, git("rev-list", "--left-right", "--count", "origin/main...HEAD").split())
+    if behind and ahead:
+        raise ValueError("GitHub changed while local publication commits are pending. Reconcile the mirror before publishing; no remote files were overwritten.")
+    if behind:
+        git("merge", "--ff-only", "origin/main")
+
+
 def require_clean_stage():
     if git("diff", "--cached", "--name-only").strip():
         raise ValueError("There are already staged Git changes. Commit or unstage them before publishing patches.")
@@ -658,6 +684,8 @@ def require_clean_stage():
 
 def publish(message=None, push=True, batch_bytes=400_000_000, skip_check=False, say=log):
     require_clean_stage()
+    if push:
+        refresh_remote(say)
     published = vc.load_published()
     gone = [p for p in published if not os.path.isfile(os.path.join(p, "patch.json"))]
     if gone:
@@ -684,7 +712,7 @@ def publish(message=None, push=True, batch_bytes=400_000_000, skip_check=False, 
     for item in status.split("\0"):
         if len(item) > 3:
             code, path = item[:2], item[3:]
-            if "D" not in code and any(path.startswith("patches/" + n + "/") for n in index["patches"]) and not path.endswith("/patch.json"):
+            if "D" not in code and any(path.startswith(vv.repo_dir(n, p) + "/") for n, p in index["patches"].items()) and not path.endswith("/patch.json"):
                 paths.append(path)
     # file batches first (each pushed on its own), patch.json files + index.json + deletions last: an updater only
     # ever sees an index whose files are all present at that commit
@@ -700,13 +728,13 @@ def publish(message=None, push=True, batch_bytes=400_000_000, skip_check=False, 
         batches.append(cur)
     commits = 0
     for k, b in enumerate(batches[:-1] if len(batches) > 1 else []):
-        git("add", "--pathspec-from-file=-", "--pathspec-file-nul", input="\0".join(b))
+        git("add", "--sparse", "--pathspec-from-file=-", "--pathspec-file-nul", input="\0".join(b))
         git("commit", "-q", "-m", "%s (part %d/%d)" % (msg, k + 1, len(batches)))
         commits += 1
     names = list(index["patches"])
-    vi.canonicalize(vc.REPO, names)
-    scopes = sorted(set(names) | set((before or {}).get("patches", {})))
-    git("add", "-A", "--", *["patches/" + name for name in scopes], "index.json")
+    vi.canonicalize(vc.REPO, names, index)
+    scopes = sorted({vv.repo_dir(n, p) for snapshot in (index, before or {}) for n, p in snapshot.get("patches", {}).items()})
+    vi.stage_release(vc.REPO, index, before)
     index = vi.finalize(vc.REPO, index, before)
     if git("diff", "--cached", "--name-only").strip():
         git("commit", "-q", "-m", msg + (" (part %d/%d)" % (len(batches), len(batches)) if len(batches) > 1 else ""))
@@ -785,10 +813,11 @@ def scan_folder(path):
     name = pname(path)
     base_entry = (published_index() or {}).get("patches", {}).get(name)
     base = (base_entry or {}).get("files", {})
+    canonical_names = {n.casefold(): n for n in base}
     files, new, changed, missing = {}, [], [], []
     root = os.path.abspath(path)
     for e in p.entries:
-        n = e["file"]
+        n = canonical_names.get(e["file"].casefold(), e["file"])
         st = p.stat(n)
         if st is None:
             missing.append(n)
@@ -804,7 +833,7 @@ def scan_folder(path):
     save_hash_cache()
     return {"name": name, "path": path, "files": files, "new": new, "changed": changed, "removed": removed,
             "missing": missing, "first": base_entry is None, "patch_json_sha": pj_sha,
-            "patch_json_changed": (base_entry or {}).get("patch_json", {}).get("sha") != pj_sha,
+            "patch_json_changed": ((base_entry or {}).get("source_manifest") != vv.manifest_hash(p.meta) if (base_entry or {}).get("source_manifest") else (base_entry or {}).get("patch_json", {}).get("sha") != pj_sha),
             "bytes_to_send": sum(files[n]["size"] for n in new + changed)}
 
 
@@ -886,6 +915,8 @@ def push_folder(path, deep=False, say=log, push=True):
     """Push ONE folder: copy only its new/changed files into the mirror, drop its removed ones, update its entry in
     index.json, commit (~400 MB batches, patch.json + index.json last) and push. Other folders are not touched."""
     require_clean_stage()
+    if push:
+        refresh_remote(say)
     published = vc.load_published()
     if not any(_norm(p) == _norm(path) for p in published):
         return {"ok": False, "errors": ["%s is not in the GitHub list" % pname(path)]}
@@ -904,7 +935,9 @@ def push_folder(path, deep=False, say=log, push=True):
     if not qc["ok"]:
         return {"ok": False, "errors": qc["errors"]}
     name = sc["name"]
-    dst = vc.path_in(vc.REPO_PATCHES, name)
+    prior = (published_index() or {}).get("patches", {}).get(name)
+    version = vv.next_version(prior)
+    dst = vv.prepare(vc.REPO, name, prior, version)
     say("copying %d files into the GitHub mirror ..." % (len(sc["new"]) + len(sc["changed"])))
     for n in sc["new"] + sc["changed"]:
         d = vc.path_in(dst, n)
@@ -917,10 +950,12 @@ def push_folder(path, deep=False, say=log, push=True):
             if f.lower() not in keep:
                 os.remove(vc.path_in(dst, f))
         _prune_empty_dirs(dst)
-    shutil.copy2(vc.path_in(path, "patch.json"), _mk(vc.path_in(dst, "patch.json")))
+    source_patch = vc.Patch(path)
+    os.makedirs(dst, exist_ok=True)
+    vc.write_patch_json(dst, vv.metadata(source_patch.meta, name, version), source_patch.entries)
     pj = vc.path_in(dst, "patch.json")
     idx = _working_index()
-    idx["patches"][name] = {"repo_dir": "patches/" + name, "total_bytes": sum(v["size"] for v in sc["files"].values()),
+    idx["patches"][name] = {"repo_dir": "patches/" + vv.display_name(name, version), "version": version, "display_name": vv.display_name(name, version), "source_manifest": vv.manifest_hash(source_patch.meta), "total_bytes": sum(v["size"] for v in sc["files"].values()),
                             "patch_json": {"size": os.path.getsize(pj), "sha": vc.git_blob_sha(pj)},
                             "files": sc["files"]}
     idx["published"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -928,7 +963,7 @@ def push_folder(path, deep=False, say=log, push=True):
         json.dump(idx, f, indent=0, sort_keys=True)
     msg = ("Add %s (%d files)" % (name, len(sc["files"])) if sc["first"] else
            "Update %s: %d new, %d changed, %d removed" % (name, len(sc["new"]), len(sc["changed"]), len(sc["removed"])))
-    rel = "patches/" + name
+    rel = vv.repo_dir(name, idx["patches"][name])
     paths = sorted(rel + "/" + n for n in sc["new"] + sc["changed"])
     batches, cur, size = [], [], 0
     for p_ in paths:
@@ -942,12 +977,12 @@ def push_folder(path, deep=False, say=log, push=True):
         batches.append(cur)
     commits = 0
     for k, b in enumerate(batches[:-1] if len(batches) > 1 else []):
-        git("add", "--pathspec-from-file=-", "--pathspec-file-nul", input="\0".join(b))
+        git("add", "--sparse", "--pathspec-from-file=-", "--pathspec-file-nul", input="\0".join(b))
         if git("diff", "--cached", "--name-only").strip():    # parts an interrupted push already committed are skipped
             git("commit", "-q", "-m", "%s (part %d/%d)" % (msg, k + 1, len(batches)))
             commits += 1
-    vi.canonicalize(vc.REPO, [name])
-    git("add", "-A", "--", rel, "index.json")
+    vi.canonicalize(vc.REPO, [name], idx)
+    vi.stage_release(vc.REPO, idx, published_index(), [name])
     idx = vi.finalize(vc.REPO, idx, published_index())
     if git("diff", "--cached", "--name-only").strip():
         git("commit", "-q", "-m", msg + (" (part %d/%d)" % (len(batches), len(batches)) if len(batches) > 1 else ""))
@@ -962,12 +997,16 @@ def remove_folder(name, say=log, push=True):
     """Stop publishing a folder: its files leave the current GitHub version (they stay in the history) and everyone's
     updater removes it on their next update. The local folder is not touched."""
     require_clean_stage()
+    if push:
+        refresh_remote(say)
     vc.safe_relative(name, folder=True)
     clear_stale_lock(say)
     ok, msg = remove_published(name)
     if not ok:
         return {"ok": False, "errors": [msg]}
-    dst = vc.path_in(vc.REPO_PATCHES, name)
+    prior = (_working_index().get("patches", {})).get(name, {})
+    rel = vv.repo_dir(name, prior)
+    dst = vc.path_in(vc.REPO, rel)
     if os.path.isdir(dst):
         shutil.rmtree(dst)
     idx = _working_index()
@@ -975,7 +1014,7 @@ def remove_folder(name, say=log, push=True):
     idx["published"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     with open(os.path.join(vc.REPO, "index.json"), "w", encoding="utf-8") as f:
         json.dump(idx, f, indent=0, sort_keys=True)
-    git("add", "-A", "--", "patches/" + name, "index.json")
+    vi.stage_release(vc.REPO, idx, published_index(), [name])
     idx = vi.finalize(vc.REPO, idx, published_index())
     commits = 0
     if git("diff", "--cached", "--name-only").strip():
@@ -1215,8 +1254,10 @@ def gui():
 
     def folder_table(parent):
         frame = ttk.Frame(parent, style="Panel.TFrame")
-        tv = ttk.Treeview(frame, columns=("files", "status", "scanned"), height=6, selectmode="browse")
+        tv = ttk.Treeview(frame, columns=("version", "files", "status", "scanned"), height=6, selectmode="browse")
         tv.heading("#0", text="FOLDER", anchor="w")
+        tv.heading("version", text="VERSION", anchor="w")
+        tv.column("version", width=int(100 * sc_), stretch=False)
         tv.heading("files", text="FILES", anchor="e")
         tv.heading("status", text="STATUS", anchor="w")
         tv.heading("scanned", text="SCANNED", anchor="e")
@@ -1449,7 +1490,10 @@ def gui():
             for p in pub:
                 n = pname(p)
                 info = scans.get(n, ("click Scan for changes", "", "", "same"))
-                tv.insert("", "end", iid=n, text="  " + n, values=(info[1], info[0], info[2]), tags=(info[3],))
+                entry = (published_index() or {}).get("patches", {}).get(n, {})
+                online = entry.get("version", "not versioned")
+                label = entry.get("display_name", n)
+                tv.insert("", "end", iid=n, text="  " + label, values=(online, info[1], info[0], info[2]), tags=(info[3],))
             names = [pname(p) for p in pub]
             if names:
                 tv.selection_set(keep[0] if keep and keep[0] in names else names[0])

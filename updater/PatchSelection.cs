@@ -45,54 +45,65 @@ namespace VirgilPatch
             return text.ToString();
         }
 
-        sealed class Choice
-        {
-            public string Name;
-            public long Bytes;
-            public bool Existing;
-            public override string ToString() { return Name + "  |  " + Size(Bytes) + " total  |  " + (Existing ? "on this PC" : "not installed"); }
-        }
         public static PatchSelection Choose(IWin32Window owner, Plan catalog, State state)
         {
             using (var dialog = Window("Choose patches to update or repair", 460))
             {
-                var list = new CheckedListBox { CheckOnClick = true, BackColor = Color.FromArgb(31, 29, 25), ForeColor = Foreground,
-                    BorderStyle = BorderStyle.FixedSingle, Location = new Point(24, 88), Size = new Size(682, 218), IntegralHeight = false };
+                var list = new ListView { CheckBoxes = true, FullRowSelect = true, View = View.Details, HideSelection = false,
+                    BackColor = Color.FromArgb(31, 29, 25), ForeColor = Foreground,
+                    BorderStyle = BorderStyle.FixedSingle, Location = new Point(24, 88), Size = new Size(682, 218) };
+                list.Columns.Add("Patch", 280); list.Columns.Add("Installed", 95); list.Columns.Add("Available", 95);
+                list.Columns.Add("Size", 90); list.Columns.Add("Status", 115);
                 bool saved = string.Equals(state.selection_root, state.patches_dir, StringComparison.OrdinalIgnoreCase);
                 foreach (var name in catalog.Patches)
                 {
                     bool existing = false;
                     try { existing = Directory.Exists(Safety.Under(state.patches_dir, name)); }
                     catch (IOException) { } // An unselected junction must not prevent checking unrelated patches.
-                    var row = new Choice { Name = name, Bytes = catalog.Files.Values.Where(f => f.Patch == name && f.Name != "patch.json").Sum(f => f.Size), Existing = existing };
-                    list.Items.Add(row, saved ? state.selected_patches.Contains(name, StringComparer.OrdinalIgnoreCase) : existing);
+                    string available, display;
+                    if (!catalog.Versions.TryGetValue(name, out available)) available = "legacy";
+                    if (!catalog.DisplayNames.TryGetValue(name, out display)) display = name;
+                    string installed = existing ? "unknown" : "-";
+                    if (existing) try {
+                        var metadata = Safety.Under(state.patches_dir, name + "/patch.json");
+                        if (File.Exists(metadata) && new FileInfo(metadata).Length <= Safety.MaxMetadataBytes) {
+                            var data = StrictJson.Read(File.ReadAllBytes(metadata), (int)Safety.MaxMetadataBytes);
+                            object version; if (data.TryGetValue("version", out version) && version is string)
+                                installed = ((string)version).Length <= 40 ? (string)version : "unknown";
+                        }
+                    } catch (Exception) { installed = "unknown"; }
+                    long bytes = catalog.Files.Values.Where(f => f.Patch == name && f.Name != "patch.json").Sum(f => f.Size);
+                    var row = new ListViewItem(new[] { display, installed, available, Size(bytes), existing ? "on this PC" : "not installed" }) { Tag = name };
+                    row.Checked = saved ? state.selected_patches.Contains(name, StringComparer.OrdinalIgnoreCase) : existing;
+                    list.Items.Add(row);
                 }
                 var verify = new CheckBox { Text = "Deep repair: re-verify unchanged files too (extra local disk reading)", AutoSize = true, Location = new Point(24, 320), ForeColor = Foreground };
                 var clear = new LauncherButton { Text = "Clear all", Location = new Point(24, 363), Size = new Size(110, 34) };
                 var all = new LauncherButton { Text = "Select all", Location = new Point(144, 363), Size = new Size(110, 34) };
                 var accept = new LauncherButton { Text = "Check selected", Primary = true, Location = new Point(508, 405), Size = new Size(198, 36), DialogResult = DialogResult.OK, Enabled = list.CheckedItems.Count > 0 };
                 var cancel = new LauncherButton { Text = "Cancel", Location = new Point(380, 405), Size = new Size(116, 36), DialogResult = DialogResult.Cancel };
-                list.ItemCheck += (s, e) => accept.Enabled = list.CheckedItems.Count + (e.NewValue == CheckState.Checked ? 1 : -1) > 0;
-                clear.Click += delegate { for (int i = 0; i < list.Items.Count; i++) list.SetItemChecked(i, false); };
-                all.Click += delegate { for (int i = 0; i < list.Items.Count; i++) list.SetItemChecked(i, true); };
+                list.ItemChecked += (s, e) => accept.Enabled = list.CheckedItems.Count > 0;
+                clear.Click += delegate { for (int i = 0; i < list.Items.Count; i++) list.Items[i].Checked = false; };
+                all.Click += delegate { for (int i = 0; i < list.Items.Count; i++) list.Items[i].Checked = true; };
                 dialog.Controls.AddRange(new Control[] { Text("Choose only the folders you want. Unselected patches stay untouched.", 24, 20, 682, 28),
                     Text("Totals are package sizes; only changed files download. Classic and HD can be selected separately.", 24, 51, 682, 30),
                     list, verify, clear, all, Text("Only missing or changed files are downloaded, including after a failed update.", 24, 406, 340, 40), accept, cancel });
                 dialog.AcceptButton = accept; dialog.CancelButton = cancel;
                 if (dialog.ShowDialog(owner) != DialogResult.OK) return null;
-                return new PatchSelection { Names = list.CheckedItems.Cast<Choice>().Select(c => c.Name).ToArray(), Verify = verify.Checked };
+                return new PatchSelection { Names = list.CheckedItems.Cast<ListViewItem>().Select(c => (string)c.Tag).ToArray(), Verify = verify.Checked };
             }
         }
 
         public static string Summary(Plan plan)
         {
             var text = new StringBuilder();
-            text.AppendLine("Version: " + plan.Published).AppendLine("Download: " + Size(plan.FetchBytes) + " across " + plan.Fetch.Count + " files").AppendLine();
+            text.AppendLine("Published: " + plan.Published).AppendLine("Download: " + Size(plan.FetchBytes) + " across " + plan.Fetch.Count + " files").AppendLine();
             foreach (var patch in plan.Patches)
             {
                 Func<string, bool> here = k => k.StartsWith(patch + "/", StringComparison.OrdinalIgnoreCase);
                 var files = plan.Fetch.Where(f => f.Patch == patch).ToList();
-                text.AppendLine(patch).AppendLine("  " + plan.Added.Count(here) + " new / missing, " + plan.Changed.Count(here) + " changed, " + plan.Repairs.Count(here) + " repairs, " + plan.Remove.Count(here) + " retired");
+                string display; if (!plan.DisplayNames.TryGetValue(patch, out display)) display = patch;
+                text.AppendLine(display).AppendLine("  " + plan.Added.Count(here) + " new / missing, " + plan.Changed.Count(here) + " changed, " + plan.Repairs.Count(here) + " repairs, " + plan.Remove.Count(here) + " retired");
                 string latest; if (plan.LatestUpdates.TryGetValue(patch, out latest) && latest.Length > 0) text.AppendLine("  " + latest);
                 text.AppendLine("  Transfer: " + Size(files.Sum(f => f.Size)) + (plan.PatchJsons.Any(f => f.Patch == patch) ? "; patch.json will be restored or refreshed after files are complete." : "; patch.json is already current."));
                 foreach (var f in files.Take(80)) text.AppendLine("    " + f.Name);

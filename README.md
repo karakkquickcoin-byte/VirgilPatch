@@ -123,3 +123,16 @@ Windows Authenticode signatures and do not establish an antivirus clearance.
 GitHub's **Code > Download ZIP** and generated source archives omit `patches/`, `index.json` and the compiled EXE/ZIP to keep older
 updater downloads small. The files remain tracked in the repository and are available through raw URLs or a Git clone.
 For patch installation use the updater. The separate `VirgilUpdater.zip` download still contains the latest updater.
+
+
+### Online patch versions
+
+Patch releases start at `5.0.0`, then advance independently to `5.0.0.1`, `5.0.0.2`, and so on when published content changes. No-op scans, no-op publishes, and retries of a completed commit do not consume another version. Publisher tables show the online version; the updater chooser shows Installed and Available versions.
+
+The permanent `index.json` key remains the local installation folder. `version`, `display_name`, and the strictly derived `repo_dir` describe the online release, for example key `!Chronicles-TexturePatch(3.2.0)` with repository path `patches/!Chronicles-TexturePatch(5.0.0)`. Only the Git mirror and published `patch.json` receive the new name/version. Publisher source folders and their metadata are never renamed or rewritten by release numbering. The updater continues to use stable local keys for selection, hashes, repair, resume, and retirement; renaming online assets does not force unchanged assets to download.
+
+Use updater 1.5.2 or later for the versioned catalog. Startup still checks the signed program channel only; patches still require explicit Update, selection and confirmation. Path, link, extension, ID, hash, byte-limit, signature and atomic-publication checks remain enforced.
+
+Maintainers can optionally set `E:\M2FX_Work\virgil\repository.json` to `{"path":"E:\\path\\to\\mirror"}` to use a different Git mirror without changing `published.json` source paths. The mirror must track the same GitHub main branch; keep existing pending commits and staged work separate.
+
+The configured publisher mirror may use Git sparse checkout: its working folders can contain only metadata and recently changed assets. Unchanged assets remain in verified Git objects and are staged under their new online paths without copying or reuploading their bytes. The final catalog is rebuilt from the complete staged Git snapshot, not from the sparse directory listing. Before a normal online publish, the publisher fetches GitHub main and accepts only a fast-forward update; diverged pending commits stop publication for reconciliation.

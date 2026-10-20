@@ -11,6 +11,11 @@ MAIN_NAME = "!Chronicles-TexturePatch(3.2.0)"
 MAIN = os.path.join(PATCHES, MAIN_NAME)
 RETIRED = os.path.join(os.path.dirname(PATCHES), "Patches_merged")      # merged source patches are moved here
 REPO = r"D:\D-Fix\VirgilPatch"
+WORK = r"E:\M2FX_Work\virgil"
+_repo_config = os.path.join(WORK, "repository.json")
+if os.path.isfile(_repo_config):
+    with open(_repo_config, encoding="utf-8") as _config:
+        REPO = json.load(_config)["path"]
 REPO_PATCHES = os.path.join(REPO, "patches")            # one sub-folder per published patch, named as installed
 WORK = r"E:\M2FX_Work\virgil"
 PUBLISHED = os.path.join(WORK, "published.json")        # which local patch folders go to GitHub (first = main)

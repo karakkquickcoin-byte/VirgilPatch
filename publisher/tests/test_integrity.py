@@ -7,7 +7,7 @@ import virgil_publish as vp
 import virgil_integrity as vi
 
 def run(repo,*args):
-    result=subprocess.run(['git','-C',str(repo),*args],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    result=subprocess.run(['git','-c','safe.directory='+str(repo.resolve()),'-c','safe.directory='+str((repo/'remote.git').resolve()),'-C',str(repo),*args],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     if result.returncode:raise RuntimeError(result.stderr.decode('utf-8','replace'))
     return result.stdout
 def sha(data):return hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
@@ -47,7 +47,7 @@ class PublisherTests(unittest.TestCase):
         (self.repo/'index.json').write_bytes(json.dumps(self.index).encode());run(self.repo,'add','index.json');run(self.repo,'commit','-qm','bad declared size')
         with self.assertRaises(ValueError):vi.validate_head(str(self.repo))
     def test_publish_batches_never_expose_intermediate_main(self):
-        remote=self.repo/'remote.git';subprocess.run(['git','init','--bare','-q',str(remote)],check=True);run(self.repo,'remote','add','origin',str(remote));run(self.repo,'push','-q','-u','origin','HEAD:main')
+        remote=self.repo/'remote.git';subprocess.run(['git','init','--bare','-q',str(remote)],check=True);run(self.repo,'remote','add','origin',str(remote));run(self.repo,'config','remote.origin.receivepack','git -c safe.directory='+remote.as_posix()+' receive-pack');run(self.repo,'config','remote.origin.uploadpack','git -c safe.directory='+remote.as_posix()+' upload-pack');run(self.repo,'push','-q','-u','origin','HEAD:main')
         initial=run(self.repo,'rev-parse','HEAD').decode().strip()
         self.asset.write_bytes(b'asset change awaiting complete release');run(self.repo,'add','--','patches/Test/Wallpiece05.wmo');run(self.repo,'commit','-qm','asset batch')
         vi.finalize(str(self.repo),self.index);run(self.repo,'commit','-qm','complete manifest')

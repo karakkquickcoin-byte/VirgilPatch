@@ -257,6 +257,7 @@ class SecurityTests
                 Test("production-index-and-all-patch-metadata-compatible", delegate {
                     // Validate the entire schema and metadata without probing 69,000 nonexistent fixture assets.
                     var source = new FolderSource(args[1]);
+                    var productionCatalog = new Updater(source, new State()).Catalog();
                     var index = js.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(source.Get("local", "index.json")));
                     var patches = (Dictionary<string, object>)index["patches"];
                     var expected = new Dictionary<string, FileInfoEntry>(StringComparer.OrdinalIgnoreCase);
@@ -266,7 +267,7 @@ class SecurityTests
                     {
                         var data = (Dictionary<string, object>)patch.Value;
                         var repoDir = (string)data["repo_dir"];
-                        Assert(repoDir == "patches/" + patch.Key, "Unexpected production repo path.");
+                        Assert(productionCatalog.Files[patch.Key + "/patch.json"].RepoPath == repoDir + "/patch.json", "Unexpected production repo path.");
                         var files = (Dictionary<string, object>)data["files"];
                         foreach (var file in files.Concat(new[] { new KeyValuePair<string, object>("patch.json", data["patch_json"]) }))
                         {

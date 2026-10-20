@@ -27,8 +27,8 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.1.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.1.0")]
+[assembly: System.Reflection.AssemblyVersion("1.5.2.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.2.0")]
 [assembly: System.Reflection.AssemblyInformationalVersion("1.5.1")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
@@ -350,6 +350,8 @@ namespace VirgilPatch
         public HashSet<string> Scope = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         public List<string> Added = new List<string>(), Changed = new List<string>(), Repairs = new List<string>();
         public List<string> CompletedPatches = new List<string>();
+        public Dictionary<string, string> Versions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, string> DisplayNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, string> LatestUpdates = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public bool UpToDate { get { return Fetch.Count == 0 && Remove.Count == 0 && PatchJsons.Count == 0; } }
     }
@@ -491,6 +493,7 @@ namespace VirgilPatch
                 patches.Add(new KeyValuePair<string, Dictionary<string, object>>((string)index["patch_folder"], index));
             var all = new List<FileInfoEntry>();
             var jsons = new List<FileInfoEntry>();
+            var repositoryDirs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var kv in patches)
             {
                 Safety.Patch(kv.Key);
@@ -499,8 +502,23 @@ namespace VirgilPatch
                 object latest;
                 if (d.TryGetValue("changes", out latest)) p.LatestUpdates[kv.Key] = PatchDialogs.Latest(latest);
                 var repoDir = d.ContainsKey("repo_dir") ? (string)d["repo_dir"] : "patches/" + kv.Key;
-                if (repoDir != "patches/" + kv.Key && !(patches.Count == 1 && !index.ContainsKey("patches") && repoDir == "patch"))
+                string expected = "patches/" + kv.Key;
+                if (d.ContainsKey("version"))
+                {
+                    var version = d["version"] as string;
+                    const string number = @"(?:0|[1-9][0-9]{0,8})";
+                    if (version == null || !System.Text.RegularExpressions.Regex.IsMatch(version, @"\A" + number + @"\." + number + @"\." + number + @"(?:\." + number + @")?\z"))
+                        throw new InvalidDataException("Invalid online patch version.");
+                    string stem = System.Text.RegularExpressions.Regex.Replace(kv.Key, @"\([0-9]+\.[0-9]+\.[0-9]+(?:\.[0-9]+)?\)$", "").TrimEnd();
+                    string display = stem + "(" + version + ")";
+                    Safety.Patch(display);
+                    expected = "patches/" + display;
+                    p.Versions[kv.Key] = version;
+                    p.DisplayNames[kv.Key] = display;
+                }
+                if (repoDir != expected && !(patches.Count == 1 && !index.ContainsKey("patches") && repoDir == "patch" && !d.ContainsKey("version")))
                     throw new InvalidDataException("Unexpected repository path for patch.");
+                if (!repositoryDirs.Add(repoDir)) throw new InvalidDataException("Duplicate patch repository path.");
                 p.Patches.Add(kv.Key);
                 if (p.Patches.Count > 128) throw new InvalidDataException("Too many published patches.");
                 jsons.Add(Entry(kv.Key, repoDir, "patch.json", d["patch_json"]));
@@ -539,6 +557,10 @@ namespace VirgilPatch
             var p = new Plan { Commit = catalog.Commit, Published = catalog.Published };
             foreach (var note in catalog.LatestUpdates.Where(kv => chosen.Contains(kv.Key))) p.LatestUpdates[note.Key] = note.Value;
             p.Patches = catalog.Patches.Where(chosen.Contains).ToList();
+            foreach (var patch in p.Patches) {
+                if (catalog.Versions.ContainsKey(patch)) p.Versions[patch] = catalog.Versions[patch];
+                if (catalog.DisplayNames.ContainsKey(patch)) p.DisplayNames[patch] = catalog.DisplayNames[patch];
+            }
             foreach (var patch in p.Patches) p.Scope.Add(patch);
             // Legacy all-patches CLI behavior can remove retired tracked patches. Explicit selections never do.
             if (selection == null) foreach (var key in state.installed.Keys) if (key.IndexOf('/') > 0) p.Scope.Add(key.Substring(0, key.IndexOf('/')));
