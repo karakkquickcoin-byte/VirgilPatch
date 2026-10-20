@@ -39,9 +39,10 @@ EXCLUSIVE_PUBLISH_GROUPS = (
 
 def exclusive_alternatives(first, second):
     """True only for two different, explicitly named alternative packages."""
-    a = os.path.basename(os.path.normpath(first)).casefold()
-    b = os.path.basename(os.path.normpath(second)).casefold()
-    return a != b and any(a in group and b in group for group in EXCLUSIVE_PUBLISH_GROUPS)
+    def family(value):
+        return re.sub(r"\([0-9]+\.[0-9]+\.[0-9]+(?:\.[0-9]+)?\)$", "", os.path.basename(os.path.normpath(value))).rstrip().casefold()
+    a, b = family(first), family(second)
+    return a != b and any(a in {family(name) for name in group} and b in {family(name) for name in group} for group in EXCLUSIVE_PUBLISH_GROUPS)
 
 # chunks whose payload is a plain uint32 FileDataID array
 ID_ARRAYS = {b"SFID": "skin", b"TXID": "texture", b"BFID": "bone", b"SKID": "skel", b"PFID": "phys",
@@ -60,7 +61,7 @@ def safe_relative(name, asset=False, folder=False):
     for part in name.split('/'):
         if (not part or part in ('.', '..') or part.endswith(('.', ' ')) or
                 any(ord(c) < 32 or ord(c) == 127 or c in '<>:\"|?*' for c in part) or part.casefold() == '.git' or
-                re.fullmatch(r'(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9¹²³]|LPT[1-9¹²³])', part.split('.')[0], re.I)):
+                re.fullmatch(r'(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9Ã‚Â¹Ã‚Â²Ã‚Â³]|LPT[1-9Ã‚Â¹Ã‚Â²Ã‚Â³])', part.split('.')[0], re.I)):
             raise ValueError('unsafe Windows path component: %r' % name)
     if folder and '/' in name:
         raise ValueError('patch name must be one folder')
@@ -193,13 +194,29 @@ class Patch:
         return [v[0] for v in self.tree.values()]
 
 
+def resolve_source_path(path):
+    """Follow a client-migrated source folder without changing its publication identity."""
+    no_links(path)
+    if os.path.exists(path):
+        return path
+    name = safe_relative(os.path.basename(os.path.normpath(path)), folder=True)
+    stem = re.sub(r"\([0-9]+\.[0-9]+\.[0-9]+(?:\.[0-9]+)?\)$", "", name).rstrip()
+    candidate = os.path.join(os.path.dirname(os.path.normpath(path)), safe_relative(stem + "(5.0.0)", folder=True))
+    no_links(candidate)
+    return candidate if os.path.isdir(candidate) else path
+
+
+MAIN = resolve_source_path(MAIN)
+
+
 def load_published():
     """Absolute paths of the patch folders published to GitHub; the first one is the main patch."""
     try:
-        lst = [p for p in json.load(open(PUBLISHED, encoding="utf-8"))["patches"] if isinstance(p, str)]
+        with open(PUBLISHED, encoding="utf-8") as source:
+            lst = [p for p in json.load(source)["patches"] if isinstance(p, str)]
     except (OSError, ValueError, KeyError, TypeError):
         lst = []
-    return lst or [MAIN]
+    return [resolve_source_path(path) for path in (lst or [MAIN])]
 
 
 def save_published(paths):

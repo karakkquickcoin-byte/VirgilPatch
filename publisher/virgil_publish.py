@@ -40,6 +40,7 @@ HASH_CACHE = os.path.join(vc.WORK, "hash_cache.json")
 _hash_cache = None
 _hash_dirty = False
 _index_cache = {}
+_source_key_aliases = {}
 
 
 def log(*a):
@@ -56,7 +57,19 @@ def _norm(p):
 
 
 def pname(path):
-    return vc.safe_relative(os.path.basename(os.path.normpath(path)), folder=True)
+    name = vc.safe_relative(os.path.basename(os.path.normpath(path)), folder=True)
+    if not name.endswith("(5.0.0)"):
+        return name
+    aliases = _source_key_aliases.setdefault(os.path.abspath(vc.REPO), {})
+    if name not in aliases:
+        entries = (published_index() or {}).get("patches", {})
+        for key in entries:
+            canonical = vv.display_name(key, "5.0.0")
+            if canonical in aliases and aliases[canonical] != key:
+                raise ValueError("Ambiguous migrated source folder: " + canonical)
+            aliases[canonical] = key
+        aliases.setdefault(name, name)
+    return aliases[name]
 
 
 # ---------------------------------------------------------------- hashing with a size/mtime cache
@@ -358,7 +371,7 @@ def check(patch_path=vc.MAIN, scope="changed", published=None):
         warnings.append("%d files on disk are not in patch.json (not loaded, not published): %s"
                         % (len(unlisted), unlisted[:5]))
     idx = published_index()
-    base = (idx or {}).get("patches", {}).get(patch.name)
+    base = (idx or {}).get("patches", {}).get(pname(patch.path))
     prev = (base or {}).get("files", {})
     if scope == "changed":
         if base is None:                               # first publish of this patch: pre-existing problems are warnings
