@@ -1,5 +1,42 @@
-param([string]$SigningKeyPath=$env:VIRGIL_UPDATER_SIGNING_KEY, [switch]$CompileOnly)
+param(
+    [string]$SigningKeyPath=$env:VIRGIL_UPDATER_SIGNING_KEY,
+    [switch]$CompileOnly,
+    [string]$AuthenticodeThumbprint=$env:VIRGIL_AUTHENTICODE_THUMBPRINT,
+    [string]$TimestampUrl=$env:VIRGIL_AUTHENTICODE_TIMESTAMP_URL,
+    [string]$SignToolPath,
+    [switch]$RequireAuthenticode
+)
 $ErrorActionPreference='Stop'
+
+# Publisher signing is separate from the RSA signature trusted by the self-updater.
+# Validate all prerequisites BEFORE compiling or changing the previous release executable.
+$publisherCertificate=$null
+if ($RequireAuthenticode -and [string]::IsNullOrWhiteSpace($AuthenticodeThumbprint)) {
+    throw 'Trusted publisher signing was required but no Authenticode certificate thumbprint was configured.'
+}
+if (-not [string]::IsNullOrWhiteSpace($AuthenticodeThumbprint)) {
+    if ($AuthenticodeThumbprint -notmatch '\A[0-9a-fA-F]{40}\z') { throw 'Invalid Authenticode certificate thumbprint.' }
+    $publisherCertificate=Get-Item -LiteralPath ("Cert:\CurrentUser\My\"+$AuthenticodeThumbprint) -ErrorAction Stop
+    if (-not $publisherCertificate.HasPrivateKey -or $publisherCertificate.NotBefore -gt (Get-Date) -or $publisherCertificate.NotAfter -le (Get-Date) -or
+        -not @($publisherCertificate.EnhancedKeyUsageList | Where-Object { $_.ObjectId.Value -eq '1.3.6.1.5.5.7.3.3' }).Count) {
+        throw 'A current certificate with a private key and code-signing authority is required.'
+    }
+    $chain=[Security.Cryptography.X509Certificates.X509Chain]::new()
+    try {
+        $chain.ChainPolicy.RevocationMode=[Security.Cryptography.X509Certificates.X509RevocationMode]::Online
+        if (-not $chain.Build($publisherCertificate)) { throw 'The publisher certificate chain is not trusted or revocation could not be checked.' }
+    } finally { $chain.Dispose() }
+    $timestampUri=$null
+    if (-not [Uri]::TryCreate($TimestampUrl,[UriKind]::Absolute,[ref]$timestampUri) -or $timestampUri.Scheme -ne 'https' -or $timestampUri.UserInfo) {
+        throw 'Configure a trusted HTTPS RFC3161 timestamp service URL without credentials.'
+    }
+    if (-not $SignToolPath) {
+        $signToolCommand=Get-Command signtool.exe -ErrorAction SilentlyContinue
+        if ($signToolCommand) { $SignToolPath=$signToolCommand.Source }
+    }
+    if (-not $SignToolPath -or -not (Test-Path -LiteralPath $SignToolPath -PathType Leaf)) { throw 'Microsoft SignTool is required for publisher signing.' }
+}
+
 $compiler=Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 if (-not (Test-Path -LiteralPath $compiler)) { throw '.NET Framework compiler was not found.' }
 if (-not $CompileOnly -and (-not $SigningKeyPath -or -not (Test-Path -LiteralPath $SigningKeyPath))) {
@@ -25,6 +62,19 @@ try {
     & $compiler /nologo /target:winexe /optimize+ /out:VirgilUpdater.exe /r:System.Web.Extensions.dll /r:System.Xaml.dll "/r:$wpf\PresentationCore.dll" "/r:$wpf\WindowsBase.dll" /r:System.IO.Compression.dll /r:System.IO.Compression.FileSystem.dll /win32icon:virgil.ico /win32manifest:app.manifest /resource:assets/lordaeron-background.png,VirgilPatch.LauncherBackground /resource:assets/lordaeron-ambience.mp3,VirgilPatch.LauncherAmbience /resource:assets/lordaeron-leaves.mp4,VirgilPatch.LauncherVideo VirgilUpdater.cs LauncherVideo.cs SelfUpdate.cs LauncherTheme.cs LauncherAmbience.cs LauncherLinks.cs PatchSelection.cs PatchDiagnostics.cs InstallationFolders.cs StrictJson.cs
     if ($LASTEXITCODE -ne 0) { throw 'Updater build failed.' }
     if ((Get-Item -LiteralPath 'VirgilUpdater.exe').Length -gt 16MB) { throw 'Updater exceeds the 16 MiB size limit trusted by existing self-updating clients.' }
+    if ($publisherCertificate) {
+        & $SignToolPath sign /sha1 $AuthenticodeThumbprint /fd SHA256 /tr $TimestampUrl /td SHA256 (Join-Path $PSScriptRoot 'VirgilUpdater.exe')
+        if ($LASTEXITCODE -ne 0) { throw 'Authenticode publisher signing failed; nothing was packaged or published.' }
+        & $SignToolPath verify /pa /all (Join-Path $PSScriptRoot 'VirgilUpdater.exe')
+        if ($LASTEXITCODE -ne 0) { throw 'Windows publisher signature verification failed.' }
+        $publisherSignature=Get-AuthenticodeSignature -LiteralPath (Join-Path $PSScriptRoot 'VirgilUpdater.exe')
+        if ($publisherSignature.Status -ne 'Valid' -or $publisherSignature.SignerCertificate.Thumbprint -ne $AuthenticodeThumbprint -or -not $publisherSignature.TimeStamperCertificate) {
+            throw 'A valid timestamped signature from the configured publisher certificate is required.'
+        }
+    }
+    if ((Get-Item -LiteralPath (Join-Path $PSScriptRoot 'VirgilUpdater.exe')).Length -gt 16MB) { throw 'Final signed updater exceeds the trusted 16 MiB size limit.' }
+    if (-not $publisherCertificate) { Write-Warning 'No Windows Authenticode publisher signature configured. The release-channel signature is separate and does not establish antivirus acceptance.' }
+    # Hash and RSA-sign the final Authenticode-signed bytes, never the pre-signing executable.
     if ($CompileOnly) { return }
     $entropy=[Text.Encoding]::UTF8.GetBytes('VirgilPatchUpdaterReleaseKey/v1')
     $clear=[Security.Cryptography.ProtectedData]::Unprotect([IO.File]::ReadAllBytes($SigningKeyPath),$entropy,[Security.Cryptography.DataProtectionScope]::CurrentUser)

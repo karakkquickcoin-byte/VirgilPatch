@@ -55,3 +55,11 @@ an unnecessary rollback on a sharing violation. This compatibility fix is indepe
 
 Handoff readers retry only Windows sharing/lock violations within the existing 15/45-second deadlines.
 They recheck paths and exact nonce content and reject oversized records. Other I/O/validation failures still fail.
+
+## Windows publisher signing and antivirus reports
+
+The RSA signature in updater-release.json authenticates our updater channel. It is not a Windows Authenticode publisher signature or antivirus clearance. The current 1.5.6 executable is not Authenticode-signed. Preserve its exact hash while investigating scan/reputation reports; a pending scan alone is not a confirmed malware detection.
+
+For a future publisher-signed release, configure a valid CA-trusted code-signing certificate with an accessible private key in CurrentUser/My, Microsoft SignTool, and your HTTPS RFC3161 timestamp service. Pass -AuthenticodeThumbprint, -TimestampUrl, -SignToolPath if needed, and -RequireAuthenticode to build.ps1. Signing prerequisites fail before compilation. The build verifies trust/revocation and code-signing usage, timestamps the signature, verifies it using Windows policy and the configured signer, and enforces the final size limit before generating the release hash, RSA signature, and ZIP. Never modify signed bytes after those steps; issue a higher version when changing executable signatures. No self-signed certificate or trust-store modification is used. Successful publisher signing still does not guarantee a reputation or antivirus verdict.
+
+For Norton reports, obtain the exact warning or detection name, Alert ID, and a SHA256 matching the public release. The official review route is https://submissions.norton.com/submitsample; Norton requires a contact email and CAPTCHA as well as detection details. Submit only the public executable/URL, not private logs, user files or signing keys. No submission or user-supplied personal information is collected automatically. Do not add antivirus exclusions, disable protection, or describe a hash/signature check as an antivirus scan.
