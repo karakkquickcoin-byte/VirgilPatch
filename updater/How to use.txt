@@ -36,3 +36,5 @@ The audio is embedded in the EXE; no separate audio download is needed.
 The falling-leaves background is an embedded silent 12-second loop; it adds no extra audio.
 It pauses while minimized and uses a matching still image if the video cannot play.
 All 1.5.0 repair, selected-folder, progress and safety behavior remains intact.
+
+Updater 1.5.4: the preview and Details show the exact Patches directory and per-patch install folders. Confirm this is the installation you launch. Latest-release added/changed assets and assets newer than your saved installation are checked without cached hashes on every Update check. New downloads and files copied from duplicates are verified as temporary files, reopened in their final location, and reread before patch.json is finalized. Only affected files receive the extra content reads; unchanged files retain the fast check. Deep repair still checks every selected asset. Opening the updater alone changes no game folders.

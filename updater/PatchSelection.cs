@@ -102,13 +102,15 @@ namespace VirgilPatch
         public static string Summary(Plan plan)
         {
             var text = new StringBuilder();
-            text.AppendLine("Published: " + plan.Published).AppendLine("Download: " + Size(plan.FetchBytes) + " across " + plan.Fetch.Count + " files").AppendLine();
+            text.AppendLine("Patches folder: " + plan.TargetRoot).AppendLine("This verifies the selected folder; confirm it belongs to the Epsilon installation you launch.").AppendLine("Recent added / changed files are checked without the hash cache. New installs pass three verification checks.").AppendLine().AppendLine("Published: " + plan.Published).AppendLine("Download: " + Size(plan.FetchBytes) + " across " + plan.Fetch.Count + " files").AppendLine();
             foreach (var patch in plan.Patches)
             {
                 Func<string, bool> here = k => k.StartsWith(patch + "/", StringComparison.OrdinalIgnoreCase);
                 var files = plan.Fetch.Where(f => f.Patch == patch).ToList();
                 string display; if (!plan.DisplayNames.TryGetValue(patch, out display)) display = patch;
                 text.AppendLine(display).AppendLine("  " + plan.Added.Count(here) + " new / missing, " + plan.Changed.Count(here) + " changed, " + plan.Repairs.Count(here) + " repairs, " + plan.Remove.Count(here) + " retired");
+                string destination; if (plan.Destinations.TryGetValue(patch, out destination)) text.AppendLine("  Install folder: " + destination);
+                text.AppendLine("  Fresh verification: " + plan.VerificationTargets.Count(here) + " affected files.");
                 FolderMigration migration;
                 if (plan.Migrations.TryGetValue(patch, out migration)) text.AppendLine("  Rename / reconcile: " + string.Join(", ", migration.Sources.Select(Path.GetFileName)) + " -> " + Path.GetFileName(migration.Target) + ". Duplicates move outside Patches after verification.");
                 string latest; if (plan.LatestUpdates.TryGetValue(patch, out latest) && latest.Length > 0) text.AppendLine("  " + latest);
@@ -118,7 +120,7 @@ namespace VirgilPatch
                 foreach (var key in plan.Remove.Where(here).Take(20)) text.AppendLine("    Remove: " + key.Substring(patch.Length + 1));
                 text.AppendLine();
             }
-            if (plan.UpToDate) text.AppendLine("Your selected patches are complete and up to date. No game files need downloading.");
+            if (plan.UpToDate) text.AppendLine("Your selected patches are up to date in the Patches folder shown above. No game files need downloading.");
             text.AppendLine("Successful files from earlier attempts are reused. A patch is finalized only after its files verify.");
             return text.ToString();
         }
@@ -201,11 +203,11 @@ namespace VirgilPatch
                 }
                 plan = t.Result; lastPlan = plan; changesButton.Enabled = true;
                 Say(PatchDialogs.Summary(plan));
-                status.Text = plan.UpToDate ? "Your selected patches are complete and up to date." : "Ready: " + plan.Fetch.Count + " files, " + PatchDialogs.Size(plan.FetchBytes) + ".";
+                status.Text = plan.UpToDate ? "Selected patches verified in: " + plan.TargetRoot : "Ready: " + plan.Fetch.Count + " files, " + PatchDialogs.Size(plan.FetchBytes) + ".";
                 bool confirmed = ConfirmChanges != null ? ConfirmChanges(plan) : PatchDialogs.Review(this, plan);
                 cts.Dispose(); cts = null;
                 if (apply && confirmed && !plan.UpToDate) ApplyUpdate();
-                else if (plan.UpToDate) { Say("You're up to date."); Phase("Complete"); transferText.Text = "Complete 100% | Selected patches verified | ETA done"; }
+                else if (plan.UpToDate) { Say("You're up to date in: " + plan.TargetRoot); Phase("Complete"); transferText.Text = "Complete 100% | Selected patches verified | ETA done"; }
             }));
         }
     }

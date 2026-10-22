@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Web.Script.Serialization;
+using VirgilPatch;
+class TripleLockTests {
+ static string root; static int passed; static JavaScriptSerializer js=new JavaScriptSerializer();
+ static byte[] B(string s){return Encoding.UTF8.GetBytes(s);}
+ static void Assert(bool ok,string why){if(!ok)throw new Exception(why);}
+ static void Reject(Action a){try{a();}catch(Exception){return;}throw new Exception("Expected rejection");}
+ static void Test(string n,Action a){a();passed++;Console.WriteLine("PASS "+n);}
+ static State Fresh(){var area=Path.Combine(root,Guid.NewGuid().ToString("N"));Config.StateDir=Path.Combine(area,"state");var s=new State{patches_dir=Path.Combine(area,"Patches")};Directory.CreateDirectory(s.patches_dir);return s;}
+ static RepairSource Source(){var s=new RepairSource();s.Publish(new Dictionary<string,Dictionary<string,byte[]>>{{"Small",new Dictionary<string,byte[]>{{"a.ogg",B("asset-a")},{"b.ogg",B("asset-b")}}}});return s;}
+ static void Recent(RepairSource s,params string[] names){var i=js.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(s.Data["index.json"]));var p=(Dictionary<string,object>)((Dictionary<string,object>)i["patches"])["Small"];p["changes"]=new{added_count=names.Length,changed_count=0,removed_count=0,added=names,changed=new string[0],removed=new string[0]};s.Data["index.json"]=B(js.Serialize(i));}
+ static void Apply(Updater u){var p=u.Check();if(!p.UpToDate)u.Apply(p,CancellationToken.None);}
+ static void Damage(string p){var stamp=File.GetLastWriteTimeUtc(p);var b=File.ReadAllBytes(p);b[0]^=1;File.WriteAllBytes(p,b);File.SetLastWriteTimeUtc(p,stamp);}
+ static void AddNew(RepairSource s){s.Publish(new Dictionary<string,Dictionary<string,byte[]>>{{"Small",new Dictionary<string,byte[]>{{"a.ogg",B("asset-a")},{"b.ogg",B("asset-b")},{"new.ogg",B("asset-new")}}}});Recent(s,"new.ogg");}
+ static int Main(string[] args){try{root=Path.GetFullPath(args[0]);Directory.CreateDirectory(root);
+ Test("new-installs-read-stage-destination-and-final-files",delegate{var st=Fresh();var src=Source();var u=new Updater(src,st);var steps=new Dictionary<string,List<int>>();u.Verified=(n,f,path)=>{if(!steps.ContainsKey(f.Key))steps[f.Key]=new List<int>();steps[f.Key].Add(n);if(n>1)Assert(path==u.Local(f),"Verified wrong destination");};Apply(u);foreach(var key in new[]{"Small/a.ogg","Small/b.ogg","Small/patch.json"})Assert(steps[key].SequenceEqual(new[]{1,2,3}),"Three checks missing: "+key);});
+ Test("latest-release-corruption-cannot-hide-behind-mtime-cache",delegate{var st=Fresh();var src=Source();Recent(src,"a.ogg");var u=new Updater(src,st);Apply(u);Damage(u.Local("Small/a.ogg"));var p=u.Check();Assert(!p.UpToDate&&p.Fetch.Single().Name=="a.ogg","False up to date");u.Apply(p,CancellationToken.None);Assert(u.Check().UpToDate,"Repair did not finish");});
+ Test("new-or-changed-since-last-install-ignores-poisoned-cache",delegate{var st=Fresh();var src=Source();var u=new Updater(src,st);Apply(u);AddNew(src);string file=u.Local("Small/new.ogg");File.WriteAllText(file,"bad-bytes");var fi=new FileInfo(file);st.hashes[file]=new object[]{fi.Length,fi.LastWriteTimeUtc.Ticks.ToString(),RepairSource.Sha(B("asset-new"))};Assert(u.Check().Fetch.Any(f=>f.Name=="new.ogg"),"New asset trusted stale cache");});
+ Test("optimized-check-does-not-reread-unchanged-old-assets",delegate{var st=Fresh();var src=Source();var u=new Updater(src,st);Apply(u);Damage(u.Local("Small/b.ogg"));AddNew(src);var p=u.Check();Assert(p.Fetch.Count==1&&p.Fetch[0].Name=="new.ogg","Unchanged file unnecessarily reread");u.Apply(p,CancellationToken.None);u.VerifyExisting=true;Assert(u.Check().Fetch.Any(f=>f.Name=="b.ogg"),"Deep repair no longer available");});
+ Test("stage-to-destination-corruption-stops-before-metadata",delegate{var st=Fresh();var src=Source();var u=new Updater(src,st);u.Verified=(n,f,path)=>{if(n==1&&f.Name=="a.ogg")Damage(path);};Reject(()=>Apply(u));Assert(!File.Exists(u.Local("Small/patch.json")),"Failed file advertised");});
+ Test("post-placement-corruption-fails-final-check-and-retries",delegate{var st=Fresh();var src=Source();var u=new Updater(src,st);Apply(u);string meta=u.Local("Small/patch.json"),old=File.ReadAllText(meta);AddNew(src);u.Verified=(n,f,path)=>{if(n==2&&f.Name=="new.ogg")Damage(path);};Reject(()=>Apply(u));Assert(File.ReadAllText(meta)==old,"Incomplete payload published metadata");u.Verified=delegate{};Apply(u);Assert(u.Check().UpToDate,"Retry failed");});
+ Test("changed-root-is-rejected-before-any-install",delegate{var st=Fresh();var u=new Updater(Source(),st);var p=u.Check();var original=st.patches_dir;st.patches_dir=Path.Combine(Path.GetDirectoryName(original),"OtherPatches");Directory.CreateDirectory(st.patches_dir);Reject(()=>u.Apply(p,CancellationToken.None));Assert(!Directory.EnumerateFileSystemEntries(original).Any()&&!Directory.EnumerateFileSystemEntries(st.patches_dir).Any(),"Plan installed in wrong root");});
+ Test("separate-updater-still-enforces-plan-root",delegate{var st=Fresh();var src=Source();var p=new Updater(src,st).Check();var other=Fresh();Reject(()=>new Updater(src,other).Apply(p,CancellationToken.None));Assert(!Directory.EnumerateFileSystemEntries(other.patches_dir).Any(),"Plan rebound to other install");});
+ Test("summary-identifies-exact-root-and-patch-destination",delegate{var st=Fresh();var u=new Updater(Source(),st);var p=u.Check();var text=PatchDialogs.Summary(p);Assert(text.Contains(st.patches_dir)&&text.Contains(Path.Combine(st.patches_dir,"Small")),"Ambiguous summary");});
+ Test("unknown-release-verification-path-is-rejected",delegate{var st=Fresh();var src=Source();Recent(src,"not-in-manifest.ogg");Reject(()=>new Updater(src,st).Check());Assert(!Directory.EnumerateFileSystemEntries(st.patches_dir).Any(),"Invalid release touched game");});
+ Test("cancel-final-verification-keeps-previous-metadata",delegate{var st=Fresh();var src=Source();var u=new Updater(src,st);Apply(u);var old=File.ReadAllText(u.Local("Small/patch.json"));AddNew(src);var p=u.Check();var cancel=new CancellationTokenSource();u.Phase=phase=>{if(phase=="Final verification (3/3)")cancel.Cancel();};Reject(()=>u.Apply(p,cancel.Token));Assert(File.ReadAllText(u.Local("Small/patch.json"))==old,"Cancel advertised incomplete update");});
+ Test("up-to-date-recheck-downloads-nothing-and-refreshes-recent-hash",delegate{var st=Fresh();var src=Source();Recent(src,"a.ogg");var u=new Updater(src,st);Apply(u);src.Downloads.Clear();string path=u.Local("Small/a.ogg");st.hashes[path]=new object[]{new FileInfo(path).Length,File.GetLastWriteTimeUtc(path).Ticks.ToString(),new string('0',40)};Assert(u.Check().UpToDate&&src.Downloads.Count==0,"Matching asset redownloaded");Assert((string)st.hashes[path][2]==RepairSource.Sha(B("asset-a")),"Cache was reused");});
+ Console.WriteLine("TOTAL "+passed+" targeted verification cases passed");return 0;}catch(Exception e){Console.Error.WriteLine(e);return 1;}}
+}

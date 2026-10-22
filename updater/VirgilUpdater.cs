@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.3.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.3.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.5.1")]
+[assembly: System.Reflection.AssemblyVersion("1.5.4.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.4.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.5.4")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.5.1";
+        public const string UserAgent = "VirgilPatchUpdater/1.5.4";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }
@@ -395,6 +395,9 @@ namespace VirgilPatch
     {
         public string Commit;
         public string Published;
+        public string TargetRoot;
+        public HashSet<string> VerificationTargets = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, string> Destinations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public List<string> Patches = new List<string>();
         public Dictionary<string, FileInfoEntry> Files = new Dictionary<string, FileInfoEntry>(StringComparer.OrdinalIgnoreCase);
         public List<FileInfoEntry> Fetch = new List<FileInfoEntry>();
@@ -489,6 +492,15 @@ namespace VirgilPatch
         readonly ISource src;
         readonly State state;
         public bool VerifyExisting;
+        internal Action<int, FileInfoEntry, string> Verified = delegate { };
+        string checkedRoot;
+
+        void ValidateRoot(string expected)
+        {
+            if (string.IsNullOrEmpty(expected) || !string.Equals(Path.GetFullPath(state.patches_dir), expected, StringComparison.OrdinalIgnoreCase))
+                throw new InvalidDataException("The Patches folder changed after checking. Check the selected folder again before updating.");
+            Safety.NoLinks(expected);
+        }
         public Updater(ISource src, State state) { this.src = src; this.state = state; }
 
         public static string BlobSha(string path, CancellationToken cancel = default(CancellationToken))
@@ -540,6 +552,7 @@ namespace VirgilPatch
         public string Local(string key)
         {
             Safety.Key(key);
+            if (checkedRoot != null) ValidateRoot(checkedRoot);
             int slash = key.IndexOf('/'); string mapped = null, saved;
             if (slash > 0) {
                 string patch = key.Substring(0, slash);
@@ -574,7 +587,18 @@ namespace VirgilPatch
                 if (p.Patches.Contains(kv.Key, StringComparer.OrdinalIgnoreCase)) throw new InvalidDataException("Duplicate patch folder.");
                 var d = kv.Value;
                 object latest;
-                if (d.TryGetValue("changes", out latest)) p.LatestUpdates[kv.Key] = PatchDialogs.Latest(latest);
+                if (d.TryGetValue("changes", out latest)) {
+                    p.LatestUpdates[kv.Key] = PatchDialogs.Latest(latest);
+                    var changes = latest as Dictionary<string, object>;
+                    if (changes != null) foreach (string kind in new[] { "added", "changed" }) {
+                        object names;
+                        if (changes.TryGetValue(kind, out names) && names is System.Collections.IEnumerable && !(names is string))
+                            foreach (var value in (System.Collections.IEnumerable)names) {
+                                var name = value as string; Safety.Asset(name, false);
+                                p.VerificationTargets.Add(kv.Key + "/" + name);
+                            }
+                    }
+                }
                 var repoDir = d.ContainsKey("repo_dir") ? (string)d["repo_dir"] : "patches/" + kv.Key;
                 string expected = "patches/" + kv.Key;
                 if (d.ContainsKey("version"))
@@ -616,6 +640,7 @@ namespace VirgilPatch
                 for (int slash = key.LastIndexOf('/'); slash > 0; slash = key.LastIndexOf('/', slash - 1))
                     if (p.Files.ContainsKey(key.Substring(0, slash)))
                         throw new InvalidDataException("Manifest file is also used as a directory.");
+            foreach (var key in p.VerificationTargets) if (!p.Files.ContainsKey(key)) throw new InvalidDataException("Release verification list contains an unknown asset.");
             p.TotalFiles = all.Count; p.TotalBytes = all.Sum(f => f.Size);
             return p;
         }
@@ -624,12 +649,15 @@ namespace VirgilPatch
         {
             if (string.IsNullOrWhiteSpace(state.patches_dir)) throw new InvalidDataException("Choose a Patches folder first.");
             state.patches_dir = Path.GetFullPath(state.patches_dir); Safety.NoLinks(state.patches_dir);
+            checkedRoot = state.patches_dir; localFolders.Clear();
             Phase("Checking selected patches");
             catalog = catalog ?? Catalog();
             var chosen = new HashSet<string>(selection ?? catalog.Patches, StringComparer.OrdinalIgnoreCase);
             if (selection != null && (chosen.Count == 0 || chosen.Any(n => !catalog.Patches.Contains(n, StringComparer.OrdinalIgnoreCase))))
                 throw new InvalidDataException("Choose at least one published patch folder.");
-            var p = new Plan { Commit = catalog.Commit, Published = catalog.Published };
+            var p = new Plan { Commit = catalog.Commit, Published = catalog.Published, TargetRoot = checkedRoot };
+            foreach (var key in catalog.VerificationTargets) if (chosen.Contains(key.Substring(0, key.IndexOf('/')))) p.VerificationTargets.Add(key);
+            Log("Checking Patches folder: " + p.TargetRoot);
             foreach (var note in catalog.LatestUpdates.Where(kv => chosen.Contains(kv.Key))) p.LatestUpdates[note.Key] = note.Value;
             p.Patches = catalog.Patches.Where(chosen.Contains).ToList();
             foreach (var patch in p.Patches) {
@@ -642,7 +670,12 @@ namespace VirgilPatch
                     if (migration.Needed) p.Migrations[patch] = migration;
                 }
             }
-            foreach (var patch in p.Patches) p.Scope.Add(patch);
+            foreach (var patch in p.Patches) {
+                p.Scope.Add(patch);
+                string canonical;
+                p.Destinations[patch] = p.InstallFolders.TryGetValue(patch, out canonical) ? Safety.Under(p.TargetRoot, canonical) : Safety.Under(p.TargetRoot, patch);
+                Log("Install destination: " + p.Destinations[patch]);
+            }
             // Legacy all-patches CLI behavior can remove retired tracked patches. Explicit selections never do.
             if (selection == null) foreach (var key in state.installed.Keys) if (key.IndexOf('/') > 0) p.Scope.Add(key.Substring(0, key.IndexOf('/')));
             foreach (var entry in catalog.Files.Values.Where(f => chosen.Contains(f.Patch))) { Local(entry); p.Files.Add(entry.Key, entry); }
@@ -658,7 +691,9 @@ namespace VirgilPatch
             {
                 cancel.ThrowIfCancellationRequested();
                 var path = Local(f); var info = new FileInfo(path);
-                bool matches = Matches(f, path, VerifyExisting || !state.verified_patches.Contains(f.Patch, StringComparer.OrdinalIgnoreCase), cancel);
+                string previous;
+                if (!state.installed.TryGetValue(f.Key, out previous) || previous != f.Sha) p.VerificationTargets.Add(f.Key);
+                bool matches = Matches(f, path, VerifyExisting || p.VerificationTargets.Contains(f.Key) || !state.verified_patches.Contains(f.Patch, StringComparer.OrdinalIgnoreCase), cancel);
                 FolderMigration migration;
                 if (!matches && p.Migrations.TryGetValue(f.Patch, out migration))
                     foreach (var source in migration.Sources) {
@@ -723,7 +758,7 @@ namespace VirgilPatch
                     if (!Matches(asset, source, false, cancel)) continue;
                     Directory.CreateDirectory(Path.GetDirectoryName(target));
                     string temp = target + "." + Guid.NewGuid().ToString("N") + ".vtmp";
-                    try { File.Copy(source, temp, false); Place(temp, target, asset); }
+                    try { plan.VerificationTargets.Add(asset.Key); File.Copy(source, temp, false); Place(temp, target, asset); }
                     finally { Safety.DeleteTemp(temp); }
                     break;
                 }
@@ -762,7 +797,9 @@ namespace VirgilPatch
         public void Apply(Plan p, CancellationToken cancel)
         {
             cancel.ThrowIfCancellationRequested();
+            ValidateRoot(p.TargetRoot); checkedRoot = p.TargetRoot; localFolders.Clear();
             foreach (var pair in p.InstallFolders) {
+                if (!string.Equals(pair.Value, FolderMigration.Canonical(pair.Key), StringComparison.OrdinalIgnoreCase)) throw new InvalidDataException("Invalid install folder mapping.");
                 FolderMigration migration;
                 localFolders[pair.Key] = p.Migrations.TryGetValue(pair.Key, out migration) ? migration.Preferred : Safety.Under(state.patches_dir, pair.Value);
             }
@@ -775,7 +812,9 @@ namespace VirgilPatch
                 foreach (var patch in p.Patches.Concat(p.Scope.Where(n => !p.Patches.Contains(n, StringComparer.OrdinalIgnoreCase))))
                 {
                     cancel.ThrowIfCancellationRequested();
-                    var unit = new Plan { Commit = p.Commit, Published = p.Published };
+                    var unit = new Plan { Commit = p.Commit, Published = p.Published, TargetRoot = p.TargetRoot };
+                    foreach (var key in p.VerificationTargets.Where(k => k.StartsWith(patch + "/", StringComparison.OrdinalIgnoreCase))) unit.VerificationTargets.Add(key);
+                    foreach (var f in p.Fetch.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase))) unit.VerificationTargets.Add(f.Key);
                     unit.Patches.Add(patch); unit.Scope.Add(patch);
                     if (p.Migrations.ContainsKey(patch)) unit.Migrations[patch] = p.Migrations[patch];
                     if (p.InstallFolders.ContainsKey(patch)) unit.InstallFolders[patch] = p.InstallFolders[patch];
@@ -807,7 +846,7 @@ namespace VirgilPatch
                         Log("Completed " + patch + ".");
                     }
                     catch (OperationCanceledException) { throw; }
-                    catch (Exception ex) { errors.Add(patch + ": " + ex.Message); Log("Patch incomplete: " + patch + ". Its previous patch.json was preserved. " + ex.Message); }
+                    catch (Exception ex) { errors.Add(patch + ": " + ex.Message); Log("Patch incomplete: " + patch + ". It was not marked complete; retry to finish verification. " + ex.Message); }
                     offset += received;
                 }
             }
@@ -825,10 +864,17 @@ namespace VirgilPatch
             var sha = entry.Sha;
             var got = BlobSha(tmp);
             if (got != sha) { File.Delete(tmp); throw new InvalidDataException("Checksum mismatch for " + Path.GetFileName(dest) + ". Update stopped; the existing file was preserved."); }
+            Verified(1, entry, tmp);
             Directory.CreateDirectory(Path.GetDirectoryName(dest));
             Safety.NoLinks(dest);
             if (File.Exists(dest)) File.Replace(tmp, dest, null);
             else File.Move(tmp, dest);
+            // Reopen the actual destination. Never seed the cache from the temporary file's hash.
+            if (!File.Exists(dest) || new FileInfo(dest).Length != entry.Size || BlobSha(dest) != sha) {
+                state.hashes.Remove(dest);
+                throw new InvalidDataException("Installed file failed verification (2/3): " + dest);
+            }
+            Verified(2, entry, dest);
             var fi = new FileInfo(dest);
             state.hashes[dest] = new object[] { fi.Length, fi.LastWriteTimeUtc.Ticks.ToString(), sha };
         }
@@ -888,12 +934,15 @@ namespace VirgilPatch
                                         "\r\n(If a file is in use, close WoW and run the update again - finished files are kept.)");
                 }
             }
-            // Never advertise an incomplete patch, including missing files that a stale cache claimed were installed.
+            Phase("Final verification (3/3)");
+            Log("Final verification: " + p.VerificationTargets.Count + " affected files in " + state.patches_dir + ".");
+            // Check all manifest paths cheaply; reread only new, changed, repaired and latest-release assets.
             foreach (var asset in p.Files.Values.Where(f => f.Name != "patch.json"))
             {
                 cancel.ThrowIfCancellationRequested(); var path = Local(asset);
-                if (!File.Exists(path) || new FileInfo(path).Length != asset.Size || CachedSha(path) != asset.Sha)
-                    throw new InvalidDataException("Patch remains incomplete: " + asset.Key);
+                if (!File.Exists(path) || new FileInfo(path).Length != asset.Size || CachedSha(path, p.VerificationTargets.Contains(asset.Key), cancel) != asset.Sha)
+                    throw new InvalidDataException("Patch remains incomplete: " + path);
+                if (p.VerificationTargets.Contains(asset.Key)) Verified(3, asset, path);
             }
             // each patch.json last: until now the game still sees the previous file lists
             foreach (var j in p.PatchJsons)
@@ -909,6 +958,8 @@ namespace VirgilPatch
                     using (var output = new FileStream(tmp, FileMode.CreateNew, FileAccess.Write, FileShare.None))
                         output.Write(bytes, 0, bytes.Length);
                     Place(tmp, Local(j), j);
+                    if (BlobSha(Local(j), cancel) != j.Sha) throw new InvalidDataException("Installed patch.json failed final verification: " + Local(j));
+                    Verified(3, j, Local(j));
                 }
                 finally { Safety.DeleteTemp(tmp); }
             }
@@ -1170,7 +1221,7 @@ namespace VirgilPatch
             {
                 if (t.IsFaulted) { Say("Error: " + t.Exception.GetBaseException().Message); status.Text = "Update unavailable. Open Details for the error, then try again."; }
                 else if (t.IsCanceled) { Say("Update cancelled."); status.Text = "Update cancelled. Click Update to try again."; }
-                else { status.Text = "Your selected patches are complete: " + p.Published; Phase("Complete"); transferText.Text = "Complete 100% | Selected patches ready | ETA done"; }
+                else { status.Text = "Selected patches complete in: " + p.TargetRoot; Phase("Complete"); transferText.Text = "Complete 100% | Selected patches ready | ETA done"; }
                 plan = null;
                 cts.Dispose(); cts = null;
                 bar.Value = t.IsFaulted || t.IsCanceled ? 0 : 1000;
