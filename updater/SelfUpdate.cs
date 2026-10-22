@@ -36,8 +36,8 @@ namespace VirgilPatch
         {
             if (bytes == null || bytes.Length > 65536) throw new InvalidDataException("Updater release metadata is too large.");
             var js = new JavaScriptSerializer { MaxJsonLength = 65536 };
-            var d = js.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(bytes).TrimStart('\ufeff'));
-            if (d == null || d.Count != 6 || !(d["format"] is int) || (int)d["format"] != 1 ||
+            var d = StrictJson.Read(bytes, 65536);
+            if (d == null || d.Count != 6 || new[] { "format", "file", "size", "version", "sha256", "signature" }.Any(k => !d.ContainsKey(k)) || !(d["format"] is int) || (int)d["format"] != 1 ||
                 (string)d["file"] != BinaryPath || !(d["size"] is int || d["size"] is long))
                 throw new InvalidDataException("Invalid updater release format.");
             var versionText = d["version"] as string;

@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.6.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.6.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.5.6")]
+[assembly: System.Reflection.AssemblyVersion("1.5.7.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.7.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.5.7")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.5.6";
+        public const string UserAgent = "VirgilPatchUpdater/1.5.7";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }
@@ -140,6 +140,8 @@ namespace VirgilPatch
 
         public static string RawUrl(string commit, string repoPath)
         {
+            if (!Safety.IsSha(commit)) throw new InvalidDataException("Downloads require an immutable Git commit ID.");
+            Safety.Relative(repoPath);
             var parts = repoPath.Split('/').Select(Uri.EscapeDataString);
             return "https://raw.githubusercontent.com/" + Config.Owner + "/" + Config.Repo + "/" + commit + "/" + string.Join("/", parts);
         }
@@ -213,7 +215,8 @@ namespace VirgilPatch
                 if (segment.Length == 0 || segment == "." || segment == ".." || segment.EndsWith(".") || segment.EndsWith(" ") ||
                     segment.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || segment.Any(c => char.IsControl(c)) ||
                     segment.Equals(".git", StringComparison.OrdinalIgnoreCase) ||
-                    Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³]|LPT[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³])\z", RegexOptions.IgnoreCase))
+                    Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³]|LPT[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³])\z", RegexOptions.IgnoreCase) ||
+                    Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9\u00b9\u00b2\u00b3]|LPT[1-9\u00b9\u00b2\u00b3])\z", RegexOptions.IgnoreCase))
                     throw new InvalidDataException("Unsafe Windows path component.");
             }
         }
@@ -441,7 +444,7 @@ namespace VirgilPatch
                 var js = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
                 Safety.NoLinks(FilePath);
                 if (new FileInfo(FilePath).Length > Safety.MaxIndexBytes) throw new InvalidDataException("State exceeds size limit.");
-                var d = js.Deserialize<Dictionary<string, object>>(File.ReadAllText(FilePath));
+                var d = StrictJson.Read(File.ReadAllBytes(FilePath), (int)Safety.MaxIndexBytes);
                 var s = new State();
                 object v;
                 if (d.TryGetValue("patches_dir", out v)) s.patches_dir = v as string;
@@ -454,7 +457,7 @@ namespace VirgilPatch
                 if (d.TryGetValue("install_folders", out v) && v is Dictionary<string, object>)
                     foreach (var pair in ((Dictionary<string, object>)v).Take(128)) {
                         try { Safety.Patch(pair.Key); if (string.Equals(pair.Value as string, FolderMigration.Canonical(pair.Key), StringComparison.OrdinalIgnoreCase)) s.install_folders[pair.Key] = (string)pair.Value; }
-                        catch (IOException) { } catch (ArgumentException) { }
+                        catch (InvalidDataException) { } catch (IOException) { } catch (ArgumentException) { }
                     }
                 if (d.TryGetValue("commit", out v)) s.commit = v as string;
                 if (d.TryGetValue("published", out v)) s.published = v as string;
@@ -466,7 +469,10 @@ namespace VirgilPatch
                         if (arr != null && arr.Length == 3) s.hashes[kv.Key] = arr;
                     }
                 if (d.TryGetValue("installed", out v) && v is Dictionary<string, object>)
-                    foreach (var kv in (Dictionary<string, object>)v) s.installed[kv.Key] = kv.Value as string;
+                    foreach (var kv in (Dictionary<string, object>)v) {
+                        try { Safety.Key(kv.Key); if (Safety.IsSha(kv.Value as string)) s.installed[kv.Key] = (string)kv.Value; }
+                        catch (InvalidDataException) { } catch (IOException) { } catch (ArgumentException) { }
+                    }
                 return s;
             }
             catch { return new State(); }
@@ -804,6 +810,16 @@ namespace VirgilPatch
             }
         }
 
+        internal static FileStream AcquirePatchLock(string root)
+        {
+            Safety.NoLinks(root);
+            Directory.CreateDirectory(root);
+            var path = Safety.Under(root, ".virgil-update.lock");
+            Safety.NoLinks(path);
+            try { return new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 4096, FileOptions.DeleteOnClose); }
+            catch (IOException ex) { throw new IOException("Cannot lock this Patches folder. Another updater may be using it; close that updater and retry. No patch files were changed by this attempt.", ex); }
+        }
+
         public void Apply(Plan p, CancellationToken cancel)
         {
             cancel.ThrowIfCancellationRequested();
@@ -815,6 +831,8 @@ namespace VirgilPatch
             }
             foreach (var entry in p.Files.Values) Local(entry);
             if (p.UpToDate) { Progress(0, 0); Phase("Complete"); return; }
+            using (var patchLock = AcquirePatchLock(p.TargetRoot))
+            {
             var errors = new List<string>(); var progress = Progress; long offset = 0;
             Phase("Downloading selected patches");
             try
@@ -865,6 +883,7 @@ namespace VirgilPatch
             if (errors.Count > 0) throw new Exception(errors.Count + " patches / files failed. Completed patches: " + string.Join(", ", p.CompletedPatches) +
                 ". Successful files are kept for retry.\r\n" + string.Join("\r\n", errors.Take(8)));
             progress(p.FetchBytes, p.FetchBytes); Phase("Complete");
+            }
         }
 
         void Place(string tmp, string dest, FileInfoEntry entry)

@@ -157,3 +157,7 @@ Copy diagnostics generates a read-only support report with report-local path ali
 ### Updater 1.5.6 folder confirmation and changelog
 
 Every fifth manual Update use checks the Epsilon.exe/Data main installation markers, _retail_/Wow.exe/EpsilonAddon.dll, the existing Patches directory and nearby installations. A themed dialog asks the user to confirm the exact path; missing required markers disable confirmation. No reopens folder selection, and Cancel stops patch work. Problem installing? Check folders in the patch chooser runs this flow immediately. A successful confirmation resets the saved five-use counter. These are layout checks, not executable authenticity checks. The gear at bottom left opens the history of updater releases. Software startup still never updates game patches automatically.
+
+### Updater 1.5.7 additive security checks
+
+Five protections extend the existing update flow: strict signed-release metadata parsing; strict saved-state parsing and unsafe tracking-entry rejection; immutable Git commit and relative download path checks; complete Windows reserved-device-name rejection, including superscript COM/LPT names; and an exclusive per-Patches update lock that prevents simultaneous writers and releases on failure/process exit. Existing repair, migration, privacy, folder confirmations and three-stage verification remain. These tests establish the covered updater behaviour, not an antivirus verdict.
