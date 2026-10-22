@@ -13,12 +13,13 @@ namespace VirgilPatch
     {
         public string[] Names;
         public bool Verify;
+        public bool CheckFolders;
     }
 
     static class PatchDialogs
     {
         static readonly Color Background = Color.FromArgb(23, 21, 18), Foreground = Color.FromArgb(230, 217, 190);
-        static Form Window(string title, int height)
+        internal static Form Window(string title, int height)
         {
             return new Form { Text = title + " - Chronicles of Lordaeron", ClientSize = new Size(730, height),
                 BackColor = Background, ForeColor = Foreground, Font = new Font("Segoe UI", 10f),
@@ -85,6 +86,7 @@ namespace VirgilPatch
                 var verify = new CheckBox { Text = "Deep repair: re-verify unchanged files too (extra local disk reading)", AutoSize = true, Location = new Point(24, 320), ForeColor = Foreground };
                 var clear = new LauncherButton { Text = "Clear all", Location = new Point(24, 363), Size = new Size(110, 34) };
                 var all = new LauncherButton { Text = "Select all", Location = new Point(144, 363), Size = new Size(110, 34) };
+                var troubleshoot = new LauncherButton { Text = "Problem installing? Check folders", Location = new Point(276, 363), Size = new Size(430, 34), DialogResult = DialogResult.Retry };
                 var accept = new LauncherButton { Text = "Check selected", Primary = true, Location = new Point(508, 405), Size = new Size(198, 36), DialogResult = DialogResult.OK, Enabled = list.CheckedItems.Count > 0 };
                 var cancel = new LauncherButton { Text = "Cancel", Location = new Point(380, 405), Size = new Size(116, 36), DialogResult = DialogResult.Cancel };
                 list.ItemChecked += (s, e) => accept.Enabled = list.CheckedItems.Count > 0;
@@ -92,12 +94,31 @@ namespace VirgilPatch
                 all.Click += delegate { for (int i = 0; i < list.Items.Count; i++) list.Items[i].Checked = true; };
                 dialog.Controls.AddRange(new Control[] { Text("Choose only the folders you want. Unselected patches stay untouched.", 24, 20, 682, 28),
                     Text("Totals are package sizes; only changed files download. Classic and HD can be selected separately.", 24, 51, 682, 30),
-                    list, verify, clear, all, Text("Only missing or changed files are downloaded, including after a failed update.", 24, 406, 340, 40), accept, cancel });
+                    list, verify, clear, all, troubleshoot, Text("Only missing or changed files are downloaded, including after a failed update.", 24, 406, 340, 40), accept, cancel });
                 dialog.AcceptButton = accept; dialog.CancelButton = cancel;
-                if (dialog.ShowDialog(owner) != DialogResult.OK) return null;
+                var answer = dialog.ShowDialog(owner);
+                if (answer == DialogResult.Retry) return new PatchSelection { CheckFolders = true };
+                if (answer != DialogResult.OK) return null;
                 return new PatchSelection { Names = list.CheckedItems.Cast<ListViewItem>().Select(c => (string)c.Tag).ToArray(), Verify = verify.Checked };
             }
         }
+
+        public static DialogResult Installation(IWin32Window owner, InstallationInspection inspection) {
+            using(var dialog=Window("Check installation folders",560)) {
+                var details=new TextBox { Multiline=true,ReadOnly=true,ScrollBars=ScrollBars.Vertical,BackColor=Background,ForeColor=Foreground,Location=new Point(24,24),Size=new Size(682,448),Text=inspection.Describe() };
+                var yes=new LauncherButton {Text="Yes, this is correct",Primary=true,Enabled=inspection.Valid,Location=new Point(486,496),Size=new Size(220,36),DialogResult=DialogResult.Yes};
+                var no=new LauncherButton {Text="No, select folder",Location=new Point(248,496),Size=new Size(220,36),DialogResult=DialogResult.Retry};
+                var cancel=new LauncherButton {Text="Cancel",Location=new Point(24,496),Size=new Size(200,36),DialogResult=DialogResult.Cancel};
+                dialog.Controls.AddRange(new Control[]{details,yes,no,cancel});dialog.AcceptButton=yes;dialog.CancelButton=cancel;return dialog.ShowDialog(owner);
+            }
+        }
+        public static void Changelog(IWin32Window owner) {
+            using(var dialog=Window("Updater changelog",560)) {
+                var details=new TextBox{Multiline=true,ReadOnly=true,ScrollBars=ScrollBars.Vertical,BackColor=Background,ForeColor=Foreground,Location=new Point(24,24),Size=new Size(682,448),Text=ChangelogText.Replace("\n",Environment.NewLine)};
+                var close=new LauncherButton{Text="Close",Location=new Point(486,496),Size=new Size(220,36),DialogResult=DialogResult.OK};dialog.Controls.AddRange(new Control[]{details,close});dialog.AcceptButton=close;dialog.ShowDialog(owner);
+            }
+        }
+        internal const string ChangelogText = "1.5.6 - Installation folder checks\nChecks Epsilon.exe and Data, _retail_/Wow.exe and EpsilonAddon.dll, and nearby Patches folders. Every fifth Update use asks you to confirm the exact path. Problem installing? Check folders runs it immediately. No automatic switching or deletion. Changelog gear added.\n\n1.5.5 - Private support diagnostics\nCopy diagnostics reports tokenized paths, detected folders, nearby installations, migration events and error codes. Personal path parts, network/drive identifiers and raw error messages are omitted. No automatic upload.\n\n1.5.4 - Targeted three-stage verification\nRecent added/changed assets bypass cached hashes. New files are checked before placement, at their installed path, and before finalization. Plans are bound to the checked folder. Full Deep repair remains available.\n\n1.5.3 - Existing folder migration\nConfirmed Update reuses existing versions, consolidates into fixed (5.0.0) folders, and archives duplicates outside Patches. Repairs, retry and independent selections retained.\n\n1.5.2 - Online patch numbering\nFive online packages start at 5.0.0, then advance independently through 5.0.0.1 and later revisions. Installed/Available version columns and publisher source compatibility.\n\n1.5.1 and earlier - Signed launcher updates and safety\nProgram self-update on launch; game patch changes require explicit Update confirmation. Path/link validation, checksums, atomic file placement, metadata-last updates, cancellation and retry protections. Launcher video and ambience with fallbacks.\n\nGame patch releases are separate from updater versions. Opening the updater does not install or rename game patches.";
 
         public static string Summary(Plan plan)
         {

@@ -25,7 +25,7 @@ namespace VirgilPatch
         public void Record(string operation, string patch = null, string from = null, string to = null, Exception error = null)
         {
             // Operation is a closed set of application-defined labels, never external text.
-            if (!new[] { "detected folder", "planned rename", "rename started", "renamed", "archive duplicate started", "duplicate archived", "patch complete", "patch failed", "check failed", "update failed", "check cancelled", "update cancelled" }.Contains(operation)) operation = "operation";
+            if (!new[] { "folder check", "detected folder", "planned rename", "rename started", "renamed", "archive duplicate started", "duplicate archived", "patch complete", "patch failed", "check failed", "update failed", "check cancelled", "update cancelled" }.Contains(operation)) operation = "operation";
             lock (gate) { if (events.Count >= 256) events.Dequeue(); events.Enqueue(new Event { Operation = operation, Patch = patch, From = from, To = to, Error = error == null ? null : ErrorCode(error) }); }
         }
         internal sealed class Redactor
@@ -68,6 +68,9 @@ namespace VirgilPatch
                 try {
                     Safety.NoLinks(state.patches_dir);
                     text.AppendLine("Root exists: " + Directory.Exists(state.patches_dir));
+                    var inspection=InstallationFolders.Inspect(state.patches_dir);
+                    text.AppendLine("Installation markers: Epsilon.exe="+inspection.MainExecutable+"; Data="+inspection.Data+"; _retail_="+inspection.RetailDirectory+"; Wow.exe="+inspection.RetailExecutable+"; EpsilonAddon.dll="+inspection.EpsilonAddon+"; valid="+inspection.Valid);
+                    text.AppendLine("Update uses since folder confirmation: "+state.folder_check_uses);
                     var parent = System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(state.patches_dir));
                     text.AppendLine("Wow.exe beside Patches: " + File.Exists(System.IO.Path.Combine(parent ?? state.patches_dir, "Wow.exe")));
                     text.AppendLine("Detected direct child folders (no asset scan):");
@@ -94,12 +97,7 @@ namespace VirgilPatch
                             }
                     }
                     text.AppendLine("Nearby installation candidates (existence checks only):");
-                    var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase); string ancestor=parent;
-                    for(int level=0;level<3 && !string.IsNullOrEmpty(ancestor);level++,ancestor=System.IO.Path.GetDirectoryName(ancestor))
-                        foreach(string suffix in new[]{@"_retail_\Patches",@"Epsilon\_retail_\Patches",@"Epsilon\Epsilon\_retail_\Patches"}) {
-                            string candidate=System.IO.Path.Combine(ancestor,suffix); if(!seen.Add(candidate))continue;
-                            try { Safety.NoLinks(candidate); if(Directory.Exists(candidate))text.AppendLine("  "+redactor.Path(candidate)+(string.Equals(System.IO.Path.GetFullPath(candidate),System.IO.Path.GetFullPath(state.patches_dir),StringComparison.OrdinalIgnoreCase)?" [selected]":" [other]")); } catch(Exception ex) { text.AppendLine("  "+redactor.Path(candidate)+"; inspect="+ErrorCode(ex)); }
-                        }
+                    foreach(var candidate in inspection.Nearby) text.AppendLine("  "+redactor.Path(candidate)+(string.Equals(System.IO.Path.GetFullPath(candidate),System.IO.Path.GetFullPath(state.patches_dir),StringComparison.OrdinalIgnoreCase)?" [selected]":" [other]"));
                 } catch(Exception ex) { text.AppendLine("Folder inspection: "+ErrorCode(ex)); }
             }
             if(includeRunningGame) {

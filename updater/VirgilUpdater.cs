@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.5.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.5.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.5.5")]
+[assembly: System.Reflection.AssemblyVersion("1.5.6.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.6.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.5.6")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.5.5";
+        public const string UserAgent = "VirgilPatchUpdater/1.5.6";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }
@@ -422,6 +422,8 @@ namespace VirgilPatch
     {
         public string patches_dir;
         public string selection_root;
+        public int folder_check_uses;
+        public bool CountFolderCheck() { folder_check_uses = Math.Min(5, Math.Max(0, folder_check_uses) + 1); return folder_check_uses >= 5; }
         public List<string> verified_patches = new List<string>();
         public List<string> selected_patches = new List<string>();
         public Dictionary<string, string> install_folders = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -445,6 +447,7 @@ namespace VirgilPatch
                 if (d.TryGetValue("patches_dir", out v)) s.patches_dir = v as string;
                 if (d.TryGetValue("verified_patches", out v) && v is System.Collections.IEnumerable && !(v is string))
                     foreach (var name in (System.Collections.IEnumerable)v) if (name is string && s.verified_patches.Count < 128) s.verified_patches.Add((string)name);
+                if (d.TryGetValue("folder_check_uses", out v) && v is int) s.folder_check_uses = Math.Max(0, Math.Min(5, (int)v));
                 if (d.TryGetValue("selection_root", out v)) s.selection_root = v as string;
                 if (d.TryGetValue("selected_patches", out v) && v is System.Collections.IEnumerable && !(v is string))
                     foreach (var choice in (System.Collections.IEnumerable)v) if (choice is string && s.selected_patches.Count < 128) s.selected_patches.Add((string)choice);
@@ -476,7 +479,7 @@ namespace VirgilPatch
             var js = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
             var tmp = FilePath + "." + Guid.NewGuid().ToString("N") + ".tmp";
             File.WriteAllText(tmp, js.Serialize(new Dictionary<string, object> {
-                { "patches_dir", patches_dir }, { "selection_root", selection_root }, { "verified_patches", verified_patches }, { "selected_patches", selected_patches }, { "commit", commit }, { "published", published },
+                { "folder_check_uses", folder_check_uses }, { "patches_dir", patches_dir }, { "selection_root", selection_root }, { "verified_patches", verified_patches }, { "selected_patches", selected_patches }, { "commit", commit }, { "published", published },
                 { "hashes", hashes }, { "installed", installed }, { "install_folders", install_folders } }));
             Safety.NoLinks(FilePath);
             if (File.Exists(FilePath)) File.Replace(tmp, FilePath, null);
@@ -1088,7 +1091,7 @@ namespace VirgilPatch
             if (!string.Equals(state.patches_dir, path, StringComparison.OrdinalIgnoreCase))
             {
                 state.installed.Clear(); state.install_folders.Clear(); state.hashes.Clear(); state.verified_patches.Clear(); state.selected_patches.Clear();
-                state.selection_root = null; state.commit = null; state.published = null;
+                state.folder_check_uses = 0; state.selection_root = null; state.commit = null; state.published = null;
             }
             state.patches_dir = path;
             dirBox.Text = path;
@@ -1173,9 +1176,10 @@ namespace VirgilPatch
             }));
         }
 
-        void RunPatchCheck(bool applyAfterCheck = false)
+        void RunPatchCheck(bool applyAfterCheck = false, bool countAttempt = true)
         {
             if (string.IsNullOrEmpty(state.patches_dir) && !PickFolder()) return;
+            if (applyAfterCheck && countAttempt) { bool due = state.CountFolderCheck(); state.Save(); if (due && !CheckInstallationFolders()) { status.Text = "Folder check cancelled. No patch files changed."; return; } }
             cts = new CancellationTokenSource();
             Busy(true); plan = null;
             status.Text = "Loading the patch list. No game files are downloading yet.";
@@ -1196,6 +1200,7 @@ namespace VirgilPatch
                     return;
                 }
                 var choice = ChoosePatches != null ? ChoosePatches(t.Result) : PatchDialogs.Choose(this, t.Result, state);
+                if (choice != null && choice.CheckFolders) { Busy(false); cts.Dispose(); cts = null; if (CheckInstallationFolders()) RunPatchCheck(applyAfterCheck, false); else status.Text = "Folder check cancelled. No patch files changed."; return; }
                 if (choice == null || choice.Names == null || choice.Names.Length == 0)
                 {
                     Busy(false); cts.Dispose(); cts = null; status.Text = "No patch folders selected. Your patches were left unchanged."; return;

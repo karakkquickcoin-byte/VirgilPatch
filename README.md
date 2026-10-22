@@ -153,3 +153,7 @@ Update previews and Details identify the exact selected Patches root and install
 ### Updater 1.5.5 diagnostics
 
 Copy diagnostics generates a read-only support report with report-local path aliases, detected direct patch folders and metadata versions, nearby installation candidates, running WoW locations if accessible, selected/checked destinations, migration events and categorized error codes. It excludes raw logs, exception messages, drive/network identifiers and arbitrary personal path components. The report is copied only on request; it is not uploaded. No patch content is scanned for diagnostics and the chosen installation is never switched automatically. An Epsilon/Epsilon installation remains distinguishable from Epsilon because game path components are preserved.
+
+### Updater 1.5.6 folder confirmation and changelog
+
+Every fifth manual Update use checks the Epsilon.exe/Data main installation markers, _retail_/Wow.exe/EpsilonAddon.dll, the existing Patches directory and nearby installations. A themed dialog asks the user to confirm the exact path; missing required markers disable confirmation. No reopens folder selection, and Cancel stops patch work. Problem installing? Check folders in the patch chooser runs this flow immediately. A successful confirmation resets the saved five-use counter. These are layout checks, not executable authenticity checks. The gear at bottom left opens the history of updater releases. Software startup still never updates game patches automatically.

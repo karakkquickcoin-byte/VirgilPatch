@@ -363,6 +363,8 @@ namespace VirgilPatch
             copyDiagnostics.Font = small;
             copyDiagnostics.Click += delegate { CopyDiagnostics(); };
             Controls.AddRange(new Control[] { transferText, cancelWork, changesButton, copyDiagnostics });
+            var gear = new LauncherButton {Text="\u2699",AccessibleName="Open updater changelog",Font=new Font("Segoe UI Symbol",12f)};
+            gear.SetBounds(8,628,32,22);gear.Click+=delegate{PatchDialogs.Changelog(this);};Controls.Add(gear);
             CaptureLayout();
         }
 
