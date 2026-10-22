@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.7.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.7.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.5.7")]
+[assembly: System.Reflection.AssemblyVersion("1.5.8.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.8.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.5.8")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.5.7";
+        public const string UserAgent = "VirgilPatchUpdater/1.5.8";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }

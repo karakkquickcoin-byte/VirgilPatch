@@ -269,7 +269,7 @@ namespace VirgilPatch
             Caption("Click Update, then choose the patches you want.", 115, 357, 330, 24, normal, ForeColor);
             Caption("Patch files change only after you confirm Update.", 73, 400, 375, 20, small, muted);
 
-            Caption("PATCHES FOLDER", 48, 485, 500, 23, small, gold);
+            Caption("PATCHES FOLDER", 48, 485, 260, 23, small, gold);
             dirBox.BorderStyle = BorderStyle.FixedSingle;
             dirBox.BackColor = Color.FromArgb(28, 26, 22);
             dirBox.ForeColor = Color.FromArgb(224, 216, 200);
