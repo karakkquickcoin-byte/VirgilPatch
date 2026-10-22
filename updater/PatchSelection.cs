@@ -172,6 +172,15 @@ namespace VirgilPatch
         readonly Label transferText = new Label { AutoSize = false, BackColor = Color.Transparent, ForeColor = Color.FromArgb(209, 190, 153) };
         readonly Button cancelWork = new LauncherButton { Text = "Cancel", Enabled = false };
         readonly Button changesButton = new LauncherButton { Text = "What's new" };
+        readonly Button copyDiagnostics = new LauncherButton { Text = "Copy diagnostics", AccessibleName = "Copy privacy-redacted patch diagnostics" };
+        readonly PatchDiagnostics diagnostics = new PatchDiagnostics();
+        internal Action<string> CopyDiagnosticText = text => Clipboard.SetText(text);
+        internal string DiagnosticText() { return diagnostics.Build(state, lastPlan); }
+        void CopyDiagnostics()
+        {
+            try { CopyDiagnosticText(DiagnosticText()); status.Text = "Diagnostics copied with personal paths redacted. Paste them into your support message."; }
+            catch { status.Text = "Could not copy diagnostics. The clipboard may be busy; try again."; }
+        }
         readonly TransferEstimate estimate = new TransferEstimate();
         Plan lastPlan;
 
@@ -198,7 +207,8 @@ namespace VirgilPatch
                 if (t.IsFaulted || t.IsCanceled)
                 {
                     status.Text = t.IsCanceled || t.Exception.GetBaseException() is OperationCanceledException ? "Check cancelled. No patch files were changed." : "Cannot check these patches. Open Details for the error.";
-                    if (t.IsFaulted) Say("Error: " + t.Exception.GetBaseException().Message);
+                    if (t.IsFaulted) { diagnostics.Record("check failed", null, state.patches_dir, null, t.Exception.GetBaseException()); Say("Error: " + t.Exception.GetBaseException().Message); }
+                    else diagnostics.Record("check cancelled");
                     cts.Dispose(); cts = null; return;
                 }
                 plan = t.Result; lastPlan = plan; changesButton.Enabled = true;

@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.4.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.4.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.5.4")]
+[assembly: System.Reflection.AssemblyVersion("1.5.5.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.5.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.5.5")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.5.4";
+        public const string UserAgent = "VirgilPatchUpdater/1.5.5";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }
@@ -492,6 +492,7 @@ namespace VirgilPatch
         readonly ISource src;
         readonly State state;
         public bool VerifyExisting;
+        public PatchDiagnostics Diagnostics = new PatchDiagnostics();
         internal Action<int, FileInfoEntry, string> Verified = delegate { };
         string checkedRoot;
 
@@ -642,6 +643,7 @@ namespace VirgilPatch
                         throw new InvalidDataException("Manifest file is also used as a directory.");
             foreach (var key in p.VerificationTargets) if (!p.Files.ContainsKey(key)) throw new InvalidDataException("Release verification list contains an unknown asset.");
             p.TotalFiles = all.Count; p.TotalBytes = all.Sum(f => f.Size);
+            Diagnostics.Catalog(p);
             return p;
         }
 
@@ -667,7 +669,8 @@ namespace VirgilPatch
                     p.InstallFolders[patch] = catalog.InstallFolders[patch];
                     var migration = FolderMigration.Discover(state, patch, catalog.InstallFolders[patch]);
                     localFolders[patch] = migration.Preferred;
-                    if (migration.Needed) p.Migrations[patch] = migration;
+                    foreach (var folder in migration.Sources) Diagnostics.Record("detected folder", patch, folder);
+                    if (migration.Needed) { p.Migrations[patch] = migration; foreach (var folder in migration.Sources) Diagnostics.Record("planned rename", patch, folder, migration.Target); }
                 }
             }
             foreach (var patch in p.Patches) {
@@ -740,7 +743,9 @@ namespace VirgilPatch
             Safety.NoLinks(migration.Target);
             if (!Directory.Exists(migration.Target) && Directory.Exists(migration.Preferred)) {
                 string before = migration.Preferred;
+                Diagnostics.Record("rename started", migration.Key, before, migration.Target);
                 Directory.Move(before, migration.Target);
+                Diagnostics.Record("renamed", migration.Key, before, migration.Target);
                 foreach (var key in state.hashes.Keys.Where(k => k.StartsWith(before + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)).ToList()) {
                     state.hashes[migration.Target + key.Substring(before.Length)] = state.hashes[key]; state.hashes.Remove(key);
                 }
@@ -777,7 +782,9 @@ namespace VirgilPatch
                 string operation = Safety.Under(backups, DateTime.UtcNow.ToString("yyyyMMdd-HHmmss") + "-" + Guid.NewGuid().ToString("N"));
                 Directory.CreateDirectory(operation);
                 string destination = Safety.Under(operation, Path.GetFileName(source));
+                Diagnostics.Record("archive duplicate started", migration.Key, source, destination);
                 Directory.Move(source, destination);
+                Diagnostics.Record("duplicate archived", migration.Key, source, destination);
                 foreach (var key in state.hashes.Keys.Where(k => k.StartsWith(source + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)).ToList()) state.hashes.Remove(key);
                 Log("Removed duplicate " + Path.GetFileName(source) + " from Patches; rollback copy: " + destination);
             }
@@ -843,10 +850,11 @@ namespace VirgilPatch
                         ApplyPatch(unit, metadata, cancel);
                         if (unit.Migrations.ContainsKey(patch)) FinishMigration(unit.Migrations[patch], cancel);
                         p.CompletedPatches.Add(patch);
+                        Diagnostics.Record("patch complete", patch, null, state.patches_dir);
                         Log("Completed " + patch + ".");
                     }
                     catch (OperationCanceledException) { throw; }
-                    catch (Exception ex) { errors.Add(patch + ": " + ex.Message); Log("Patch incomplete: " + patch + ". It was not marked complete; retry to finish verification. " + ex.Message); }
+                    catch (Exception ex) { Diagnostics.Record("patch failed", patch, null, state.patches_dir, ex); errors.Add(patch + ": " + ex.Message); Log("Patch incomplete: " + patch + ". It was not marked complete; retry to finish verification. " + ex.Message); }
                     offset += received;
                 }
             }
@@ -1109,6 +1117,7 @@ namespace VirgilPatch
         {
             isBusy = on;
             browse.Enabled = !on;
+            copyDiagnostics.Enabled = !on;
             cancelWork.Enabled = on && cts != null;
             updateBtn.Enabled = !on;
             updateBtn.Text = on ? "Please wait..." : "Update";
@@ -1116,7 +1125,7 @@ namespace VirgilPatch
 
         Updater MakeUpdater()
         {
-            return new Updater(source, state) { Log = Say, Progress = Prog, Phase = Phase };
+            return new Updater(source, state) { Log = Say, Progress = Prog, Phase = Phase, Diagnostics = diagnostics };
         }
 
         void RunCheck(bool applyAfterCheck = false)
@@ -1175,7 +1184,7 @@ namespace VirgilPatch
             Task.Factory.StartNew(() => updater.Catalog()).ContinueWith(t => Post(delegate {
                 if (t.IsFaulted || t.IsCanceled || cts.IsCancellationRequested)
                 {
-                    if (t.IsFaulted) Say("Error: " + t.Exception.GetBaseException().Message);
+                    if (t.IsFaulted) { diagnostics.Record("check failed", null, state.patches_dir, null, t.Exception.GetBaseException()); Say("Error: " + t.Exception.GetBaseException().Message); }
                     status.Text = "Could not load patches, or the check was cancelled. Open Details or try again.";
                     Busy(false); cts.Dispose(); cts = null; return;
                 }
@@ -1219,8 +1228,8 @@ namespace VirgilPatch
             var tok = cts.Token;
             Task.Factory.StartNew(() => u.Apply(p, tok)).ContinueWith(t => Post(() =>
             {
-                if (t.IsFaulted) { Say("Error: " + t.Exception.GetBaseException().Message); status.Text = "Update unavailable. Open Details for the error, then try again."; }
-                else if (t.IsCanceled) { Say("Update cancelled."); status.Text = "Update cancelled. Click Update to try again."; }
+                if (t.IsFaulted) { diagnostics.Record("update failed", null, state.patches_dir, null, t.Exception.GetBaseException()); Say("Error: " + t.Exception.GetBaseException().Message); status.Text = "Update unavailable. Open Details for the error, then try again."; }
+                else if (t.IsCanceled) { diagnostics.Record("update cancelled"); Say("Update cancelled."); status.Text = "Update cancelled. Click Update to try again."; }
                 else { status.Text = "Selected patches complete in: " + p.TargetRoot; Phase("Complete"); transferText.Text = "Complete 100% | Selected patches ready | ETA done"; }
                 plan = null;
                 cts.Dispose(); cts = null;

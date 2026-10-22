@@ -359,7 +359,10 @@ namespace VirgilPatch
             changesButton.SetBounds(752, 190, 200, 32);
             changesButton.Enabled = false;
             changesButton.Click += delegate { if (lastPlan != null) PatchDialogs.Review(this, lastPlan, false); };
-            Controls.AddRange(new Control[] { transferText, cancelWork, changesButton });
+            copyDiagnostics.SetBounds(460, 478, 180, 28);
+            copyDiagnostics.Font = small;
+            copyDiagnostics.Click += delegate { CopyDiagnostics(); };
+            Controls.AddRange(new Control[] { transferText, cancelWork, changesButton, copyDiagnostics });
             CaptureLayout();
         }
 
