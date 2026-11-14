@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.8.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.8.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.5.8")]
+[assembly: System.Reflection.AssemblyVersion("1.5.9.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.9.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.5.9")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.5.8";
+        public const string UserAgent = "VirgilPatchUpdater/1.5.9";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }
@@ -215,7 +215,7 @@ namespace VirgilPatch
                 if (segment.Length == 0 || segment == "." || segment == ".." || segment.EndsWith(".") || segment.EndsWith(" ") ||
                     segment.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || segment.Any(c => char.IsControl(c)) ||
                     segment.Equals(".git", StringComparison.OrdinalIgnoreCase) ||
-                    Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³]|LPT[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³])\z", RegexOptions.IgnoreCase) ||
+                    Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³]|LPT[1-9ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³])\z", RegexOptions.IgnoreCase) ||
                     Regex.IsMatch(segment.Split('.')[0], @"\A(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9\u00b9\u00b2\u00b3]|LPT[1-9\u00b9\u00b2\u00b3])\z", RegexOptions.IgnoreCase))
                     throw new InvalidDataException("Unsafe Windows path component.");
             }
@@ -394,6 +394,74 @@ namespace VirgilPatch
         }
     }
 
+    // Epsilon resolves manifest paths with exact casing, even on case-insensitive NTFS.
+    // Cache directory listings for one check/repair pass; never trust the spelling supplied to File.Exists.
+    sealed class PathCasing
+    {
+        readonly string root;
+        readonly Dictionary<string, Dictionary<string, string>> listings = new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
+        [System.Runtime.InteropServices.DllImport("kernel32.dll", EntryPoint = "MoveFileExW", CharSet = System.Runtime.InteropServices.CharSet.Unicode, SetLastError = true)]
+        static extern bool MoveCase(string before, string after, uint flags);
+        public PathCasing(string root) { this.root = root; Safety.NoLinks(root); }
+        Dictionary<string, string> Listing(string parent)
+        {
+            Dictionary<string, string> entries;
+            if (listings.TryGetValue(parent, out entries)) return entries;
+            Safety.NoLinks(parent);
+            entries = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            if (Directory.Exists(parent)) foreach (var entry in Directory.EnumerateFileSystemEntries(parent)) {
+                string name = Path.GetFileName(entry);
+                if (entries.ContainsKey(name)) throw new InvalidDataException("Case-colliding local paths: " + parent);
+                entries.Add(name, name);
+            }
+            listings[parent] = entries; return entries;
+        }
+        string Walk(string relative, bool repair)
+        {
+            Safety.Relative(relative);
+            string parent = root;
+            var actual = new List<string>();
+            foreach (string wanted in relative.Split('/')) {
+                var entries = Listing(parent); string found;
+                if (!entries.TryGetValue(wanted, out found)) return null;
+                string before = Safety.Under(parent, found);
+                if (repair && !string.Equals(found, wanted, StringComparison.Ordinal)) {
+                    string after = Safety.Under(parent, wanted);
+                    // Windows can report a successful no-op for a direct case-only rename.
+                    // Use a unique sibling, and restore the original spelling if the second move fails.
+                    string temporary = Safety.Under(parent, found + "." + Guid.NewGuid().ToString("N") + ".vcase");
+                    if (!MoveCase(before, temporary, 0)) throw new IOException("Could not prepare filename casing repair: " + before,
+                        new System.ComponentModel.Win32Exception(System.Runtime.InteropServices.Marshal.GetLastWin32Error()));
+                    if (!MoveCase(temporary, after, 0)) {
+                        int error = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
+                        if (!MoveCase(temporary, before, 0)) throw new IOException("Filename casing repair needs recovery; preserved original at: " + temporary);
+                        throw new IOException("Could not repair filename casing: " + after, new System.ComponentModel.Win32Exception(error));
+                    }
+                    entries[wanted] = wanted; found = wanted;
+                }
+                actual.Add(found); parent = Safety.Under(parent, found);
+            }
+            return string.Join("/", actual);
+        }
+        public bool Matches(string relative) { return string.Equals(Walk(relative, false), relative, StringComparison.Ordinal); }
+        public void Repair(string relative) {
+            if (!string.Equals(Walk(relative, true), relative, StringComparison.Ordinal))
+                throw new InvalidDataException("Cannot repair casing of a missing path: " + relative);
+        }
+        public static void Validate(IEnumerable<FileInfoEntry> files) {
+            var spellings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var file in files) {
+                string prefix = file.Patch;
+                foreach (var part in file.Name.Split('/')) {
+                    prefix += "/" + part; string previous;
+                    if (spellings.TryGetValue(prefix, out previous) && !string.Equals(previous, prefix, StringComparison.Ordinal))
+                        throw new InvalidDataException("Manifest has inconsistent path casing: " + prefix);
+                    spellings[prefix] = prefix;
+                }
+            }
+        }
+    }
+
     class Plan
     {
         public string Commit;
@@ -404,6 +472,7 @@ namespace VirgilPatch
         public List<string> Patches = new List<string>();
         public Dictionary<string, FileInfoEntry> Files = new Dictionary<string, FileInfoEntry>(StringComparer.OrdinalIgnoreCase);
         public List<FileInfoEntry> Fetch = new List<FileInfoEntry>();
+        public List<FileInfoEntry> CaseRepairs = new List<FileInfoEntry>();
         public List<string> Remove = new List<string>();                   // installed keys "<patch>/<file>"
         public List<FileInfoEntry> PatchJsons = new List<FileInfoEntry>(); // changed patch.json files, written last
         public long FetchBytes { get { return Fetch.Sum(f => f.Size); } }
@@ -418,7 +487,7 @@ namespace VirgilPatch
         public Dictionary<string, string> LatestUpdates = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, string> InstallFolders = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, FolderMigration> Migrations = new Dictionary<string, FolderMigration>(StringComparer.OrdinalIgnoreCase);
-        public bool UpToDate { get { return Fetch.Count == 0 && Remove.Count == 0 && PatchJsons.Count == 0 && Migrations.Values.All(m => m.Completed); } }
+        public bool UpToDate { get { return Fetch.Count == 0 && CaseRepairs.Count == 0 && Remove.Count == 0 && PatchJsons.Count == 0 && Migrations.Values.All(m => m.Completed); } }
     }
 
     class State
@@ -728,6 +797,11 @@ namespace VirgilPatch
                 if (p.Migrations.ContainsKey(j.Patch) || !File.Exists(path) || new FileInfo(path).Length != j.Size || BlobSha(path) != j.Sha) p.PatchJsons.Add(j);
                 p.Installed[j.Key] = j.Sha;
             }
+            PathCasing.Validate(p.Files.Values);
+            foreach (var group in p.Files.Values.GroupBy(f => f.Patch, StringComparer.OrdinalIgnoreCase)) {
+                var casing = new PathCasing(Path.GetDirectoryName(Local(group.First().Patch + "/patch.json")));
+                foreach (var f in group) if (File.Exists(Local(f)) && !casing.Matches(f.Name)) p.CaseRepairs.Add(f);
+            }
             foreach (var old in state.installed)
                 if (!p.Installed.ContainsKey(old.Key) && old.Key.IndexOf('/') > 0 && p.Scope.Contains(old.Key.Substring(0, old.Key.IndexOf('/'))))
                 {
@@ -830,6 +904,7 @@ namespace VirgilPatch
                 localFolders[pair.Key] = p.Migrations.TryGetValue(pair.Key, out migration) ? migration.Preferred : Safety.Under(state.patches_dir, pair.Value);
             }
             foreach (var entry in p.Files.Values) Local(entry);
+            PathCasing.Validate(p.Files.Values);
             if (p.UpToDate) { Progress(0, 0); Phase("Complete"); return; }
             using (var patchLock = AcquirePatchLock(p.TargetRoot))
             {
@@ -848,6 +923,7 @@ namespace VirgilPatch
                     if (p.InstallFolders.ContainsKey(patch)) unit.InstallFolders[patch] = p.InstallFolders[patch];
                     foreach (var f in p.Files.Values.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase))) unit.Files.Add(f.Key, f);
                     unit.Fetch = p.Fetch.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase)).ToList();
+                    unit.CaseRepairs = p.CaseRepairs.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase)).ToList();
                     unit.PatchJsons = p.PatchJsons.Where(f => f.Patch.Equals(patch, StringComparison.OrdinalIgnoreCase)).ToList();
                     unit.Remove = p.Remove.Where(k => k.StartsWith(patch + "/", StringComparison.OrdinalIgnoreCase)).ToList();
                     unit.Installed = new Dictionary<string, string>(state.installed, StringComparer.OrdinalIgnoreCase);
@@ -974,6 +1050,16 @@ namespace VirgilPatch
                     throw new InvalidDataException("Patch remains incomplete: " + path);
                 if (p.VerificationTargets.Contains(asset.Key)) Verified(3, asset, path);
             }
+            // Reconcile actual directory-entry spelling, including reused files and replaced destinations.
+            var casing = new PathCasing(Path.GetDirectoryName(Local(p.Patches[0] + "/patch.json")));
+            foreach (var asset in p.Files.Values) {
+                cancel.ThrowIfCancellationRequested();
+                if (asset.Name == "patch.json" && !File.Exists(Local(asset))) continue;
+                if (!casing.Matches(asset.Name)) { casing.Repair(asset.Name); Log("Repaired filename casing: " + asset.Key); }
+            }
+            var exact = new PathCasing(Path.GetDirectoryName(Local(p.Patches[0] + "/patch.json")));
+            foreach (var asset in p.Files.Values.Where(f => f.Name != "patch.json"))
+                if (!exact.Matches(asset.Name)) throw new InvalidDataException("Installed filename casing differs from patch.json: " + asset.Key);
             // each patch.json last: until now the game still sees the previous file lists
             foreach (var j in p.PatchJsons)
             {
