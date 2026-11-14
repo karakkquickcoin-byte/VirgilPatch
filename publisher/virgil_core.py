@@ -61,7 +61,7 @@ def safe_relative(name, asset=False, folder=False):
     for part in name.split('/'):
         if (not part or part in ('.', '..') or part.endswith(('.', ' ')) or
                 any(ord(c) < 32 or ord(c) == 127 or c in '<>:\"|?*' for c in part) or part.casefold() == '.git' or
-                re.fullmatch(r'(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9Ã‚Â¹Ã‚Â²Ã‚Â³]|LPT[1-9Ã‚Â¹Ã‚Â²Ã‚Â³])', part.split('.')[0], re.I)):
+                re.fullmatch(r'(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9Ãƒâ€šÃ‚Â¹Ãƒâ€šÃ‚Â²Ãƒâ€šÃ‚Â³]|LPT[1-9Ãƒâ€šÃ‚Â¹Ãƒâ€šÃ‚Â²Ãƒâ€šÃ‚Â³])', part.split('.')[0], re.I)):
             raise ValueError('unsafe Windows path component: %r' % name)
     if folder and '/' in name:
         raise ValueError('patch name must be one folder')
@@ -132,6 +132,14 @@ def validate_entries(entries):
         fid = entry.get('id')
         if type(fid) is not int or not 0 < fid <= 0xffffffff:
             raise ValueError('invalid FileDataID: ' + name)
+    spellings = {}
+    for entry in entries:
+        parts = entry['file'].split('/')
+        for i in range(1, len(parts)):
+            prefix = '/'.join(parts[:i]); key = prefix.casefold()
+            if key in spellings and spellings[key] != prefix:
+                raise ValueError('inconsistent directory casing in patch.json: ' + prefix)
+            spellings[key] = prefix
     for name in seen:
         parts = name.split('/')
         if any('/'.join(parts[:i]) in seen for i in range(1, len(parts))):

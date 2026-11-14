@@ -350,6 +350,10 @@ def check(patch_path=vc.MAIN, scope="changed", published=None):
     published = vc.load_published() if published is None else published
     patch = vc.Patch(patch_path)
     errors, warnings = [], []
+    baseline = (published_index() or {}).get('patches', {}).get(pname(patch_path), {}).get('files', {})
+    filename_report = vi.filename_plan(patch, baseline)
+    if filename_report['filename_mismatches'] or filename_report['metadata_changes']:
+        errors.append('Filename casing requires repair before upload; Push performs the verified repair automatically.')
     ents = patch.entries
     ids = [e["id"] for e in ents]
     names = [e["file"].lower() for e in ents]
@@ -704,6 +708,9 @@ def publish(message=None, push=True, batch_bytes=400_000_000, skip_check=False, 
     if gone:
         return {"ok": False, "errors": {pname(p): ["folder missing: %s - put it back or Remove it from GitHub" % p]
                                         for p in gone}}
+    for source in published:
+        base = (published_index() or {}).get('patches', {}).get(pname(source), {}).get('files', {})
+        vi.repair_source_filenames(source, base, say=say)
     warnings = {}
     if not skip_check:
         errs = {}
@@ -827,6 +834,7 @@ def scan_folder(path):
     base_entry = (published_index() or {}).get("patches", {}).get(name)
     base = (base_entry or {}).get("files", {})
     canonical_names = {n.casefold(): n for n in base}
+    filename_plan = vi.filename_plan(p, base)
     files, new, changed, missing = {}, [], [], []
     root = os.path.abspath(path)
     for e in p.entries:
@@ -844,13 +852,15 @@ def scan_folder(path):
     removed = [n for n in base if n not in files]
     pj_sha = blob_sha(os.path.join(root, "patch.json"), p.stat("patch.json"))
     save_hash_cache()
-    return {"name": name, "path": path, "files": files, "new": new, "changed": changed, "removed": removed,
+    return {"filename_mismatches": filename_plan["filename_mismatches"], "filename_metadata_changes": filename_plan["metadata_changes"], "name": name, "path": path, "files": files, "new": new, "changed": changed, "removed": removed,
             "missing": missing, "first": base_entry is None, "patch_json_sha": pj_sha,
             "patch_json_changed": ((base_entry or {}).get("source_manifest") != vv.manifest_hash(p.meta) if (base_entry or {}).get("source_manifest") else (base_entry or {}).get("patch_json", {}).get("sha") != pj_sha),
             "bytes_to_send": sum(files[n]["size"] for n in new + changed)}
 
 
 def scan_summary(sc):
+    if sc.get('filename_mismatches') or sc.get('filename_metadata_changes'):
+        return '%d filename casing fixes required; Push repairs and verifies them before upload' % len(sc.get('filename_mismatches', []))
     if sc["first"]:
         return "not on GitHub yet - %d files, %.2f GB" % (len(sc["files"]), sc["bytes_to_send"] / 1e9)
     n = len(sc["new"]) + len(sc["changed"]) + len(sc["removed"])
@@ -873,6 +883,8 @@ def quick_check(sc, published, deep=False):
         errors.append("duplicate ids in patch.json")
     if len(names) != len(set(names)):
         errors.append("duplicate file names in patch.json")
+    if sc.get('filename_mismatches') or sc.get('filename_metadata_changes'):
+        errors.append('filename spelling must be repaired before upload')
     if sc["missing"]:
         errors.append("%d files listed in patch.json are missing, e.g. %s" % (len(sc["missing"]), sc["missing"][:5]))
     bad = []
@@ -933,6 +945,8 @@ def push_folder(path, deep=False, say=log, push=True):
     published = vc.load_published()
     if not any(_norm(p) == _norm(path) for p in published):
         return {"ok": False, "errors": ["%s is not in the GitHub list" % pname(path)]}
+    base = (published_index() or {}).get('patches', {}).get(pname(path), {}).get('files', {})
+    filename_repairs = vi.repair_source_filenames(path, base, say=say)
     clear_stale_lock(say)
     say("scanning %s ..." % pname(path))
     sc = scan_folder(path)
@@ -1311,7 +1325,7 @@ def gui():
                 sc = scan_folder(p)
                 n = len(sc["new"]) + len(sc["changed"]) + len(sc["removed"]) + len(sc["missing"])
                 scans[pname(p)] = (scan_summary(sc), len(sc["files"]), "%.1f s" % (_t.time() - t0),
-                                   "bad" if sc["missing"] else "changed" if n or sc["first"] or sc["patch_json_changed"] else "same")
+                                   "bad" if sc["missing"] else "changed" if n or sc["first"] or sc["patch_json_changed"] or sc.get("filename_mismatches") or sc.get("filename_metadata_changes") else "same")
             else:
                 scans[pname(p)] = ("folder missing: " + p, 0, "", "bad")
             say("%s: %s" % (pname(p), scans[pname(p)][0]))

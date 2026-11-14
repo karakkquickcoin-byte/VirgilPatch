@@ -106,6 +106,116 @@ class ObjectSizes:
             write_json(self.path, self.values)
 
 
+def filename_plan(patch, baseline=None):
+    """Exact source spelling, retaining published Git spelling for existing files/directories."""
+    import virgil_core as vc
+    if patch.is_zip:
+        raise ValueError('Publish an extracted patch folder before repairing filenames.')
+    baseline = baseline or {}
+    canonical = {name.casefold(): name for name in baseline}
+    directories = {}
+    for name in baseline:
+        parts = name.split('/')
+        for i in range(1, len(parts)):
+            prefix = '/'.join(parts[:i]); key = prefix.casefold()
+            if key in directories and directories[key] != prefix:
+                raise ValueError('Published directory casing is inconsistent: ' + prefix)
+            directories[key] = prefix
+    entries, changes, missing = [], [], []
+    for entry in patch.entries:
+        desired = canonical.get(entry['file'].casefold(), entry['file'])
+        parts = desired.split('/')
+        for i in range(1, len(parts)):
+            prefix = '/'.join(parts[:i]); stable = directories.get(prefix.casefold())
+            if stable: parts[:i] = stable.split('/')
+        desired = '/'.join(parts)
+        actual = patch.tree.get(entry['file'].casefold())
+        if actual is None:
+            missing.append(entry['file'])
+        elif actual[0] != desired:
+            changes.append({'actual': actual[0], 'expected': desired})
+        entries.append(dict(entry, file=desired))
+    vc.validate_entries(entries)
+    meta = patch.tree.get('patch.json')
+    if meta and meta[0] != 'patch.json': changes.append({'actual': meta[0], 'expected': 'patch.json'})
+    return {'entries': entries, 'filename_mismatches': changes, 'missing': missing,
+            'metadata_changes': entries != patch.entries}
+
+
+def repair_source_filenames(path, baseline=None, say=lambda message: None, backup_root=None):
+    """Repair case-only names transactionally before scanning/staging; preserve file bytes and IDs."""
+    import virgil_core as vc
+    import shutil, uuid, datetime
+    patch = vc.Patch(path)
+    plan = filename_plan(patch, baseline)
+    if plan['missing']:
+        raise ValueError('Missing listed files; upload blocked: ' + ', '.join(plan['missing'][:8]))
+    if not plan['filename_mismatches'] and not plan['metadata_changes']:
+        return {'repaired': 0, 'metadata_changed': False, 'backup': None}
+    operation = os.path.join(backup_root or vc.BACKUPS, 'filename-case-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + '-' + uuid.uuid4().hex)
+    os.makedirs(operation, exist_ok=False)
+    original = vc.path_in(path, 'patch.json')
+    shutil.copy2(original, os.path.join(operation, 'patch.json.before'))
+    hashes = {row['expected']: vc.git_blob_sha(vc.path_in(path, row['actual'])) for row in plan['filename_mismatches']}
+    journal = {'source': os.path.abspath(path), 'status': 'prepared', 'changes': plan['filename_mismatches'], 'hashes': hashes, 'moves': []}
+    receipt = os.path.join(operation, 'receipt.json')
+    write_json(receipt, journal)
+    def move_case(before, after):
+        vc.no_links(before); vc.no_links(after)
+        temp = before + '.' + uuid.uuid4().hex + '.vcase'
+        os.rename(before, temp)
+        try: os.rename(temp, after)
+        except BaseException:
+            os.rename(temp, before)
+            raise
+    completed, listings = [], {}
+    move_log = os.path.join(operation, 'moves.jsonl')
+    def record_move(row):
+        with open(move_log, 'a', encoding='utf-8') as output:
+            output.write(json.dumps(row, ensure_ascii=False) + '\n'); output.flush(); os.fsync(output.fileno())
+    try:
+        for row in plan['filename_mismatches']:
+            parent = os.path.abspath(path)
+            for wanted in row['expected'].split('/'):
+                key = os.path.normcase(parent).casefold()
+                if key not in listings:
+                    children = {}
+                    with os.scandir(parent) as listing:
+                        for item in listing:
+                            folded = item.name.casefold()
+                            if folded in children: raise ValueError('Ambiguous filename during repair: ' + item.name)
+                            children[folded] = item.name
+                    listings[key] = children
+                children = listings[key]
+                found = children.get(wanted.casefold())
+                if found is None: raise ValueError('Missing filename during repair: ' + wanted)
+                before = vc.path_in(parent, found); after = vc.path_in(parent, wanted)
+                if found != wanted:
+                    journal['moves'].append({'before': before, 'after': after, 'status': 'planned'})
+                    record_move(journal['moves'][-1])
+                    move_case(before, after); completed.append((before, after)); children[wanted.casefold()] = wanted
+                    journal['moves'][-1]['status'] = 'done'; record_move(journal['moves'][-1])
+                parent = after
+        exact = vc.tree(path)
+        for entry in plan['entries']:
+            if exact.get(entry['file'].casefold(), (None,))[0] != entry['file']:
+                raise ValueError('Filename casing still differs after repair: ' + entry['file'])
+        for name, expected in hashes.items():
+            if vc.git_blob_sha(vc.path_in(path, name)) != expected:
+                raise ValueError('File contents changed during filename repair: ' + name)
+        if plan['metadata_changes']:
+            write_json(vc.path_in(path, 'patch.json'), dict(patch.meta, files=plan['entries']))
+        journal['status'] = 'complete'; write_json(receipt, journal)
+    except BaseException:
+        for before, after in reversed(completed): move_case(after, before)
+        # The source manifest is written only after all file checks. Restore exact original bytes on failure.
+        shutil.copy2(os.path.join(operation, 'patch.json.before'), vc.path_in(path, 'patch.json'))
+        journal['status'] = 'rolled back'; write_json(receipt, journal)
+        raise
+    say('Filename preflight repaired %d paths%s; rollback receipt: %s' % (len(plan['filename_mismatches']), ' and synchronized patch.json spelling' if plan['metadata_changes'] else '', receipt))
+    return {'repaired': len(plan['filename_mismatches']), 'metadata_changed': plan['metadata_changes'], 'backup': operation}
+
+
 def canonicalize(repo, names, index=None):
     import virgil_core as vc
     tracked = records(repo)
