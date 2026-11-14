@@ -67,3 +67,7 @@ For Norton reports, obtain the exact warning or detection name, Alert ID, and a 
 ## 1.5.10 startup repair exception
 
 The signed program upgrade still runs on launch. After startup confirmation, the new launcher performs the bounded Wallpiece05 casing repair in a previously mapped TexturePatch installation. Both local files must match hashes recorded by completed installs; only their directory-entry capitalization changes. Missing, modified or unmapped files are deferred to manual Update, and running WoW/concurrent updater locks defer the repair. Other patch downloads and updates still require explicit confirmation. Regression coverage includes an actual MainForm launch with no Update click.
+
+## 1.5.11 generalized startup filename check
+
+Supersedes the two-file 1.5.10 repair. On launch, a cancellable background pass inventories every direct installed patch manifest, validates all entries and directory spellings, and checks actual disk capitalization. Only mismatches in previously managed files receive content hashes; repairs require completed-install hashes and fresh pre/post-rename verification. Unmanaged/modified mismatches and missing files are reported without guessing names, overwriting files or downloading assets. Invalid manifests are deferred independently. WoW running/starting and concurrent patch-update locks defer changes. Correctly named files are not opened for hashing. Regression tests inject game-running status only for isolated scratch fixtures; production always checks real WoW processes.

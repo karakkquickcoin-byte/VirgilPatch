@@ -1,4 +1,4 @@
-Chronicles of Lordaeron Launcher 1.5.1
+Chronicles of Lordaeron Launcher 1.5.11
 
 1. Extract VirgilUpdater.exe into a normal folder you can write to.
 2. Run it, click Select folder, and choose your Epsilon _retail_\Patches folder if needed.
@@ -48,3 +48,5 @@ Updater 1.5.7 adds five guards: strict signed release metadata, strict saved-sta
 Updater 1.5.9: Update also repairs filename capitalization to match patch.json exactly, even when the contents are unchanged. The preview reports casing repairs separately; spelling-only fixes reuse installed files. Close Epsilon and WoW before updating, then refresh the Epsilon patch list or reopen its launcher.
 
 Updater 1.5.10: the next launch automatically repairs the known Wallpiece05 capitalization issue in an existing mapped TexturePatch installation. Both files must match checksums recorded by a completed install. If WoW is running, files are missing/changed, or another updater holds the patch lock, repair is deferred to a later launch or manual Update. No asset downloads, metadata changes or patch enabling occur during this repair.
+
+Updater 1.5.11: every launch checks file and folder capitalization against all installed patch manifests in the background. All Virgil-managed patches are eligible, including older managed folders without a migration map. Only mismatched files are freshly hashed; managed files are renamed only if their contents match the completed-install record and pass post-rename verification. Unmanaged or modified mismatches and missing files are reported in Details for manual verification. The scan can be cancelled, is retried on later launches, and defers while WoW or another updater is using the patches. No assets download, no patch.json contents change, and patch enable/disable choices stay as selected.
