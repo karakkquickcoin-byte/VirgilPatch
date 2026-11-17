@@ -49,17 +49,7 @@ def records(repo, revision=None):
 
 def write_json(path, value):
     import virgil_core as vc
-    vc.no_links(path)
-    folder = os.path.dirname(os.path.abspath(path))
-    fd, temporary = tempfile.mkstemp(prefix='manifest-', suffix='.tmp', dir=folder)
-    try:
-        with os.fdopen(fd, 'w', encoding='utf-8', newline='\n') as output:
-            json.dump(value, output, separators=(',', ':'), ensure_ascii=False)
-        vc.no_links(path)
-        os.replace(temporary, path)
-    finally:
-        if os.path.exists(temporary):
-            os.unlink(temporary)
+    vc.atomic_json(path, value, separators=(',', ':'), ensure_ascii=False)
 
 
 class ObjectSizes:
@@ -334,6 +324,9 @@ def validate_head(repo):
     measured = ObjectSizes(repo)
     measured.prime(value['sha'] for path, value in objects.items() if path.startswith('patches/'))
     index = strict_json(git_bytes(repo, 'show', 'HEAD:index.json'))
+    if index.get('locked'):
+        import virgil_lock
+        return virgil_lock.verify_head(repo)
     errors = []
     for name, patch in index.get('patches', {}).items():
         vc.safe_relative(name, folder=True)

@@ -1,2 +1,8 @@
 *.vtmp
 *.zip.part
+
+# Local publisher encryption dependencies and synthetic test results
+publisher/lib/
+publisher/tests/test-results/
+**/__pycache__/
+weekly-passwords.json

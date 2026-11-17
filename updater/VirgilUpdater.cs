@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.11.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.11.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.5.11")]
+[assembly: System.Reflection.AssemblyVersion("1.5.12.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.12.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.5.12")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.5.11";
+        public const string UserAgent = "VirgilPatchUpdater/1.5.12";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }
@@ -1214,6 +1214,7 @@ namespace VirgilPatch
     {
         readonly State state = State.Load();
         readonly ISource source;
+        readonly LockedSource patchSource;
         readonly TextBox dirBox = new TextBox { ReadOnly = true, Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top };
         readonly Button browse = new LauncherButton { Text = "Browse...", Anchor = AnchorStyles.Right | AnchorStyles.Top };
         readonly Label status = new Label { AutoSize = false, Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top };
@@ -1232,6 +1233,10 @@ namespace VirgilPatch
         public MainForm(ISource source, string confirmationDirectory = null, bool skipProgramCheck = false, string[] programArguments = null)
         {
             this.source = source;
+            this.patchSource = new LockedSource(source, (number,retry) => {
+                if (IsDisposed || Disposing) return null;
+                return (string)Invoke(new Func<string>(() => LockedSource.Prompt(this,number,retry)));
+            });
             this.confirmationDirectory = confirmationDirectory;
             this.skipProgramCheck = skipProgramCheck;
             this.programArguments = programArguments ?? new string[0];
@@ -1341,7 +1346,7 @@ namespace VirgilPatch
 
         Updater MakeUpdater()
         {
-            return new Updater(source, state) { Log = Say, Progress = Prog, Phase = Phase, Diagnostics = diagnostics };
+            return new Updater(patchSource, state) { Log = Say, Progress = Prog, Phase = Phase, Diagnostics = diagnostics };
         }
 
         void RunCheck(bool applyAfterCheck = false)
@@ -1493,7 +1498,7 @@ namespace VirgilPatch
                 {
                     var st = State.Load();
                     if (patches != null) st.patches_dir = patches;
-                    var u = new Updater(src, st) { Log = say, VerifyExisting = verify };
+                    var u = new Updater(new LockedSource(src, (number,retry) => { if(retry) throw new InvalidDataException("Incorrect weekly password."); var code=Environment.GetEnvironmentVariable("VIRGIL_WEEKLY_PASSWORD"); if(string.IsNullOrEmpty(code)) throw new InvalidDataException("Set VIRGIL_WEEKLY_PASSWORD for Pass " + number); return code; }), st) { Log = say, VerifyExisting = verify };
                     var plan = u.Check(include.Count == 0 ? null : include);
                     say(string.Format("plan: fetch {0} files / {1} bytes, remove {2}, patch.json changed {3}", plan.Fetch.Count,
                                       plan.FetchBytes, plan.Remove.Count, plan.PatchJsons.Count));

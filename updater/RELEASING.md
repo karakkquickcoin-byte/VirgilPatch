@@ -71,3 +71,6 @@ The signed program upgrade still runs on launch. After startup confirmation, the
 ## 1.5.11 generalized startup filename check
 
 Supersedes the two-file 1.5.10 repair. On launch, a cancellable background pass inventories every direct installed patch manifest, validates all entries and directory spellings, and checks actual disk capitalization. Only mismatches in previously managed files receive content hashes; repairs require completed-install hashes and fresh pre/post-rename verification. Unmanaged/modified mismatches and missing files are reported without guessing names, overwriting files or downloading assets. Invalid manifests are deferred independently. WoW running/starting and concurrent patch-update locks defer changes. Correctly named files are not opened for hashing. Regression tests inject game-running status only for isolated scratch fixtures; production always checks real WoW processes.
+
+
+1.5.12 weekly encrypted patches: Update asks for the current weekly code, with a small Pass number. The same box accepts the maintainer recovery code. Passwords are never embedded in the app. Signed program upgrades remain password independent. Publisher setup and local record instructions: publisher/WEEKLY_PASSWORDS.md. Compile LockedSource.cs in all test/release builds.

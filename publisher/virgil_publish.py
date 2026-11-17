@@ -29,12 +29,13 @@ Merge rules (the target patch.json is the bible):
   * file name already used by a different id -> incoming file renamed <stem>_<id><ext>
 Every merge is journaled under E:\\M2FX_Work\\virgil\\backups\\<time> and rolled back automatically if the check fails.
 """
-import os, sys, json, time, shutil, struct, argparse, subprocess, datetime
+import os, sys, json, time, shutil, struct, argparse, subprocess, datetime, hashlib, tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import virgil_core as vc
 import virgil_integrity as vi
 import virgil_versions as vv
+import virgil_lock as vl
 
 HASH_CACHE = os.path.join(vc.WORK, "hash_cache.json")
 _hash_cache = None
@@ -72,23 +73,39 @@ def pname(path):
     return aliases[name]
 
 
+def merge_result_path(path):
+    import hashlib
+    key = hashlib.sha256(os.path.normcase(os.path.abspath(path)).encode("utf-8")).hexdigest()
+    return os.path.join(vc.WORK, "merge_results", key + ".json")
+
+
+def record_merge_result(path, report):
+    target = merge_result_path(path)
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    vc.atomic_json(target, report, indent=1)
+
+
 # ---------------------------------------------------------------- hashing with a size/mtime cache
 def blob_sha(path, size_mtime=None):
-    """git blob sha of a file; reused from the cache while its size and modified time are unchanged. size_mtime can
+    """Git blob SHA; WMO exports are always rehashed because exporters can preserve timestamps. size_mtime can
     come from a directory walk (vc.Patch.stat) so a cache hit needs no system call at all."""
     global _hash_cache, _hash_dirty
     if _hash_cache is None:
         try:
             with open(HASH_CACHE, encoding="utf-8") as f:
-                _hash_cache = json.load(f)
+                _hash_cache = vc.strict_json(f.read())
         except (OSError, ValueError):
             _hash_cache = {}
     if size_mtime is None:
         st = os.stat(path)
         size_mtime = (st.st_size, st.st_mtime_ns)
+    if not isinstance(_hash_cache, dict):
+        _hash_cache = {}
     key = os.path.normcase(os.path.abspath(path))
     hit = _hash_cache.get(key)
-    if hit and hit[0] == size_mtime[0] and hit[1] == size_mtime[1]:
+    if not isinstance(hit, list) or len(hit) != 3 or type(hit[0]) is not int or type(hit[1]) is not int or not isinstance(hit[2], str) or len(hit[2]) != 40:
+        hit = None
+    if not os.fspath(path).lower().endswith(".wmo") and hit and hit[0] == size_mtime[0] and hit[1] == size_mtime[1]:
         return hit[2]
     sha = vc.git_blob_sha(path)
     _hash_cache[key] = [size_mtime[0], size_mtime[1], sha]
@@ -103,31 +120,63 @@ def save_hash_cache():
     if _hash_cache is None or not _hash_dirty:
         return
     os.makedirs(vc.WORK, exist_ok=True)
-    tmp = HASH_CACHE + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(_hash_cache, f, separators=(",", ":"))
-    os.replace(tmp, HASH_CACHE)
+    vc.atomic_json(HASH_CACHE, _hash_cache, separators=(",", ":"))
     _hash_dirty = False
+
+
+def validate_index(index):
+    import re
+    if not isinstance(index, dict) or not isinstance(index.get("patches"), dict):
+        raise ValueError("index.json patches must be an object")
+    for name, patch in index["patches"].items():
+        vc.safe_relative(name, folder=True)
+        if not isinstance(patch, dict) or not isinstance(patch.get("files"), dict):
+            raise ValueError("invalid indexed patch: " + name)
+        entries, total = [], 0
+        for path, item in patch["files"].items():
+            if not isinstance(item, dict) or type(item.get("size")) is not int or item["size"] < 0:
+                raise ValueError("invalid indexed file size: " + path)
+            if not isinstance(item.get("sha"), str) or not re.fullmatch(r"[0-9a-f]{40}", item["sha"]):
+                raise ValueError("invalid indexed blob SHA: " + path)
+            entries.append({"file": path, "id": item.get("id")})
+            total += item["size"]
+        vc.validate_entries(entries)
+        if "total_bytes" in patch and (type(patch["total_bytes"]) is not int or patch["total_bytes"] != total):
+            raise ValueError("indexed total_bytes does not match file sizes: " + name)
+        changes = patch.get("changes", {})
+        if not isinstance(changes, dict):
+            raise ValueError("indexed changes must be an object: " + name)
+        for kind in ("added", "changed", "removed"):
+            if kind + "_count" in changes:
+                count, rows = changes[kind + "_count"], changes.get(kind)
+                if type(count) is not int or count < 0 or not isinstance(rows, list) or not (len(rows) == count or len(rows) == 100 <= count):
+                    raise ValueError("indexed change count does not match its list: " + name)
+    return index
 
 
 def published_index():
     """index.json as last committed (the working-tree copy is rewritten by every sync), as {"patches": {name: {...}}}."""
     flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
     head = subprocess.run(["git", "-c", "safe.directory=" + os.path.abspath(vc.REPO), "-C", vc.REPO, "rev-parse", "HEAD"], capture_output=True, creationflags=flags).stdout.strip()
-    if head and head in _index_cache:                         # same commit: reuse the parsed index (it is several MB)
-        return json.loads(_index_cache[head])
+    cache_key = (_norm(vc.REPO), head)
+    if head and cache_key in _index_cache:                         # same commit: reuse the parsed index (it is several MB)
+        return vc.strict_json(_index_cache[cache_key])
     r = subprocess.run(["git", "-c", "safe.directory=" + os.path.abspath(vc.REPO), "-C", vc.REPO, "show", "HEAD:index.json"], capture_output=True, creationflags=flags)
     if r.returncode:
         return None
     try:
-        idx = json.loads(r.stdout.decode("utf-8"))
-    except ValueError:
-        return None
+        idx = vc.strict_json(r.stdout)
+    except ValueError as ex:
+        raise ValueError("Committed index.json is invalid: %s" % ex) from ex
+    if not isinstance(idx, dict):
+        raise ValueError("Committed index.json must be an object")
+    idx = vl.logical(idx)
+    if "patches" not in idx:
+        idx = {"format": 1, "patches": {idx.get("patch_folder", vc.MAIN_NAME): idx}}
+    validate_index(idx)
     if head:
         _index_cache.clear()
-        _index_cache[head] = r.stdout.decode("utf-8")
-    if "patches" not in idx:                                  # format 1: the single main patch under patch/
-        idx = {"format": 1, "patches": {idx.get("patch_folder", vc.MAIN_NAME): idx}}
+        _index_cache[cache_key] = json.dumps(idx, allow_nan=False)
     return idx
 
 
@@ -209,7 +258,7 @@ def plan_merge(incoming_path, main_path=vc.MAIN):
                 a["note"] = (a["note"] + "; " if a["note"] else "") + "renamed (target has another %s)" % n
         taken.add(a["dst"].lower())
         actions.append(a)
-    plan = {"incoming": incoming_path, "main": main_path, "actions": actions, "remap": remap,
+    plan = {"target_manifest": _meta_sha(main.meta), "source_manifest": _meta_sha(inc.meta), "incoming": incoming_path, "main": main_path, "actions": actions, "remap": remap,
             "alternate_copies_ignored": sorted(alt)}
     _attach_data(plan, inc, main)
     return plan
@@ -218,9 +267,13 @@ def plan_merge(incoming_path, main_path=vc.MAIN):
 def _attach_data(plan, inc, main):
     """Final bytes for every incoming file (references renumbered); 'update' with identical bytes -> 'unchanged'."""
     for a in plan["actions"]:
+        if a["kind"] not in {"missing", "unchanged", "update", "add", "renumber", "override_conflict"}:
+            raise ValueError("unknown merge action")
         if a["kind"] == "missing":
             continue
         data = inc.read(a["src"])
+        a["source_sha256"] = hashlib.sha256(data).hexdigest()
+        a["target_sha256"] = hashlib.sha256(main.read(a["dst"])).hexdigest() if main.has(a["dst"]) else None
         if plan["remap"] and a["src"].lower().endswith((".m2", ".skel")):
             data, a["rewrites"] = vc.rewrite_ids(data, plan["remap"])
         a["_data"] = data
@@ -248,17 +301,45 @@ def summarize(plan):
     return "\n".join(lines)
 
 
+def _meta_sha(meta):
+    return hashlib.sha256(json.dumps(meta, sort_keys=True, allow_nan=False).encode("utf-8")).hexdigest()
+
+
+def _verify_merge_plan(plan, main, override):
+    if plan.get("target_manifest") != _meta_sha(main.meta):
+        raise ValueError("Target patch.json changed since preview; preview the merge again")
+    inc = vc.Patch(plan["incoming"])
+    if plan.get("source_manifest") != _meta_sha(inc.meta):
+        raise ValueError("Source patch.json changed since preview; preview the merge again")
+    proposed = list(main.entries)
+    for a in plan["actions"]:
+        if a["kind"] == "missing":
+            raise ValueError("Incoming file is missing: " + a["src"])
+        if hashlib.sha256(inc.read(a["src"])).hexdigest() != a.get("source_sha256"):
+            raise ValueError("Source file changed since preview: " + a["src"])
+        current = hashlib.sha256(main.read(a["dst"])).hexdigest() if main.has(a["dst"]) else None
+        if current != a.get("target_sha256"):
+            raise ValueError("Target file changed since preview: " + a["dst"])
+        if a["kind"] == "override_conflict" and override == "replace":
+            proposed = [e for e in proposed if e["file"].casefold() != a["main_file"].casefold()]
+        if a["kind"] not in {"unchanged", "update"} and (a["kind"] != "override_conflict" or override == "replace"):
+            proposed.append({"file": a["dst"], "id": a["id"]})
+    vc.validate_entries(proposed)
+
+
 def apply_merge(plan, override="skip", retire=False):
     """Writes the plan into the target patch; journaled backup; rolls back if the check of the touched files fails."""
     main_path = plan["main"]
     for action in plan['actions']:
         vc.safe_relative(action['dst'], asset=True)
         vc.path_in(main_path, action['dst'])
+    main = vc.Patch(main_path)
+    _verify_merge_plan(plan, main, override)
     if not any(a["kind"] not in ("missing", "unchanged") and (a["kind"] != "override_conflict" or override == "replace")
                for a in plan["actions"]):
         return {"ok": True, "errors": [], "warnings": [], "nothing_to_merge": True}
-    main = vc.Patch(main_path)
-    bdir = os.path.join(vc.BACKUPS, time.strftime("%Y%m%d_%H%M%S"))
+    os.makedirs(vc.BACKUPS, exist_ok=True)
+    bdir = tempfile.mkdtemp(prefix=time.strftime("%Y%m%d_%H%M%S_") , dir=vc.BACKUPS)
     os.makedirs(os.path.join(bdir, "overwritten"))
     os.makedirs(os.path.join(bdir, "removed"))
     shutil.copy2(vc.path_in(main_path, "patch.json"), vc.path_in(bdir, "patch.json"))
@@ -266,6 +347,8 @@ def apply_merge(plan, override="skip", retire=False):
                "retired_to": None}
     entries = list(main.entries)
     touched = []
+    write_error = None
+    vc.atomic_json(os.path.join(bdir, "journal.json"), journal, indent=1)
     try:
         for a in plan["actions"]:
             kind = a["kind"]
@@ -275,29 +358,46 @@ def apply_merge(plan, override="skip", retire=False):
                 old = a["main_file"]
                 entries = [e for e in entries if e["file"].lower() != old.lower()]
                 if os.path.exists(vc.path_in(main_path, old)):
-                    shutil.move(vc.path_in(main_path, old), _mk(vc.path_in(os.path.join(bdir, "removed"), old)))
+                    shutil.copy2(vc.path_in(main_path, old), _mk(vc.path_in(os.path.join(bdir, "removed"), old)))
                     journal["removed"].append(old)
+                    vc.atomic_json(os.path.join(bdir, "journal.json"), journal, indent=1)
+                    os.unlink(vc.path_in(main_path, old))
             dst = _mk(vc.path_in(main_path, a["dst"]))
             if os.path.exists(dst):
                 shutil.copy2(dst, _mk(vc.path_in(os.path.join(bdir, "overwritten"), a["dst"])))
                 journal["overwritten"].append(a["dst"])
             else:
                 journal["added"].append(a["dst"])
+            vc.atomic_json(os.path.join(bdir, "journal.json"), journal, indent=1)
             with open(dst, "wb") as f:
                 f.write(a["_data"])
             if kind != "update":
                 entries.append({"file": a["dst"], "id": a["id"]})
             touched.append(a["dst"])
         vc.write_patch_json(main_path, main.meta, entries)
+    except Exception as ex:
+        write_error = ex
     finally:
-        json.dump(journal, open(os.path.join(bdir, "journal.json"), "w", encoding="utf-8"), indent=1)
+        try:
+            vc.atomic_json(os.path.join(bdir, "journal.json"), journal, indent=1)
+        except Exception as ex:
+            write_error = write_error or ex
+    if write_error is not None:
+        undo(bdir)
+        rep = {"ok": False, "errors": ["Merge write failed: %s" % write_error], "warnings": [], "backup": bdir, "rolled_back": True}
+        record_merge_result(main_path, rep)
+        return rep
     # the incoming patch is about to be part of the target: don't count it as a separate published patch here
     pub = [p for p in vc.load_published() if _norm(p) != _norm(plan["incoming"])]
-    rep = check(main_path, scope=touched, published=pub)
+    try:
+        rep = check(main_path, scope=touched, published=pub)
+    except Exception as ex:
+        rep = {"ok": False, "errors": ["Validation could not finish: %s" % ex], "warnings": []}
     rep["backup"] = bdir
     if rep["errors"]:
         undo(bdir)
         rep["rolled_back"] = True
+        record_merge_result(main_path, rep)
         return rep
     if retire and os.path.isdir(plan["incoming"]) and \
             os.path.normcase(os.path.dirname(os.path.abspath(plan["incoming"]))) == os.path.normcase(vc.PATCHES):
@@ -307,7 +407,8 @@ def apply_merge(plan, override="skip", retire=False):
             dst += time.strftime("_%Y%m%d_%H%M%S")
         shutil.move(plan["incoming"], dst)
         journal["retired_to"] = dst
-        json.dump(journal, open(os.path.join(bdir, "journal.json"), "w", encoding="utf-8"), indent=1)
+        vc.atomic_json(os.path.join(bdir, "journal.json"), journal, indent=1)
+    record_merge_result(main_path, rep)
     rep["retired_to"] = journal["retired_to"]
     # its content now lives in the target: stop publishing the merged patch on its own (it would clash)
     full = vc.load_published()
@@ -320,11 +421,11 @@ def apply_merge(plan, override="skip", retire=False):
 def undo(bdir=None):
     if bdir is None:
         dirs = sorted(d for d in os.listdir(vc.BACKUPS) if os.path.isfile(os.path.join(vc.BACKUPS, d, "journal.json"))
-                      and "undone" not in json.load(open(os.path.join(vc.BACKUPS, d, "journal.json"), encoding="utf-8")))
+                      and "undone" not in vc.read_json(os.path.join(vc.BACKUPS, d, "journal.json")))
         if not dirs:
             raise SystemExit("nothing to undo")
         bdir = os.path.join(vc.BACKUPS, dirs[-1])
-    j = json.load(open(os.path.join(bdir, "journal.json"), encoding="utf-8"))
+    j = vc.read_json(os.path.join(bdir, "journal.json"))
     main_path = j["main"]
     rolled = os.path.join(bdir, "rolled_back")
     os.makedirs(rolled, exist_ok=True)
@@ -339,7 +440,7 @@ def undo(bdir=None):
     if j.get("retired_to") and os.path.exists(j["retired_to"]) and not os.path.exists(j["incoming"]):
         shutil.move(j["retired_to"], j["incoming"])
     j["undone"] = time.strftime("%Y-%m-%d %H:%M:%S")
-    json.dump(j, open(os.path.join(bdir, "journal.json"), "w", encoding="utf-8"), indent=1)
+    vc.atomic_json(os.path.join(bdir, "journal.json"), j, indent=1)
     return bdir
 
 
@@ -535,7 +636,7 @@ def remove_published(name):
     keep = [p for p in pub if pname(p).lower() != name.lower()]
     if len(keep) == len(pub):
         return False, "%s is not on GitHub" % name
-    vc.save_published(keep or [vc.MAIN])
+    vc.save_published(keep)
     return True, "%s removed from the GitHub list - its files leave GitHub with the next push" % name
 
 
@@ -653,13 +754,12 @@ def sync_repo(published=None):
     index = {"format": 2, "published": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), "patches": patches}
     try:
         with open(os.path.join(vc.REPO, "index.json"), encoding="utf-8") as source:
-            old = json.load(source)
+            old = vc.strict_json(source.read())
         if old.get("patches") == patches:
             index["published"] = old.get("published", index["published"])     # nothing changed: no new commit
     except (OSError, ValueError):
         pass
-    with open(os.path.join(vc.REPO, "index.json"), "w", encoding="utf-8") as f:
-        json.dump(index, f, indent=0, sort_keys=True)
+    vc.atomic_json(os.path.join(vc.REPO, "index.json"), index, indent=0, sort_keys=True)
     save_hash_cache()
     return index
 
@@ -700,6 +800,8 @@ def require_clean_stage():
 
 
 def publish(message=None, push=True, batch_bytes=400_000_000, skip_check=False, say=log):
+    if vl.enabled():
+        return vl.publish(sys.modules[__name__], push=push, deep=not skip_check, say=say)
     require_clean_stage()
     if push:
         refresh_remote(say)
@@ -776,19 +878,51 @@ def push_pending(say=log):
     todo = [c for c in git("rev-list", "--reverse", "origin/main..HEAD" if has_remote else "HEAD").split() if c]
     if not todo:
         return 0
+    if vl.enabled():
+        row = vl.current(require=True)
+        locked_head = vc.strict_json(git("show", "HEAD:index.json"))
+        if not locked_head.get("locked"):
+            raise ValueError("Password lock is enabled. Publish an encrypted snapshot before resuming uploads.")
+        if locked_head.get("pass_number") != row["number"]:
+            raise ValueError("Pending upload uses an older password. Push a folder again to apply the current weekly code.")
     vi.validate_head(vc.REPO)
     if len(todo) == 1:
         say("publishing one verified snapshot ...")
-        git("push", "-q", "origin", "%s:refs/heads/main" % todo[0])
+        push_with_retry(say, "push", "-q", "origin", "%s:refs/heads/main" % todo[0])
     else:
         staging = "refs/heads/virgil-upload-" + uuid.uuid4().hex
         for k, commit in enumerate(todo):
             say("uploading batch %d/%d %s (published main stays unchanged) ..." % (k + 1, len(todo), commit[:7]))
-            git("push", "-q", "origin", "%s:%s" % (commit, staging))
+            push_with_retry(say, "push", "-q", "origin", "%s:%s" % (commit, staging))
         # GitHub already has the objects. This one atomic ref update exposes the final index/assets together.
         say("promoting the complete verified release ...")
-        git("push", "--atomic", "-q", "origin", "%s:refs/heads/main" % todo[-1], ":" + staging)
+        push_with_retry(say, "push", "--atomic", "-q", "origin", "%s:refs/heads/main" % todo[-1], ":" + staging)
     return len(todo)
+
+
+# Rejections that will fail the same way every time: sign-in, history/branch rules, oversized or blocked content.
+_PERMANENT_PUSH_ERRORS = ("could not read Username", "Authentication failed", "terminal prompts disabled",
+                          "Permission to", "403", "non-fast-forward", "fetch first", "stale info",
+                          "protected branch", "GH001", "GH013", "pre-receive hook declined")
+PUSH_RETRY_DELAYS = (15, 45, 90)                        # seconds before attempts 2, 3 and 4
+
+
+def push_with_retry(say, *args, delays=None, sleep=time.sleep):
+    """git push, retried after GitHub-side hiccups (e.g. 'fatal error in commit_refs_rules', HTTP 5xx, dropped
+    connections). Pushing the same commit to the same ref again is harmless: objects GitHub already received are
+    not sent twice. Permanent rejections are raised at once."""
+    delays = PUSH_RETRY_DELAYS if delays is None else delays
+    for attempt in range(len(delays) + 1):
+        try:
+            return git(*args)
+        except RuntimeError as e:
+            msg = str(e)
+            if attempt == len(delays) or any(p in msg for p in _PERMANENT_PUSH_ERRORS):
+                raise
+            last = msg.strip().splitlines()[-1] if msg.strip() else "unknown error"
+            say("GitHub push failed (%s) - retrying in %ds (attempt %d/%d) ..."
+                % (last[:120], delays[attempt], attempt + 2, len(delays) + 1))
+            sleep(delays[attempt])
 
 
 # ---------------------------------------------------------------- per-folder publishing (fast path)
@@ -799,7 +933,7 @@ def _working_index():
     idx = published_index()
     if idx is None:
         try:
-            idx = json.load(open(os.path.join(vc.REPO, "index.json"), encoding="utf-8"))
+            idx = vc.read_json(os.path.join(vc.REPO, "index.json"))
             idx["patches"] = {}
         except (OSError, ValueError):
             idx = {}
@@ -827,9 +961,14 @@ def clear_stale_lock(say=log):
 
 
 def scan_folder(path):
-    """What changed in one patch folder since it was last pushed. Fast: a file is only re-hashed when its size or
-    modified time differ from the hash cache, so an unchanged 6000-file patch scans in a few seconds."""
+    """Changes since publication. Always rehash WMOs; cache other assets by size/mtime.
+    Report unregistered WMO exports so a copied file cannot silently be omitted."""
     p = vc.Patch(path)                                      # one directory walk: existence, size, time, link check
+    try:
+        with open(merge_result_path(path), encoding="utf-8") as f:
+            last_merge = vc.strict_json(f.read())
+    except (OSError, ValueError):
+        last_merge = {}
     name = pname(path)
     base_entry = (published_index() or {}).get("patches", {}).get(name)
     base = (base_entry or {}).get("files", {})
@@ -849,16 +988,23 @@ def scan_folder(path):
             new.append(n)
         elif base[n].get("sha") != sha or base[n].get("id") != e["id"]:
             changed.append(n)
+    registered = {e["file"].casefold() for e in p.entries}
+    unregistered_wmos = sorted(n for n in p.files_on_disk() if n.lower().endswith(".wmo") and n.casefold() not in registered)
     removed = [n for n in base if n not in files]
     pj_sha = blob_sha(os.path.join(root, "patch.json"), p.stat("patch.json"))
     save_hash_cache()
     return {"filename_mismatches": filename_plan["filename_mismatches"], "filename_metadata_changes": filename_plan["metadata_changes"], "name": name, "path": path, "files": files, "new": new, "changed": changed, "removed": removed,
-            "missing": missing, "first": base_entry is None, "patch_json_sha": pj_sha,
+            "last_merge_failed": last_merge.get("rolled_back", False), "missing": missing, "unregistered_wmos": unregistered_wmos, "first": base_entry is None, "patch_json_sha": pj_sha,
             "patch_json_changed": ((base_entry or {}).get("source_manifest") != vv.manifest_hash(p.meta) if (base_entry or {}).get("source_manifest") else (base_entry or {}).get("patch_json", {}).get("sha") != pj_sha),
             "bytes_to_send": sum(files[n]["size"] for n in new + changed)}
 
 
 def scan_summary(sc):
+    if sc.get("last_merge_failed"):
+        clean = dict(sc, last_merge_failed=False)
+        return "Last merge FAILED and was rolled back; " + scan_summary(clean)
+    if sc.get("unregistered_wmos"):
+        return "%d WMO files are not registered in patch.json; merge/register them before publishing" % len(sc["unregistered_wmos"])
     if sc.get('filename_mismatches') or sc.get('filename_metadata_changes'):
         return '%d filename casing fixes required; Push repairs and verifies them before upload' % len(sc.get('filename_mismatches', []))
     if sc["first"]:
@@ -883,8 +1029,10 @@ def quick_check(sc, published, deep=False):
         errors.append("duplicate ids in patch.json")
     if len(names) != len(set(names)):
         errors.append("duplicate file names in patch.json")
-    if sc.get('filename_mismatches') or sc.get('filename_metadata_changes'):
-        errors.append('filename spelling must be repaired before upload')
+    if sc.get('filename_mismatches'):
+        errors.append('filename casing differs from patch.json: %s' % sc['filename_mismatches'][:5])
+    if sc.get("unregistered_wmos"):
+        errors.append("WMO files are missing from patch.json: %s" % sc["unregistered_wmos"][:5])
     if sc["missing"]:
         errors.append("%d files listed in patch.json are missing, e.g. %s" % (len(sc["missing"]), sc["missing"][:5]))
     bad = []
@@ -939,6 +1087,8 @@ def quick_check(sc, published, deep=False):
 def push_folder(path, deep=False, say=log, push=True):
     """Push ONE folder: copy only its new/changed files into the mirror, drop its removed ones, update its entry in
     index.json, commit (~400 MB batches, patch.json + index.json last) and push. Other folders are not touched."""
+    if vl.enabled():
+        return vl.publish(sys.modules[__name__], selected=path, push=push, deep=deep, say=say)
     require_clean_stage()
     if push:
         refresh_remote(say)
@@ -950,6 +1100,8 @@ def push_folder(path, deep=False, say=log, push=True):
     clear_stale_lock(say)
     say("scanning %s ..." % pname(path))
     sc = scan_folder(path)
+    if sc.get("unregistered_wmos"):
+        raise ValueError(scan_summary(sc))
     say("  " + scan_summary(sc))
     todo = sc["new"] + sc["changed"] + sc["removed"]
     if not todo and not sc["patch_json_changed"] and not sc["first"]:
@@ -986,8 +1138,7 @@ def push_folder(path, deep=False, say=log, push=True):
                             "patch_json": {"size": os.path.getsize(pj), "sha": vc.git_blob_sha(pj)},
                             "files": sc["files"]}
     idx["published"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    with open(os.path.join(vc.REPO, "index.json"), "w", encoding="utf-8") as f:
-        json.dump(idx, f, indent=0, sort_keys=True)
+    vc.atomic_json(os.path.join(vc.REPO, "index.json"), idx, indent=0, sort_keys=True)
     msg = ("Add %s (%d files)" % (name, len(sc["files"])) if sc["first"] else
            "Update %s: %d new, %d changed, %d removed" % (name, len(sc["new"]), len(sc["changed"]), len(sc["removed"])))
     rel = vv.repo_dir(name, idx["patches"][name])
@@ -1023,6 +1174,13 @@ def push_folder(path, deep=False, say=log, push=True):
 def remove_folder(name, say=log, push=True):
     """Stop publishing a folder: its files leave the current GitHub version (they stay in the history) and everyone's
     updater removes it on their next update. The local folder is not touched."""
+    if vl.enabled():
+        vc.safe_relative(name, folder=True)
+        if name not in (published_index() or {}).get("patches", {}):
+            return {"ok": False, "errors": ["Folder is not published: " + name]}
+        result = vl.publish(sys.modules[__name__], selected="__remove_only__", remove=name, push=push, say=say)
+        if result["ok"]: remove_published(name)
+        return result
     require_clean_stage()
     if push:
         refresh_remote(say)
@@ -1039,8 +1197,7 @@ def remove_folder(name, say=log, push=True):
     idx = _working_index()
     idx["patches"].pop(name, None)
     idx["published"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    with open(os.path.join(vc.REPO, "index.json"), "w", encoding="utf-8") as f:
-        json.dump(idx, f, indent=0, sort_keys=True)
+    vc.atomic_json(os.path.join(vc.REPO, "index.json"), idx, indent=0, sort_keys=True)
     vi.stage_release(vc.REPO, idx, published_index(), [name])
     idx = vi.finalize(vc.REPO, idx, published_index())
     commits = 0
@@ -1064,7 +1221,7 @@ def gui():
     """Chronicles of Lordaeron styled publisher window (matches the 1.4.x launcher). Resizable; the header art follows
     the window width. Every action below runs the same publishing functions as before."""
     import threading, queue, tkinter as tk
-    from tkinter import ttk, filedialog, messagebox
+    from tkinter import ttk, filedialog, messagebox, simpledialog
     try:                                              # crisp text on scaled displays (Tk picks up the DPI)
         import ctypes
         ctypes.windll.shcore.SetProcessDpiAwareness(1)
@@ -1141,6 +1298,32 @@ def gui():
     st.map("Gold.Vertical.TScrollbar", background=[("active", T["button_hi"])])
     st.configure("Gold.Horizontal.TProgressbar", troughcolor=T["panel2"], background="#dda74f", bordercolor=T["bg"],
                  lightcolor="#dda74f", darkcolor="#dda74f")
+
+    lockbar = ttk.Frame(root)
+    lockbar.pack(fill="x", padx=16, pady=4)
+    pass_label = ttk.Label(lockbar, style="Status.TLabel")
+    pass_label.pack(side="left")
+    def refresh_pass():
+        row = vl.current()
+        pass_label.config(text=("Pass " + row["number"] + " | renew by " + row["expires"][:10]) if row else "Weekly password required before publishing")
+    def set_weekly_password():
+        if busy["on"]: return
+        try:
+            data = vl.settings()
+            master = None
+            if not data or not data.get("recovery_password"):
+                master = simpledialog.askstring("Recovery password", "Set your recovery password (kept only in your local publisher record):", show="*", parent=root)
+                if not master: return
+            password = simpledialog.askstring("Weekly password", "Enter a NEW password for the next seven days (at least 10 characters):", show="*", parent=root)
+            if password is None: return
+            confirm = simpledialog.askstring("Confirm weekly password", "Enter the same weekly password again:", show="*", parent=root)
+            if confirm != password: raise ValueError("The passwords did not match.")
+            row = vl.set_password(password, master=master)
+            refresh_pass()
+            messagebox.showinfo("Weekly password saved", "Pass " + row["number"] + " saved locally in:\n" + vl.secret_path(), parent=root)
+        except Exception as ex: messagebox.showerror("Password", str(ex), parent=root)
+    ttk.Button(lockbar, text="Set weekly password", command=set_weekly_password).pack(side="right")
+    refresh_pass()
 
     # ---- header: the launcher's Lordaeron art, darkened, with the title over it
     header = tk.Canvas(root, height=int(150 * sc_), bg=T["bg"], highlightthickness=0, bd=0)
@@ -1325,7 +1508,7 @@ def gui():
                 sc = scan_folder(p)
                 n = len(sc["new"]) + len(sc["changed"]) + len(sc["removed"]) + len(sc["missing"])
                 scans[pname(p)] = (scan_summary(sc), len(sc["files"]), "%.1f s" % (_t.time() - t0),
-                                   "bad" if sc["missing"] else "changed" if n or sc["first"] or sc["patch_json_changed"] or sc.get("filename_mismatches") or sc.get("filename_metadata_changes") else "same")
+                                   "bad" if sc["missing"] or sc.get("unregistered_wmos") or sc.get("last_merge_failed") else "changed" if n or sc["first"] or sc["patch_json_changed"] or sc.get("filename_mismatches") or sc.get("filename_metadata_changes") else "same")
             else:
                 scans[pname(p)] = ("folder missing: " + p, 0, "", "bad")
             say("%s: %s" % (pname(p), scans[pname(p)][0]))
@@ -1466,6 +1649,8 @@ def gui():
                 return
             rep = apply_merge(plan, override=override, retire=retire.get())
             say(json.dumps({k: v for k, v in rep.items() if k not in ("unresolved_refs",)}, indent=1)[:3000])
+            if rep.get("rolled_back"):
+                ask_main("showerror", "Merge failed - rolled back", "No incoming files were kept in the target patch.\n\n" + "\n".join(rep["errors"])[:2200])
             say("nothing new to merge" if rep.get("nothing_to_merge") else "ROLLED BACK - nothing changed"
                 if rep.get("rolled_back") else "merged OK - test in game, then push it from the Update folder tab")
         run(job, "Merging into %s..." % pname(tgt))

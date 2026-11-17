@@ -6,6 +6,53 @@ override a game file.
 """
 import os, re, json, glob, struct, hashlib, zipfile
 
+JSON_LIMIT = 128 * 1024 * 1024
+MANIFEST_LIMIT = 16 * 1024 * 1024
+
+
+def strict_json(raw):
+    from virgil_integrity import strict_json as decode
+    return decode(raw)
+
+
+def read_json(path, limit=JSON_LIMIT):
+    with open(path, "rb") as handle:
+        raw = handle.read(limit + 1)
+    if len(raw) > limit:
+        raise ValueError("JSON exceeds size limit: " + os.fspath(path))
+    try:
+        return strict_json(raw)
+    except (ValueError, UnicodeError) as ex:
+        raise ValueError("Invalid JSON in %s: %s" % (path, ex)) from ex
+
+
+def atomic_json(path, value, **options):
+    import tempfile
+    # Serialize before opening a temporary file, so invalid values cannot damage an existing document.
+    data = json.dumps(value, allow_nan=False, **options).encode("utf-8")
+    strict_json(data)
+    no_links(path)
+    parent = os.path.dirname(os.path.abspath(path))
+    fd, temporary = tempfile.mkstemp(prefix="virgil-", suffix=".tmp", dir=parent)
+    try:
+        with os.fdopen(fd, "wb") as output:
+            output.write(data)
+            output.flush()
+            os.fsync(output.fileno())
+        no_links(path)
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+
+
+def validate_meta(meta):
+    if not isinstance(meta, dict) or "files" not in meta:
+        raise ValueError("patch.json must be an object containing files")
+    validate_entries(meta["files"])
+    return meta
+
+
 PATCHES = r"D:\D-Fix\Epsilon\Epsilon\_retail_\Patches"
 MAIN_NAME = "!Chronicles-TexturePatch(3.2.0)"
 MAIN = os.path.join(PATCHES, MAIN_NAME)
@@ -15,7 +62,7 @@ WORK = r"E:\M2FX_Work\virgil"
 _repo_config = os.path.join(WORK, "repository.json")
 if os.path.isfile(_repo_config):
     with open(_repo_config, encoding="utf-8") as _config:
-        REPO = json.load(_config)["path"]
+        REPO = read_json(_repo_config, MANIFEST_LIMIT)["path"]
 REPO_PATCHES = os.path.join(REPO, "patches")            # one sub-folder per published patch, named as installed
 WORK = r"E:\M2FX_Work\virgil"
 PUBLISHED = os.path.join(WORK, "published.json")        # which local patch folders go to GitHub (first = main)
@@ -103,7 +150,10 @@ def tree(root):
                 if e.is_dir(follow_symlinks=False):
                     stack.append((r, e.path))
                 else:
-                    out[r.lower()] = (r, st.st_size, st.st_mtime_ns)
+                    key = r.casefold()
+                    if key in out:
+                        raise ValueError("case-colliding disk paths: %s and %s" % (out[key][0], r))
+                    out[key] = (r, st.st_size, st.st_mtime_ns)
     return out
 
 
@@ -120,7 +170,7 @@ def path_in(root, name):
 def validate_entries(entries):
     if not isinstance(entries, list):
         raise ValueError('patch files must be a list')
-    seen = set()
+    seen, ids = set(), set()
     for entry in entries:
         if not isinstance(entry, dict):
             raise ValueError('invalid patch entry')
@@ -132,6 +182,9 @@ def validate_entries(entries):
         fid = entry.get('id')
         if type(fid) is not int or not 0 < fid <= 0xffffffff:
             raise ValueError('invalid FileDataID: ' + name)
+        if fid in ids:
+            raise ValueError('duplicate FileDataID %d: %s' % (fid, name))
+        ids.add(fid)
     spellings = {}
     for entry in entries:
         parts = entry['file'].split('/')
@@ -157,6 +210,17 @@ class Patch:
         if self.is_zip:
             self.zip = zipfile.ZipFile(path)
             names = self.zip.namelist()
+            import stat
+            for info in self.zip.infolist():
+                if stat.S_ISLNK(info.external_attr >> 16):
+                    self.zip.close()
+                    raise ValueError("archive symbolic links are not supported: " + info.filename)
+            archive_files = {n.rstrip('/').casefold() for n in names if not n.endswith('/')}
+            for n in names:
+                parts = n.rstrip('/').casefold().split('/')
+                if any('/'.join(parts[:i]) in archive_files for i in range(1, len(parts))):
+                    self.zip.close()
+                    raise ValueError("archive file is also a directory: " + n)
             for name in names:
                 safe_relative(name.rstrip('/'))
             if len({n.casefold() for n in names}) != len(names):
@@ -167,12 +231,12 @@ class Patch:
             if self.zip.getinfo(pj[0]).file_size > 16 * 1024 * 1024:
                 raise ValueError('patch metadata exceeds size limit')
             self.prefix = pj[0][:-len("patch.json")]
-            self.meta = json.loads(self.zip.read(pj[0]).decode("utf-8-sig"))
-            self._zip_names = {n[len(self.prefix):].lower(): n for n in names if n.startswith(self.prefix)}
+            self.meta = strict_json(self.zip.read(pj[0]))
+            self._zip_names = {n[len(self.prefix):].casefold(): n for n in names if n.startswith(self.prefix)}
         else:
-            with open(path_in(path, "patch.json"), encoding="utf-8-sig") as handle:
-                self.meta = json.load(handle)
-        self.entries = self.meta.get("files", [])
+            self.meta = read_json(path_in(path, "patch.json"), MANIFEST_LIMIT)
+        validate_meta(self.meta)
+        self.entries = self.meta["files"]
         validate_entries(self.entries)          # every name is a safe relative path (no .., drive, backslash ...)
         # one walk replaces a link check per entry per ancestor folder (that was ~3 M system calls on big patches)
         self.tree = None if self.is_zip else tree(path)
@@ -180,19 +244,19 @@ class Patch:
 
     def stat(self, name):
         """(size, mtime_ns) of a listed file from the walk, or None when it is missing."""
-        hit = self.tree.get(name.lower()) if self.tree is not None else None
+        hit = self.tree.get(name.casefold()) if self.tree is not None else None
         return (hit[1], hit[2]) if hit else None
 
     def has(self, name):
         safe_relative(name, asset=True)
         if self.is_zip:
-            return name.lower() in self._zip_names
-        return name.lower() in self.tree
+            return name.casefold() in self._zip_names
+        return name.casefold() in self.tree
 
     def read(self, name):
         safe_relative(name, asset=True)
         if self.is_zip:
-            return self.zip.read(self._zip_names[name.lower()])
+            return self.zip.read(self._zip_names[name.casefold()])
         with open(path_in(self.path, name), "rb") as f:
             return f.read()
 
@@ -217,20 +281,38 @@ def resolve_source_path(path):
 MAIN = resolve_source_path(MAIN)
 
 
+def _published_paths(value):
+    if not isinstance(value, dict) or not isinstance(value.get("patches"), list):
+        raise ValueError("published.json must contain a patches list")
+    paths, seen, names = [], set(), set()
+    for path in value["patches"]:
+        if not isinstance(path, str) or not os.path.isabs(path):
+            raise ValueError("published patch paths must be absolute strings")
+        resolved = resolve_source_path(path)
+        key = os.path.normcase(os.path.abspath(resolved)).casefold()
+        name = os.path.basename(os.path.normpath(resolved)).casefold()
+        if key in seen or name in names:
+            raise ValueError("duplicate published patch path or folder: " + path)
+        seen.add(key)
+        names.add(name)
+        paths.append(resolved)
+    return paths
+
+
 def load_published():
-    """Absolute paths of the patch folders published to GitHub; the first one is the main patch."""
+    """Missing config uses the initial default; malformed config blocks operations; an empty list stays empty."""
     try:
-        with open(PUBLISHED, encoding="utf-8") as source:
-            lst = [p for p in json.load(source)["patches"] if isinstance(p, str)]
-    except (OSError, ValueError, KeyError, TypeError):
-        lst = []
-    return [resolve_source_path(path) for path in (lst or [MAIN])]
+        value = read_json(PUBLISHED, MANIFEST_LIMIT)
+    except FileNotFoundError:
+        return [MAIN]
+    return _published_paths(value)
 
 
 def save_published(paths):
     os.makedirs(WORK, exist_ok=True)
-    with open(PUBLISHED, "w", encoding="utf-8") as f:
-        json.dump({"patches": paths}, f, indent=1)
+    value = {"patches": list(paths)}
+    _published_paths(value)
+    atomic_json(PUBLISHED, value, indent=1)
 
 
 def list_files(folder):
@@ -239,21 +321,12 @@ def list_files(folder):
 
 
 def write_patch_json(folder, meta, entries):
-    import tempfile
     validate_entries(entries)
     no_links(folder)
-    dest = path_in(folder, 'patch.json')
-    meta = dict(meta)
-    meta["files"] = entries
-    fd, tmp = tempfile.mkstemp(prefix='patch.json.', suffix='.virgil_tmp', dir=folder)
-    try:
-        with os.fdopen(fd, 'w', encoding='utf-8') as f:
-            json.dump(meta, f, separators=(",", ":"))
-        no_links(dest)
-        os.replace(tmp, dest)
-    finally:
-        if os.path.exists(tmp):
-            os.unlink(tmp)
+    value = dict(meta)
+    value["files"] = entries
+    validate_meta(value)
+    atomic_json(path_in(folder, "patch.json"), value, separators=(",", ":"))
 
 
 ID_RE = re.compile(r'"file"\s*:\s*"([^"]*)"\s*,\s*"id"\s*:\s*(\d+)|"id"\s*:\s*(\d+)\s*,\s*"file"\s*:\s*"([^"]*)"')
@@ -272,18 +345,25 @@ def installed_patches(exclude=()):
         d = os.path.dirname(pj)
         if os.path.normcase(os.path.abspath(d)) in exclude:
             continue
-        out[os.path.basename(d)] = {i: f for f, i in _pairs(open(pj, encoding="utf-8-sig", errors="replace").read())}
+        meta = validate_meta(read_json(pj, MANIFEST_LIMIT))
+        out[os.path.basename(d)] = {e["id"]: e["file"] for e in meta["files"]}
     for zp in glob.glob(os.path.join(PATCHES, "*.patch")):
         if os.path.normcase(os.path.abspath(zp)) in exclude:
             continue
         try:
             with zipfile.ZipFile(zp) as z:
-                for n in z.namelist():
-                    if n.lower().endswith("patch.json"):
-                        out[os.path.basename(zp)] = {i: f for f, i in
-                                                     _pairs(z.read(n).decode("utf-8-sig", errors="replace"))}
-        except zipfile.BadZipFile:
-            pass
+                manifests = [n for n in z.namelist() if n.rsplit('/', 1)[-1].casefold() == "patch.json"]
+                if len(manifests) != 1:
+                    raise ValueError("installed archive must contain exactly one patch.json: " + zp)
+                for n in manifests:
+                    if n.rsplit('/', 1)[-1].casefold() == "patch.json":
+                        info = z.getinfo(n)
+                        if info.file_size > MANIFEST_LIMIT:
+                            raise ValueError("patch metadata exceeds size limit: " + zp)
+                        meta = validate_meta(strict_json(z.read(n)))
+                        out[os.path.basename(zp)] = {e["id"]: e["file"] for e in meta["files"]}
+        except zipfile.BadZipFile as ex:
+            raise ValueError("cannot survey IDs in corrupt patch archive: " + zp) from ex
     return out
 
 
