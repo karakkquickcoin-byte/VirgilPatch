@@ -86,7 +86,18 @@ def record_merge_result(path, report):
 
 
 # ---------------------------------------------------------------- hashing with a size/mtime cache
-def blob_sha(path, size_mtime=None):
+def prehash_wmos(paths):
+    """WMOs are always rehashed (see blob_sha); hash them on several threads. hashlib and file reads release the
+    GIL, so this keeps the always-rehash guarantee at a fraction of the wall time. Returns {path: sha}."""
+    paths = [p for p in paths if os.fspath(p).lower().endswith(".wmo")]
+    if len(paths) < 16:
+        return {}
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=min(8, os.cpu_count() or 4)) as ex:
+        return dict(zip(paths, ex.map(vc.git_blob_sha, paths)))
+
+
+def blob_sha(path, size_mtime=None, fresh=None):
     """Git blob SHA; WMO exports are always rehashed because exporters can preserve timestamps. size_mtime can
     come from a directory walk (vc.Patch.stat) so a cache hit needs no system call at all."""
     global _hash_cache, _hash_dirty
@@ -107,9 +118,13 @@ def blob_sha(path, size_mtime=None):
         hit = None
     if not os.fspath(path).lower().endswith(".wmo") and hit and hit[0] == size_mtime[0] and hit[1] == size_mtime[1]:
         return hit[2]
-    sha = vc.git_blob_sha(path)
-    _hash_cache[key] = [size_mtime[0], size_mtime[1], sha]
-    _hash_dirty = True
+    sha = fresh.get(path) if fresh else None             # hashed this scan by prehash_wmos
+    if sha is None:
+        sha = vc.git_blob_sha(path)
+    row = [size_mtime[0], size_mtime[1], sha]
+    if hit != row:                       # WMOs are always rehashed; an unchanged result must not force a 17 MB rewrite
+        _hash_cache[key] = row
+        _hash_dirty = True
     return sha
 
 
@@ -160,7 +175,7 @@ def published_index():
     head = subprocess.run(["git", "-c", "safe.directory=" + os.path.abspath(vc.REPO), "-C", vc.REPO, "rev-parse", "HEAD"], capture_output=True, creationflags=flags).stdout.strip()
     cache_key = (_norm(vc.REPO), head)
     if head and cache_key in _index_cache:                         # same commit: reuse the parsed index (it is several MB)
-        return vc.strict_json(_index_cache[cache_key])
+        return json.loads(_index_cache[cache_key])                 # our own validated dump: a plain parse is enough
     r = subprocess.run(["git", "-c", "safe.directory=" + os.path.abspath(vc.REPO), "-C", vc.REPO, "show", "HEAD:index.json"], capture_output=True, creationflags=flags)
     if r.returncode:
         return None
@@ -801,7 +816,7 @@ def require_clean_stage():
 
 def publish(message=None, push=True, batch_bytes=400_000_000, skip_check=False, say=log):
     if vl.enabled():
-        return vl.publish(sys.modules[__name__], push=push, deep=not skip_check, say=say)
+        vl.gate()                                      # fail early (no copying) if this week's Pass is missing/expired
     require_clean_stage()
     if push:
         refresh_remote(say)
@@ -856,6 +871,7 @@ def publish(message=None, push=True, batch_bytes=400_000_000, skip_check=False, 
     names = list(index["patches"])
     vi.canonicalize(vc.REPO, names, index)
     scopes = sorted({vv.repo_dir(n, p) for snapshot in (index, before or {}) for n, p in snapshot.get("patches", {}).items()})
+    vl.apply_gate(index)
     vi.stage_release(vc.REPO, index, before)
     index = vi.finalize(vc.REPO, index, before)
     if git("diff", "--cached", "--name-only").strip():
@@ -880,11 +896,10 @@ def push_pending(say=log):
         return 0
     if vl.enabled():
         row = vl.current(require=True)
-        locked_head = vc.strict_json(git("show", "HEAD:index.json"))
-        if not locked_head.get("locked"):
-            raise ValueError("Password lock is enabled. Publish an encrypted snapshot before resuming uploads.")
-        if locked_head.get("pass_number") != row["number"]:
-            raise ValueError("Pending upload uses an older password. Push a folder again to apply the current weekly code.")
+        head = vc.strict_json(git("show", "HEAD:index.json"))
+        number = head.get("pass_number") if head.get("locked") else (head.get("gate") or {}).get("pass_number")
+        if number != row["number"]:
+            raise ValueError("Pending upload uses an older (or no) weekly code. Push a folder again to apply Pass %s." % row["number"])
     vi.validate_head(vc.REPO)
     if len(todo) == 1:
         say("publishing one verified snapshot ...")
@@ -976,13 +991,15 @@ def scan_folder(path):
     filename_plan = vi.filename_plan(p, base)
     files, new, changed, missing = {}, [], [], []
     root = os.path.abspath(path)
+    fresh = prehash_wmos([os.path.join(root, canonical_names.get(e["file"].casefold(), e["file"]).replace("/", os.sep))
+                          for e in p.entries if p.stat(canonical_names.get(e["file"].casefold(), e["file"])) is not None])
     for e in p.entries:
         n = canonical_names.get(e["file"].casefold(), e["file"])
         st = p.stat(n)
         if st is None:
             missing.append(n)
             continue
-        sha = blob_sha(os.path.join(root, n.replace("/", os.sep)), st)
+        sha = blob_sha(os.path.join(root, n.replace("/", os.sep)), st, fresh)
         files[n] = {"id": e["id"], "size": st[0], "sha": sha}
         if n not in base:
             new.append(n)
@@ -1088,7 +1105,7 @@ def push_folder(path, deep=False, say=log, push=True):
     """Push ONE folder: copy only its new/changed files into the mirror, drop its removed ones, update its entry in
     index.json, commit (~400 MB batches, patch.json + index.json last) and push. Other folders are not touched."""
     if vl.enabled():
-        return vl.publish(sys.modules[__name__], selected=path, push=push, deep=deep, say=say)
+        vl.gate()                                      # fail early (no copying) if this week's Pass is missing/expired
     require_clean_stage()
     if push:
         refresh_remote(say)
@@ -1160,6 +1177,7 @@ def push_folder(path, deep=False, say=log, push=True):
             git("commit", "-q", "-m", "%s (part %d/%d)" % (msg, k + 1, len(batches)))
             commits += 1
     vi.canonicalize(vc.REPO, [name], idx)
+    vl.apply_gate(idx)
     vi.stage_release(vc.REPO, idx, published_index(), [name])
     idx = vi.finalize(vc.REPO, idx, published_index())
     if git("diff", "--cached", "--name-only").strip():
@@ -1175,12 +1193,7 @@ def remove_folder(name, say=log, push=True):
     """Stop publishing a folder: its files leave the current GitHub version (they stay in the history) and everyone's
     updater removes it on their next update. The local folder is not touched."""
     if vl.enabled():
-        vc.safe_relative(name, folder=True)
-        if name not in (published_index() or {}).get("patches", {}):
-            return {"ok": False, "errors": ["Folder is not published: " + name]}
-        result = vl.publish(sys.modules[__name__], selected="__remove_only__", remove=name, push=push, say=say)
-        if result["ok"]: remove_published(name)
-        return result
+        vl.gate()                                      # fail early if this week's Pass is missing/expired
     require_clean_stage()
     if push:
         refresh_remote(say)
@@ -1198,6 +1211,7 @@ def remove_folder(name, say=log, push=True):
     idx["patches"].pop(name, None)
     idx["published"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     vc.atomic_json(os.path.join(vc.REPO, "index.json"), idx, indent=0, sort_keys=True)
+    vl.apply_gate(idx)
     vi.stage_release(vc.REPO, idx, published_index(), [name])
     idx = vi.finalize(vc.REPO, idx, published_index())
     commits = 0

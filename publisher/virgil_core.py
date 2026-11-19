@@ -4,7 +4,7 @@ An Epsilon patch is a folder of flat files plus patch.json {"name","version","ur
 *.patch files carry the same layout. FileDataIDs above the community listfile max are custom; at or below it they
 override a game file.
 """
-import os, re, json, glob, struct, hashlib, zipfile
+import os, re, json, glob, struct, hashlib, zipfile, functools
 
 JSON_LIMIT = 128 * 1024 * 1024
 MANIFEST_LIMIT = 16 * 1024 * 1024
@@ -101,14 +101,29 @@ ID_ARRAYS = {b"SFID": "skin", b"TXID": "texture", b"BFID": "bone", b"SKID": "ske
 ASSET_EXTENSIONS = {'.adt', '.anim', '.blp', '.bone', '.db2', '.m2', '.ogg', '.phys', '.skel', '.skin', '.wdl', '.wdt', '.wmo'}
 
 
+_BAD_PATH_CHARS = re.compile(r'[\x00-\x1f\x7f<>:"|?*]')
+# Reserved Windows device names. The superscripts are written as escapes: the literal characters were mangled by
+# a re-encode earlier (which also blocked harmless names such as "COMÃ").
+_RESERVED_NAME = re.compile('(CON|PRN|AUX|NUL|CLOCK\\$|CONIN\\$|CONOUT\\$|COM[1-9¹²³]|LPT[1-9¹²³])', re.I)
+
+
 def safe_relative(name, asset=False, folder=False):
+    # Same rules as before; results are memoized because a scan checks each of ~80k names several times
+    # (patch.json, filename plan, committed index), which was the largest single cost of a scan.
+    if not isinstance(name, str):
+        raise ValueError('unsafe relative path: %r' % name)
+    return _safe_relative(name, bool(asset), bool(folder))
+
+
+@functools.lru_cache(maxsize=1 << 19)
+def _safe_relative(name, asset, folder):
     import ntpath
-    if not isinstance(name, str) or not name or len(name) > 220 or '\\' in name or ntpath.isabs(name):
+    if not name or len(name) > 220 or '\\' in name or ntpath.isabs(name):
         raise ValueError('unsafe relative path: %r' % name)
     for part in name.split('/'):
         if (not part or part in ('.', '..') or part.endswith(('.', ' ')) or
-                any(ord(c) < 32 or ord(c) == 127 or c in '<>:\"|?*' for c in part) or part.casefold() == '.git' or
-                re.fullmatch(r'(CON|PRN|AUX|NUL|CLOCK\$|CONIN\$|CONOUT\$|COM[1-9Ãƒâ€šÃ‚Â¹Ãƒâ€šÃ‚Â²Ãƒâ€šÃ‚Â³]|LPT[1-9Ãƒâ€šÃ‚Â¹Ãƒâ€šÃ‚Â²Ãƒâ€šÃ‚Â³])', part.split('.')[0], re.I)):
+                _BAD_PATH_CHARS.search(part) or part.casefold() == '.git' or
+                _RESERVED_NAME.fullmatch(part.split('.')[0])):
             raise ValueError('unsafe Windows path component: %r' % name)
     if folder and '/' in name:
         raise ValueError('patch name must be one folder')
@@ -465,9 +480,10 @@ def blp_ok(raw):
 
 
 def git_blob_sha(path):
+    # The header size comes from the open handle, so it always matches the bytes actually hashed.
     h = hashlib.sha1()
-    h.update(b"blob %d\0" % os.path.getsize(path))
     with open(path, "rb") as f:
+        h.update(b"blob %d\0" % os.fstat(f.fileno()).st_size)
         for block in iter(lambda: f.read(1 << 20), b""):
             h.update(block)
     return h.hexdigest()

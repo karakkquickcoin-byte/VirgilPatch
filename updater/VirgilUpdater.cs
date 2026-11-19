@@ -27,9 +27,9 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyCompany("VirgilPatch")]
 [assembly: System.Reflection.AssemblyProduct("Chronicles of Lordaeron")]
 [assembly: System.Reflection.AssemblyCopyright("VirgilPatch contributors")]
-[assembly: System.Reflection.AssemblyVersion("1.5.12.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.5.12.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.5.12")]
+[assembly: System.Reflection.AssemblyVersion("1.5.13.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.5.13.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.5.13")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 namespace VirgilPatch
@@ -39,7 +39,7 @@ namespace VirgilPatch
         public const string Owner = "karakkquickcoin-byte";
         public const string Repo = "VirgilPatch";
         public const string Branch = "main";
-        public const string UserAgent = "VirgilPatchUpdater/1.5.12";
+        public const string UserAgent = "VirgilPatchUpdater/1.5.13";
         public static string StateDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirgilPatch");
         public static bool StartAmbienceMuted;
     }
@@ -1262,15 +1262,24 @@ namespace VirgilPatch
             };
         }
 
+        // Each background job owns its token source. It clears the shared field only if that field still holds its
+        // own source, so a job finishing after another started (or after close) cannot hit a null/disposed source.
+        void EndWork(CancellationTokenSource mine)
+        {
+            if (mine == null) return;
+            if (ReferenceEquals(cts, mine)) cts = null;
+            mine.Dispose();
+        }
+
         internal Func<bool> StartupGameRunning;
         void RunStartupFilenameCheck()
         {
-            cts = new CancellationTokenSource(); var token = cts.Token;
+            var mine = cts = new CancellationTokenSource(); var token = mine.Token;
             Busy(true); status.Text = "Checking installed patch filenames ...";
             Task.Factory.StartNew(() => StartupCasingRepair.Apply(state, Say, token, StartupGameRunning), token).ContinueWith(t => Post(delegate {
                 if (t.IsFaulted) Say("Automatic filename check deferred: " + t.Exception.GetBaseException().Message);
                 else if (t.IsCanceled) Say("Automatic filename check cancelled; it will retry next launch.");
-                cts.Dispose(); cts = null; Busy(false);
+                EndWork(mine); Busy(false);
                 status.Text = t.IsCanceled ? "Filename check cancelled; it will retry next launch." : "Filename check finished. Details show repairs or deferred checks; Update checks patch content.";
             }));
         }
@@ -1399,33 +1408,33 @@ namespace VirgilPatch
         {
             if (string.IsNullOrEmpty(state.patches_dir) && !PickFolder()) return;
             if (applyAfterCheck && countAttempt) { bool due = state.CountFolderCheck(); state.Save(); if (due && !CheckInstallationFolders()) { status.Text = "Folder check cancelled. No patch files changed."; return; } }
-            cts = new CancellationTokenSource();
+            var mine = cts = new CancellationTokenSource();
             Busy(true); plan = null;
             status.Text = "Loading the patch list. No game files are downloading yet.";
             Phase("Loading patch list");
             var updater = MakeUpdater();
             Task.Factory.StartNew(() => updater.Catalog()).ContinueWith(t => Post(delegate {
-                if (t.IsFaulted || t.IsCanceled || cts.IsCancellationRequested)
+                if (t.IsFaulted || t.IsCanceled || mine.IsCancellationRequested)
                 {
                     if (t.IsFaulted) { diagnostics.Record("check failed", null, state.patches_dir, null, t.Exception.GetBaseException()); Say("Error: " + t.Exception.GetBaseException().Message); }
                     status.Text = "Could not load patches, or the check was cancelled. Open Details or try again.";
-                    Busy(false); cts.Dispose(); cts = null; return;
+                    Busy(false); EndWork(mine); return;
                 }
                 if (t.Result.Patches.Count == 0)
                 {
-                    Busy(false); cts.Dispose(); cts = null;
+                    Busy(false); EndWork(mine);
                     Say("You're up to date. No patch folders are currently published.");
                     status.Text = "No patch folders are currently published. Your patches were left unchanged.";
                     return;
                 }
                 var choice = ChoosePatches != null ? ChoosePatches(t.Result) : PatchDialogs.Choose(this, t.Result, state);
-                if (choice != null && choice.CheckFolders) { Busy(false); cts.Dispose(); cts = null; if (CheckInstallationFolders()) RunPatchCheck(applyAfterCheck, false); else status.Text = "Folder check cancelled. No patch files changed."; return; }
+                if (choice != null && choice.CheckFolders) { Busy(false); EndWork(mine); if (CheckInstallationFolders()) RunPatchCheck(applyAfterCheck, false); else status.Text = "Folder check cancelled. No patch files changed."; return; }
                 if (choice == null || choice.Names == null || choice.Names.Length == 0)
                 {
-                    Busy(false); cts.Dispose(); cts = null; status.Text = "No patch folders selected. Your patches were left unchanged."; return;
+                    Busy(false); EndWork(mine); status.Text = "No patch folders selected. Your patches were left unchanged."; return;
                 }
                 try { CheckChosen(updater, t.Result, choice, applyAfterCheck); }
-                catch (Exception ex) { Say("Error: " + ex.Message); Busy(false); cts.Dispose(); cts = null; status.Text = "Could not save patch selection. Open Details."; }
+                catch (Exception ex) { Say("Error: " + ex.Message); Busy(false); EndWork(mine); status.Text = "Could not save patch selection. Open Details."; }
             }));
         }
 
@@ -1443,20 +1452,20 @@ namespace VirgilPatch
                 MessageBox.Show(this, "WoW is running. Close it first so the patch files aren't in use.\r\n\r\nUpdate anyway?", Text,
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
                 return;
-            cts = new CancellationTokenSource();
+            var mine = cts = new CancellationTokenSource();
             Busy(true);
             updateBtn.Text = "Updating...";
             status.Text = "Updating your patch files. Please keep the launcher open.";
             var u = MakeUpdater();
             var p = plan;
-            var tok = cts.Token;
+            var tok = mine.Token;
             Task.Factory.StartNew(() => u.Apply(p, tok)).ContinueWith(t => Post(() =>
             {
                 if (t.IsFaulted) { diagnostics.Record("update failed", null, state.patches_dir, null, t.Exception.GetBaseException()); Say("Error: " + t.Exception.GetBaseException().Message); status.Text = "Update unavailable. Open Details for the error, then try again."; }
                 else if (t.IsCanceled) { diagnostics.Record("update cancelled"); Say("Update cancelled."); status.Text = "Update cancelled. Click Update to try again."; }
                 else { status.Text = "Selected patches complete in: " + p.TargetRoot; Phase("Complete"); transferText.Text = "Complete 100% | Selected patches ready | ETA done"; }
                 plan = null;
-                cts.Dispose(); cts = null;
+                EndWork(mine);
                 bar.Value = t.IsFaulted || t.IsCanceled ? 0 : 1000;
                 Busy(false);
             }));

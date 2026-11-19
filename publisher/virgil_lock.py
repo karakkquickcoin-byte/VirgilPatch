@@ -28,7 +28,8 @@ def set_password(password, master=None, clock=None):
     if password == data['recovery_password'] or any(r['password'] == password for r in data['history']):
         raise ValueError('Choose a new weekly password, different from recovery and all previous weeks.')
     row = {'number': '0.' + str(len(data['history']) + 1), 'password': password,
-           'created': clock.isoformat(), 'expires': (clock + dt.timedelta(days=7)).isoformat()}
+           'created': clock.isoformat(), 'expires': (clock + dt.timedelta(days=7)).isoformat(),
+           'gate_salt': b64(os.urandom(16))}
     data['history'].append(row)
     # Keep outside the repository, even if configuration points at an unusual WORK.
     if os.path.commonpath([os.path.abspath(vc.REPO), os.path.abspath(secret_path())]) == os.path.abspath(vc.REPO):
@@ -48,6 +49,36 @@ def current(require=False):
     return row
 
 def derive(password, salt): return hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, ITERATIONS, 64)
+
+# ---------------------------------------------------------------- Update-button gate (default mode, 2026-11-19)
+# Patch files stay plain on GitHub exactly as before (no re-upload, no full re-download for players). index.json
+# only carries a salted PBKDF2 check of this week's code, and the updater asks for that code before it downloads.
+# A spoiler blocker for people who click Update early: anyone fetching the raw GitHub mirror still gets the files.
+# Salts stay fixed for the whole Pass so the updater can remember an unlocked Pass across launches and pushes.
+
+def _check(password, salt_b64):
+    return b64(hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), un64(salt_b64), ITERATIONS, 32))
+
+def gate(clock=None):
+    data = settings()
+    if not data or not data.get('history') or not data.get('recovery_password'):
+        raise ValueError('Set this week\'s password in Publisher before pushing.')
+    row = data['history'][-1]
+    if (clock or now()) >= dt.datetime.fromisoformat(row['expires']):
+        raise ValueError('Pass ' + row['number'] + ' has expired. Set a new weekly password before pushing.')
+    changed = False
+    if not row.get('gate_salt'): row['gate_salt'] = b64(os.urandom(16)); changed = True
+    if not data.get('recovery_gate_salt'): data['recovery_gate_salt'] = b64(os.urandom(16)); changed = True
+    if changed: vc.atomic_json(secret_path(), data, indent=2)
+    return {'format': 1, 'pass_number': row['number'], 'iterations': ITERATIONS,
+            'weekly': {'salt': row['gate_salt'], 'check': _check(row['password'], row['gate_salt'])},
+            'recovery': {'salt': data['recovery_gate_salt'], 'check': _check(data['recovery_password'], data['recovery_gate_salt'])}}
+
+def apply_gate(index):
+    """Add (or drop, when no weekly password is configured) the gate on an index about to be committed."""
+    if enabled(): index['gate'] = gate()
+    else: index.pop('gate', None)
+    return index
 
 def encrypt(source, target, key):
     iv = os.urandom(16); header = b'VGL1' + iv
@@ -82,10 +113,10 @@ def envelope(catalog, row, recovery):
         result[label] = {'salt': b64(salt), 'key': b64(seal(key, derive(password, salt)))}
     return result
 
-def unlock(outer, password):
+def unlock(outer, password, slots=('weekly', 'recovery')):
     if outer.get('format') != 3 or outer.get('locked') is not True or outer.get('iterations') != ITERATIONS:
         raise ValueError('Unsupported encrypted publication.')
-    for label in ('weekly', 'recovery'):
+    for label in slots:
         slot = outer[label]; salt = un64(slot['salt'])
         if len(salt) != 16: raise ValueError('Invalid password salt.')
         try: key = open_sealed(un64(slot['key']), derive(password, salt))
@@ -97,7 +128,9 @@ def unlock(outer, password):
 def local_catalog(outer):
     data = settings()
     if not data: raise ValueError('Local password record is missing; restore it before publishing.')
-    return unlock(outer, data['recovery_password'])
+    # The publisher holds the recovery password, so only that slot can open; trying the weekly slot first
+    # cost a wasted 600k-round PBKDF2 (~1 s) on every catalog read.
+    return unlock(outer, data['recovery_password'], slots=('recovery',))
 
 def logical(outer): return local_catalog(outer)['index'] if outer.get('locked') else outer
 
@@ -131,6 +164,8 @@ def verify_head(repo):
     return catalog['index']
 
 def publish(pub, selected=None, remove=None, push=True, deep=False, say=print):
+    # Full encryption mode. No longer called by the publisher (which uses apply_gate instead); kept for reference
+    # and for its tests. Its first run re-encrypts and re-uploads every published folder.
     row = current(require=True)
     pub.require_clean_stage()
     if push: pub.refresh_remote(say)
@@ -233,3 +268,4 @@ def publish(pub, selected=None, remove=None, push=True, deep=False, say=print):
     result = {'ok':True, 'commits':1, 'changes':'Encrypted publication - Pass ' + row['number']}
     if push: result['pushed'] = pub.push_pending(say)
     return result
+

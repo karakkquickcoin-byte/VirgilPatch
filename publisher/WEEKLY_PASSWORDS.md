@@ -16,3 +16,13 @@ Protocol: public index format 3 intentionally does not expose a legacy patch lis
 Cryptography references: https://cryptography.io/en/latest/hazmat/primitives/symmetric-encryption/ and https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.rfc2898derivebytes.-ctor?view=netframework-4.8
 
 Publisher dependency: install requirements.txt into publisher/lib or the Python environment. The installed E-drive publisher already includes its local dependency.
+
+## 1.5.13: code on the Update button (default from 2026-11-19)
+
+Patch files are published plain, exactly as before the weekly lock: no re-encryption, no full re-upload, and
+players only download new or changed files. Each push adds a `gate` block to `index.json` with the Pass number
+and salted PBKDF2-SHA256 (600000 rounds) check values for the weekly and recovery codes; the codes themselves are
+never published. Updater 1.5.13 asks for the code before any download and remembers the unlocked Pass (its public
+check value only) until the next Pass. This is a spoiler blocker for early Update clicks, not access control:
+the raw GitHub mirror still serves the files. Older updaters ignore the gate. Full encryption (`virgil_lock.publish`)
+is kept in the code but no longer used. Tests: `E:\M2FX_Work\virgil\gate_publish_smoke.py` and `updater/tests/GateTests.cs`.

@@ -68,13 +68,51 @@ namespace VirgilPatch {
             }
             return null;
         }
+        // Update-button gate (1.5.13): patch files stay plain on GitHub; index.json carries a salted PBKDF2 check of
+        // this week's code. Update asks for it before any download. A spoiler blocker, not file encryption.
+        // The unlocked Pass is remembered (its public check value only, never the code) so players are asked once per Pass.
+        internal static string GateMemoryPath { get { return Path.Combine(Config.StateDir,"weekly-unlock.txt"); } }
+        static bool GateMatches(string password,Dictionary<string,object> slot) {
+            if(slot==null) return false;
+            byte[] salt=B64(slot["salt"]), check=B64(slot["check"]);
+            if(salt.Length!=16 || check.Length!=32) throw new InvalidDataException("Invalid update code check.");
+            using(var kdf=new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(password),salt,600000,HashAlgorithmName.SHA256))
+                return Equal(kdf.GetBytes(32),check);
+        }
+        void CheckGate(Dictionary<string,object> gate) {
+            if(gate==null || Convert.ToInt32(gate["format"])!=1 || Convert.ToInt32(gate["iterations"])!=600000) throw new InvalidDataException("Unsupported update code check. Update the launcher.");
+            string number=gate["pass_number"] as string;
+            if(number==null || !Regex.IsMatch(number,@"\A0\.[1-9][0-9]{0,8}\z")) throw new InvalidDataException("Invalid password number.");
+            var weekly=gate["weekly"] as Dictionary<string,object>;
+            object r; var recovery=gate.TryGetValue("recovery",out r) ? r as Dictionary<string,object> : null;
+            if(weekly==null) throw new InvalidDataException("Invalid update code check.");
+            string memory=number+"\n"+(string)weekly["check"];
+            try { var f=new FileInfo(GateMemoryPath); if(f.Exists && f.Length<4096 && File.ReadAllText(f.FullName)==memory) return; } catch(IOException) { } catch(UnauthorizedAccessException) { }
+            for(int attempt=0;attempt<3;attempt++) {
+                string password=ask(number,attempt>0);
+                if(password==null) throw new OperationCanceledException("Code entry cancelled. No patch files were changed.");
+                if(GateMatches(password,weekly) || GateMatches(password,recovery)) {
+                    try { Directory.CreateDirectory(Config.StateDir); File.WriteAllText(GateMemoryPath,memory); } catch(IOException) { } catch(UnauthorizedAccessException) { }
+                    return;
+                }
+            }
+            throw new InvalidDataException("Incorrect code. Try Update again with this week's code.");
+        }
         public byte[] Get(string commit,string repoPath) {
             if(repoPath=="index.json") {
                 if(commit==unlockedCommit && unlockedIndex!=null) return unlockedIndex;
                 byte[] raw=inner.Get(commit,repoPath);
                 var outer=StrictJson.Read(raw,(int)Safety.MaxIndexBytes);
                 object locked;
-                if(!outer.TryGetValue("locked",out locked) || !(locked is bool) || !(bool)locked) { objects=null; return raw; }
+                if(!outer.TryGetValue("locked",out locked) || !(locked is bool) || !(bool)locked) {
+                    objects=null;
+                    object gate;
+                    if(outer.TryGetValue("gate",out gate) && gate!=null) {
+                        CheckGate(gate as Dictionary<string,object>);
+                        unlockedIndex=raw; unlockedCommit=commit;   // one code entry per Update, even if index.json is read again
+                    }
+                    return raw;
+                }
                 if(Convert.ToInt32(outer["format"])!=3 || Convert.ToInt32(outer["iterations"])!=600000) throw new InvalidDataException("Unsupported encrypted publication. Update the launcher.");
                 string number=outer["pass_number"] as string;
                 if(number==null || !Regex.IsMatch(number,@"\A0\.[1-9][0-9]{0,8}\z")) throw new InvalidDataException("Invalid password number.");

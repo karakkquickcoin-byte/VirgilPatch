@@ -224,6 +224,7 @@ namespace VirgilPatch
 
         void TaskCheck(Updater updater, Plan catalog, PatchSelection choice, bool apply, System.Threading.CancellationToken token)
         {
+            var mine = cts;                                    // the patch check's source, owned by this job from here
             System.Threading.Tasks.Task.Factory.StartNew(() => updater.Check(choice.Names, catalog, token)).ContinueWith(t => Post(delegate {
                 Busy(false);
                 if (t.IsFaulted || t.IsCanceled)
@@ -231,13 +232,13 @@ namespace VirgilPatch
                     status.Text = t.IsCanceled || t.Exception.GetBaseException() is OperationCanceledException ? "Check cancelled. No patch files were changed." : "Cannot check these patches. Open Details for the error.";
                     if (t.IsFaulted) { diagnostics.Record("check failed", null, state.patches_dir, null, t.Exception.GetBaseException()); Say("Error: " + t.Exception.GetBaseException().Message); }
                     else diagnostics.Record("check cancelled");
-                    cts.Dispose(); cts = null; return;
+                    EndWork(mine); return;
                 }
                 plan = t.Result; lastPlan = plan; changesButton.Enabled = true;
                 Say(PatchDialogs.Summary(plan));
                 status.Text = plan.UpToDate ? "Selected patches verified in: " + plan.TargetRoot : "Ready: " + plan.Fetch.Count + " files, " + PatchDialogs.Size(plan.FetchBytes) + ".";
                 bool confirmed = ConfirmChanges != null ? ConfirmChanges(plan) : PatchDialogs.Review(this, plan);
-                cts.Dispose(); cts = null;
+                EndWork(mine);
                 if (apply && confirmed && !plan.UpToDate) ApplyUpdate();
                 else if (plan.UpToDate) { Say("You're up to date in: " + plan.TargetRoot); Phase("Complete"); transferText.Text = "Complete 100% | Selected patches verified | ETA done"; }
             }));
