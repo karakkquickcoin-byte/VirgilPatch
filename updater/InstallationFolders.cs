@@ -28,15 +28,31 @@ namespace VirgilPatch {
  static class InstallationFolders {
   static bool FileMarker(string p){Safety.NoLinks(p);return File.Exists(p);}
   static bool DirectoryMarker(string p){Safety.NoLinks(p);return Directory.Exists(p);}
+  static bool SearchableDirectory(string path) {
+   try { return DirectoryMarker(path); }
+   catch (InvalidDataException) { return false; }
+   catch (IOException) { return false; }
+   catch (UnauthorizedAccessException) { return false; }
+  }
   public static List<string> Nearby(string root) {
-   var result=new HashSet<string>(StringComparer.OrdinalIgnoreCase);var probes=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-   Action<string> probe=p=>{if(!probes.Add(p))return;try{Safety.NoLinks(p);if(Directory.Exists(p))result.Add(Path.GetFullPath(p));}catch(IOException){}catch(UnauthorizedAccessException){}};
-   probe(root);string ancestor=Path.GetDirectoryName(Path.GetDirectoryName(Path.GetFullPath(root)));
-   for(int depth=0;depth<3&&!string.IsNullOrEmpty(ancestor);depth++,ancestor=Path.GetDirectoryName(ancestor)) {
-    probe(Path.Combine(ancestor,"_retail_","Patches"));
-    try{Safety.NoLinks(ancestor);foreach(string child in Directory.EnumerateDirectories(ancestor).Take(64)){Safety.NoLinks(child);probe(Path.Combine(child,"_retail_","Patches"));}}catch(IOException){}catch(UnauthorizedAccessException){}
+   var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+   var probes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+   Action<string> probe = path => {
+    if (probes.Add(path) && SearchableDirectory(path)) result.Add(Path.GetFullPath(path));
+   };
+   probe(root);
+   string ancestor = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetFullPath(root)));
+   for (int depth = 0; depth < 3 && !string.IsNullOrEmpty(ancestor); depth++, ancestor = Path.GetDirectoryName(ancestor)) {
+    if (!SearchableDirectory(ancestor)) continue;
+    probe(Path.Combine(ancestor, "_retail_", "Patches"));
+    try {
+     foreach (string child in Directory.EnumerateDirectories(ancestor).Take(64))
+      if (SearchableDirectory(child)) probe(Path.Combine(child, "_retail_", "Patches"));
+    }
+    catch (IOException) { }
+    catch (UnauthorizedAccessException) { }
    }
-   return result.OrderBy(p=>p,StringComparer.OrdinalIgnoreCase).Take(64).ToList();
+   return result.OrderBy(path => path, StringComparer.OrdinalIgnoreCase).Take(64).ToList();
   }
   public static InstallationInspection Inspect(string root) {
    var x=new InstallationInspection{Root=root};

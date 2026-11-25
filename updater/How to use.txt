@@ -53,4 +53,6 @@ Updater 1.5.11: every launch checks file and folder capitalization against all i
 
 
 1.5.12 weekly encrypted patches: Update asks for the current weekly code, with a small Pass number. The same box accepts the maintainer recovery code. Passwords are never embedded in the app. Signed program upgrades remain password independent. Publisher setup and local record instructions: publisher/WEEKLY_PASSWORDS.md. Compile LockedSource.cs in all test/release builds.
+1.5.14 folder check: nearby-folder discovery skips junctions and inaccessible folders. The selected installation still requires the normal folder checks.
+
 1.5.13 weekly code on Update: patch files are no longer re-encrypted. Update asks for the current weekly code (Pass number shown) before downloading, and remembers it until the next Pass. The recovery code also works. Unchanged files are never downloaded again.
