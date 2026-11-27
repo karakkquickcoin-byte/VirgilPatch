@@ -12,7 +12,7 @@ unchanged in this visual release. Patches still require Update, selection and co
 
 ## Install / update
 
-1. Download [VirgilUpdater.zip](VirgilUpdater.zip?raw=1) from this repository and extract it.
+1. Download [VirgilUpdater.zip](https://raw.githubusercontent.com/karakkquickcoin-byte/VirgilPatch/main/VirgilUpdater.zip) from this repository and extract it.
 2. Run `VirgilUpdater.exe`. In the Chronicles of Lordaeron launcher, click **Select folder** and choose your Epsilon `_retail_\Patches` folder if needed.
 3. Close WoW, click **Update**, and select only the patch folders you want.
 4. Review **What's new / repair preview**, then confirm **Update / repair selected**.
